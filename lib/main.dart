@@ -1,11 +1,15 @@
 import 'package:bookzbox/common/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/generated/l10n.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
+
+final FirebaseAnalytics _analytics = FirebaseAnalytics();
 
 class MyApp extends StatelessWidget {
   @override
@@ -17,9 +21,12 @@ class MyApp extends StatelessWidget {
         Provider<NewAccountStore>(create: (_) => NewAccountStore()),
       ],
       child: MaterialApp(
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: _analytics),
+        ],
         localizationsDelegates: [S.delegate],
         supportedLocales: S.delegate.supportedLocales,
-        title: S.of(context).appName,
+        title: 'BookzBox',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.brown,

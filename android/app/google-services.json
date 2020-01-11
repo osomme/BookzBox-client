@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "623651395706",
+    "firebase_url": "https://bookzbox.firebaseio.com",
+    "project_id": "bookzbox",
+    "storage_bucket": "bookzbox.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623651395706:android:6ff2d140b7c59814fc83c3",
+        "android_client_info": {
+          "package_name": "no.hiof.bookzbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "623651395706-k31286vaivau3cehu09fck6rrnvc7krg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "no.hiof.bookzbox",
+            "certificate_hash": "49db707d17aae6ecb523d1164f56a4b5277f3c98"
+          }
+        },
+        {
+          "client_id": "623651395706-0m36pcjugvfim04u1t4sbiu9heq2q6qc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoA-NTJL_2hNP55gW1GdSYlbt0wULvvCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "623651395706-0m36pcjugvfim04u1t4sbiu9heq2q6qc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
