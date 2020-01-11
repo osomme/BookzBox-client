@@ -57,6 +57,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         navigationButtonText: S.of(context).authNavToRegistration,
         submitButtonText: S.of(context).authRegisterBtn,
         onSubmitPressed: _navigateToMainScreen,
+        isLoading: widget.authStore.isLoading,
       ),
     );
   }

@@ -57,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
         navigationButtonText: S.of(context).authNavToRegistration,
         submitButtonText: S.of(context).authLogInBtn,
         onSubmitPressed: _navigateToMainScreen,
+        isLoading: widget.authStore.isLoading,
       ),
     );
   }

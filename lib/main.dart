@@ -41,10 +41,6 @@ class MyApp extends StatelessWidget {
           builder: (_, authStore, __) {
             return Observer(
               builder: (ctx) {
-                if (authStore.isLoading) {
-                  print('Loading');
-                  return Scaffold(body: Center(child: CircularProgressIndicator()));
-                }
                 if (authStore.isLoggedIn) {
                   print('User is logged in');
                   return HomeScreen(authStore);

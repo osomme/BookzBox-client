@@ -27,6 +27,7 @@ class AuthScreen extends StatefulWidget {
   final String navigationButtonText;
   final List<FormFieldData> fields;
   final bool formIsValid;
+  final bool isLoading;
 
   const AuthScreen(
       {Key key,
@@ -35,7 +36,8 @@ class AuthScreen extends StatefulWidget {
       @required this.submitButtonText,
       @required this.navigationButtonText,
       @required this.fields,
-      @required this.formIsValid})
+      @required this.formIsValid,
+      @required this.isLoading})
       : super(key: key);
 
   @override
@@ -96,6 +98,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     child: AuthButton(
                       onClicked: widget.formIsValid ? widget.onSubmitPressed : null,
                       labelText: widget.submitButtonText,
+                      isLoading: widget.isLoading,
                     ),
                   ),
                 ],
