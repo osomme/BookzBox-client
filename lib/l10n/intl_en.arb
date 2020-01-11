@@ -1,0 +1,10 @@
+{
+    "appName": "BookzBox",
+    "authUsername": "Username",
+    "authPassword": "Password",
+    "authEmail": "E-mail",
+    "authNavToRegistration": "Create new account",
+    "authNavToLogIn": "Log in with existing account",
+    "authLogInBtn": "Log In",
+    "authRegisterBtn": "Register"
+}
