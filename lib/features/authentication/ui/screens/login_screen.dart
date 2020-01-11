@@ -16,8 +16,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   void _navigateToMainScreen() {
     FocusScope.of(context).unfocus();
+    widget.authStore.signInWithEmail(widget.credStore.email, widget.credStore.password);
     widget.credStore.reset();
-    widget.authStore.logIn();
   }
 
   List<FormFieldData> _createFormFields() {

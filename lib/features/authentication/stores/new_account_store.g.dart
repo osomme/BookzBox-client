@@ -18,12 +18,14 @@ mixin _$NewAccountStore on _NewAccountStore, Store {
 
   @override
   String get usernameError =>
-      (_$usernameErrorComputed ??= Computed<String>(() => super.usernameError)).value;
+      (_$usernameErrorComputed ??= Computed<String>(() => super.usernameError))
+          .value;
   Computed<bool> _$usernameIsValidComputed;
 
   @override
-  bool get usernameIsValid =>
-      (_$usernameIsValidComputed ??= Computed<bool>(() => super.usernameIsValid)).value;
+  bool get usernameIsValid => (_$usernameIsValidComputed ??=
+          Computed<bool>(() => super.usernameIsValid))
+      .value;
 
   final _$_usernameAtom = Atom(name: '_NewAccountStore._username');
 
@@ -42,7 +44,8 @@ mixin _$NewAccountStore on _NewAccountStore, Store {
     }, _$_usernameAtom, name: '${_$_usernameAtom.name}_set');
   }
 
-  final _$_NewAccountStoreActionController = ActionController(name: '_NewAccountStore');
+  final _$_NewAccountStoreActionController =
+      ActionController(name: '_NewAccountStore');
 
   @override
   void setUsername(String username) {

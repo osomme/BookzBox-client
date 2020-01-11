@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('ADD TEXT HERE'),
+            Text('This is the home screen'),
             RaisedButton(
               onPressed: authStore.logOut,
               child: Text('Log out'),

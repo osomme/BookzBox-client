@@ -15,8 +15,9 @@ class CreateAccountScreen extends StatefulWidget {
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
   void _navigateToMainScreen() {
     FocusScope.of(context).unfocus();
+    widget.authStore.registerUser(
+        widget.credStore.username, widget.credStore.email, widget.credStore.password);
     widget.credStore.reset();
-    widget.authStore.logIn();
     Navigator.pop(context);
   }
 
