@@ -80,15 +80,10 @@ class _AuthScreenState extends State<AuthScreen> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        AuthInputCard(
-                          formFields: widget.fields,
-                          navigationButtonLabel: widget.navigationButtonText,
-                          onNavigationPressed: widget.onNavigationPressed,
-                        ),
-                      ],
+                    child: AuthInputCard(
+                      formFields: widget.fields,
+                      navigationButtonLabel: widget.navigationButtonText,
+                      onNavigationPressed: widget.onNavigationPressed,
                     ),
                   ),
                   Positioned.directional(

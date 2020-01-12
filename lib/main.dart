@@ -1,7 +1,5 @@
 import 'package:bookzbox/common/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
-import 'package:bookzbox/features/authentication/repositories/auth_repository.dart';
-import 'package:bookzbox/features/authentication/services/auth_service.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -59,65 +57,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-/*
-if (snapshot.hasData) {
-                  return HomeScreen(authStore);
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('ERROR: ${snapshot.error.toString()}'),
-                  );
-                } else if (snapshot.data == null) {
-                  return LoginScreen(
-                    authStore,
-                    Provider.of<LoginCredentialsStore>(context),
-                  );
-                }
-                return Center(child: CircularProgressIndicator());
-              },
-*/
-
-/*
-return Observer(
-              builder: (ctx) {
-                if (authStore.isLoading) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                if (authStore.isLoggedIn) {
-                  return HomeScreen(authStore);
-                } else {
-                  return LoginScreen(
-                    authStore,
-                    Provider.of<LoginCredentialsStore>(ctx),
-                  );
-                }
-              },
-            );
-*/
-
-/*
-return StreamBuilder<FirebaseUser>(
-              stream: authStore.userStream,
-              builder: (BuildContext ctx, AsyncSnapshot<FirebaseUser> snapshot) {
-                print(snapshot.connectionState);
-                if (snapshot.connectionState == ConnectionState.active) {
-                  if (snapshot.hasData) {
-                    print('User is logged in');
-                    return HomeScreen(authStore);
-                  }
-
-                  print('User is not logged in');
-                  return LoginScreen(
-                    authStore,
-                    Provider.of<LoginCredentialsStore>(ctx),
-                  );
-                }
-
-                print('Loading user info');
-                return Scaffold(
-                  backgroundColor: Colors.red,
-                  body: Center(child: CircularProgressIndicator()),
-                );
-              },
-            );
-*/
