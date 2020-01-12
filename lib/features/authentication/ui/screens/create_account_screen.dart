@@ -54,7 +54,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         fields: _createFormFields(),
         onNavigationPressed: () => Navigator.pop(context),
         formIsValid: widget.credStore.credentialsAreValid,
-        navigationButtonText: S.of(context).authNavToRegistration,
+        navigationButtonText: S.of(context).authNavToLogIn,
         submitButtonText: S.of(context).authRegisterBtn,
         onSubmitPressed: _navigateToMainScreen,
         isLoading: widget.authStore.isLoading,

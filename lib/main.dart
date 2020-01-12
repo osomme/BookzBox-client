@@ -1,5 +1,6 @@
 import 'package:bookzbox/common/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
+import 'package:bookzbox/features/authentication/ui/screens/auth_selection_scren.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -35,7 +36,14 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.brown,
         ),
-        home: Consumer<AuthStore>(
+        home: AuthSelectionScreen(),
+      ),
+    );
+  }
+}
+
+/*
+Consumer<AuthStore>(
           builder: (_, authStore, __) {
             return Observer(
               builder: (ctx) {
@@ -53,7 +61,4 @@ class MyApp extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
-  }
-}
+*/

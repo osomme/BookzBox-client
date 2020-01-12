@@ -33,17 +33,7 @@ class AuthInputCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20.0),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 10.0,
-            spreadRadius: 1.0,
-          ),
-        ],
-      ),
+    return MainContentCard(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
         child: Column(
