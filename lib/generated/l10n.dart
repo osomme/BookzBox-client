@@ -100,6 +100,42 @@ class S {
       args: [],
     );
   }
+
+  String get authSelectGoogle {
+    return Intl.message(
+      'Log in with Google',
+      name: 'authSelectGoogle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authSelectFacebook {
+    return Intl.message(
+      'Log in with Facebook',
+      name: 'authSelectFacebook',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authSelectEmail {
+    return Intl.message(
+      'Log in with Email',
+      name: 'authSelectEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authSelectNewAcct {
+    return Intl.message(
+      'Don\'t have an account? Create a new one',
+      name: 'authSelectNewAcct',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

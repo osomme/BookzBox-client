@@ -6,5 +6,9 @@
     "authNavToRegistration": "Create new account",
     "authNavToLogIn": "Log in with existing account",
     "authLogInBtn": "Log In",
-    "authRegisterBtn": "Register"
+    "authRegisterBtn": "Register",
+    "authSelectGoogle": "Log in with Google",
+    "authSelectFacebook": "Log in with Facebook",
+    "authSelectEmail": "Log in with Email",
+    "authSelectNewAcct": "Don't have an account? Create a new one"
 }

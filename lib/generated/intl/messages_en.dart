@@ -28,6 +28,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "authNavToRegistration" : MessageLookupByLibrary.simpleMessage("Create new account"),
     "authPassword" : MessageLookupByLibrary.simpleMessage("Password"),
     "authRegisterBtn" : MessageLookupByLibrary.simpleMessage("Register"),
+    "authSelectEmail" : MessageLookupByLibrary.simpleMessage("Log in with Email"),
+    "authSelectFacebook" : MessageLookupByLibrary.simpleMessage("Log in with Facebook"),
+    "authSelectGoogle" : MessageLookupByLibrary.simpleMessage("Log in with Google"),
+    "authSelectNewAcct" : MessageLookupByLibrary.simpleMessage("Don\'t have an account? Create a new one"),
     "authUsername" : MessageLookupByLibrary.simpleMessage("Username")
   };
 }

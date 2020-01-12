@@ -1,6 +1,7 @@
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/authentication/ui/screens/auth_loading_screen.dart';
 import 'package:bookzbox/features/authentication/ui/widgets/main_content_card.dart';
+import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -42,7 +43,7 @@ class AuthSelectionScreen extends StatelessWidget {
                                 children: <Widget>[
                                   Icon(Icons.email),
                                   SizedBox(width: 5),
-                                  Text('Log in with Email'),
+                                  Text(S.of(context).authSelectEmail),
                                 ],
                               ),
                             ),
@@ -57,7 +58,7 @@ class AuthSelectionScreen extends StatelessWidget {
                                     color: Colors.red[700],
                                   ),
                                   SizedBox(width: 5),
-                                  Text('Log in with Google'),
+                                  Text(S.of(context).authSelectGoogle),
                                 ],
                               ),
                             ),
@@ -74,7 +75,7 @@ class AuthSelectionScreen extends StatelessWidget {
                                     color: Colors.blue[900],
                                   ),
                                   SizedBox(width: 5),
-                                  Text('Log in with Facebook'),
+                                  Text(S.of(context).authSelectFacebook),
                                 ],
                               ),
                             ),
@@ -84,7 +85,7 @@ class AuthSelectionScreen extends StatelessWidget {
                                   : () =>
                                       Navigator.pushNamed(context, 'email_new_account'),
                               child: Text(
-                                'Don\'t have an account? Create a new one',
+                                S.of(context).authSelectNewAcct,
                                 style: TextStyle(
                                   fontSize: 12.0,
                                   color: Colors.lightBlue[300],
