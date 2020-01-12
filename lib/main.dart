@@ -1,4 +1,4 @@
-import 'package:bookzbox/common/di/auth_providers.dart';
+import 'package:bookzbox/common/di/providers.dart';
 import 'package:bookzbox/common/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -18,10 +18,14 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ...authProviders,
+        ...mainProviders,
       ],
       child: MaterialApp(
         routes: {
-          'auth_selection': (ctx) => AuthSelectionScreen(),
+          'auth_selection': (ctx) => Provider.of<AuthSelectionScreen>(ctx),
+          'email_login': (ctx) => Provider.of<LoginScreen>(ctx),
+          'email_new_account': (ctx) => Provider.of<CreateAccountScreen>(ctx),
+          'main': (ctx) => Provider.of<HomeScreen>(ctx),
         },
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: _analytics),
@@ -39,13 +43,10 @@ class MyApp extends StatelessWidget {
               builder: (ctx) {
                 if (authStore.isLoggedIn) {
                   print('User is logged in');
-                  return HomeScreen(authStore);
+                  return Provider.of<HomeScreen>(ctx);
                 } else {
                   print('User is not logged in');
-                  return LoginScreen(
-                    authStore,
-                    Provider.of<LoginCredentialsStore>(ctx),
-                  );
+                  return Provider.of<AuthSelectionScreen>(ctx);
                 }
               },
             );
