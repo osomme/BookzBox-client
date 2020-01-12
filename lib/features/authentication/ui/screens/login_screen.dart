@@ -1,7 +1,6 @@
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
     FocusScope.of(context).unfocus();
     widget.authStore.signInWithEmail(widget.credStore.email, widget.credStore.password);
     widget.credStore.reset();
+    Navigator.pop(context);
   }
 
   List<FormFieldData> _createFormFields() {
@@ -44,15 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Observer(
       builder: (_) => AuthScreen(
         fields: _createFormFields(),
-        onNavigationPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (ctx) => CreateAccountScreen(
-              widget.authStore,
-              Provider.of<NewAccountStore>(context),
-            ),
-          ),
-        ),
+        onNavigationPressed: () => Navigator.pushNamed(context, 'email_new_account'),
         formIsValid: widget.credStore.credentialsAreValid,
         navigationButtonText: S.of(context).authNavToRegistration,
         submitButtonText: S.of(context).authLogInBtn,
