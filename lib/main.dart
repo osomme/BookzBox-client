@@ -1,6 +1,6 @@
+import 'package:bookzbox/common/di/auth_providers.dart';
 import 'package:bookzbox/common/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
-import 'package:bookzbox/features/authentication/ui/screens/auth_selection_scren.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -17,15 +17,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<LoginCredentialsStore>(create: (_) => LoginCredentialsStore()),
-        Provider<NewAccountStore>(create: (_) => NewAccountStore()),
-        Provider<IAuthService>(create: (_) => AuthService.instance),
-        ProxyProvider<IAuthService, IAuthRepository>(
-            update: (_, service, __) => AuthRepository(service)),
-        ProxyProvider<IAuthRepository, AuthStore>(
-            update: (_, repo, __) => AuthStore(repo)),
+        ...authProviders,
       ],
       child: MaterialApp(
+        routes: {
+          'auth_selection': (ctx) => AuthSelectionScreen(),
+        },
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: _analytics),
         ],
@@ -36,14 +33,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.brown,
         ),
-        home: AuthSelectionScreen(),
-      ),
-    );
-  }
-}
-
-/*
-Consumer<AuthStore>(
+        home: Consumer<AuthStore>(
           builder: (_, authStore, __) {
             return Observer(
               builder: (ctx) {
@@ -61,4 +51,7 @@ Consumer<AuthStore>(
             );
           },
         ),
-*/
+      ),
+    );
+  }
+}
