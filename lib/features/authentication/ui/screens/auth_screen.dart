@@ -9,13 +9,15 @@ class FormFieldData {
   final String errorText;
   final String labelText;
   final bool isPassword;
+  final TextInputType type;
 
   FormFieldData(
       {@required this.onChanged,
       @required this.prefixIcon,
       @required this.errorText,
       @required this.labelText,
-      @required this.isPassword,
+      this.isPassword = false,
+      this.type = TextInputType.text,
       this.suffixIcon});
 }
 

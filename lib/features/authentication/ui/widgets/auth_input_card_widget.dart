@@ -18,6 +18,7 @@ class AuthInputCard extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(bottom: 14.0),
         child: TextField(
+          keyboardType: field.type,
           onChanged: field.onChanged,
           obscureText: field.isPassword ? true : false,
           decoration: InputDecoration(

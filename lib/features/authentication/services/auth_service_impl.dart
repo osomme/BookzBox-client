@@ -22,7 +22,12 @@ class AuthService implements IAuthService {
       idToken: googleAuth.idToken,
     );
     final user = (await _auth.signInWithCredential(credentials)).user;
-    await _updateLastSeen(user.uid);
+    final isAlreadyInDb = await _isAlreadyInDb(user.uid);
+    if (isAlreadyInDb) {
+      await _updateLastSeen(user.uid);
+    } else {
+      await _setUserData(user, user.displayName);
+    }
     return user.toDomain();
   }
 
@@ -39,7 +44,7 @@ class AuthService implements IAuthService {
     final user =
         (await _auth.createUserWithEmailAndPassword(email: email, password: password))
             .user;
-    await setUserData(user);
+    await _setUserData(user, username);
     return user.toDomain();
   }
 
@@ -48,18 +53,23 @@ class AuthService implements IAuthService {
     await ref.setData({'lastSeen': DateTime.now()}, merge: true);
   }
 
-  @override
-  Future<void> setUserData(FirebaseUser user) async {
+  Future<void> _setUserData(FirebaseUser user, String username) async {
     final ref = _db.collection('users').document(user.uid);
 
     await ref.setData({
       'uid': user.uid,
       'email': user.email,
       'photoURL': user.photoUrl,
-      'displayName': user.displayName,
+      'displayName': username,
       'registeredOn': DateTime.now(),
       'lastSeen': DateTime.now()
     });
+  }
+
+  Future<bool> _isAlreadyInDb(String userId) async {
+    final ref = _db.collection('users').document(userId);
+    final doc = await ref.get();
+    return doc.exists;
   }
 
   @override

@@ -13,21 +13,25 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  void _navigateToMainScreen() {
-    FocusScope.of(context).unfocus();
-    widget.authStore.signInWithEmail(widget.credStore.email, widget.credStore.password);
-    widget.credStore.reset();
-    Navigator.pop(context);
+  void _logIn() async {
+    FocusScope.of(context).unfocus(); // Hides soft keyboard
+    await widget.authStore
+        .signInWithEmail(widget.credStore.email, widget.credStore.password);
+    if (widget.authStore.isLoggedIn) {
+      widget.credStore.reset();
+      Navigator.pop(context);
+    }
+    //TODO: Add error handling
   }
 
   List<FormFieldData> _createFormFields() {
     return [
       FormFieldData(
         labelText: S.of(context).authEmail,
-        isPassword: false,
         prefixIcon: Icon(Icons.email),
         errorText: widget.credStore.emailError,
         onChanged: (value) => widget.credStore.setEmail(value),
+        type: TextInputType.emailAddress,
       ),
       FormFieldData(
         labelText: S.of(context).authPassword,
@@ -48,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
         formIsValid: widget.credStore.credentialsAreValid,
         navigationButtonText: S.of(context).authNavToRegistration,
         submitButtonText: S.of(context).authLogInBtn,
-        onSubmitPressed: _navigateToMainScreen,
+        onSubmitPressed: _logIn,
         isLoading: widget.authStore.isLoading,
       ),
     );

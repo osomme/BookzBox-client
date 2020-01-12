@@ -13,12 +13,15 @@ class CreateAccountScreen extends StatefulWidget {
 }
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
-  void _navigateToMainScreen() {
-    FocusScope.of(context).unfocus();
-    widget.authStore.registerUser(
+  void _registerUser() async {
+    FocusScope.of(context).unfocus(); // Hides soft keyboard
+    await widget.authStore.registerUser(
         widget.credStore.username, widget.credStore.email, widget.credStore.password);
-    widget.credStore.reset();
-    Navigator.pop(context);
+    if (widget.authStore.isLoggedIn) {
+      widget.credStore.reset();
+      Navigator.pop(context);
+    }
+    //TODO: Add error handling
   }
 
   List<FormFieldData> _createFormFields() {
@@ -36,6 +39,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         prefixIcon: Icon(Icons.email),
         errorText: widget.credStore.emailError,
         onChanged: (value) => widget.credStore.setEmail(value),
+        type: TextInputType.emailAddress,
       ),
       FormFieldData(
         labelText: S.of(context).authPassword,
@@ -56,7 +60,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         formIsValid: widget.credStore.credentialsAreValid,
         navigationButtonText: S.of(context).authNavToLogIn,
         submitButtonText: S.of(context).authRegisterBtn,
-        onSubmitPressed: _navigateToMainScreen,
+        onSubmitPressed: _registerUser,
         isLoading: widget.authStore.isLoading,
       ),
     );
