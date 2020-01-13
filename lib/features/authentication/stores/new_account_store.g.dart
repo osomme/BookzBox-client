@@ -48,6 +48,16 @@ mixin _$NewAccountStore on _NewAccountStore, Store {
       ActionController(name: '_NewAccountStore');
 
   @override
+  void reset() {
+    final _$actionInfo = _$_NewAccountStoreActionController.startAction();
+    try {
+      return super.reset();
+    } finally {
+      _$_NewAccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setUsername(String username) {
     final _$actionInfo = _$_NewAccountStoreActionController.startAction();
     try {

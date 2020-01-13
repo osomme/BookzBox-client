@@ -1,15 +1,17 @@
 import 'package:bookzbox/features/authentication/models/models.dart';
+import 'package:dartz/dartz.dart';
 
 abstract class IAuthService {
   static IAuthService instance;
 
   Future<User> get user;
 
-  Future<User> signInWithGoogle();
+  Future<Either<String, User>> signInWithGoogle();
 
-  Future<User> signInWithEmail(String email, String password);
+  Future<Either<String, User>> signInWithEmail(String email, String password);
 
-  Future<User> registerWithEmail(String email, String password, String username);
+  Future<Either<String, User>> registerWithEmail(
+      String email, String password, String username);
 
   void logOut();
 }

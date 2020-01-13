@@ -111,4 +111,14 @@ mixin _$AuthStore on _AuthStore, Store {
       _$_AuthStoreActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  void clearError() {
+    final _$actionInfo = _$_AuthStoreActionController.startAction();
+    try {
+      return super.clearError();
+    } finally {
+      _$_AuthStoreActionController.endAction(_$actionInfo);
+    }
+  }
 }

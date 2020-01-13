@@ -10,5 +10,14 @@
     "authSelectGoogle": "Log in with Google",
     "authSelectFacebook": "Log in with Facebook",
     "authSelectEmail": "Log in with Email",
-    "authSelectNewAcct": "Don't have an account? Create a new one"
+    "authSelectNewAcct": "Don't have an account? Create a new one",
+    "authErrorEmailAlreadyUsed": "Email has already been used",
+    "authErrorInvalidEmail": "Invalid email address",
+    "authErrorWeakPassword": "Password is too weak",
+    "authErrorUserNotFound": "User not found",
+    "authErrorOperationNotAllowed": "Operation not allowed",
+    "authErrorCredsAlreadyExists": "There already exists a user with that email address",
+    "authErrorWrongPassword": "Wrong password",
+    "authErrorTooManyReqs": "You have attempted to sign in too many times",
+    "authErrorUnknown": "Unknown error"
 }

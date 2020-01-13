@@ -136,6 +136,87 @@ class S {
       args: [],
     );
   }
+
+  String get authErrorEmailAlreadyUsed {
+    return Intl.message(
+      'Email has already been used',
+      name: 'authErrorEmailAlreadyUsed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authErrorInvalidEmail {
+    return Intl.message(
+      'Invalid email address',
+      name: 'authErrorInvalidEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authErrorWeakPassword {
+    return Intl.message(
+      'Password is too weak',
+      name: 'authErrorWeakPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authErrorUserNotFound {
+    return Intl.message(
+      'User not found',
+      name: 'authErrorUserNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authErrorOperationNotAllowed {
+    return Intl.message(
+      'Operation not allowed',
+      name: 'authErrorOperationNotAllowed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authErrorCredsAlreadyExists {
+    return Intl.message(
+      'There already exists a user with that email address',
+      name: 'authErrorCredsAlreadyExists',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authErrorWrongPassword {
+    return Intl.message(
+      'Wrong password',
+      name: 'authErrorWrongPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authErrorTooManyReqs {
+    return Intl.message(
+      'You have attempted to sign in too many times',
+      name: 'authErrorTooManyReqs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authErrorUnknown {
+    return Intl.message(
+      'Unknown error',
+      name: 'authErrorUnknown',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

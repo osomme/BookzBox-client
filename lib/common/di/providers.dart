@@ -1,10 +1,12 @@
 import 'package:bookzbox/common/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
+import 'package:bookzbox/features/authentication/errors/auth_error_handling.dart';
 import 'package:provider/provider.dart';
 
 final authProviders = [
   Provider<LoginCredentialsStore>(create: (_) => LoginCredentialsStore()),
   Provider<NewAccountStore>(create: (_) => NewAccountStore()),
+  Provider<IAuthErrorParser>(create: (_) => FirebaseErrorParser()),
   Provider<IAuthService>(create: (_) => AuthService.instance),
   ProxyProvider<IAuthService, IAuthRepository>(
     update: (_, service, __) => AuthRepository(service),
@@ -12,15 +14,19 @@ final authProviders = [
   ProxyProvider<IAuthRepository, AuthStore>(
     update: (_, repo, __) => AuthStore(repo),
   ),
-  ProxyProvider<AuthStore, AuthSelectionScreen>(
-    update: (_, store, __) => AuthSelectionScreen(authStore: store),
+  ProxyProvider2<AuthStore, IAuthErrorParser, AuthSelectionScreen>(
+    update: (_, store, errorParser, __) => AuthSelectionScreen(
+      authStore: store,
+      errorParser: errorParser,
+    ),
   ),
-  ProxyProvider2<AuthStore, LoginCredentialsStore, LoginScreen>(
-    update: (_, authStore, credStore, __) => LoginScreen(authStore, credStore),
+  ProxyProvider3<AuthStore, LoginCredentialsStore, IAuthErrorParser, LoginScreen>(
+    update: (_, authStore, credStore, errorParser, __) =>
+        LoginScreen(authStore, credStore, errorParser),
   ),
-  ProxyProvider2<AuthStore, NewAccountStore, CreateAccountScreen>(
-    update: (_, authStore, newAccStore, __) =>
-        CreateAccountScreen(authStore, newAccStore),
+  ProxyProvider3<AuthStore, NewAccountStore, IAuthErrorParser, CreateAccountScreen>(
+    update: (_, authStore, newAccStore, errorParser, __) =>
+        CreateAccountScreen(authStore, newAccStore, errorParser),
   ),
 ];
 

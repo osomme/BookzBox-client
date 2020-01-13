@@ -29,6 +29,7 @@ class AuthScreen extends StatefulWidget {
   final List<FormFieldData> fields;
   final bool formIsValid;
   final bool isLoading;
+  final String errorMessage;
 
   const AuthScreen(
       {Key key,
@@ -38,7 +39,8 @@ class AuthScreen extends StatefulWidget {
       @required this.navigationButtonText,
       @required this.fields,
       @required this.formIsValid,
-      @required this.isLoading})
+      @required this.isLoading,
+      this.errorMessage})
       : super(key: key);
 
   @override
@@ -59,6 +61,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 formFields: widget.fields,
                 navigationButtonLabel: widget.navigationButtonText,
                 onNavigationPressed: widget.onNavigationPressed,
+                errorMessage: widget.errorMessage,
               ),
             ),
             Positioned.directional(

@@ -36,6 +36,7 @@ abstract class _AuthStore with Store {
 
   @action
   Future<void> registerUser(String username, String email, String password) async {
+    errorMessage = null;
     isLoading = true;
     final result = await _repository.registerWithEmail(email, password, username);
     result.fold(
@@ -47,6 +48,7 @@ abstract class _AuthStore with Store {
 
   @action
   Future<void> signInWithGoogle() async {
+    errorMessage = null;
     isLoading = true;
     final result = await _repository.signInWithGoogle();
     result.fold(
@@ -58,6 +60,7 @@ abstract class _AuthStore with Store {
 
   @action
   Future<void> signInWithEmail(String email, String password) async {
+    errorMessage = null;
     isLoading = true;
     final result = await _repository.signInWithEmail(email, password);
     result.fold(
@@ -73,4 +76,7 @@ abstract class _AuthStore with Store {
     _user = await _repository.user;
     isLoading = false;
   }
+
+  @action
+  void clearError() => errorMessage = null;
 }

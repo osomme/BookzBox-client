@@ -31,6 +31,13 @@ abstract class _NewAccountStore extends LoginCredentialsStore with Store {
   bool get credentialsAreValid =>
       super.credentialsAreValid && _username != null && usernameError == null;
 
+  @override
+  @action
+  void reset() {
+    _username = null;
+    super.reset();
+  }
+
   @action
   void setUsername(String username) => _username = username.trim();
 }

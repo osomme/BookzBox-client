@@ -6,7 +6,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class CreateAccountScreen extends StatefulWidget {
   final AuthStore authStore;
   final NewAccountStore credStore;
-  CreateAccountScreen(this.authStore, this.credStore);
+  final IAuthErrorParser errorParser;
+  CreateAccountScreen(this.authStore, this.credStore, this.errorParser);
 
   @override
   _CreateAccountScreenState createState() => _CreateAccountScreenState();
@@ -21,21 +22,18 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       widget.credStore.reset();
       Navigator.pop(context);
     }
-    //TODO: Add error handling
   }
 
   List<FormFieldData> _createFormFields() {
     return [
       FormFieldData(
         labelText: S.of(context).authUsername,
-        isPassword: false,
         prefixIcon: Icon(Icons.person),
         errorText: widget.credStore.usernameError,
         onChanged: (value) => widget.credStore.setUsername(value),
       ),
       FormFieldData(
         labelText: S.of(context).authEmail,
-        isPassword: false,
         prefixIcon: Icon(Icons.email),
         errorText: widget.credStore.emailError,
         onChanged: (value) => widget.credStore.setEmail(value),
@@ -52,6 +50,13 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   }
 
   @override
+  void dispose() {
+    widget.credStore.reset();
+    widget.authStore.clearError();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => AuthScreen(
@@ -62,6 +67,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         submitButtonText: S.of(context).authRegisterBtn,
         onSubmitPressed: _registerUser,
         isLoading: widget.authStore.isLoading,
+        errorMessage: widget.authStore.errorMessage != null
+            ? widget.errorParser.messageFrom(widget.authStore.errorMessage, context)
+            : null,
       ),
     );
   }

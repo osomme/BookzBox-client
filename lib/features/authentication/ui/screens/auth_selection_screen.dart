@@ -8,8 +8,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AuthSelectionScreen extends StatelessWidget {
   final AuthStore authStore;
+  final IAuthErrorParser errorParser;
 
-  const AuthSelectionScreen({Key key, @required this.authStore}) : super(key: key);
+  const AuthSelectionScreen(
+      {Key key, @required this.authStore, @required this.errorParser})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +82,18 @@ class AuthSelectionScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
+                            authStore.errorMessage != null
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 7.0),
+                                    child: Text(
+                                      errorParser.messageFrom(
+                                        authStore.errorMessage,
+                                        context,
+                                      ),
+                                      style: TextStyle(color: Colors.red[400]),
+                                    ),
+                                  )
+                                : SizedBox.shrink(),
                             FlatButton(
                               onPressed: authStore.isLoading
                                   ? null

@@ -5,12 +5,14 @@ class AuthInputCard extends StatelessWidget {
   final List<FormFieldData> formFields;
   final Function onNavigationPressed;
   final String navigationButtonLabel;
+  final String errorMessage;
 
   const AuthInputCard({
     Key key,
     @required this.formFields,
     @required this.onNavigationPressed,
     @required this.navigationButtonLabel,
+    this.errorMessage,
   }) : super(key: key);
 
   List<Widget> mapFields() {
@@ -44,6 +46,9 @@ class AuthInputCard extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   ...mapFields(),
+                  errorMessage != null
+                      ? Text(errorMessage, style: TextStyle(color: Colors.red[400]))
+                      : SizedBox.shrink(),
                   SizedBox(height: 14.0),
                   FlatButton(
                     onPressed: onNavigationPressed,

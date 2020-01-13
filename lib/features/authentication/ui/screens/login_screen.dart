@@ -6,7 +6,9 @@ import 'package:bookzbox/features/authentication/authentication.dart';
 class LoginScreen extends StatefulWidget {
   final AuthStore authStore;
   final LoginCredentialsStore credStore;
-  LoginScreen(this.authStore, this.credStore);
+  final IAuthErrorParser errorParser;
+
+  LoginScreen(this.authStore, this.credStore, this.errorParser);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -21,7 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
       widget.credStore.reset();
       Navigator.pop(context);
     }
-    //TODO: Add error handling
   }
 
   List<FormFieldData> _createFormFields() {
@@ -54,6 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
         submitButtonText: S.of(context).authLogInBtn,
         onSubmitPressed: _logIn,
         isLoading: widget.authStore.isLoading,
+        errorMessage: widget.authStore.errorMessage != null
+            ? widget.errorParser.messageFrom(widget.authStore.errorMessage, context)
+            : null,
       ),
     );
   }
