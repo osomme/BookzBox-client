@@ -38,45 +38,39 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _bottomNavBar() {
+  BottomNavigationBar _bottomNavBar() {
     return BottomNavigationBar(
       currentIndex: _currentTab,
       onTap: (index) {
         setState(() => _currentTab = index);
         _pageController.jumpToPage(index);
       },
-      selectedItemColor: Colors.blueGrey[700],
+      selectedItemColor: Theme.of(context).primaryColor,
+      unselectedItemColor: Colors.grey,
       items: [
+        //TODO: Add localized strings for each item
         BottomNavigationBarItem(
           title: Text('Feed'),
           icon: Icon(
             Icons.home,
-            size: 32.0,
-            color: Colors.grey,
           ),
         ),
         BottomNavigationBarItem(
           title: Text('Search'),
           icon: Icon(
             Icons.search,
-            size: 32.0,
-            color: Colors.grey,
           ),
         ),
         BottomNavigationBarItem(
           title: Text('Activity'),
           icon: Icon(
             Icons.notifications,
-            size: 32.0,
-            color: Colors.grey,
           ),
         ),
         BottomNavigationBarItem(
           title: Text('Profile'),
           icon: Icon(
             Icons.person,
-            size: 32.0,
-            color: Colors.grey,
           ),
         ),
       ],

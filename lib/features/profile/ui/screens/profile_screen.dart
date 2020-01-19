@@ -19,7 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           FlatButton(
             child: Text(
               'Log out',
-              style: TextStyle(color: Colors.white),
+              style: Theme.of(context).primaryTextTheme.button,
             ),
             onPressed: authStore.logOut,
           ),
