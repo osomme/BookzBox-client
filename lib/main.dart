@@ -1,6 +1,6 @@
 import 'package:bookzbox/common/di/providers.dart';
-import 'package:bookzbox/common/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
+import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
