@@ -1,6 +1,6 @@
 import 'package:bookzbox/common/di/providers.dart';
-import 'package:bookzbox/common/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
+import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -43,7 +43,8 @@ class MyApp extends StatelessWidget {
               builder: (ctx) {
                 if (authStore.isLoggedIn) {
                   print('User is logged in');
-                  return Provider.of<HomeScreen>(ctx);
+                  //return Provider.of<HomeScreen>(ctx);
+                  return HomeScreen();
                 } else {
                   print('User is not logged in');
                   return Provider.of<AuthSelectionScreen>(ctx);
