@@ -43,7 +43,8 @@ class MyApp extends StatelessWidget {
               builder: (ctx) {
                 if (authStore.isLoggedIn) {
                   print('User is logged in');
-                  return Provider.of<HomeScreen>(ctx);
+                  //return Provider.of<HomeScreen>(ctx);
+                  return HomeScreen();
                 } else {
                   print('User is not logged in');
                   return Provider.of<AuthSelectionScreen>(ctx);
