@@ -41,6 +41,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "authSelectFacebook" : MessageLookupByLibrary.simpleMessage("Log in with Facebook"),
     "authSelectGoogle" : MessageLookupByLibrary.simpleMessage("Log in with Google"),
     "authSelectNewAcct" : MessageLookupByLibrary.simpleMessage("Don\'t have an account? Create a new one"),
-    "authUsername" : MessageLookupByLibrary.simpleMessage("Username")
+    "authUsername" : MessageLookupByLibrary.simpleMessage("Username"),
+    "homeNavBarActivityLabel" : MessageLookupByLibrary.simpleMessage("Activity"),
+    "homeNavBarFeedLabel" : MessageLookupByLibrary.simpleMessage("Feed"),
+    "homeNavBarProfileLabel" : MessageLookupByLibrary.simpleMessage("Profile"),
+    "homeNavBarSearchLabel" : MessageLookupByLibrary.simpleMessage("Search")
   };
 }

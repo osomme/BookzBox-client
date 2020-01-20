@@ -19,5 +19,9 @@
     "authErrorCredsAlreadyExists": "There already exists a user with that email address",
     "authErrorWrongPassword": "Wrong password",
     "authErrorTooManyReqs": "You have attempted to sign in too many times",
-    "authErrorUnknown": "Unknown error"
+    "authErrorUnknown": "Unknown error",
+    "homeNavBarFeedLabel": "Feed",
+    "homeNavBarSearchLabel": "Search",
+    "homeNavBarActivityLabel": "Activity",
+    "homeNavBarProfileLabel": "Profile"
 }

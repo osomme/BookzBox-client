@@ -217,6 +217,42 @@ class S {
       args: [],
     );
   }
+
+  String get homeNavBarFeedLabel {
+    return Intl.message(
+      'Feed',
+      name: 'homeNavBarFeedLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get homeNavBarSearchLabel {
+    return Intl.message(
+      'Search',
+      name: 'homeNavBarSearchLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get homeNavBarActivityLabel {
+    return Intl.message(
+      'Activity',
+      name: 'homeNavBarActivityLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get homeNavBarProfileLabel {
+    return Intl.message(
+      'Profile',
+      name: 'homeNavBarProfileLabel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
