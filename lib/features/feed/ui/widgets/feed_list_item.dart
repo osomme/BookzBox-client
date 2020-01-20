@@ -62,7 +62,10 @@ class FeedListItem extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 S.of(context).feedLocation,
-                                style: Theme.of(context).primaryTextTheme.subtitle,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .subtitle
+                                    .copyWith(color: Colors.white70),
                               ),
                               Text(
                                 plants[index].location,
@@ -75,7 +78,10 @@ class FeedListItem extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 S.of(context).feedBooks,
-                                style: Theme.of(context).primaryTextTheme.subtitle,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .subtitle
+                                    .copyWith(color: Colors.white70),
                               ),
                               Text(
                                 '${plants[index].books}',
@@ -96,7 +102,6 @@ class FeedListItem extends StatelessWidget {
                       ),
                       SizedBox(height: 20.0),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             plants[index].category.toUpperCase(),
@@ -106,7 +111,7 @@ class FeedListItem extends StatelessWidget {
                                 .copyWith(color: Colors.white70),
                             overflow: TextOverflow.ellipsis,
                           ),
-                          SizedBox(height: 7.5),
+                          SizedBox(height: 5.0),
                           Text(
                             plants[index].name,
                             style: Theme.of(context).primaryTextTheme.subtitle,
