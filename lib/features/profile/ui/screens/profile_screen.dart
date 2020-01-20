@@ -1,3 +1,4 @@
+import 'package:bookzbox/features/new_box/ui/screens/new_box_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +38,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             size: 24,
           ),
         ),
-        onPressed: () => print('Create new box pressed'),
+        onPressed: () =>
+            Navigator.push(context, MaterialPageRoute(builder: (ctx) => NewBoxScreen())),
       ),
     );
   }

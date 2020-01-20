@@ -217,6 +217,15 @@ class S {
       args: [],
     );
   }
+
+  String get newBoxCloseText {
+    return Intl.message(
+      'Close',
+      name: 'newBoxCloseText',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
