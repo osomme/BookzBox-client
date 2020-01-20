@@ -1,12 +1,13 @@
 import 'package:bookzbox/common/di/providers.dart';
-import 'package:bookzbox/common/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
+import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:bookzbox/common/extensions/color_extensions.dart';
 
 void main() => runApp(MyApp());
 
@@ -36,7 +37,9 @@ class MyApp extends StatelessWidget {
         title: 'BookzBox',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.brown,
+          primarySwatch: Color.fromRGBO(58, 46, 58, 1.0).toSwatch(),
+          accentColor: Color.fromRGBO(239, 177, 130, 1.0),
+          accentColorBrightness: Brightness.light,
         ),
         home: Consumer<AuthStore>(
           builder: (_, authStore, __) {

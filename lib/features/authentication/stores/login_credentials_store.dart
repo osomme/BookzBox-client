@@ -20,7 +20,7 @@ abstract class _LoginCredentialsStore with Store {
 
   @computed
   bool get credentialsAreValid => _email != null && _password != null
-      ? isEmail(_email) && _password.isNotEmpty
+      ? isEmail(_email) && _password.length >= 8
       : false;
 
   @computed

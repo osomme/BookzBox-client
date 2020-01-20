@@ -4,7 +4,6 @@ class AuthButton extends StatelessWidget {
   final VoidCallback onClicked;
   final String labelText;
   final bool isLoading;
-  final Color _buttonColor = Color.fromRGBO(238, 64, 106, 1.0);
   final BorderRadiusGeometry _borderRadius = BorderRadius.circular(30.0);
 
   AuthButton({
@@ -16,6 +15,7 @@ class AuthButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _buttonColor = Theme.of(context).accentColor;
     return SizedBox(
       width: 250.0,
       height: 45.0,
@@ -38,19 +38,10 @@ class AuthButton extends StatelessWidget {
           ),
           color: _buttonColor,
           child: isLoading
-              ? Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Color.fromRGBO(239, 177, 130, 1.0),
-                  ),
-                )
+              ? Center(child: CircularProgressIndicator())
               : Text(
                   labelText,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: 0.3,
-                  ),
+                  style: Theme.of(context).accentTextTheme.button,
                 ),
         ),
       ),

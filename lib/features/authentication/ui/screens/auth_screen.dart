@@ -67,11 +67,13 @@ class _AuthScreenState extends State<AuthScreen> {
             Positioned.directional(
               textDirection: TextDirection.ltr,
               bottom: -15,
-              start: 70,
-              child: AuthButton(
-                onClicked: widget.formIsValid ? widget.onSubmitPressed : null,
-                labelText: widget.submitButtonText,
-                isLoading: widget.isLoading,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: AuthButton(
+                  onClicked: widget.formIsValid ? widget.onSubmitPressed : null,
+                  labelText: widget.submitButtonText,
+                  isLoading: widget.isLoading,
+                ),
               ),
             ),
           ],

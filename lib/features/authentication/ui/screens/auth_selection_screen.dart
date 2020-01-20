@@ -90,7 +90,8 @@ class AuthSelectionScreen extends StatelessWidget {
                                         authStore.errorMessage,
                                         context,
                                       ),
-                                      style: TextStyle(color: Colors.red[400]),
+                                      style:
+                                          TextStyle(color: Theme.of(context).errorColor),
                                     ),
                                   )
                                 : SizedBox.shrink(),

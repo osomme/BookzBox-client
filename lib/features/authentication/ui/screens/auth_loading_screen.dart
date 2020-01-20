@@ -10,7 +10,7 @@ class AuthLoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(58, 46, 58, 1.0),
+      backgroundColor: Theme.of(context).primaryColor,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
@@ -24,12 +24,12 @@ class AuthLoadingScreen extends StatelessWidget {
                     Icon(
                       Entypo.book,
                       size: 60,
-                      color: Color.fromRGBO(239, 177, 130, 1.0),
+                      color: Theme.of(context).accentColor,
                     ),
                     Text(
                       S.of(context).appName,
                       style: TextStyle(
-                        color: Color.fromRGBO(239, 177, 130, 1.0),
+                        color: Theme.of(context).accentColor,
                         fontFamily: 'Indie Flower',
                         fontSize: 46.0,
                       ),

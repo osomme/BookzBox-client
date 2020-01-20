@@ -47,7 +47,10 @@ class AuthInputCard extends StatelessWidget {
                 children: <Widget>[
                   ...mapFields(),
                   errorMessage != null
-                      ? Text(errorMessage, style: TextStyle(color: Colors.red[400]))
+                      ? Text(
+                          errorMessage,
+                          style: TextStyle(color: Theme.of(context).errorColor),
+                        )
                       : SizedBox.shrink(),
                   SizedBox(height: 14.0),
                   FlatButton(

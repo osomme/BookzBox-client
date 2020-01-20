@@ -1,6 +1,6 @@
-import 'package:bookzbox/common/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/authentication/errors/auth_error_handling.dart';
+import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 final authProviders = [
@@ -31,7 +31,7 @@ final authProviders = [
 ];
 
 final mainProviders = [
-  ProxyProvider<AuthStore, HomeScreen>(
-    update: (_, authStore, __) => HomeScreen(authStore),
+  Provider<HomeScreen>(
+    create: (_) => HomeScreen(),
   ),
 ];
