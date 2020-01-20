@@ -23,5 +23,9 @@
     "homeNavBarFeedLabel": "Feed",
     "homeNavBarSearchLabel": "Search",
     "homeNavBarActivityLabel": "Activity",
-    "homeNavBarProfileLabel": "Profile"
+    "homeNavBarProfileLabel": "Profile",
+    "feedDescription": "Description",
+    "feedTitle": "Top Boxes",
+    "feedBooks": "BOOKS",
+    "feedLocation": "LOCATION"
 }

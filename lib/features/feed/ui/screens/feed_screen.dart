@@ -1,3 +1,4 @@
+import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -35,9 +36,7 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
       },
       animation: _pageController,
       child: GestureDetector(
-        onTap: () {
-          print('Box clicked');
-        },
+        onTap: () => print('Box clicked'),
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
@@ -54,90 +53,76 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
                 ],
               ),
               margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 30.0),
-              child: Stack(
-                children: <Widget>[
-                  Center(
-                    child: Hero(
-                      tag: plants[index].imageUrl,
-                      child: Image(
-                        height: 280.0,
-                        width: 280.0,
-                        image: NetworkImage(plants[index].imageUrl),
-                        fit: BoxFit.fitWidth,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                S.of(context).feedLocation,
+                                style: Theme.of(context).primaryTextTheme.subtitle,
+                              ),
+                              Text(
+                                plants[index].location,
+                                style: Theme.of(context).primaryTextTheme.subhead,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                S.of(context).feedBooks,
+                                style: Theme.of(context).primaryTextTheme.subtitle,
+                              ),
+                              Text(
+                                '${plants[index].books}',
+                                style: Theme.of(context).primaryTextTheme.subhead,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 30,
-                    width: MediaQuery.of(context).size.width - 100,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              'LOCATION',
-                              style: TextStyle(color: Colors.white, fontSize: 15.0),
-                            ),
-                            Text(
-                              plants[index].location,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
+                      SizedBox(height: 20.0),
+                      Hero(
+                        tag: plants[index].imageUrl,
+                        child: Image(
+                          height: 250.0,
+                          image: NetworkImage(plants[index].imageUrl),
+                          fit: BoxFit.fill,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              'BOOKS',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                              ),
-                            ),
-                            Text(
-                              '${plants[index].books}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned.directional(
-                    textDirection: TextDirection.ltr,
-                    bottom: 50,
-                    width: MediaQuery.of(context).size.width - 100,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
+                      ),
+                      SizedBox(height: 20.0),
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             plants[index].category.toUpperCase(),
-                            style: Theme.of(context).primaryTextTheme.subhead,
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .subhead
+                                .copyWith(color: Colors.white70),
                             overflow: TextOverflow.ellipsis,
                           ),
-                          SizedBox(height: 5.0),
+                          SizedBox(height: 7.5),
                           Text(
                             plants[index].name,
                             style: Theme.of(context).primaryTextTheme.subtitle,
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
+                          SizedBox(height: 7.5),
                         ],
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
             Positioned(
@@ -163,7 +148,7 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
                     size: 30.0,
                   ),
                 ),
-                onPressed: () => print('Clicked "add to cart" button'),
+                onPressed: () => print('Clicked add to favorite button'),
               ),
             ),
           ],
@@ -175,7 +160,6 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: ListView(
@@ -187,7 +171,7 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Top Boxes',
+                    S.of(context).feedTitle,
                     style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600),
                   ),
                   Icon(Icons.settings, size: 30.0, color: Colors.grey[600]),
@@ -197,27 +181,21 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
             SizedBox(height: 20.0),
             Container(
               height: 500.0,
-              width: double.infinity,
+              width: MediaQuery.of(context).size.width,
               child: PageView.builder(
                 controller: _pageController,
-                onPageChanged: (index) {
-                  setState(() {
-                    _selectedPage = index;
-                  });
-                },
+                onPageChanged: (index) => setState(() => _selectedPage = index),
                 itemCount: plants.length,
-                itemBuilder: (context, index) {
-                  return _plantSelector(index);
-                },
+                itemBuilder: (context, index) => _plantSelector(index),
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(30.0),
+              padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 30.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Description',
+                    S.of(context).feedDescription,
                     style: TextStyle(
                       fontSize: 22.0,
                       fontWeight: FontWeight.w600,
@@ -226,10 +204,7 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
                   SizedBox(height: 10.0),
                   Text(
                     plants[_selectedPage].description,
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 16.0,
-                    ),
+                    style: Theme.of(context).accentTextTheme.body1,
                   ),
                 ],
               ),
@@ -241,6 +216,7 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
   }
 }
 
+/// Used for inserting fake values for testing purposes. Should be removed after UI design is completed.
 class BoxListing {
   final String imageUrl;
   final String name;
@@ -265,24 +241,23 @@ final List<BoxListing> plants = [
         'https://149349728.v2.pressablecdn.com/wp-content/uploads/2019/05/Untitled-design-27.png',
     name: 'Crime and thriller books and stuff and this is a long title',
     category: 'Thriller, Action, Suspense',
-    books: 25,
+    books: 7,
     location: 'Halden',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus efficitur placerat orci, sed luctus ante ornare id. In et facilisis purus. Nunc ipsum eros, feugiat ac ligula at, ultricies porta augue. Etiam vel metus a tellus bibendum consectetur sit amet nec mi. Sed in turpis id nulla tristique eleifend. Pellentesque ultrices ac tortor id suscipit. Aliquam non dapibus mauris. Nunc tincidunt tristique odio, in tempus nunc rhoncus et. ',
   ),
   BoxListing(
     imageUrl:
-        'https://149349728.v2.pressablecdn.com/wp-content/uploads/2019/05/Untitled-design-27.png',
-    name: 'Romance novels',
-    category: 'Romance, Suspense, Love',
-    books: 30,
+        'https://1.bp.blogspot.com/-G1fAng3vVg8/WJuEc9l5CLI/AAAAAAAAVTA/ppuLiXBJx6Mxe_RQvCKWJl9qJvvTlF62wCLcB/s1600/fullprebrith.png',
+    name: 'Just some romance novels',
+    category: 'Romance, Action, Love',
+    books: 5,
     location: 'Trondheim',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur porta risus id urna luctus efficitur.',
   ),
   BoxListing(
-    imageUrl:
-        'https://149349728.v2.pressablecdn.com/wp-content/uploads/2019/05/Untitled-design-27.png',
+    imageUrl: 'http://www.datasikkerhetsboka.no/datasikkerhet.jpg',
     name: 'Collection of school books',
     category: 'Educational, School, Science',
     books: 12,
