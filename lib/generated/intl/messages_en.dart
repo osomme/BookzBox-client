@@ -42,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "authSelectGoogle" : MessageLookupByLibrary.simpleMessage("Log in with Google"),
     "authSelectNewAcct" : MessageLookupByLibrary.simpleMessage("Don\'t have an account? Create a new one"),
     "authUsername" : MessageLookupByLibrary.simpleMessage("Username"),
-    "newBoxCloseText" : MessageLookupByLibrary.simpleMessage("Close")
+    "newBoxCloseTip" : MessageLookupByLibrary.simpleMessage("Close"),
+    "newBoxPublishTip" : MessageLookupByLibrary.simpleMessage("Publish")
   };
 }

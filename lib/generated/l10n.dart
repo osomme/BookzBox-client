@@ -218,10 +218,19 @@ class S {
     );
   }
 
-  String get newBoxCloseText {
+  String get newBoxCloseTip {
     return Intl.message(
       'Close',
-      name: 'newBoxCloseText',
+      name: 'newBoxCloseTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxPublishTip {
+    return Intl.message(
+      'Publish',
+      name: 'newBoxPublishTip',
       desc: '',
       args: [],
     );

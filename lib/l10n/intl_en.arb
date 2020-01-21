@@ -20,5 +20,6 @@
     "authErrorWrongPassword": "Wrong password",
     "authErrorTooManyReqs": "You have attempted to sign in too many times",
     "authErrorUnknown": "Unknown error",
-    "newBoxCloseText": "Close"
+    "newBoxCloseTip": "Close",
+    "newBoxPublishTip": "Publish"
 }
