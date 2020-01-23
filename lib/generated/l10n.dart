@@ -262,6 +262,87 @@ class S {
       args: [],
     );
   }
+
+  String get newBoxIsbnInvalid {
+    return Intl.message(
+      'Invalid ISBN',
+      name: 'newBoxIsbnInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxTitle {
+    return Intl.message(
+      'Create a box',
+      name: 'newBoxTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxInfo {
+    return Intl.message(
+      'Creating a box is easy. First, add the books you want to trade. Second, write a catchy title and a short description. Finally, publish!',
+      name: 'newBoxInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxBooksTitle {
+    return Intl.message(
+      'Books',
+      name: 'newBoxBooksTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxTitleTitle {
+    return Intl.message(
+      'Title',
+      name: 'newBoxTitleTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxDescriptionTitle {
+    return Intl.message(
+      'Description',
+      name: 'newBoxDescriptionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxBookAuthor {
+    return Intl.message(
+      'Author',
+      name: 'newBoxBookAuthor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxBookPublished {
+    return Intl.message(
+      'Published',
+      name: 'newBoxBookPublished',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxAddBookButton {
+    return Intl.message(
+      'ADD BOOK',
+      name: 'newBoxAddBookButton',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

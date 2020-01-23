@@ -24,5 +24,14 @@
     "newBoxPublishTip": "Publish",
     "newBoxFindBook": "FIND BOOK",
     "newBoxCancelDialog": "CANCEL",
-    "newBoxIsbnDialogTitle": "Enter ISBN"
+    "newBoxIsbnDialogTitle": "Enter ISBN",
+    "newBoxIsbnInvalid": "Invalid ISBN",
+    "newBoxTitle": "Create a box",
+    "newBoxInfo": "Creating a box is easy. First, add the books you want to trade. Second, write a catchy title and a short description. Finally, publish!",
+    "newBoxBooksTitle": "Books",
+    "newBoxTitleTitle": "Title",
+    "newBoxDescriptionTitle": "Description",
+    "newBoxBookAuthor": "Author",
+    "newBoxBookPublished": "Published",
+    "newBoxAddBookButton": "ADD BOOK"
 }

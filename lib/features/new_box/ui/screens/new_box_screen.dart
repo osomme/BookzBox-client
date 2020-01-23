@@ -76,7 +76,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
         child: Column(
           children: <Widget>[
             Text(
-              'Create a box',
+              S.of(context).newBoxTitle,
               textAlign: TextAlign.left,
               style: TextStyle(
                 color: Colors.white,
@@ -85,7 +85,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
               ),
             ),
             Text(
-              'Creating a box is easy. First, add the books you want to trade. Second, write a catchy title and a short description. Finally, publish!',
+              S.of(context).newBoxInfo,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 14,
@@ -189,7 +189,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(left: 4.0),
-            child: smallTitle('Books'),
+            child: smallTitle(S.of(context).newBoxBooksTitle),
           ),
           Observer(
             builder: (_) => GridView.count(
@@ -212,7 +212,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          smallTitle('Title'),
+          smallTitle(S.of(context).newBoxTitleTitle),
           TextField(
             maxLength: 50,
             maxLengthEnforced: true,
@@ -230,7 +230,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          smallTitle('Description'),
+          smallTitle(S.of(context).newBoxDescriptionTitle),
           TextField(
             maxLength: 500,
             maxLengthEnforced: true,
@@ -371,7 +371,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                             Row(
                               children: <Widget>[
                                 Text(
-                                  "Author:",
+                                  S.of(context).newBoxBookAuthor + ":",
                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                                 ),
                                 Text(
@@ -387,7 +387,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                             Row(
                               children: <Widget>[
                                 Text(
-                                  "Published:",
+                                  S.of(context).newBoxBookPublished + ":",
                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                                 ),
                                 Text(
@@ -434,7 +434,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                 ),
                 FlatButton(
                   child: Text(
-                    "ADD BOOK",
+                    S.of(context).newBoxAddBookButton,
                     style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
                   ),
                   onPressed: () => addBookAndCloseDialog(context),
