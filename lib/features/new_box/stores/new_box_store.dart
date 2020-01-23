@@ -67,6 +67,13 @@ abstract class _NewBoxStore with Store {
   }
 
   @action
+  void removeBook(Book book) {
+    if (book == null) return;
+
+    books.remove(book);
+  }
+
+  @action
   void setIsbn(String isbn) => _isbn = isbn;
 
   @computed

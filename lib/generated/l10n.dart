@@ -343,6 +343,15 @@ class S {
       args: [],
     );
   }
+
+  String get newBoxRemoveBook {
+    return Intl.message(
+      'Delete',
+      name: 'newBoxRemoveBook',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

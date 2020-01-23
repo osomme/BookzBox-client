@@ -33,5 +33,6 @@
     "newBoxDescriptionTitle": "Description",
     "newBoxBookAuthor": "Author",
     "newBoxBookPublished": "Published",
-    "newBoxAddBookButton": "ADD BOOK"
+    "newBoxAddBookButton": "ADD BOOK",
+    "newBoxRemoveBook": "Delete"
 }

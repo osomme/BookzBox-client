@@ -54,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "newBoxIsbnDialogTitle" : MessageLookupByLibrary.simpleMessage("Enter ISBN"),
     "newBoxIsbnInvalid" : MessageLookupByLibrary.simpleMessage("Invalid ISBN"),
     "newBoxPublishTip" : MessageLookupByLibrary.simpleMessage("Publish"),
+    "newBoxRemoveBook" : MessageLookupByLibrary.simpleMessage("Delete"),
     "newBoxTitle" : MessageLookupByLibrary.simpleMessage("Create a box"),
     "newBoxTitleTitle" : MessageLookupByLibrary.simpleMessage("Title")
   };

@@ -173,7 +173,10 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
 
   List<Widget> genBookCards(BuildContext ctx, ObservableList<Book> books) {
     List<Widget> list = List.generate(books.length, (index) {
-      return new BookCard(book: books[index]);
+      return new BookCard(
+        book: books[index],
+        deleteFunc: _newBoxStore.removeBook,
+      );
     });
     list.add(addBooksButton(ctx));
     return list;
