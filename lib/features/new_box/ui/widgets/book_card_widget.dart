@@ -1,4 +1,4 @@
-import 'package:bookzbox/features/new_box/models/book.dart';
+import 'package:bookzbox/features/box/models/book.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

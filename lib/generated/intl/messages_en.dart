@@ -42,7 +42,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "authSelectGoogle" : MessageLookupByLibrary.simpleMessage("Log in with Google"),
     "authSelectNewAcct" : MessageLookupByLibrary.simpleMessage("Don\'t have an account? Create a new one"),
     "authUsername" : MessageLookupByLibrary.simpleMessage("Username"),
+    "newBoxCancelDialog" : MessageLookupByLibrary.simpleMessage("CANCEL"),
     "newBoxCloseTip" : MessageLookupByLibrary.simpleMessage("Close"),
+    "newBoxFindBook" : MessageLookupByLibrary.simpleMessage("FIND BOOK"),
+    "newBoxIsbnDialogTitle" : MessageLookupByLibrary.simpleMessage("Enter ISBN"),
     "newBoxPublishTip" : MessageLookupByLibrary.simpleMessage("Publish")
   };
 }

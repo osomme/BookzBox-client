@@ -21,5 +21,8 @@
     "authErrorTooManyReqs": "You have attempted to sign in too many times",
     "authErrorUnknown": "Unknown error",
     "newBoxCloseTip": "Close",
-    "newBoxPublishTip": "Publish"
+    "newBoxPublishTip": "Publish",
+    "newBoxFindBook": "FIND BOOK",
+    "newBoxCancelDialog": "CANCEL",
+    "newBoxIsbnDialogTitle": "Enter ISBN"
 }

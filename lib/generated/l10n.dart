@@ -235,6 +235,33 @@ class S {
       args: [],
     );
   }
+
+  String get newBoxFindBook {
+    return Intl.message(
+      'FIND BOOK',
+      name: 'newBoxFindBook',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxCancelDialog {
+    return Intl.message(
+      'CANCEL',
+      name: 'newBoxCancelDialog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxIsbnDialogTitle {
+    return Intl.message(
+      'Enter ISBN',
+      name: 'newBoxIsbnDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
