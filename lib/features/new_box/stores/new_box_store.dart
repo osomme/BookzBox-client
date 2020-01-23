@@ -1,4 +1,7 @@
 import 'package:bookzbox/features/box/models/book.dart';
+import 'package:bookzbox/features/new_box/repositories/book_repository.dart';
+import 'package:bookzbox/features/new_box/repositories/book_repository_impl.dart';
+import 'package:bookzbox/features/new_box/services/book_service_impl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:validators/validators.dart';
 
@@ -7,6 +10,8 @@ part 'new_box_store.g.dart';
 class NewBoxStore = _NewBoxStore with _$NewBoxStore;
 
 abstract class _NewBoxStore with Store {
+  final IBookRepository _bookRepository;
+
   @observable
   String _isbn;
 
@@ -26,6 +31,8 @@ abstract class _NewBoxStore with Store {
   @observable
   ObservableList<Book> _books = new ObservableList();
 
+  _NewBoxStore(this._bookRepository);
+
   /// Attempts to find a book by using the user provided ISBN.
   /// @returns false if the isbn is invalid and true if lookup was
   ///          successfull. A successful lookup does not mean the book was found.
@@ -36,20 +43,22 @@ abstract class _NewBoxStore with Store {
     if (!isIsbn(_isbn)) return false;
 
     _isLoadingBook = true;
-    print("Looking up book with ISBN: " + _isbn);
-    // TODO execute isbn lookup
-    await sleep2();
-    _currentBook =
-        new Book(_isbn, "Harry Potter", "", "", "Elsa Rockwell", 550, "123.1", null, 2002);
-    books.add(_currentBook);
+    final result = await _bookRepository.isbnLookup(_isbn);
+    result.fold(
+      (error) => _currentBook = null,
+      (book) => _currentBook = book,
+    );
+
     _isbn = null;
     _isLoadingBook = false;
-    return true;
-  }
 
-  Future sleep2() {
-    // TODO: remove after implementing ISBN lookup service.
-    return new Future.delayed(const Duration(seconds: 2), () => "2");
+    if (_currentBook == null) {
+      return false;
+    }
+
+    books.add(_currentBook);
+
+    return true;
   }
 
   @action

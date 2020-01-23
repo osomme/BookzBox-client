@@ -1,4 +1,6 @@
 import 'package:bookzbox/features/box/models/book.dart';
+import 'package:bookzbox/features/new_box/repositories/book_repository_impl.dart';
+import 'package:bookzbox/features/new_box/services/book_service_impl.dart';
 import 'package:bookzbox/features/new_box/stores/new_box_store.dart';
 import 'package:bookzbox/features/new_box/ui/widgets/book_card_widget.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -13,7 +15,7 @@ class NewBoxScreen extends StatefulWidget {
 }
 
 class _NewBoxScreenState extends State<NewBoxScreen> {
-  final _newBoxStore = NewBoxStore();
+  final _newBoxStore = NewBoxStore(new BookRepository(BookService.instance));
 
   Container closeButton(BuildContext context) {
     return new Container(
