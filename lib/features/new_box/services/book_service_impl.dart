@@ -9,7 +9,18 @@ class BookService extends IBookService {
 
   @override
   Future<Either<String, Book>> isbnLookup(String isbn) async {
+    // TODO remove placeholder book.
     // TODO execute isbn lookup at https://www.googleapis.com/books/v1/volumes?q=isbn:9780451526342
-    return null;
+    return right(new Book(
+        "",
+        "Animal Farm",
+        "A Fairy Story",
+        "https://books.google.com/books/content?id=SGAZdjNfruYC&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+        "",
+        "George Orwell",
+        500,
+        "",
+        null,
+        1996));
   }
 }

@@ -17,6 +17,20 @@ class NewBoxScreen extends StatefulWidget {
 class _NewBoxScreenState extends State<NewBoxScreen> {
   final _newBoxStore = NewBoxStore(new BookRepository(BookService.instance));
 
+  Future<void> handleBookLookup(BuildContext ctx) async {
+    if ((await _newBoxStore.findBook()) == false) {
+      return;
+    }
+    Navigator.of(ctx).pop();
+    showBookDialog();
+  }
+
+  void addBookAndCloseDialog(BuildContext ctx) {
+    _newBoxStore.addCurrentBook();
+
+    Navigator.of(ctx).pop();
+  }
+
   Container closeButton(BuildContext context) {
     return new Container(
       margin: EdgeInsets.fromLTRB(0.0, 24, 0.0, 0.0),
@@ -229,15 +243,6 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
     );
   }
 
-  String errorText;
-
-  Future<void> findBookAndCloseDialog(BuildContext ctx) async {
-    if ((await _newBoxStore.findBook()) == false) {
-      return;
-    }
-    Navigator.of(context).pop();
-  }
-
   Future<void> showIsbnDialog() async {
     return showDialog<void>(
       context: context,
@@ -287,9 +292,152 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                       S.of(context).newBoxFindBook,
                       style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
                     ),
-                    onPressed: () =>
-                        _newBoxStore.isLoadingBook ? null : findBookAndCloseDialog(context),
+                    onPressed: () => _newBoxStore.isLoadingBook ? null : handleBookLookup(context),
                   ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> showBookDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          titlePadding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+          contentPadding: EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 0.0),
+          backgroundColor: Color.fromRGBO(252, 241, 233, 1.0),
+          content: Container(
+            padding: EdgeInsets.only(bottom: 12.0),
+            decoration: BoxDecoration(
+              border: new Border(
+                bottom: BorderSide(
+                  width: 1.0,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Center(
+                            child: Text(
+                              (_newBoxStore.currentBook == null
+                                  ? ""
+                                  : _newBoxStore.currentBook.title),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              (_newBoxStore.currentBook == null
+                                  ? ""
+                                  : _newBoxStore.currentBook.subtitle),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 0.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  "Author:",
+                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  (_newBoxStore.currentBook == null
+                                      ? ""
+                                      : _newBoxStore.currentBook.author),
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  "Published:",
+                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  (_newBoxStore.currentBook == null
+                                      ? ""
+                                      : (_newBoxStore.currentBook.publishYear.toString())),
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Image.network(
+                    (_newBoxStore.currentBook == null
+                        ? null
+                        : _newBoxStore.currentBook.thumbnailUrl),
+                    fit: BoxFit.fill,
+                    width: 70,
+                    height: 100,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                FlatButton(
+                  child: Text(
+                    S.of(context).newBoxCancelDialog,
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                FlatButton(
+                  child: Text(
+                    "ADD BOOK",
+                    style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
+                  ),
+                  onPressed: () => addBookAndCloseDialog(context),
                 ),
               ],
             ),

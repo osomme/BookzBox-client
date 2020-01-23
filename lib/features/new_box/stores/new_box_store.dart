@@ -56,9 +56,14 @@ abstract class _NewBoxStore with Store {
       return false;
     }
 
-    books.add(_currentBook);
-
     return true;
+  }
+
+  @action
+  void addCurrentBook() {
+    if (_currentBook == null) return;
+
+    books.add(_currentBook);
   }
 
   @action
