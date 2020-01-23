@@ -2,6 +2,7 @@
 class Book {
   final String isbn;
   final String title;
+  final String subtitle;
   final String thumbnailUrl;
   final String fullSizeImageUrl;
   final String author;
@@ -10,6 +11,6 @@ class Book {
   final List<String> links;
   final int publishYear;
 
-  Book(this.isbn, this.title, this.thumbnailUrl, this.fullSizeImageUrl, this.author, this.pageCount,
-      this.deweyDecimal, this.links, this.publishYear);
+  Book(this.isbn, this.title, this.subtitle, this.thumbnailUrl, this.fullSizeImageUrl, this.author,
+      this.pageCount, this.deweyDecimal, this.links, this.publishYear);
 }
