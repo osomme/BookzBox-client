@@ -1,6 +1,4 @@
 import 'package:bookzbox/features/box/models/book.dart';
-import 'package:bookzbox/features/new_box/repositories/book_repository_impl.dart';
-import 'package:bookzbox/features/new_box/services/book_service_impl.dart';
 import 'package:bookzbox/features/new_box/stores/new_box_store.dart';
 import 'package:bookzbox/features/new_box/ui/widgets/book_card_widget.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -10,15 +8,17 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 
 class NewBoxScreen extends StatefulWidget {
+  final NewBoxStore newBoxStore;
+
+  NewBoxScreen(this.newBoxStore);
+
   @override
   _NewBoxScreenState createState() => _NewBoxScreenState();
 }
 
 class _NewBoxScreenState extends State<NewBoxScreen> {
-  final _newBoxStore = NewBoxStore(new BookRepository(BookService.instance));
-
   Future<void> handleBookLookup(BuildContext ctx) async {
-    if ((await _newBoxStore.findBook()) == false) {
+    if ((await widget.newBoxStore.findBook()) == false) {
       return;
     }
     Navigator.of(ctx).pop();
@@ -26,7 +26,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
   }
 
   void addBookAndCloseDialog(BuildContext ctx) {
-    _newBoxStore.addCurrentBook();
+    widget.newBoxStore.addCurrentBook();
 
     Navigator.of(ctx).pop();
   }
@@ -175,7 +175,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
     List<Widget> list = List.generate(books.length, (index) {
       return new BookCard(
         book: books[index],
-        deleteFunc: _newBoxStore.removeBook,
+        deleteFunc: widget.newBoxStore.removeBook,
       );
     });
     list.add(addBooksButton(ctx));
@@ -200,7 +200,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
               childAspectRatio: 0.7,
               crossAxisCount: 6,
               shrinkWrap: true,
-              children: genBookCards(context, _newBoxStore.books),
+              children: genBookCards(context, widget.newBoxStore.books),
             ),
           ),
         ],
@@ -219,7 +219,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
           TextField(
             maxLength: 50,
             maxLengthEnforced: true,
-            onChanged: (value) => _newBoxStore.setBoxTitle(value),
+            onChanged: (value) => widget.newBoxStore.setBoxTitle(value),
           )
         ],
       ),
@@ -239,7 +239,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
             maxLengthEnforced: true,
             maxLines: 5,
             minLines: 5,
-            onChanged: (value) => _newBoxStore.setBoxDescription(value),
+            onChanged: (value) => widget.newBoxStore.setBoxDescription(value),
           )
         ],
       ),
@@ -263,14 +263,14 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Observer(
-                  builder: (_) => _newBoxStore.isLoadingBook
+                  builder: (_) => widget.newBoxStore.isLoadingBook
                       ? Center(child: CircularProgressIndicator())
                       : TextField(
                           keyboardType: TextInputType.number,
-                          onChanged: (value) => _newBoxStore.setIsbn(value),
+                          onChanged: (value) => widget.newBoxStore.setIsbn(value),
                           decoration: InputDecoration(
                             counterText: "",
-                            errorText: _newBoxStore.isbnErrorMsg,
+                            errorText: widget.newBoxStore.isbnErrorMsg,
                           ),
                         )),
             ],
@@ -293,7 +293,8 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                       S.of(context).newBoxFindBook,
                       style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
                     ),
-                    onPressed: () => _newBoxStore.isLoadingBook ? null : handleBookLookup(context),
+                    onPressed: () =>
+                        widget.newBoxStore.isLoadingBook ? null : handleBookLookup(context),
                   ),
                 ),
               ],
@@ -338,9 +339,9 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                         children: <Widget>[
                           Center(
                             child: Text(
-                              (_newBoxStore.currentBook == null
+                              (widget.newBoxStore.currentBook == null
                                   ? ""
-                                  : _newBoxStore.currentBook.title),
+                                  : widget.newBoxStore.currentBook.title),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 16,
@@ -351,9 +352,9 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                           ),
                           Center(
                             child: Text(
-                              (_newBoxStore.currentBook == null
+                              (widget.newBoxStore.currentBook == null
                                   ? ""
-                                  : _newBoxStore.currentBook.subtitle),
+                                  : widget.newBoxStore.currentBook.subtitle),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.grey,
@@ -376,9 +377,9 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  (_newBoxStore.currentBook == null
+                                  (widget.newBoxStore.currentBook == null
                                       ? ""
-                                      : _newBoxStore.currentBook.author),
+                                      : widget.newBoxStore.currentBook.author),
                                   style: TextStyle(
                                     fontSize: 14,
                                   ),
@@ -392,9 +393,9 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  (_newBoxStore.currentBook == null
+                                  (widget.newBoxStore.currentBook == null
                                       ? ""
-                                      : (_newBoxStore.currentBook.publishYear.toString())),
+                                      : (widget.newBoxStore.currentBook.publishYear.toString())),
                                   style: TextStyle(
                                     fontSize: 14,
                                   ),
@@ -410,9 +411,9 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                 Expanded(
                   flex: 1,
                   child: Image.network(
-                    (_newBoxStore.currentBook == null
+                    (widget.newBoxStore.currentBook == null
                         ? null
-                        : _newBoxStore.currentBook.thumbnailUrl),
+                        : widget.newBoxStore.currentBook.thumbnailUrl),
                     fit: BoxFit.fill,
                     width: 70,
                     height: 100,

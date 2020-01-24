@@ -1,6 +1,12 @@
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/authentication/errors/auth_error_handling.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
+import 'package:bookzbox/features/new_box/repositories/book_repository.dart';
+import 'package:bookzbox/features/new_box/repositories/book_repository_impl.dart';
+import 'package:bookzbox/features/new_box/services/book_service.dart';
+import 'package:bookzbox/features/new_box/services/book_service_impl.dart';
+import 'package:bookzbox/features/new_box/stores/new_box_store.dart';
+import 'package:bookzbox/features/new_box/ui/screens/new_box_screen.dart';
 import 'package:provider/provider.dart';
 
 final authProviders = [
@@ -28,6 +34,19 @@ final authProviders = [
     update: (_, authStore, newAccStore, errorParser, __) =>
         CreateAccountScreen(authStore, newAccStore, errorParser),
   ),
+];
+
+final bookProviders = [
+  Provider<IBookService>(create: (_) => BookService.instance),
+  ProxyProvider<IBookService, IBookRepository>(
+    update: (_, service, __) => BookRepository(service),
+  ),
+  ProxyProvider<IBookRepository, NewBoxStore>(
+    update: (_, repo, __) => NewBoxStore(repo),
+  ),
+  ProxyProvider<NewBoxStore, NewBoxScreen>(
+    update: (_, store, __) => NewBoxScreen(store),
+  )
 ];
 
 final mainProviders = [

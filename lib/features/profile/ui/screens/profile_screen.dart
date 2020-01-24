@@ -38,8 +38,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             size: 24,
           ),
         ),
-        onPressed: () =>
-            Navigator.push(context, MaterialPageRoute(builder: (ctx) => NewBoxScreen())),
+        onPressed: () => Navigator.push(
+            context, MaterialPageRoute(builder: (ctx) => Provider.of<NewBoxScreen>(ctx))),
       ),
     );
   }

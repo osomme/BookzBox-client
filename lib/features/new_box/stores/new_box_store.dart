@@ -104,11 +104,4 @@ abstract class _NewBoxStore with Store {
 
   @action
   void setBoxDescription(String description) => _boxDescription = description;
-
-  // bool isIsbn(String isbn) {
-  //   if (_isbn == null || (_isbn.length != 10 && _isbn.length != 13)) {
-  //     return false;
-  //   }
-  //   return isNumeric(isbn);
-  // }
 }
