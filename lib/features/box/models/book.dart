@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 /// Represents a book.
 class Book {
   final String isbn10;
