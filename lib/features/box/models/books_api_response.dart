@@ -63,6 +63,7 @@ class BookResponseItem {
   Book2 toDomain() {
     return Book2(
       title: volumeInfo.title,
+      subtitle: volumeInfo.subtitle,
       authors: volumeInfo.authors,
       categories: volumeInfo.categories,
       fullSizeImageUrl: volumeInfo.imageLinks?.thumbnail,

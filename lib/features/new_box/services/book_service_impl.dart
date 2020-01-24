@@ -14,7 +14,7 @@ class BookService extends IBookService {
   @override
   Future<Either<String, Book2>> isbnLookup2(String isbn) async {
     try {
-      final sanitizedISBN = isbn.replaceAll('-', '').trim();
+      final sanitizedISBN = isbn.replaceAll(RegExp(r'[\s-]+'), '');
       final res = await http.get(
           'https://www.googleapis.com/books/v1/volumes?q=isbn=$sanitizedISBN&printTypes=books');
       final response = BooksApiResponse.fromJson(json.decode(res.body));
