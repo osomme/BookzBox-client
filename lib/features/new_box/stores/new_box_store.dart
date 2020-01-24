@@ -40,10 +40,10 @@ abstract class _NewBoxStore with Store {
   ///          returned true.
   @action
   Future<bool> findBook() async {
-    if (!isIsbn(_isbn)) return false;
+    if (!isISBN(_isbn)) return false;
 
     _isLoadingBook = true;
-    final result = await _bookRepository.isbnLookup(_isbn);
+    final result = await _bookRepository.isbnLookup(_isbn.replaceAll('-', ''));
     result.fold(
       (error) => _currentBook = null,
       (book) => _currentBook = book,
@@ -81,7 +81,7 @@ abstract class _NewBoxStore with Store {
     if (_isbn == null) {
       return null;
     }
-    return !isIsbn(_isbn) ? "Invalid ISBN" : null;
+    return !isISBN(_isbn) ? "Invalid ISBN" : null;
   }
 
   @computed
@@ -105,10 +105,10 @@ abstract class _NewBoxStore with Store {
   @action
   void setBoxDescription(String description) => _boxDescription = description;
 
-  bool isIsbn(String isbn) {
-    if (_isbn == null || (_isbn.length != 10 && _isbn.length != 13)) {
-      return false;
-    }
-    return isNumeric(isbn);
-  }
+  // bool isIsbn(String isbn) {
+  //   if (_isbn == null || (_isbn.length != 10 && _isbn.length != 13)) {
+  //     return false;
+  //   }
+  //   return isNumeric(isbn);
+  // }
 }

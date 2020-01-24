@@ -267,8 +267,6 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                       ? Center(child: CircularProgressIndicator())
                       : TextField(
                           keyboardType: TextInputType.number,
-                          maxLength: 13,
-                          maxLengthEnforced: true,
                           onChanged: (value) => _newBoxStore.setIsbn(value),
                           decoration: InputDecoration(
                             counterText: "",
