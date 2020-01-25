@@ -6,6 +6,7 @@ enum BoxStatus { public, private, traded }
 
 /// Represents a box of books.
 class Box {
+  final String id;
   final User publisher;
   final List<Book> books;
   final BoxStatus status;
@@ -16,6 +17,7 @@ class Box {
   final String description;
 
   Box({
+    @required this.id,
     @required this.publisher,
     @required this.books,
     @required this.status,

@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Feed service implementation', () {
+    //TODO: Update after adding actual Firebase functionality
     var service = FirebaseFeedService();
 
     setUp(() => service = FirebaseFeedService());

@@ -8,7 +8,7 @@ class FirebaseFeedService implements IFeedService {
   @override
   Future<Either<NetworkError, List<Box>>> getNextBoxes(
       int number, DateTime fromDate) async {
-    return Right(_boxes.take(number).toList());
+    return Right(testBoxes.take(number).toList());
   }
 }
 
@@ -16,7 +16,7 @@ class FirebaseFeedService implements IFeedService {
 /// For testing purposes:
 final _user = User('abcdef');
 
-final _boxes = [
+final testBoxes = [
   Box(
     books: <Book>[
       Book(
@@ -50,6 +50,7 @@ final _boxes = [
         title: 'The Old Man and the Sea',
       ),
     ],
+    id: 'box1',
     description: 'Just some books I am trying to get rid of',
     longitude: 45.2,
     latitude: 84.23,
@@ -101,6 +102,7 @@ final _boxes = [
         title: 'Webutvikling',
       ),
     ],
+    id: 'box2',
     description:
         'Since I an no longer taking any classes that use these books as their curriculum, I might as well sell them.',
     longitude: 45.2,

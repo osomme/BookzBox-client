@@ -1,6 +1,6 @@
+import 'package:bookzbox/common/errors/error_types.dart';
 import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/feed/feed.dart';
-import 'package:dartz/dartz.dart';
 import 'package:mobx/mobx.dart';
 
 part 'feed_store.g.dart';
@@ -9,47 +9,80 @@ class FeedStore = _FeedStore with _$FeedStore;
 
 abstract class _FeedStore with Store {
   final IFeedRepository _repo;
+  ReactionDisposer _listener;
 
   @observable
   ObservableList<Box> _boxes = ObservableList();
 
   @observable
-  Option<String> _errorMessage;
+  NetworkError _error;
 
   @observable
-  bool _isLoading = false;
+  bool _initialLoadingOngoing = false;
+
+  @observable
+  bool _incrementalLoading = false;
+
+  @observable
+  int _currentIndex = 0;
 
   @computed
-  Option<String> get errorMessage => _errorMessage;
+  NetworkError get errorMessage => _error;
 
   @computed
   ObservableList<Box> get boxes => _boxes;
 
   @computed
-  bool get isLoading => _isLoading;
+  bool get initialLoadingOngoing => _initialLoadingOngoing;
+
+  @computed
+  bool get incrementalLoading => _incrementalLoading;
+
+  @computed
+  int get currentIndex => _currentIndex;
 
   _FeedStore(this._repo) {
-    _fetchBoxes();
+    _init();
   }
 
-  @action
-  void _fetchBoxes() {
-    _wrapLoading(() async {
-      final result = await _repo.getNextBoxes(10, DateTime.now());
-      result.fold(
-        (error) => _errorMessage = some(error.toString()),
-        (boxes) => _boxes.addAll(boxes),
-      );
+  Future<void> _init() async {
+    await _initialFetch();
+    // Creates a reaction that checks if the current index is less than 5. If it is,
+    // it will load a new batch of boxes.
+    _listener = autorun((_) {
+      if ((boxes.length - _currentIndex) <= 5) {
+        _incrementalLoad();
+      }
     });
   }
 
-  /// Utility method which takes an async function as parameter and resets error
-  /// message while setting the loading property to true while the function is running.
   @action
-  Future<void> _wrapLoading(Function function) async {
-    _errorMessage = None();
-    _isLoading = true;
-    await function();
-    _isLoading = false;
+  void setIndex(int index) => _currentIndex = index;
+
+  @action
+  Future<void> _incrementalLoad() async {
+    _error = null;
+    _incrementalLoading = true;
+    final result = await _repo.getNextBoxes(10, boxes[_currentIndex].publishDateTime);
+    result.fold(
+      (error) => _error,
+      (boxes) => _boxes.addAll(boxes),
+    );
+    _incrementalLoading = false;
   }
+
+  @action
+  Future<void> _initialFetch() async {
+    _error = null;
+    _initialLoadingOngoing = true;
+    final result = await _repo.getNextBoxes(10, DateTime.now());
+    result.fold(
+      (error) => _error = error,
+      (boxes) => _boxes.addAll(boxes),
+    );
+    _initialLoadingOngoing = false;
+  }
+
+  /// Disposes the resources that the store is using.
+  void dispose() => _listener();
 }

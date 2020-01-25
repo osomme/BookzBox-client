@@ -4,10 +4,10 @@ import 'package:bookzbox/features/feed/repositories/feed_repository.dart';
 import 'package:bookzbox/features/feed/service/service.dart';
 import 'package:dartz/dartz.dart';
 
-class FirebaseFeedRepository implements IFeedRepository {
+class FeedRepository implements IFeedRepository {
   final IFeedService _service;
 
-  FirebaseFeedRepository(this._service);
+  FeedRepository(this._service);
 
   @override
   Future<Either<NetworkError, List<Box>>> getNextBoxes(

@@ -4,6 +4,7 @@ import 'package:bookzbox/features/profile/ui/screens/profile_screen.dart';
 import 'package:bookzbox/features/search/ui/screens/search_screen.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -35,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() => _currentTab = index);
         },
         children: <Widget>[
-          FeedScreen(),
+          Provider.of<FeedScreen>(context),
           SearchScreen(),
           ActivityScreen(),
           ProfileScreen(),

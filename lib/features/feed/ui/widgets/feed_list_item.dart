@@ -1,3 +1,4 @@
+import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -7,11 +8,13 @@ class FeedListItem extends StatelessWidget {
     Key key,
     @required PageController pageController,
     @required this.index,
+    @required this.box,
   })  : _pageController = pageController,
         super(key: key);
 
   final PageController _pageController;
   final int index;
+  final Box box;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +71,7 @@ class FeedListItem extends StatelessWidget {
                                     .copyWith(color: Colors.white70),
                               ),
                               Text(
-                                plants[index].location,
+                                '>Location<', //TODO: Replace with actual location from lat lng
                                 style: Theme.of(context).primaryTextTheme.subhead,
                               ),
                             ],
@@ -84,7 +87,7 @@ class FeedListItem extends StatelessWidget {
                                     .copyWith(color: Colors.white70),
                               ),
                               Text(
-                                '${plants[index].books}',
+                                '${box.books.length}',
                                 style: Theme.of(context).primaryTextTheme.subhead,
                               ),
                             ],
@@ -93,10 +96,10 @@ class FeedListItem extends StatelessWidget {
                       ),
                       SizedBox(height: 20.0),
                       Hero(
-                        tag: plants[index].imageUrl,
+                        tag: box.id,
                         child: Image(
                           height: 250.0,
-                          image: NetworkImage(plants[index].imageUrl),
+                          image: NetworkImage(box.books.first.thumbnailUrl),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -104,7 +107,8 @@ class FeedListItem extends StatelessWidget {
                       Column(
                         children: <Widget>[
                           Text(
-                            plants[index].category.toUpperCase(),
+                            '<CATEGORIES>'
+                                .toUpperCase(), //TODO: Insert the actual categories
                             style: Theme.of(context)
                                 .primaryTextTheme
                                 .subhead
@@ -113,7 +117,7 @@ class FeedListItem extends StatelessWidget {
                           ),
                           SizedBox(height: 5.0),
                           Text(
-                            plants[index].name,
+                            box.title,
                             style: Theme.of(context).primaryTextTheme.subtitle,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -158,54 +162,3 @@ class FeedListItem extends StatelessWidget {
     );
   }
 }
-
-/// Used for inserting fake values for testing purposes. Should be removed after UI design is completed.
-class BoxListing {
-  final String imageUrl;
-  final String name;
-  final String category;
-  final int books;
-  final String location;
-  final String description;
-
-  BoxListing({
-    this.imageUrl,
-    this.name,
-    this.category,
-    this.books,
-    this.location,
-    this.description,
-  });
-}
-
-final List<BoxListing> plants = [
-  BoxListing(
-    imageUrl:
-        'https://149349728.v2.pressablecdn.com/wp-content/uploads/2019/05/Untitled-design-27.png',
-    name: 'Crime and thriller books and stuff and this is a long title',
-    category: 'Thriller, Action, Suspense',
-    books: 7,
-    location: 'Halden',
-    description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus efficitur placerat orci, sed luctus ante ornare id. In et facilisis purus. Nunc ipsum eros, feugiat ac ligula at, ultricies porta augue. Etiam vel metus a tellus bibendum consectetur sit amet nec mi. Sed in turpis id nulla tristique eleifend. Pellentesque ultrices ac tortor id suscipit. Aliquam non dapibus mauris. Nunc tincidunt tristique odio, in tempus nunc rhoncus et. ',
-  ),
-  BoxListing(
-    imageUrl:
-        'https://1.bp.blogspot.com/-G1fAng3vVg8/WJuEc9l5CLI/AAAAAAAAVTA/ppuLiXBJx6Mxe_RQvCKWJl9qJvvTlF62wCLcB/s1600/fullprebrith.png',
-    name: 'Just some romance novels',
-    category: 'Romance, Action, Love',
-    books: 5,
-    location: 'Trondheim',
-    description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur porta risus id urna luctus efficitur.',
-  ),
-  BoxListing(
-    imageUrl: 'http://www.datasikkerhetsboka.no/datasikkerhet.jpg',
-    name: 'Collection of school books',
-    category: 'Educational, School, Science',
-    books: 12,
-    location: 'Stavanger',
-    description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur porta risus id urna luctus efficitur. Suspendisse vulputate faucibus est, a vehicula sem eleifend quis.',
-  ),
-];

@@ -14,28 +14,94 @@ mixin _$BoxItemStore on _BoxItemStore, Store {
   @override
   bool get likeLoading =>
       (_$likeLoadingComputed ??= Computed<bool>(() => super.likeLoading)).value;
-
-  final _$_likeLoadingAtom = Atom(name: '_BoxItemStore._likeLoading');
+  Computed<bool> _$isLikedComputed;
 
   @override
-  bool get _likeLoading {
-    _$_likeLoadingAtom.context.enforceReadPolicy(_$_likeLoadingAtom);
-    _$_likeLoadingAtom.reportObserved();
-    return super._likeLoading;
+  bool get isLiked =>
+      (_$isLikedComputed ??= Computed<bool>(() => super.isLiked)).value;
+  Computed<NetworkError> _$errorMessageComputed;
+
+  @override
+  NetworkError get errorMessage => (_$errorMessageComputed ??=
+          Computed<NetworkError>(() => super.errorMessage))
+      .value;
+
+  final _$_likeIsLoadingAtom = Atom(name: '_BoxItemStore._likeIsLoading');
+
+  @override
+  bool get _likeIsLoading {
+    _$_likeIsLoadingAtom.context.enforceReadPolicy(_$_likeIsLoadingAtom);
+    _$_likeIsLoadingAtom.reportObserved();
+    return super._likeIsLoading;
   }
 
   @override
-  set _likeLoading(bool value) {
-    _$_likeLoadingAtom.context.conditionallyRunInAction(() {
-      super._likeLoading = value;
-      _$_likeLoadingAtom.reportChanged();
-    }, _$_likeLoadingAtom, name: '${_$_likeLoadingAtom.name}_set');
+  set _likeIsLoading(bool value) {
+    _$_likeIsLoadingAtom.context.conditionallyRunInAction(() {
+      super._likeIsLoading = value;
+      _$_likeIsLoadingAtom.reportChanged();
+    }, _$_likeIsLoadingAtom, name: '${_$_likeIsLoadingAtom.name}_set');
   }
 
-  final _$likeBoxAsyncAction = AsyncAction('likeBox');
+  final _$_isLikedAtom = Atom(name: '_BoxItemStore._isLiked');
 
   @override
-  Future<void> likeBox(Box box) {
-    return _$likeBoxAsyncAction.run(() => super.likeBox(box));
+  bool get _isLiked {
+    _$_isLikedAtom.context.enforceReadPolicy(_$_isLikedAtom);
+    _$_isLikedAtom.reportObserved();
+    return super._isLiked;
+  }
+
+  @override
+  set _isLiked(bool value) {
+    _$_isLikedAtom.context.conditionallyRunInAction(() {
+      super._isLiked = value;
+      _$_isLikedAtom.reportChanged();
+    }, _$_isLikedAtom, name: '${_$_isLikedAtom.name}_set');
+  }
+
+  final _$_errorAtom = Atom(name: '_BoxItemStore._error');
+
+  @override
+  NetworkError get _error {
+    _$_errorAtom.context.enforceReadPolicy(_$_errorAtom);
+    _$_errorAtom.reportObserved();
+    return super._error;
+  }
+
+  @override
+  set _error(NetworkError value) {
+    _$_errorAtom.context.conditionallyRunInAction(() {
+      super._error = value;
+      _$_errorAtom.reportChanged();
+    }, _$_errorAtom, name: '${_$_errorAtom.name}_set');
+  }
+
+  final _$toggleLikeStatusAsyncAction = AsyncAction('toggleLikeStatus');
+
+  @override
+  Future<void> toggleLikeStatus() {
+    return _$toggleLikeStatusAsyncAction.run(() => super.toggleLikeStatus());
+  }
+
+  final _$_removeLikeAsyncAction = AsyncAction('_removeLike');
+
+  @override
+  Future<void> _removeLike() {
+    return _$_removeLikeAsyncAction.run(() => super._removeLike());
+  }
+
+  final _$_likeBoxAsyncAction = AsyncAction('_likeBox');
+
+  @override
+  Future<void> _likeBox() {
+    return _$_likeBoxAsyncAction.run(() => super._likeBox());
+  }
+
+  final _$_checkIfLikedAsyncAction = AsyncAction('_checkIfLiked');
+
+  @override
+  Future<void> _checkIfLiked() {
+    return _$_checkIfLikedAsyncAction.run(() => super._checkIfLiked());
   }
 }

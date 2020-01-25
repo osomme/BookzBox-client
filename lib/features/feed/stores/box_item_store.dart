@@ -1,4 +1,7 @@
+import 'package:bookzbox/common/errors/error_types.dart';
+import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/models/models.dart';
+import 'package:bookzbox/features/feed/feed.dart';
 import 'package:mobx/mobx.dart';
 
 part 'box_item_store.g.dart';
@@ -6,15 +9,73 @@ part 'box_item_store.g.dart';
 class BoxItemStore = _BoxItemStore with _$BoxItemStore;
 
 abstract class _BoxItemStore with Store {
-  @observable
-  bool _likeLoading = false;
+  final IBoxLikeRepository _repo;
+  final IAuthService _authService;
+  final Box _box;
 
+  @observable
+  bool _likeIsLoading = false;
+
+  @observable
+  bool _isLiked = false;
+
+  @observable
+  NetworkError _error;
+
+  _BoxItemStore(this._repo, this._authService, this._box) {
+    _checkIfLiked();
+  }
+
+  /// True if the store is currently loading the like status, false otherwise.
   @computed
-  bool get likeLoading => _likeLoading;
+  bool get likeLoading => _likeIsLoading;
+
+  /// True if the box is liked by the user, false otherwise.
+  @computed
+  bool get isLiked => _isLiked;
+
+  /// A potential error message for the store.
+  @computed
+  NetworkError get errorMessage => _error;
+
+  // Toggles the like status of the box.
+  @action
+  Future<void> toggleLikeStatus() async {
+    _likeIsLoading = true;
+    if (_isLiked) {
+      await _likeBox();
+    } else {
+      await _removeLike();
+    }
+    _likeIsLoading = false;
+  }
 
   @action
-  Future<void> likeBox(Box box) async {
-    _likeLoading = true;
-    _likeLoading = false;
+  Future<void> _removeLike() async {
+    final result = await _repo.removeLike(_box.id, (await _authService.user).uid);
+    result.fold(
+      (error) => _error = error,
+      (success) => _isLiked = false,
+    );
+  }
+
+  @action
+  Future<void> _likeBox() async {
+    final result = await _repo.likeBox(_box.id, (await _authService.user).uid);
+    result.fold(
+      (error) => _error = error,
+      (success) => _isLiked = true,
+    );
+  }
+
+  @action
+  Future<void> _checkIfLiked() async {
+    _likeIsLoading = true;
+    final result = await _repo.isBoxLiked(_box.id, (await _authService.user).uid);
+    result.fold(
+      (error) => _error = error,
+      (liked) => _isLiked = liked,
+    );
+    _likeIsLoading = false;
   }
 }
