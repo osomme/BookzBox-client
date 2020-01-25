@@ -40,6 +40,9 @@ dependencies:
   # Dartz
   dartz: ^0.8.9
 
+  # Loading (progress bar widgets)
+  loading: ^1.0.2
+
   
   
 

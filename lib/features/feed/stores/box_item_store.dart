@@ -14,7 +14,7 @@ abstract class _BoxItemStore with Store {
   final Box _box;
 
   @observable
-  bool _likeIsLoading = false;
+  bool _isLoading = false;
 
   @observable
   bool _isLiked = false;
@@ -28,7 +28,7 @@ abstract class _BoxItemStore with Store {
 
   /// True if the store is currently loading the like status, false otherwise.
   @computed
-  bool get likeLoading => _likeIsLoading;
+  bool get isLoading => _isLoading;
 
   /// True if the box is liked by the user, false otherwise.
   @computed
@@ -41,13 +41,13 @@ abstract class _BoxItemStore with Store {
   // Toggles the like status of the box.
   @action
   Future<void> toggleLikeStatus() async {
-    _likeIsLoading = true;
-    if (_isLiked) {
-      await _likeBox();
-    } else {
+    _isLoading = true;
+    if (isLiked) {
       await _removeLike();
+    } else {
+      await _addLike();
     }
-    _likeIsLoading = false;
+    _isLoading = false;
   }
 
   @action
@@ -60,7 +60,7 @@ abstract class _BoxItemStore with Store {
   }
 
   @action
-  Future<void> _likeBox() async {
+  Future<void> _addLike() async {
     final result = await _repo.likeBox(_box.id, (await _authService.user).uid);
     result.fold(
       (error) => _error = error,
@@ -70,12 +70,12 @@ abstract class _BoxItemStore with Store {
 
   @action
   Future<void> _checkIfLiked() async {
-    _likeIsLoading = true;
+    _isLoading = true;
     final result = await _repo.isBoxLiked(_box.id, (await _authService.user).uid);
     result.fold(
       (error) => _error = error,
-      (liked) => _isLiked = liked,
+      (likeStatus) => _isLiked = likeStatus,
     );
-    _likeIsLoading = false;
+    _isLoading = false;
   }
 }

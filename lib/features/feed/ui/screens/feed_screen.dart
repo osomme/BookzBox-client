@@ -1,8 +1,11 @@
+import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/feed/feed.dart';
+import 'package:bookzbox/features/feed/stores/box_item_store.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 class FeedScreen extends StatefulWidget {
   final FeedStore feedStore;
@@ -76,6 +79,11 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
               pageController: _pageController,
               index: index,
               box: widget.feedStore.boxes[index],
+              store: BoxItemStore(
+                Provider.of<IBoxLikeRepository>(context),
+                Provider.of<IAuthService>(context),
+                widget.feedStore.boxes[index],
+              ),
             ),
           ),
         ),

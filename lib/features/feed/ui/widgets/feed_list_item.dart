@@ -1,7 +1,12 @@
 import 'package:bookzbox/features/box/models/models.dart';
+import 'package:bookzbox/features/feed/stores/box_item_store.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:loading/indicator/ball_pulse_indicator.dart';
+import 'package:loading/indicator/ball_scale_indicator.dart';
+import 'package:loading/loading.dart';
 
 class FeedListItem extends StatelessWidget {
   const FeedListItem({
@@ -9,12 +14,14 @@ class FeedListItem extends StatelessWidget {
     @required PageController pageController,
     @required this.index,
     @required this.box,
+    @required this.store,
   })  : _pageController = pageController,
         super(key: key);
 
   final PageController _pageController;
   final int index;
   final Box box;
+  final BoxItemStore store;
 
   @override
   Widget build(BuildContext context) {
@@ -147,13 +154,33 @@ class FeedListItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Icon(
-                    MaterialCommunityIcons.heart_outline,
-                    color: Theme.of(context).accentIconTheme.color,
-                    size: 30.0,
-                  ),
+                  child: Observer(builder: (_) {
+                    if (store.isLoading) {
+                      return SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: Loading(
+                          indicator: BallScaleIndicator(),
+                          size: 30,
+                          color: Theme.of(context).accentIconTheme.color,
+                        ),
+                      );
+                    }
+                    return Icon(
+                      store.isLiked
+                          ? MaterialCommunityIcons.heart
+                          : MaterialCommunityIcons.heart_outline,
+                      color: Theme.of(context).accentIconTheme.color,
+                      size: 30.0,
+                    );
+                  }),
                 ),
-                onPressed: () => print('Clicked add to favorite button'),
+                onPressed: () {
+                  if (store.isLoading) {
+                    return;
+                  }
+                  store.toggleLikeStatus();
+                },
               ),
             ),
           ],

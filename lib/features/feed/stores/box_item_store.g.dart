@@ -9,11 +9,11 @@ part of 'box_item_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$BoxItemStore on _BoxItemStore, Store {
-  Computed<bool> _$likeLoadingComputed;
+  Computed<bool> _$isLoadingComputed;
 
   @override
-  bool get likeLoading =>
-      (_$likeLoadingComputed ??= Computed<bool>(() => super.likeLoading)).value;
+  bool get isLoading =>
+      (_$isLoadingComputed ??= Computed<bool>(() => super.isLoading)).value;
   Computed<bool> _$isLikedComputed;
 
   @override
@@ -26,21 +26,21 @@ mixin _$BoxItemStore on _BoxItemStore, Store {
           Computed<NetworkError>(() => super.errorMessage))
       .value;
 
-  final _$_likeIsLoadingAtom = Atom(name: '_BoxItemStore._likeIsLoading');
+  final _$_isLoadingAtom = Atom(name: '_BoxItemStore._isLoading');
 
   @override
-  bool get _likeIsLoading {
-    _$_likeIsLoadingAtom.context.enforceReadPolicy(_$_likeIsLoadingAtom);
-    _$_likeIsLoadingAtom.reportObserved();
-    return super._likeIsLoading;
+  bool get _isLoading {
+    _$_isLoadingAtom.context.enforceReadPolicy(_$_isLoadingAtom);
+    _$_isLoadingAtom.reportObserved();
+    return super._isLoading;
   }
 
   @override
-  set _likeIsLoading(bool value) {
-    _$_likeIsLoadingAtom.context.conditionallyRunInAction(() {
-      super._likeIsLoading = value;
-      _$_likeIsLoadingAtom.reportChanged();
-    }, _$_likeIsLoadingAtom, name: '${_$_likeIsLoadingAtom.name}_set');
+  set _isLoading(bool value) {
+    _$_isLoadingAtom.context.conditionallyRunInAction(() {
+      super._isLoading = value;
+      _$_isLoadingAtom.reportChanged();
+    }, _$_isLoadingAtom, name: '${_$_isLoadingAtom.name}_set');
   }
 
   final _$_isLikedAtom = Atom(name: '_BoxItemStore._isLiked');
@@ -91,11 +91,11 @@ mixin _$BoxItemStore on _BoxItemStore, Store {
     return _$_removeLikeAsyncAction.run(() => super._removeLike());
   }
 
-  final _$_likeBoxAsyncAction = AsyncAction('_likeBox');
+  final _$_addLikeAsyncAction = AsyncAction('_addLike');
 
   @override
-  Future<void> _likeBox() {
-    return _$_likeBoxAsyncAction.run(() => super._likeBox());
+  Future<void> _addLike() {
+    return _$_addLikeAsyncAction.run(() => super._addLike());
   }
 
   final _$_checkIfLikedAsyncAction = AsyncAction('_checkIfLiked');

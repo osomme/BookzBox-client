@@ -50,7 +50,7 @@ abstract class _FeedStore with Store {
     // Creates a reaction that checks if the current index is less than 5. If it is,
     // it will load a new batch of boxes.
     _listener = autorun((_) {
-      if ((boxes.length - _currentIndex) <= 5) {
+      if (boxes.isNotEmpty && (boxes.length - _currentIndex) <= 5) {
         _incrementalLoad();
       }
     });

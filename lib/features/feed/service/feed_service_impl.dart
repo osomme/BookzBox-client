@@ -8,6 +8,7 @@ class FirebaseFeedService implements IFeedService {
   @override
   Future<Either<NetworkError, List<Box>>> getNextBoxes(
       int number, DateTime fromDate) async {
+    //TODO: Add firebase support.
     return Right(testBoxes.take(number).toList());
   }
 }
