@@ -4,7 +4,6 @@ import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'package:loading/indicator/ball_scale_indicator.dart';
 import 'package:loading/loading.dart';
 
@@ -78,7 +77,7 @@ class FeedListItem extends StatelessWidget {
                                     .copyWith(color: Colors.white70),
                               ),
                               Text(
-                                '>Location<', //TODO: Replace with actual location from lat lng
+                                '<Location>', //TODO: Replace with actual location from lat lng
                                 style: Theme.of(context).primaryTextTheme.subhead,
                               ),
                             ],

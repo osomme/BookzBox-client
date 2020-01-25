@@ -9,12 +9,11 @@ part of 'feed_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$FeedStore on _FeedStore, Store {
-  Computed<NetworkError> _$errorMessageComputed;
+  Computed<NetworkError> _$errorComputed;
 
   @override
-  NetworkError get errorMessage => (_$errorMessageComputed ??=
-          Computed<NetworkError>(() => super.errorMessage))
-      .value;
+  NetworkError get error =>
+      (_$errorComputed ??= Computed<NetworkError>(() => super.error)).value;
   Computed<ObservableList<Box>> _$boxesComputed;
 
   @override

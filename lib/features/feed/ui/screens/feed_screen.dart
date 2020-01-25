@@ -13,12 +13,14 @@ class FeedScreen extends StatefulWidget {
   const FeedScreen({Key key, this.feedStore}) : super(key: key);
 
   @override
-  _FeedScreenState createState() => _FeedScreenState();
+  _FeedScreenState createState() {
+    feedStore.init();
+    return _FeedScreenState();
+  }
 }
 
 class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateMixin {
   PageController _pageController;
-  //int _selectedPage = 0;
 
   @override
   void initState() {
@@ -70,10 +72,7 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
           width: MediaQuery.of(context).size.width,
           child: PageView.builder(
             controller: _pageController,
-            onPageChanged: (index) {
-              widget.feedStore.setIndex(index);
-              //setState(() => _selectedPage = index);
-            },
+            onPageChanged: (index) => widget.feedStore.setIndex(index),
             itemCount: widget.feedStore.boxes.length,
             itemBuilder: (context, index) => FeedListItem(
               pageController: _pageController,

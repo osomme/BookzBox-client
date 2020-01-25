@@ -27,7 +27,7 @@ abstract class _FeedStore with Store {
   int _currentIndex = 0;
 
   @computed
-  NetworkError get errorMessage => _error;
+  NetworkError get error => _error;
 
   @computed
   ObservableList<Box> get boxes => _boxes;
@@ -41,11 +41,9 @@ abstract class _FeedStore with Store {
   @computed
   int get currentIndex => _currentIndex;
 
-  _FeedStore(this._repo) {
-    _init();
-  }
+  _FeedStore(this._repo);
 
-  Future<void> _init() async {
+  Future<void> init() async {
     await _initialFetch();
     // Creates a reaction that checks if the current index is less than 5. If it is,
     // it will load a new batch of boxes.
@@ -57,7 +55,9 @@ abstract class _FeedStore with Store {
   }
 
   @action
-  void setIndex(int index) => _currentIndex = index;
+  void setIndex(int index) {
+    _currentIndex = index >= 0 ? index : 0;
+  }
 
   @action
   Future<void> _incrementalLoad() async {
