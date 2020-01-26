@@ -27,5 +27,6 @@
     "feedDescription": "Description",
     "feedTitle": "Top Boxes",
     "feedBooks": "BOOKS",
-    "feedLocation": "LOCATION"
+    "feedLocation": "LOCATION",
+    "feedNoLocationData": "No data"
 }

@@ -4,6 +4,8 @@ import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/feed/service/box_like_service.dart';
 import 'package:bookzbox/features/feed/service/box_like_service_impl.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
+import 'package:bookzbox/features/location/location.dart';
+import 'package:bookzbox/features/location/services/location_service.dart';
 import 'package:provider/provider.dart';
 
 final authProviders = [
@@ -57,5 +59,11 @@ final feedProviders = [
   ),
   ProxyProvider<FeedStore, FeedScreen>(
     update: (_, store, __) => FeedScreen(feedStore: store),
+  ),
+];
+
+final commonServicesProviders = [
+  Provider<ILocationService>(
+    create: (_) => LocationService(),
   ),
 ];

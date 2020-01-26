@@ -289,6 +289,15 @@ class S {
       args: [],
     );
   }
+
+  String get feedNoLocationData {
+    return Intl.message(
+      'No data',
+      name: 'feedNoLocationData',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

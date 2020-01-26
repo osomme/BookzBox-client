@@ -1,11 +1,14 @@
 import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/feed/stores/box_item_store.dart';
+import 'package:bookzbox/features/location/services/location_service.dart';
 import 'package:bookzbox/generated/l10n.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:loading/indicator/ball_scale_indicator.dart';
-import 'package:loading/loading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:bookzbox/common/extensions/extensions.dart';
 
 class FeedListItem extends StatelessWidget {
   const FeedListItem({
@@ -14,6 +17,7 @@ class FeedListItem extends StatelessWidget {
     @required this.index,
     @required this.box,
     @required this.store,
+    @required this.locationService,
   })  : _pageController = pageController,
         super(key: key);
 
@@ -21,6 +25,7 @@ class FeedListItem extends StatelessWidget {
   final int index;
   final Box box;
   final BoxItemStore store;
+  final ILocationService locationService;
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +81,7 @@ class FeedListItem extends StatelessWidget {
                                     .subtitle
                                     .copyWith(color: Colors.white70),
                               ),
-                              Text(
-                                '<Location>', //TODO: Replace with actual location from lat lng
-                                style: Theme.of(context).primaryTextTheme.subhead,
-                              ),
+                              _locationBuilder(),
                             ],
                           ),
                           Column(
@@ -113,8 +115,7 @@ class FeedListItem extends StatelessWidget {
                       Column(
                         children: <Widget>[
                           Text(
-                            '<CATEGORIES>'
-                                .toUpperCase(), //TODO: Insert the actual categories
+                            box.books.toCategoryString(),
                             style: Theme.of(context)
                                 .primaryTextTheme
                                 .subhead
@@ -155,14 +156,9 @@ class FeedListItem extends StatelessWidget {
                   ),
                   child: Observer(builder: (_) {
                     if (store.isLoading) {
-                      return SizedBox(
-                        width: 30,
-                        height: 30,
-                        child: Loading(
-                          indicator: BallScaleIndicator(),
-                          size: 30,
-                          color: Theme.of(context).accentIconTheme.color,
-                        ),
+                      return SpinKitPulse(
+                        size: 30.0,
+                        color: Theme.of(context).accentIconTheme.color,
                       );
                     }
                     return Icon(
@@ -185,6 +181,28 @@ class FeedListItem extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  FutureBuilder<Option<Placemark>> _locationBuilder() {
+    return FutureBuilder<Option<Placemark>>(
+      future: locationService.getLocationDataFrom(box.latitude, box.longitude),
+      builder: (ctx, snapshot) {
+        if (!snapshot.hasData) {
+          return SpinKitPulse(
+            size: 20.0,
+            color: Theme.of(ctx).primaryIconTheme.color,
+          );
+        }
+        final location = snapshot.data.fold(
+          () => S.of(ctx).feedNoLocationData,
+          (placemark) => placemark.toLocationString(),
+        );
+        return Text(
+          location.isEmpty ? S.of(ctx).feedNoLocationData : location,
+          style: Theme.of(ctx).primaryTextTheme.subhead,
+        );
+      },
     );
   }
 }
