@@ -263,6 +263,16 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Observer(
+                builder: (_) => Text(
+                  widget.newBoxStore.lookupErrorMsg,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.red[900],
+                  ),
+                ),
+              ),
+              Observer(
                   builder: (_) => widget.newBoxStore.isLoadingBook
                       ? Center(child: CircularProgressIndicator())
                       : TextField(
@@ -379,7 +389,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                                 Text(
                                   (widget.newBoxStore.currentBook == null
                                       ? ""
-                                      : widget.newBoxStore.currentBook.author),
+                                      : widget.newBoxStore.currentBook.authors[0]),
                                   style: TextStyle(
                                     fontSize: 14,
                                   ),

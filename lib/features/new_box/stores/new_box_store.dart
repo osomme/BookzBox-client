@@ -1,7 +1,5 @@
 import 'package:bookzbox/features/box/models/book.dart';
 import 'package:bookzbox/features/new_box/repositories/book_repository.dart';
-import 'package:bookzbox/features/new_box/repositories/book_repository_impl.dart';
-import 'package:bookzbox/features/new_box/services/book_service_impl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:validators/validators.dart';
 
@@ -29,6 +27,9 @@ abstract class _NewBoxStore with Store {
   String _boxDescription;
 
   @observable
+  String _lookupErrorMsg;
+
+  @observable
   ObservableList<Book> _books = new ObservableList();
 
   _NewBoxStore(this._bookRepository);
@@ -40,7 +41,7 @@ abstract class _NewBoxStore with Store {
   ///          returned true.
   @action
   Future<bool> findBook() async {
-    if (!isISBN(_isbn)) return false;
+    if (_isbn == null || !isISBN(_isbn)) return false;
 
     _isLoadingBook = true;
     final result = await _bookRepository.isbnLookup(_isbn.replaceAll('-', ''));
@@ -53,6 +54,7 @@ abstract class _NewBoxStore with Store {
     _isLoadingBook = false;
 
     if (_currentBook == null) {
+      _lookupErrorMsg = 'Book not found';
       return false;
     }
 
@@ -104,4 +106,7 @@ abstract class _NewBoxStore with Store {
 
   @action
   void setBoxDescription(String description) => _boxDescription = description;
+
+  @computed
+  String get lookupErrorMsg => (_lookupErrorMsg == null ? '' : _lookupErrorMsg);
 }
