@@ -35,4 +35,15 @@
     "newBoxBookPublished": "Published",
     "newBoxAddBookButton": "ADD BOOK",
     "newBoxRemoveBook": "Delete"
+    "authErrorUnknown": "Unknown error",
+    "homeNavBarFeedLabel": "Feed",
+    "homeNavBarSearchLabel": "Search",
+    "homeNavBarActivityLabel": "Activity",
+    "homeNavBarProfileLabel": "Profile",
+    "feedDescription": "Description",
+    "feedTitle": "Top Boxes",
+    "feedBooks": "BOOKS",
+    "feedLocation": "LOCATION",
+    "feedNoLocationData": "No data",
+    "feedNoBoxesFound": "No boxes found... Try changing your preferences!"
 }

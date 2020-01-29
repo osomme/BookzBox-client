@@ -2,7 +2,9 @@ import 'package:bookzbox/features/activity/ui/screens/activity_screen.dart';
 import 'package:bookzbox/features/feed/ui/screens/feed_screen.dart';
 import 'package:bookzbox/features/profile/ui/screens/profile_screen.dart';
 import 'package:bookzbox/features/search/ui/screens/search_screen.dart';
+import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,7 +18,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    _pageController = PageController(initialPage: _currentTab);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -28,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() => _currentTab = index);
         },
         children: <Widget>[
-          FeedScreen(),
+          Provider.of<FeedScreen>(context),
           SearchScreen(),
           ActivityScreen(),
           ProfileScreen(),
@@ -48,27 +56,26 @@ class _HomeScreenState extends State<HomeScreen> {
       selectedItemColor: Theme.of(context).primaryColor,
       unselectedItemColor: Colors.grey,
       items: [
-        //TODO: Add localized strings for each item
         BottomNavigationBarItem(
-          title: Text('Feed'),
+          title: Text(S.of(context).homeNavBarFeedLabel),
           icon: Icon(
             Icons.home,
           ),
         ),
         BottomNavigationBarItem(
-          title: Text('Search'),
+          title: Text(S.of(context).homeNavBarSearchLabel),
           icon: Icon(
             Icons.search,
           ),
         ),
         BottomNavigationBarItem(
-          title: Text('Activity'),
+          title: Text(S.of(context).homeNavBarActivityLabel),
           icon: Icon(
             Icons.notifications,
           ),
         ),
         BottomNavigationBarItem(
-          title: Text('Profile'),
+          title: Text(S.of(context).homeNavBarProfileLabel),
           icon: Icon(
             Icons.person,
           ),

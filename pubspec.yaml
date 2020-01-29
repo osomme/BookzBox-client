@@ -42,6 +42,12 @@ dependencies:
   # Dartz
   dartz: ^0.8.9
 
+  # Geolocator (obtaining user location and converting lat lng coords to location data)
+  geolocator: ^5.2.0
+
+  # Spinning progress bar widgets
+  flutter_spinkit: "^4.1.1"
+
   
   
 

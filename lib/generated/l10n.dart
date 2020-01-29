@@ -352,6 +352,96 @@ class S {
       args: [],
     );
   }
+
+  String get homeNavBarFeedLabel {
+    return Intl.message(
+      'Feed',
+      name: 'homeNavBarFeedLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get homeNavBarSearchLabel {
+    return Intl.message(
+      'Search',
+      name: 'homeNavBarSearchLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get homeNavBarActivityLabel {
+    return Intl.message(
+      'Activity',
+      name: 'homeNavBarActivityLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get homeNavBarProfileLabel {
+    return Intl.message(
+      'Profile',
+      name: 'homeNavBarProfileLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get feedDescription {
+    return Intl.message(
+      'Description',
+      name: 'feedDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get feedTitle {
+    return Intl.message(
+      'Top Boxes',
+      name: 'feedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get feedBooks {
+    return Intl.message(
+      'BOOKS',
+      name: 'feedBooks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get feedLocation {
+    return Intl.message(
+      'LOCATION',
+      name: 'feedLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get feedNoLocationData {
+    return Intl.message(
+      'No data',
+      name: 'feedNoLocationData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get feedNoBoxesFound {
+    return Intl.message(
+      'No boxes found... Try changing your preferences!',
+      name: 'feedNoBoxesFound',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

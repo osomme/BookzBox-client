@@ -57,5 +57,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "newBoxRemoveBook" : MessageLookupByLibrary.simpleMessage("Delete"),
     "newBoxTitle" : MessageLookupByLibrary.simpleMessage("Create a box"),
     "newBoxTitleTitle" : MessageLookupByLibrary.simpleMessage("Title")
+    "authUsername" : MessageLookupByLibrary.simpleMessage("Username"),
+    "feedBooks" : MessageLookupByLibrary.simpleMessage("BOOKS"),
+    "feedDescription" : MessageLookupByLibrary.simpleMessage("Description"),
+    "feedLocation" : MessageLookupByLibrary.simpleMessage("LOCATION"),
+    "feedNoBoxesFound" : MessageLookupByLibrary.simpleMessage("No boxes found... Try changing your preferences!"),
+    "feedNoLocationData" : MessageLookupByLibrary.simpleMessage("No data"),
+    "feedTitle" : MessageLookupByLibrary.simpleMessage("Top Boxes"),
+    "homeNavBarActivityLabel" : MessageLookupByLibrary.simpleMessage("Activity"),
+    "homeNavBarFeedLabel" : MessageLookupByLibrary.simpleMessage("Feed"),
+    "homeNavBarProfileLabel" : MessageLookupByLibrary.simpleMessage("Profile"),
+    "homeNavBarSearchLabel" : MessageLookupByLibrary.simpleMessage("Search")
   };
 }

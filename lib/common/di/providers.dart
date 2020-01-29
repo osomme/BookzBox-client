@@ -1,6 +1,11 @@
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/authentication/errors/auth_error_handling.dart';
+import 'package:bookzbox/features/feed/feed.dart';
+import 'package:bookzbox/features/feed/service/box_like_service.dart';
+import 'package:bookzbox/features/feed/service/box_like_service_impl.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
+import 'package:bookzbox/features/location/location.dart';
+import 'package:bookzbox/features/location/services/location_service.dart';
 import 'package:bookzbox/features/new_box/repositories/book_repository.dart';
 import 'package:bookzbox/features/new_box/repositories/book_repository_impl.dart';
 import 'package:bookzbox/features/new_box/services/book_service.dart';
@@ -52,5 +57,32 @@ final bookProviders = [
 final mainProviders = [
   Provider<HomeScreen>(
     create: (_) => HomeScreen(),
+  ),
+];
+
+final feedProviders = [
+  Provider<IFeedService>(
+    create: (_) => FirebaseFeedService(),
+  ),
+  ProxyProvider<IFeedService, IFeedRepository>(
+    update: (_, service, __) => FeedRepository(service),
+  ),
+  ProxyProvider<IFeedRepository, FeedStore>(
+    update: (_, repo, __) => FeedStore(repo),
+  ),
+  Provider<IBoxLikeService>(
+    create: (_) => FirebaseBoxLikeService(),
+  ),
+  ProxyProvider<IBoxLikeService, IBoxLikeRepository>(
+    update: (_, service, __) => BoxLikeRepository(service),
+  ),
+  ProxyProvider<FeedStore, FeedScreen>(
+    update: (_, store, __) => FeedScreen(feedStore: store),
+  ),
+];
+
+final commonServicesProviders = [
+  Provider<ILocationService>(
+    create: (_) => LocationService(),
   ),
 ];
