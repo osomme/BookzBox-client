@@ -6,6 +6,7 @@ import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -50,12 +51,14 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
       body: Observer(builder: (_) {
         if (widget.feedStore.initialLoadingOngoing) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: SpinKitThreeBounce(
+              color: Theme.of(context).primaryColor,
+            ),
           );
         }
         if (widget.feedStore.boxes.isEmpty) {
           return Center(
-            child: Text('No boxes found...'), //TODO: Add localized string
+            child: Text(S.of(context).feedNoBoxesFound),
           );
         } else {
           return _mainContent();

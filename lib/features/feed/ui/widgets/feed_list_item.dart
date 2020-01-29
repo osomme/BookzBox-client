@@ -118,7 +118,7 @@ class FeedListItem extends StatelessWidget {
                             box.books.toCategoryString(),
                             style: Theme.of(context)
                                 .primaryTextTheme
-                                .subhead
+                                .overline
                                 .copyWith(color: Colors.white70),
                             overflow: TextOverflow.ellipsis,
                           ),

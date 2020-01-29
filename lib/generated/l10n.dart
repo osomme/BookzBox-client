@@ -298,6 +298,15 @@ class S {
       args: [],
     );
   }
+
+  String get feedNoBoxesFound {
+    return Intl.message(
+      'No boxes found... Try changing your preferences!',
+      name: 'feedNoBoxesFound',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

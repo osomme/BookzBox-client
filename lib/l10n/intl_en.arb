@@ -28,5 +28,6 @@
     "feedTitle": "Top Boxes",
     "feedBooks": "BOOKS",
     "feedLocation": "LOCATION",
-    "feedNoLocationData": "No data"
+    "feedNoLocationData": "No data",
+    "feedNoBoxesFound": "No boxes found... Try changing your preferences!"
 }
