@@ -11,7 +11,7 @@ class FirebaseErrorParser implements IAuthErrorParser {
   /// descriptions found here: https://pub.dev/documentation/firebase_auth/latest/firebase_auth/FirebaseAuth-class.html
   @override
   String messageFrom(String errorCode, BuildContext ctx) {
-    print('[AUTH ERROR] Parsing code: $errorCode');
+    print('[AUTH ERROR] code: $errorCode');
     switch (errorCode) {
       case 'ERROR_EMAIL_ALREADY_IN_USE': // Email has already been used by a different account.
         return S.of(ctx).authErrorEmailAlreadyUsed;

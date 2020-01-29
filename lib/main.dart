@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         routes: {
+          // TODO: Replace with constants
           'auth_selection': (ctx) => Provider.of<AuthSelectionScreen>(ctx),
           'email_login': (ctx) => Provider.of<LoginScreen>(ctx),
           'email_new_account': (ctx) => Provider.of<CreateAccountScreen>(ctx),

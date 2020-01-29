@@ -12,17 +12,17 @@ abstract class _AuthStore with Store {
   @observable
   User _user;
 
-  @computed
-  User get user => _user;
-
-  @computed
-  bool get isLoggedIn => _user != null;
-
   @observable
   bool isLoading = false;
 
   @observable
   String errorMessage;
+
+  @computed
+  User get user => _user;
+
+  @computed
+  bool get isLoggedIn => _user != null;
 
   _AuthStore(this._repository) {
     _checkAuthStatus();
