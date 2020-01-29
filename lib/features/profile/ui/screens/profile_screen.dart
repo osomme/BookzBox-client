@@ -1,4 +1,6 @@
+import 'package:bookzbox/features/new_box/ui/screens/new_box_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../../../authentication/authentication.dart';
@@ -29,8 +31,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Text('Profile Screen'),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => print('Create new box pressed'),
+        child: Align(
+          alignment: Alignment(-0.2, 0.075),
+          child: Icon(
+            FontAwesome5Solid.box_open,
+            size: 24,
+          ),
+        ),
+        onPressed: () => Navigator.push(
+            context, MaterialPageRoute(builder: (ctx) => Provider.of<NewBoxScreen>(ctx))),
       ),
     );
   }

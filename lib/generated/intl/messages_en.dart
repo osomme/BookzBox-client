@@ -41,6 +41,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "authSelectFacebook" : MessageLookupByLibrary.simpleMessage("Log in with Facebook"),
     "authSelectGoogle" : MessageLookupByLibrary.simpleMessage("Log in with Google"),
     "authSelectNewAcct" : MessageLookupByLibrary.simpleMessage("Don\'t have an account? Create a new one"),
-    "authUsername" : MessageLookupByLibrary.simpleMessage("Username")
+    "authUsername" : MessageLookupByLibrary.simpleMessage("Username"),
+    "newBoxAddBookButton" : MessageLookupByLibrary.simpleMessage("ADD BOOK"),
+    "newBoxBookAuthor" : MessageLookupByLibrary.simpleMessage("Author"),
+    "newBoxBookPublished" : MessageLookupByLibrary.simpleMessage("Published"),
+    "newBoxBooksTitle" : MessageLookupByLibrary.simpleMessage("Books"),
+    "newBoxCancelDialog" : MessageLookupByLibrary.simpleMessage("CANCEL"),
+    "newBoxCloseTip" : MessageLookupByLibrary.simpleMessage("Close"),
+    "newBoxDescriptionTitle" : MessageLookupByLibrary.simpleMessage("Description"),
+    "newBoxFindBook" : MessageLookupByLibrary.simpleMessage("FIND BOOK"),
+    "newBoxInfo" : MessageLookupByLibrary.simpleMessage("Creating a box is easy. First, add the books you want to trade. Second, write a catchy title and a short description. Finally, publish!"),
+    "newBoxIsbnDialogTitle" : MessageLookupByLibrary.simpleMessage("Enter ISBN"),
+    "newBoxIsbnInvalid" : MessageLookupByLibrary.simpleMessage("Invalid ISBN"),
+    "newBoxPublishTip" : MessageLookupByLibrary.simpleMessage("Publish"),
+    "newBoxRemoveBook" : MessageLookupByLibrary.simpleMessage("Delete"),
+    "newBoxTitle" : MessageLookupByLibrary.simpleMessage("Create a box"),
+    "newBoxTitleTitle" : MessageLookupByLibrary.simpleMessage("Title")
   };
 }

@@ -33,6 +33,8 @@ dependencies:
   firebase_analytics: ^5.0.9
   cloud_firestore: ^0.13.0+1  
   google_sign_in: ^4.1.1      
+  # Http client
+  http: ^0.12.0+4
 
   # RxDart
   rxdart: ^0.23.1
@@ -68,6 +70,7 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - assets/
+    - assets/images/book_cover_demo.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

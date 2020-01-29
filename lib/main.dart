@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ...authProviders,
         ...mainProviders,
+        ...bookProviders,
       ],
       child: MaterialApp(
         routes: {
