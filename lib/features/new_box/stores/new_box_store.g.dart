@@ -43,6 +43,12 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
   String get boxDescription => (_$boxDescriptionComputed ??=
           Computed<String>(() => super.boxDescription))
       .value;
+  Computed<String> _$lookupErrorMsgComputed;
+
+  @override
+  String get lookupErrorMsg => (_$lookupErrorMsgComputed ??=
+          Computed<String>(() => super.lookupErrorMsg))
+      .value;
 
   final _$_isbnAtom = Atom(name: '_NewBoxStore._isbn');
 
@@ -129,6 +135,23 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
     }, _$_boxDescriptionAtom, name: '${_$_boxDescriptionAtom.name}_set');
   }
 
+  final _$_lookupErrorMsgAtom = Atom(name: '_NewBoxStore._lookupErrorMsg');
+
+  @override
+  String get _lookupErrorMsg {
+    _$_lookupErrorMsgAtom.context.enforceReadPolicy(_$_lookupErrorMsgAtom);
+    _$_lookupErrorMsgAtom.reportObserved();
+    return super._lookupErrorMsg;
+  }
+
+  @override
+  set _lookupErrorMsg(String value) {
+    _$_lookupErrorMsgAtom.context.conditionallyRunInAction(() {
+      super._lookupErrorMsg = value;
+      _$_lookupErrorMsgAtom.reportChanged();
+    }, _$_lookupErrorMsgAtom, name: '${_$_lookupErrorMsgAtom.name}_set');
+  }
+
   final _$_booksAtom = Atom(name: '_NewBoxStore._books');
 
   @override
@@ -154,6 +177,26 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
   }
 
   final _$_NewBoxStoreActionController = ActionController(name: '_NewBoxStore');
+
+  @override
+  void addCurrentBook() {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.addCurrentBook();
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeBook(Book book) {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.removeBook(book);
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setIsbn(String isbn) {
