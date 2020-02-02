@@ -35,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           alignment: Alignment(-0.2, 0.075),
           child: Icon(
             FontAwesome5Solid.box_open,
-            size: 24,
+            size: 20,
           ),
         ),
         onPressed: () => Navigator.push(

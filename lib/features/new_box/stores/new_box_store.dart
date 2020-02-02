@@ -109,4 +109,7 @@ abstract class _NewBoxStore with Store {
 
   @computed
   String get lookupErrorMsg => (_lookupErrorMsg == null ? '' : _lookupErrorMsg);
+
+  @action
+  void setLookupErrorMsg(String msg) => _lookupErrorMsg = msg;
 }

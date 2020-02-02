@@ -34,8 +34,7 @@
     "newBoxBookAuthor": "Author",
     "newBoxBookPublished": "Published",
     "newBoxAddBookButton": "ADD BOOK",
-    "newBoxRemoveBook": "Delete"
-    "authErrorUnknown": "Unknown error",
+    "newBoxRemoveBook": "Delete",
     "homeNavBarFeedLabel": "Feed",
     "homeNavBarSearchLabel": "Search",
     "homeNavBarActivityLabel": "Activity",
