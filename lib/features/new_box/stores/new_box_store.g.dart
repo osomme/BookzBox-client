@@ -227,4 +227,14 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
       _$_NewBoxStoreActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  void setLookupErrorMsg(String msg) {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.setLookupErrorMsg(msg);
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
 }

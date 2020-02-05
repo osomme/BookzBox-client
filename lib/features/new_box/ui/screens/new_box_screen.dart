@@ -33,7 +33,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
 
   Container closeButton(BuildContext context) {
     return new Container(
-      margin: EdgeInsets.fromLTRB(0.0, 24, 0.0, 0.0),
+      margin: EdgeInsets.fromLTRB(8.0, 28, 0.0, 0.0),
       child: Align(
         alignment: Alignment.topLeft,
         child: IconButton(
@@ -51,7 +51,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
 
   Container publishButton(BuildContext context) {
     return new Container(
-      margin: EdgeInsets.fromLTRB(0.0, 24.0, 2.0, 0.0),
+      margin: EdgeInsets.fromLTRB(0.0, 28.0, 8.0, 0.0),
       child: Align(
         alignment: Alignment.topLeft,
         child: IconButton(
@@ -246,6 +246,11 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
     );
   }
 
+  void popIsbnDialog(BuildContext ctx) {
+    Navigator.of(ctx).pop();
+    widget.newBoxStore.setLookupErrorMsg('');
+  }
+
   Future<void> showIsbnDialog() async {
     return showDialog<void>(
       context: context,
@@ -295,7 +300,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                     S.of(context).newBoxCancelDialog,
                     style: TextStyle(fontWeight: FontWeight.w700),
                   ),
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () => popIsbnDialog(context),
                 ),
                 Observer(
                   builder: (_) => FlatButton(
@@ -463,16 +468,21 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).accentColor,
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            customTopBar(context),
-            infoText(context),
-            triangleBackgroundWidget(context),
-            booksWidget(context),
-            boxTitleWidget(context),
-            boxDescriptionWidget(context)
-          ],
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus(); // Hides soft keyboard
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              customTopBar(context),
+              infoText(context),
+              triangleBackgroundWidget(context),
+              booksWidget(context),
+              boxTitleWidget(context),
+              boxDescriptionWidget(context)
+            ],
+          ),
         ),
       ),
     );

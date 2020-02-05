@@ -42,6 +42,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "authSelectGoogle" : MessageLookupByLibrary.simpleMessage("Log in with Google"),
     "authSelectNewAcct" : MessageLookupByLibrary.simpleMessage("Don\'t have an account? Create a new one"),
     "authUsername" : MessageLookupByLibrary.simpleMessage("Username"),
+    "feedBooks" : MessageLookupByLibrary.simpleMessage("BOOKS"),
+    "feedDescription" : MessageLookupByLibrary.simpleMessage("Description"),
+    "feedLocation" : MessageLookupByLibrary.simpleMessage("LOCATION"),
+    "feedNoBoxesFound" : MessageLookupByLibrary.simpleMessage("No boxes found... Try changing your preferences!"),
+    "feedNoLocationData" : MessageLookupByLibrary.simpleMessage("No data"),
+    "feedTitle" : MessageLookupByLibrary.simpleMessage("Top Boxes"),
+    "homeNavBarActivityLabel" : MessageLookupByLibrary.simpleMessage("Activity"),
+    "homeNavBarFeedLabel" : MessageLookupByLibrary.simpleMessage("Feed"),
+    "homeNavBarProfileLabel" : MessageLookupByLibrary.simpleMessage("Profile"),
+    "homeNavBarSearchLabel" : MessageLookupByLibrary.simpleMessage("Search"),
     "newBoxAddBookButton" : MessageLookupByLibrary.simpleMessage("ADD BOOK"),
     "newBoxBookAuthor" : MessageLookupByLibrary.simpleMessage("Author"),
     "newBoxBookPublished" : MessageLookupByLibrary.simpleMessage("Published"),
@@ -57,16 +67,5 @@ class MessageLookup extends MessageLookupByLibrary {
     "newBoxRemoveBook" : MessageLookupByLibrary.simpleMessage("Delete"),
     "newBoxTitle" : MessageLookupByLibrary.simpleMessage("Create a box"),
     "newBoxTitleTitle" : MessageLookupByLibrary.simpleMessage("Title")
-    "authUsername" : MessageLookupByLibrary.simpleMessage("Username"),
-    "feedBooks" : MessageLookupByLibrary.simpleMessage("BOOKS"),
-    "feedDescription" : MessageLookupByLibrary.simpleMessage("Description"),
-    "feedLocation" : MessageLookupByLibrary.simpleMessage("LOCATION"),
-    "feedNoBoxesFound" : MessageLookupByLibrary.simpleMessage("No boxes found... Try changing your preferences!"),
-    "feedNoLocationData" : MessageLookupByLibrary.simpleMessage("No data"),
-    "feedTitle" : MessageLookupByLibrary.simpleMessage("Top Boxes"),
-    "homeNavBarActivityLabel" : MessageLookupByLibrary.simpleMessage("Activity"),
-    "homeNavBarFeedLabel" : MessageLookupByLibrary.simpleMessage("Feed"),
-    "homeNavBarProfileLabel" : MessageLookupByLibrary.simpleMessage("Profile"),
-    "homeNavBarSearchLabel" : MessageLookupByLibrary.simpleMessage("Search")
   };
 }
