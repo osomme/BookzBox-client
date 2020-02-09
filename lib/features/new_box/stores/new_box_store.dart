@@ -1,4 +1,5 @@
 import 'package:bookzbox/features/box/models/book.dart';
+import 'package:bookzbox/features/new_box/models/box_error.dart';
 import 'package:bookzbox/features/new_box/repositories/book_repository.dart';
 import 'package:mobx/mobx.dart';
 import 'package:validators/validators.dart';
@@ -32,6 +33,12 @@ abstract class _NewBoxStore with Store {
   @observable
   ObservableList<Book> _books = new ObservableList();
 
+  @observable
+  BoxError _bookCountError = BoxError.None;
+
+  @observable
+  BoxError _titleError = BoxError.None;
+
   _NewBoxStore(this._bookRepository);
 
   /// Attempts to find a book by using the user provided ISBN.
@@ -62,10 +69,20 @@ abstract class _NewBoxStore with Store {
   }
 
   @action
+  Future<bool> publishBox() async {
+    if (!isBoxContentValid()) return false;
+
+    //TODO: publish box
+
+    return true;
+  }
+
+  @action
   void addCurrentBook() {
     if (_currentBook == null) return;
 
     books.add(_currentBook);
+    validateBooks();
   }
 
   @action
@@ -83,7 +100,7 @@ abstract class _NewBoxStore with Store {
     if (_isbn == null) {
       return null;
     }
-    return !isISBN(_isbn) ? "Invalid ISBN" : null;
+    return !isISBN(_isbn) ? "Invalid ISBN" : '';
   }
 
   @computed
@@ -99,7 +116,10 @@ abstract class _NewBoxStore with Store {
   String get boxTitle => _boxTitle;
 
   @action
-  void setBoxTitle(String title) => _boxTitle = title;
+  void setBoxTitle(String title) {
+    _boxTitle = title;
+    validateTitle();
+  }
 
   @computed
   String get boxDescription => _boxDescription;
@@ -112,4 +132,50 @@ abstract class _NewBoxStore with Store {
 
   @action
   void setLookupErrorMsg(String msg) => _lookupErrorMsg = msg;
+
+  @computed
+  BoxError get titleError => _titleError;
+
+  @action
+  void setTitleError(BoxError err) => _titleError = err;
+
+  @computed
+  BoxError get bookCountError => _bookCountError;
+
+  @action
+  void setBookCountError(BoxError err) => _bookCountError = err;
+
+  bool isBoxContentValid() {
+    bool isValid = true;
+
+    if (!validateBooks()) {
+      isValid = false;
+    }
+
+    if (!validateTitle()) {
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  @action
+  bool validateBooks() {
+    if (_books == null || _books.length < 1) {
+      _bookCountError = BoxError.InvalidBookCount;
+      return false;
+    }
+    _bookCountError = BoxError.None;
+    return true;
+  }
+
+  @action
+  bool validateTitle() {
+    if (_boxTitle == null || _boxTitle.length <= 3) {
+      _titleError = BoxError.InvalidTitle;
+      return false;
+    }
+    _titleError = BoxError.None;
+    return true;
+  }
 }

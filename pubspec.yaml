@@ -77,6 +77,7 @@ flutter:
   assets:
     - assets/
     - assets/images/book_cover_demo.jpg
+    - assets/images/book_cover_placeholder.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

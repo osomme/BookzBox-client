@@ -49,6 +49,18 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
   String get lookupErrorMsg => (_$lookupErrorMsgComputed ??=
           Computed<String>(() => super.lookupErrorMsg))
       .value;
+  Computed<BoxError> _$titleErrorComputed;
+
+  @override
+  BoxError get titleError =>
+      (_$titleErrorComputed ??= Computed<BoxError>(() => super.titleError))
+          .value;
+  Computed<BoxError> _$bookCountErrorComputed;
+
+  @override
+  BoxError get bookCountError => (_$bookCountErrorComputed ??=
+          Computed<BoxError>(() => super.bookCountError))
+      .value;
 
   final _$_isbnAtom = Atom(name: '_NewBoxStore._isbn');
 
@@ -169,11 +181,52 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
     }, _$_booksAtom, name: '${_$_booksAtom.name}_set');
   }
 
+  final _$_bookCountErrorAtom = Atom(name: '_NewBoxStore._bookCountError');
+
+  @override
+  BoxError get _bookCountError {
+    _$_bookCountErrorAtom.context.enforceReadPolicy(_$_bookCountErrorAtom);
+    _$_bookCountErrorAtom.reportObserved();
+    return super._bookCountError;
+  }
+
+  @override
+  set _bookCountError(BoxError value) {
+    _$_bookCountErrorAtom.context.conditionallyRunInAction(() {
+      super._bookCountError = value;
+      _$_bookCountErrorAtom.reportChanged();
+    }, _$_bookCountErrorAtom, name: '${_$_bookCountErrorAtom.name}_set');
+  }
+
+  final _$_titleErrorAtom = Atom(name: '_NewBoxStore._titleError');
+
+  @override
+  BoxError get _titleError {
+    _$_titleErrorAtom.context.enforceReadPolicy(_$_titleErrorAtom);
+    _$_titleErrorAtom.reportObserved();
+    return super._titleError;
+  }
+
+  @override
+  set _titleError(BoxError value) {
+    _$_titleErrorAtom.context.conditionallyRunInAction(() {
+      super._titleError = value;
+      _$_titleErrorAtom.reportChanged();
+    }, _$_titleErrorAtom, name: '${_$_titleErrorAtom.name}_set');
+  }
+
   final _$findBookAsyncAction = AsyncAction('findBook');
 
   @override
   Future<bool> findBook() {
     return _$findBookAsyncAction.run(() => super.findBook());
+  }
+
+  final _$publishBoxAsyncAction = AsyncAction('publishBox');
+
+  @override
+  Future<bool> publishBox() {
+    return _$publishBoxAsyncAction.run(() => super.publishBox());
   }
 
   final _$_NewBoxStoreActionController = ActionController(name: '_NewBoxStore');
@@ -233,6 +286,46 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
     final _$actionInfo = _$_NewBoxStoreActionController.startAction();
     try {
       return super.setLookupErrorMsg(msg);
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setTitleError(BoxError err) {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.setTitleError(err);
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setBookCountError(BoxError err) {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.setBookCountError(err);
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  bool validateBooks() {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.validateBooks();
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  bool validateTitle() {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.validateTitle();
     } finally {
       _$_NewBoxStoreActionController.endAction(_$actionInfo);
     }

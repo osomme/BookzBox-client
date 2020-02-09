@@ -1,4 +1,5 @@
 import 'package:bookzbox/features/box/models/book.dart';
+import 'package:bookzbox/features/new_box/models/box_error.dart';
 import 'package:bookzbox/features/new_box/stores/new_box_store.dart';
 import 'package:bookzbox/features/new_box/ui/widgets/book_card_widget.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -43,10 +44,21 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
             color: Theme.of(context).accentColor,
           ),
           tooltip: S.of(context).newBoxCloseTip,
-          onPressed: () => setState(() => Navigator.pop(context)),
+          onPressed: () => setState(() {
+            widget.newBoxStore.setBookCountError(BoxError.None);
+            widget.newBoxStore.setTitleError(BoxError.None);
+            widget.newBoxStore.books.clear();
+            return Navigator.pop(context);
+          }),
         ),
       ),
     );
+  }
+
+  Future<void> publishAndClosePage(BuildContext ctx) async {
+    if (!(await widget.newBoxStore.publishBox())) return;
+
+    Navigator.of(ctx).pop();
   }
 
   Container publishButton(BuildContext context) {
@@ -61,7 +73,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
             color: Theme.of(context).accentColor,
           ),
           tooltip: S.of(context).newBoxPublishTip,
-          onPressed: () => print("Publish"),
+          onPressed: () => publishAndClosePage(context),
         ),
       ),
     );
@@ -192,7 +204,26 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(left: 4.0),
-            child: smallTitle(S.of(context).newBoxBooksTitle),
+            child: Row(
+              children: <Widget>[
+                smallTitle(S.of(context).newBoxBooksTitle),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+                  child: Observer(
+                    builder: (_) => Text(
+                      (widget.newBoxStore.bookCountError == BoxError.None
+                          ? ''
+                          : S.of(context).newBoxNoBooks),
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.red[900],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           Observer(
             builder: (_) => GridView.count(
@@ -210,17 +241,36 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
 
   Container boxTitleWidget(BuildContext context) {
     return new Container(
-      margin: EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 4.0),
+      margin: EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 16.0),
       constraints: BoxConstraints(minWidth: double.infinity),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          smallTitle(S.of(context).newBoxTitleTitle),
+          Row(
+            children: <Widget>[
+              smallTitle(S.of(context).newBoxTitleTitle),
+              Container(
+                margin: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+                child: Observer(
+                  builder: (_) => Text(
+                    (widget.newBoxStore.titleError == BoxError.None
+                        ? ''
+                        : S.of(context).newBoxInvalidTitle),
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.red[900],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
           TextField(
             maxLength: 50,
             maxLengthEnforced: true,
             onChanged: (value) => widget.newBoxStore.setBoxTitle(value),
-          )
+          ),
         ],
       ),
     );
@@ -356,7 +406,9 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                             child: Text(
                               (widget.newBoxStore.currentBook == null
                                   ? ""
-                                  : widget.newBoxStore.currentBook.title),
+                                  : (widget.newBoxStore.currentBook.title == null
+                                      ? S.of(context).newBoxFieldPlaceholder
+                                      : widget.newBoxStore.currentBook.title)),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 16,
@@ -368,8 +420,10 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                           Center(
                             child: Text(
                               (widget.newBoxStore.currentBook == null
-                                  ? ""
-                                  : widget.newBoxStore.currentBook.subtitle),
+                                  ? ''
+                                  : (widget.newBoxStore.currentBook.subtitle == null
+                                      ? ''
+                                      : widget.newBoxStore.currentBook.subtitle)),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.grey,
@@ -387,14 +441,19 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                           children: [
                             Row(
                               children: <Widget>[
-                                Text(
-                                  S.of(context).newBoxBookAuthor + ":",
-                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                Container(
+                                  margin: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                                  child: Text(
+                                    S.of(context).newBoxBookAuthor + ":",
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                  ),
                                 ),
                                 Text(
                                   (widget.newBoxStore.currentBook == null
                                       ? ""
-                                      : widget.newBoxStore.currentBook.authors[0]),
+                                      : (widget.newBoxStore.currentBook.authors[0] == null
+                                          ? S.of(context).newBoxFieldPlaceholder
+                                          : widget.newBoxStore.currentBook.authors[0])),
                                   style: TextStyle(
                                     fontSize: 14,
                                   ),
@@ -403,14 +462,20 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                             ),
                             Row(
                               children: <Widget>[
-                                Text(
-                                  S.of(context).newBoxBookPublished + ":",
-                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                Container(
+                                  margin: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                                  child: Text(
+                                    S.of(context).newBoxBookPublished + ":",
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                  ),
                                 ),
                                 Text(
                                   (widget.newBoxStore.currentBook == null
                                       ? ""
-                                      : (widget.newBoxStore.currentBook.publishYear.toString())),
+                                      : ((widget.newBoxStore.currentBook.publishYear < 1
+                                          ? S.of(context).newBoxFieldPlaceholder
+                                          : widget.newBoxStore.currentBook.publishYear
+                                              .toString()))),
                                   style: TextStyle(
                                     fontSize: 14,
                                   ),
@@ -425,14 +490,20 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Image.network(
-                    (widget.newBoxStore.currentBook == null
-                        ? null
-                        : widget.newBoxStore.currentBook.thumbnailUrl),
-                    fit: BoxFit.fill,
-                    width: 70,
-                    height: 100,
-                  ),
+                  child: (widget.newBoxStore.currentBook == null ||
+                          widget.newBoxStore.currentBook.thumbnailUrl == null
+                      ? Image.asset(
+                          'assets/images/book_cover_placeholder.jpeg',
+                          fit: BoxFit.fill,
+                          width: 70,
+                          height: 100,
+                        )
+                      : Image.network(
+                          widget.newBoxStore.currentBook.thumbnailUrl,
+                          fit: BoxFit.fill,
+                          width: 70,
+                          height: 100,
+                        )),
                 ),
               ],
             ),
