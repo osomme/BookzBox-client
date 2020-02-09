@@ -353,6 +353,33 @@ class S {
     );
   }
 
+  String get newBoxInvalidTitle {
+    return Intl.message(
+      'Title must be at least 4 characters long',
+      name: 'newBoxInvalidTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxNoBooks {
+    return Intl.message(
+      'A box must have at least 1 book',
+      name: 'newBoxNoBooks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxFieldPlaceholder {
+    return Intl.message(
+      'Unknown',
+      name: 'newBoxFieldPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get homeNavBarFeedLabel {
     return Intl.message(
       'Feed',
