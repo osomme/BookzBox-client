@@ -21,7 +21,7 @@ class FormFieldData {
       this.suffixIcon});
 }
 
-class AuthScreen extends StatefulWidget {
+class AuthScreen extends StatelessWidget {
   final VoidCallback onSubmitPressed;
   final VoidCallback onNavigationPressed;
   final String submitButtonText;
@@ -44,11 +44,6 @@ class AuthScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  _AuthScreenState createState() => _AuthScreenState();
-}
-
-class _AuthScreenState extends State<AuthScreen> {
-  @override
   Widget build(BuildContext context) {
     return AuthLoadingScreen(
       children: <Widget>[
@@ -58,10 +53,10 @@ class _AuthScreenState extends State<AuthScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: AuthInputCard(
-                formFields: widget.fields,
-                navigationButtonLabel: widget.navigationButtonText,
-                onNavigationPressed: widget.onNavigationPressed,
-                errorMessage: widget.errorMessage,
+                formFields: fields,
+                navigationButtonLabel: navigationButtonText,
+                onNavigationPressed: onNavigationPressed,
+                errorMessage: errorMessage,
               ),
             ),
             Positioned.directional(
@@ -70,9 +65,9 @@ class _AuthScreenState extends State<AuthScreen> {
               width: MediaQuery.of(context).size.width,
               child: Center(
                 child: AuthButton(
-                  onClicked: widget.formIsValid ? widget.onSubmitPressed : null,
-                  labelText: widget.submitButtonText,
-                  isLoading: widget.isLoading,
+                  onClicked: formIsValid ? onSubmitPressed : null,
+                  labelText: submitButtonText,
+                  isLoading: isLoading,
                 ),
               ),
             ),

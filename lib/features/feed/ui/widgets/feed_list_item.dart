@@ -193,13 +193,17 @@ class FeedListItem extends StatelessWidget {
             size: 20.0,
             color: Theme.of(ctx).primaryIconTheme.color,
           );
+        } else if (snapshot.hasError) {
+          return Text(
+            S.of(ctx).feedNoLocationData,
+            style: Theme.of(ctx).primaryTextTheme.subhead,
+          );
         }
-        final location = snapshot.data.fold(
-          () => S.of(ctx).feedNoLocationData,
-          (placemark) => placemark.toLocationString(),
-        );
         return Text(
-          location.isEmpty ? S.of(ctx).feedNoLocationData : location,
+          snapshot.data
+              .map((p) => p.toLocationString())
+              .filter((s) => s.isNotEmpty)
+              .getOrElse(() => S.of(ctx).feedNoLocationData),
           style: Theme.of(ctx).primaryTextTheme.subhead,
         );
       },

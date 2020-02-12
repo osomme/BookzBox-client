@@ -15,8 +15,6 @@ import 'package:bookzbox/features/new_box/ui/screens/new_box_screen.dart';
 import 'package:provider/provider.dart';
 
 final authProviders = [
-  Provider<LoginCredentialsStore>(create: (_) => LoginCredentialsStore()),
-  Provider<NewAccountStore>(create: (_) => NewAccountStore()),
   Provider<IAuthErrorParser>(create: (_) => FirebaseErrorParser()),
   Provider<IAuthService>(create: (_) => AuthService.instance),
   ProxyProvider<IAuthService, IAuthRepository>(
@@ -31,6 +29,11 @@ final authProviders = [
       errorParser: errorParser,
     ),
   ),
+];
+
+final loginProviders = [
+  Provider<LoginCredentialsStore>(create: (_) => LoginCredentialsStore()),
+  Provider<NewAccountStore>(create: (_) => NewAccountStore()),
   ProxyProvider3<AuthStore, LoginCredentialsStore, IAuthErrorParser, LoginScreen>(
     update: (_, authStore, credStore, errorParser, __) =>
         LoginScreen(authStore, credStore, errorParser),

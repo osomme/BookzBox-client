@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/authentication/ui/screens/auth_loading_screen.dart';
 import 'package:bookzbox/features/authentication/ui/widgets/main_content_card.dart';
@@ -16,10 +17,10 @@ class AuthSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) => AuthLoadingScreen(
-        children: <Widget>[
-          Center(
+    return AuthLoadingScreen(
+      children: <Widget>[
+        Observer(
+          builder: (_) => Center(
             child: authStore.isLoading
                 ? SizedBox(
                     height: 64.0,
@@ -41,7 +42,8 @@ class AuthSelectionScreen extends StatelessWidget {
                             RaisedButton(
                               onPressed: authStore.isLoading
                                   ? null
-                                  : () => Navigator.pushNamed(context, 'email_login'),
+                                  : () =>
+                                      Navigator.pushNamed(context, Screens.emailLogin),
                               child: Row(
                                 children: <Widget>[
                                   Icon(Icons.email),
@@ -98,8 +100,8 @@ class AuthSelectionScreen extends StatelessWidget {
                             FlatButton(
                               onPressed: authStore.isLoading
                                   ? null
-                                  : () =>
-                                      Navigator.pushNamed(context, 'email_new_account'),
+                                  : () => Navigator.pushNamed(
+                                      context, Screens.emailNewAccount),
                               child: Text(
                                 S.of(context).authSelectNewAcct,
                                 style: TextStyle(
@@ -114,8 +116,8 @@ class AuthSelectionScreen extends StatelessWidget {
                     ),
                   ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

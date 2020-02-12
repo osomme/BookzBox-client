@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -21,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
         .signInWithEmail(widget.credStore.email, widget.credStore.password);
     if (widget.authStore.isLoggedIn) {
       widget.credStore.reset();
-      Navigator.pop(context);
+      Navigator.popUntil(context, (s) => s.isFirst);
     }
   }
 
@@ -49,7 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
     return Observer(
       builder: (_) => AuthScreen(
         fields: _createFormFields(),
-        onNavigationPressed: () => Navigator.pushNamed(context, 'email_new_account'),
+        onNavigationPressed: () {
+          widget.authStore.clearError();
+          return Navigator.pushNamed(context, Screens.emailNewAccount);
+        },
         formIsValid: widget.credStore.credentialsAreValid,
         navigationButtonText: S.of(context).authNavToRegistration,
         submitButtonText: S.of(context).authLogInBtn,

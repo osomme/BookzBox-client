@@ -1,4 +1,5 @@
 import 'package:bookzbox/common/di/providers.dart';
+import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -13,6 +14,12 @@ void main() => runApp(MyApp());
 
 final FirebaseAnalytics _analytics = FirebaseAnalytics();
 
+final _themeData = ThemeData(
+  primarySwatch: Color.fromRGBO(58, 46, 58, 1.0).toSwatch(),
+  accentColor: Color.fromRGBO(239, 177, 130, 1.0),
+  accentColorBrightness: Brightness.light,
+);
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -26,11 +33,20 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         routes: {
-          // TODO: Replace with constants
-          'auth_selection': (ctx) => Provider.of<AuthSelectionScreen>(ctx),
-          'email_login': (ctx) => Provider.of<LoginScreen>(ctx),
-          'email_new_account': (ctx) => Provider.of<CreateAccountScreen>(ctx),
-          'main': (ctx) => Provider.of<HomeScreen>(ctx),
+          Screens.authSelect: (ctx) => Provider.of<AuthSelectionScreen>(ctx),
+          Screens.emailLogin: (ctx) => MultiProvider(
+                providers: loginProviders,
+                child: Consumer<LoginScreen>(
+                  builder: (_, loginScreen, __) => loginScreen,
+                ),
+              ),
+          Screens.emailNewAccount: (ctx) => MultiProvider(
+                providers: loginProviders,
+                child: Consumer<CreateAccountScreen>(
+                  builder: (_, createAccScreen, __) => createAccScreen,
+                ),
+              ),
+          Screens.home: (ctx) => Provider.of<HomeScreen>(ctx),
         },
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: _analytics),
@@ -39,11 +55,7 @@ class MyApp extends StatelessWidget {
         supportedLocales: S.delegate.supportedLocales,
         title: 'BookzBox',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Color.fromRGBO(58, 46, 58, 1.0).toSwatch(),
-          accentColor: Color.fromRGBO(239, 177, 130, 1.0),
-          accentColorBrightness: Brightness.light,
-        ),
+        theme: _themeData,
         home: Consumer<AuthStore>(
           builder: (_, authStore, __) {
             return Observer(

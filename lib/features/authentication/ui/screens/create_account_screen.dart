@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         widget.credStore.username, widget.credStore.email, widget.credStore.password);
     if (widget.authStore.isLoggedIn) {
       widget.credStore.reset();
-      Navigator.pop(context);
+      Navigator.popUntil(context, (s) => s.isFirst);
     }
   }
 
@@ -50,27 +51,25 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   }
 
   @override
-  void dispose() {
-    widget.credStore.reset();
-    widget.authStore.clearError();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Observer(
-      builder: (_) => AuthScreen(
-        fields: _createFormFields(),
-        onNavigationPressed: () => Navigator.pop(context),
-        formIsValid: widget.credStore.credentialsAreValid,
-        navigationButtonText: S.of(context).authNavToLogIn,
-        submitButtonText: S.of(context).authRegisterBtn,
-        onSubmitPressed: _registerUser,
-        isLoading: widget.authStore.isLoading,
-        errorMessage: widget.authStore.errorMessage != null
-            ? widget.errorParser.messageFrom(widget.authStore.errorMessage, context)
-            : null,
-      ),
+      builder: (_) {
+        return AuthScreen(
+          fields: _createFormFields(),
+          onNavigationPressed: () {
+            widget.authStore.clearError();
+            return Navigator.pushNamed(context, Screens.emailLogin);
+          },
+          formIsValid: widget.credStore.credentialsAreValid,
+          navigationButtonText: S.of(context).authNavToLogIn,
+          submitButtonText: S.of(context).authRegisterBtn,
+          onSubmitPressed: _registerUser,
+          isLoading: widget.authStore.isLoading,
+          errorMessage: widget.authStore.errorMessage != null
+              ? widget.errorParser.messageFrom(widget.authStore.errorMessage, context)
+              : null,
+        );
+      },
     );
   }
 }
