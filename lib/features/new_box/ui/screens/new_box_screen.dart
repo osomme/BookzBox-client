@@ -66,13 +66,24 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
       margin: EdgeInsets.fromLTRB(0.0, 28.0, 8.0, 0.0),
       child: Align(
         alignment: Alignment.topLeft,
-        child: IconButton(
-          icon: Icon(
-            MaterialCommunityIcons.cube_send,
-            size: 24.0,
-            color: Theme.of(context).accentColor,
+        child: FlatButton(
+          child: Row(
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(right: 2.0),
+                child: Text(
+                  S.of(context).newBoxPublishTip,
+                  style:
+                      TextStyle(color: Theme.of(context).accentColor, fontWeight: FontWeight.w600),
+                ),
+              ),
+              Icon(
+                MaterialCommunityIcons.cube_send,
+                size: 24.0,
+                color: Theme.of(context).accentColor,
+              ),
+            ],
           ),
-          tooltip: S.of(context).newBoxPublishTip,
           onPressed: () => publishAndClosePage(context),
         ),
       ),
