@@ -19,6 +19,9 @@ class AuthService implements IAuthService {
   Future<Either<String, User>> signInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        return Left('sign_in_canceled');
+      }
       final googleAuth = await googleUser.authentication;
       final credentials = GoogleAuthProvider.getCredential(
         accessToken: googleAuth.accessToken,

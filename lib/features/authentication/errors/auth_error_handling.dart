@@ -31,6 +31,8 @@ class FirebaseErrorParser implements IAuthErrorParser {
         return S.of(ctx).authErrorWrongPassword;
       case 'ERROR_TOO_MANY_REQUESTS': // User has attempted to log in too many times.
         return S.of(ctx).authErrorTooManyReqs;
+      case 'sign_in_canceled': // User cancelled their Google auth login window.
+        return '';
       default:
         return S.of(ctx).authErrorUnknown;
     }
