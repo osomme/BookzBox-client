@@ -225,8 +225,8 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
   final _$publishBoxAsyncAction = AsyncAction('publishBox');
 
   @override
-  Future<bool> publishBox() {
-    return _$publishBoxAsyncAction.run(() => super.publishBox());
+  Future<Either<PublishError, Box>> publishBox(User user) {
+    return _$publishBoxAsyncAction.run(() => super.publishBox(user));
   }
 
   final _$_NewBoxStoreActionController = ActionController(name: '_NewBoxStore');

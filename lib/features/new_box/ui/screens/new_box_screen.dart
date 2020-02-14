@@ -1,3 +1,4 @@
+import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/models/book.dart';
 import 'package:bookzbox/features/new_box/models/box_error.dart';
 import 'package:bookzbox/features/new_box/stores/new_box_store.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 class NewBoxScreen extends StatefulWidget {
   final NewBoxStore newBoxStore;
@@ -55,13 +57,14 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
     );
   }
 
-  Future<void> publishAndClosePage(BuildContext ctx) async {
-    if (!(await widget.newBoxStore.publishBox())) return;
-
-    Navigator.of(ctx).pop();
+  Future<void> publishAndClosePage(BuildContext ctx, final User publisher) async {
+    final result = (await widget.newBoxStore.publishBox(publisher));
+    result.fold(
+        (error) => print("Publish error"), // TODO: add error message
+        (box) => Navigator.of(ctx).pop()); // TODO navigate to details page?
   }
 
-  Container publishButton(BuildContext context) {
+  Container publishButton(BuildContext context, final User user) {
     return new Container(
       margin: EdgeInsets.fromLTRB(0.0, 28.0, 8.0, 0.0),
       child: Align(
@@ -84,7 +87,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
               ),
             ],
           ),
-          onPressed: () => publishAndClosePage(context),
+          onPressed: () => publishAndClosePage(context, user),
         ),
       ),
     );
@@ -152,7 +155,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
     );
   }
 
-  Row customTopBar(BuildContext context) {
+  Row customTopBar(BuildContext context, final AuthStore authStore) {
     return new Row(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
@@ -166,7 +169,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                 closeButton(context),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: publishButton(context),
+                  child: publishButton(context, authStore.user),
                 ),
               ],
             ),
@@ -548,23 +551,59 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authStore = Provider.of<AuthStore>(context);
     return Scaffold(
       backgroundColor: Theme.of(context).accentColor,
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus(); // Hides soft keyboard
         },
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              customTopBar(context),
-              infoText(context),
-              triangleBackgroundWidget(context),
-              booksWidget(context),
-              boxTitleWidget(context),
-              boxDescriptionWidget(context)
-            ],
-          ),
+        child: Stack(
+          children: <Widget>[
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  customTopBar(context, authStore),
+                  infoText(context),
+                  triangleBackgroundWidget(context),
+                  booksWidget(context),
+                  boxTitleWidget(context),
+                  boxDescriptionWidget(context)
+                ],
+              ),
+            ),
+            Visibility(
+              visible: widget.newBoxStore.isPublishing,
+              child: Align(
+                alignment: Alignment.center,
+                child: Container(
+                  margin: const EdgeInsets.only(top: 128),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                    color: Colors.black26,
+                  ),
+                  padding: const EdgeInsets.all(48),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        S.of(context).newBoxIsPublishing,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 24,
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 24),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
