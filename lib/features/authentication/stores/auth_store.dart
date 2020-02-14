@@ -1,5 +1,6 @@
 import 'package:bookzbox/features/authentication/models/models.dart';
 import 'package:bookzbox/features/authentication/repositories/auth_repository.dart';
+import 'package:dartz/dartz.dart';
 import 'package:mobx/mobx.dart';
 
 part 'auth_store.g.dart';
@@ -39,10 +40,7 @@ abstract class _AuthStore with Store {
     errorMessage = null;
     isLoading = true;
     final result = await _repository.registerWithEmail(email, password, username);
-    result.fold(
-      (error) => errorMessage = error,
-      (user) => _user = user,
-    );
+    _handleLoginResult(result);
     isLoading = false;
   }
 
@@ -51,10 +49,7 @@ abstract class _AuthStore with Store {
     errorMessage = null;
     isLoading = true;
     final result = await _repository.signInWithGoogle();
-    result.fold(
-      (error) => errorMessage = error,
-      (user) => _user = user,
-    );
+    _handleLoginResult(result);
     isLoading = false;
   }
 
@@ -63,10 +58,7 @@ abstract class _AuthStore with Store {
     errorMessage = null;
     isLoading = true;
     final result = await _repository.signInWithEmail(email, password);
-    result.fold(
-      (error) => errorMessage = error,
-      (user) => _user = user,
-    );
+    _handleLoginResult(result);
     isLoading = false;
   }
 
@@ -76,6 +68,11 @@ abstract class _AuthStore with Store {
     _user = await _repository.user;
     isLoading = false;
   }
+
+  void _handleLoginResult(Either<String, User> result) => result.fold(
+        (error) => errorMessage = error,
+        (user) => _user = user,
+      );
 
   @action
   void clearError() => errorMessage = null;

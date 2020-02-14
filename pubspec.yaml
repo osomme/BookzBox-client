@@ -48,7 +48,8 @@ dependencies:
   # Spinning progress bar widgets
   flutter_spinkit: "^4.1.1"
 
-  
+  # Cached network image
+  cached_network_image: ^2.0.0
   
 
 dev_dependencies:
