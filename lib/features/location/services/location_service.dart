@@ -5,4 +5,7 @@ import 'package:geolocator/geolocator.dart';
 abstract class ILocationService {
   /// Retrives location information from latitude and longitude coordinates.
   Future<Option<Placemark>> getLocationDataFrom(double lat, double lng);
+
+  /// Retrieves the rough location of the current device.
+  Future<Position> getCoarseLocation();
 }

@@ -61,6 +61,12 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
   BoxError get bookCountError => (_$bookCountErrorComputed ??=
           Computed<BoxError>(() => super.bookCountError))
       .value;
+  Computed<bool> _$isPublishingComputed;
+
+  @override
+  bool get isPublishing =>
+      (_$isPublishingComputed ??= Computed<bool>(() => super.isPublishing))
+          .value;
 
   final _$_isbnAtom = Atom(name: '_NewBoxStore._isbn');
 
@@ -213,6 +219,23 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
       super._titleError = value;
       _$_titleErrorAtom.reportChanged();
     }, _$_titleErrorAtom, name: '${_$_titleErrorAtom.name}_set');
+  }
+
+  final _$_isPublishingAtom = Atom(name: '_NewBoxStore._isPublishing');
+
+  @override
+  bool get _isPublishing {
+    _$_isPublishingAtom.context.enforceReadPolicy(_$_isPublishingAtom);
+    _$_isPublishingAtom.reportObserved();
+    return super._isPublishing;
+  }
+
+  @override
+  set _isPublishing(bool value) {
+    _$_isPublishingAtom.context.conditionallyRunInAction(() {
+      super._isPublishing = value;
+      _$_isPublishingAtom.reportChanged();
+    }, _$_isPublishingAtom, name: '${_$_isPublishingAtom.name}_set');
   }
 
   final _$findBookAsyncAction = AsyncAction('findBook');

@@ -1,11 +1,13 @@
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/models/book.dart';
 import 'package:bookzbox/features/box/models/box.dart';
+import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/features/new_box/models/box_error.dart';
 import 'package:bookzbox/features/new_box/repositories/book_repository.dart';
 import 'package:bookzbox/features/new_box/repositories/box_repository.dart';
 import 'package:bookzbox/features/new_box/services/publish_error.dart';
 import 'package:dartz/dartz.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:mobx/mobx.dart';
 import 'package:validators/validators.dart';
 
@@ -16,6 +18,7 @@ class NewBoxStore = _NewBoxStore with _$NewBoxStore;
 abstract class _NewBoxStore with Store {
   final IBookRepository _bookRepository;
   final IBoxRepository _boxRepository;
+  final ILocationService _locationService;
 
   @observable
   String _isbn;
@@ -48,7 +51,7 @@ abstract class _NewBoxStore with Store {
   @observable
   bool _isPublishing = false;
 
-  _NewBoxStore(this._bookRepository, this._boxRepository);
+  _NewBoxStore(this._bookRepository, this._boxRepository, this._locationService);
 
   /// Attempts to find a book by using the user provided ISBN.
   /// @returns false if the isbn is invalid and true if lookup was
@@ -80,18 +83,21 @@ abstract class _NewBoxStore with Store {
   @action
   Future<Either<PublishError, Box>> publishBox(final User user) async {
     if (!isBoxContentValid()) return left(PublishError.Invalid);
+    _isPublishing = true;
+
+    Position pos = await _locationService.getCoarseLocation();
     Box toPublish = Box(
         id: null,
         publisher: user,
         books: _books,
         status: BoxStatus.public,
         publishDateTime: DateTime.now(),
-        latitude: 12.0, // TODO add actual position
-        longitude: 69.0,
+        latitude: pos.latitude ?? 0.0,
+        longitude: pos.longitude ?? 0.0,
         title: _boxTitle,
         description: _boxDescription);
-    _isPublishing = true;
     final res = await _boxRepository.publish(toPublish);
+
     _isPublishing = false;
     return res;
   }

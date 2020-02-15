@@ -59,8 +59,11 @@ final bookProviders = [
   ProxyProvider<IPublishService, IBoxRepository>(
     update: (_, service, __) => BoxRepository(service),
   ),
-  ProxyProvider2<IBookRepository, IBoxRepository, NewBoxStore>(
-    update: (_, bookRepo, boxRepo, __) => NewBoxStore(bookRepo, boxRepo),
+  Provider<ILocationService>(
+    create: (_) => LocationService(),
+  ),
+  ProxyProvider3<IBookRepository, IBoxRepository, ILocationService, NewBoxStore>(
+    update: (_, bookRepo, boxRepo, locService, __) => NewBoxStore(bookRepo, boxRepo, locService),
   ),
   ProxyProvider<NewBoxStore, NewBoxScreen>(
     update: (_, store, __) => NewBoxScreen(store),
