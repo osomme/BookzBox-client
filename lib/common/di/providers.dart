@@ -8,8 +8,12 @@ import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/features/location/services/location_service.dart';
 import 'package:bookzbox/features/new_box/repositories/book_repository.dart';
 import 'package:bookzbox/features/new_box/repositories/book_repository_impl.dart';
+import 'package:bookzbox/features/new_box/repositories/box_repository.dart';
+import 'package:bookzbox/features/new_box/repositories/box_repository_impl.dart';
 import 'package:bookzbox/features/new_box/services/book_service.dart';
 import 'package:bookzbox/features/new_box/services/book_service_impl.dart';
+import 'package:bookzbox/features/new_box/services/publish_service.dart';
+import 'package:bookzbox/features/new_box/services/publish_service_impl.dart';
 import 'package:bookzbox/features/new_box/stores/new_box_store.dart';
 import 'package:bookzbox/features/new_box/ui/screens/new_box_screen.dart';
 import 'package:provider/provider.dart';
@@ -49,8 +53,14 @@ final bookProviders = [
   ProxyProvider<IBookService, IBookRepository>(
     update: (_, service, __) => BookRepository(service),
   ),
-  ProxyProvider<IBookRepository, NewBoxStore>(
-    update: (_, repo, __) => NewBoxStore(repo),
+  Provider<IPublishService>(
+    create: (_) => PublishService.instance,
+  ),
+  ProxyProvider<IPublishService, IBoxRepository>(
+    update: (_, service, __) => BoxRepository(service),
+  ),
+  ProxyProvider2<IBookRepository, IBoxRepository, NewBoxStore>(
+    update: (_, bookRepo, boxRepo, __) => NewBoxStore(bookRepo, boxRepo),
   ),
   ProxyProvider<NewBoxStore, NewBoxScreen>(
     update: (_, store, __) => NewBoxScreen(store),

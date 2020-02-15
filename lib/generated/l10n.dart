@@ -380,6 +380,15 @@ class S {
     );
   }
 
+  String get newBoxIsPublishing {
+    return Intl.message(
+      'Publishing..',
+      name: 'newBoxIsPublishing',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get homeNavBarFeedLabel {
     return Intl.message(
       'Feed',

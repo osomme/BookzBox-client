@@ -63,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "newBoxFindBook" : MessageLookupByLibrary.simpleMessage("FIND BOOK"),
     "newBoxInfo" : MessageLookupByLibrary.simpleMessage("Creating a box is easy. First, add the books you want to trade. Second, write a catchy title and a short description. Finally, publish!"),
     "newBoxInvalidTitle" : MessageLookupByLibrary.simpleMessage("Title must be at least 4 characters long"),
+    "newBoxIsPublishing" : MessageLookupByLibrary.simpleMessage("Publishing.."),
     "newBoxIsbnDialogTitle" : MessageLookupByLibrary.simpleMessage("Enter ISBN"),
     "newBoxIsbnInvalid" : MessageLookupByLibrary.simpleMessage("Invalid ISBN"),
     "newBoxNoBooks" : MessageLookupByLibrary.simpleMessage("A box must have at least 1 book"),

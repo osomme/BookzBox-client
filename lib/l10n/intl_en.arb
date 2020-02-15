@@ -38,6 +38,7 @@
     "newBoxInvalidTitle": "Title must be at least 4 characters long",
     "newBoxNoBooks": "A box must have at least 1 book",
     "newBoxFieldPlaceholder": "Unknown",
+    "newBoxIsPublishing": "Publishing..",
     "homeNavBarFeedLabel": "Feed",
     "homeNavBarSearchLabel": "Search",
     "homeNavBarActivityLabel": "Activity",

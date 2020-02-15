@@ -1,0 +1,1 @@
+enum PublishError { Invalid, TimeOut }
