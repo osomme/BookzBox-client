@@ -12,7 +12,7 @@ abstract class _FeedStore with Store {
   ReactionDisposer _listener;
 
   @observable
-  ObservableList<Box> _boxes = ObservableList();
+  ObservableList<BoxFeedListItem> _boxes = ObservableList();
 
   @observable
   NetworkError _error;
@@ -30,7 +30,7 @@ abstract class _FeedStore with Store {
   NetworkError get error => _error;
 
   @computed
-  ObservableList<Box> get boxes => _boxes;
+  ObservableList<BoxFeedListItem> get boxes => _boxes;
 
   @computed
   bool get initialLoadingOngoing => _initialLoadingOngoing;
@@ -55,17 +55,16 @@ abstract class _FeedStore with Store {
   }
 
   @action
-  void setIndex(int index) {
-    _currentIndex = index >= 0 ? index : 0;
-  }
+  void setIndex(int index) => _currentIndex = index >= 0 ? index : 0;
 
   @action
   Future<void> _incrementalLoad() async {
+    print('Loading box feed');
     _error = null;
     _incrementalLoading = true;
-    final result = await _repo.getNextBoxes(10, boxes[_currentIndex].publishDateTime);
+    final result = await _repo.getBoxesFrom(10, boxes.last.publishedOn);
     result.fold(
-      (error) => _error,
+      (error) => _error = error,
       (boxes) => _boxes.addAll(boxes),
     );
     _incrementalLoading = false;
@@ -73,9 +72,11 @@ abstract class _FeedStore with Store {
 
   @action
   Future<void> _initialFetch() async {
+    print('Loading initial box feed');
     _error = null;
     _initialLoadingOngoing = true;
-    final result = await _repo.getNextBoxes(10, DateTime.now());
+    final result =
+        await _repo.getBoxesFrom(10, DateTime.now().subtract(Duration(days: 365)));
     result.fold(
       (error) => _error = error,
       (boxes) => _boxes.addAll(boxes),

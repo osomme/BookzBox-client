@@ -2,14 +2,27 @@ import 'package:bookzbox/common/errors/error_types.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/feed/feed.dart';
+import 'package:bookzbox/features/feed/models/box_feed_list_item.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
 class FirebaseFeedService implements IFeedService {
+  final firebase = Firestore.instance; //TODO: Inject through parameter
+
   @override
-  Future<Either<NetworkError, List<Box>>> getNextBoxes(
+  Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxesFrom(
       int number, DateTime fromDate) async {
-    //TODO: Add firebase support.
-    return Right(testBoxes.take(number).toList());
+    final col = await firebase
+        .collection('boxes')
+        /*.where('publishDateTime', isGreaterThan: fromDate)
+        .orderBy('publishDateTime')
+        .limit(number)
+        */
+        .getDocuments();
+
+    final res = col.documents.map((b) => BoxFeedListItem.fromFirestore(b)).toList();
+
+    return Right(res);
   }
 }
 

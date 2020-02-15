@@ -12,7 +12,7 @@ void main() {
     test('[getNextBoxes] should return list of n size when n number of boxes is passed',
         () async {
       final n = 1;
-      final result = await service.getNextBoxes(n, DateTime.now());
+      final result = await service.getBoxesFrom(n, DateTime.now());
       result.fold(
         (error) => fail('Failed with: $error'),
         (data) => expect(data.length, equals(n)),
@@ -23,7 +23,7 @@ void main() {
         '[getNextBoxes] should only return boxes that have a publishing date after the passed parameter',
         () async {
       final fetchingFrom = DateTime.now().subtract(Duration(days: 7));
-      final result = await service.getNextBoxes(3, fetchingFrom);
+      final result = await service.getBoxesFrom(3, fetchingFrom);
       final areInFuture = (box) => box.publishDateTime.isAfter(fetchingFrom);
       result.fold(
         (error) => fail('Failed with: $error'),
@@ -32,7 +32,7 @@ void main() {
     });
 
     test('[getNextBoxes] should not return any boxes that are NOT public', () async {
-      final result = await service.getNextBoxes(100, DateTime.now());
+      final result = await service.getBoxesFrom(100, DateTime.now());
       result.fold(
         (error) => fail('Failed with: $error'),
         (data) => expect(data.every((b) => b.status == BoxStatus.public), isTrue),
