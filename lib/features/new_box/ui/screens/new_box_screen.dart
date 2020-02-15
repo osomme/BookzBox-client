@@ -59,8 +59,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
 
   Future<void> publishAndClosePage(BuildContext ctx, final User publisher) async {
     final result = (await widget.newBoxStore.publishBox(publisher));
-    result.fold(
-        (error) => print("Publish error"), // TODO: add error message
+    result.fold((error) => print("Publish error"),
         (box) => Navigator.of(ctx).pop()); // TODO navigate to details page?
   }
 

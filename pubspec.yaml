@@ -48,8 +48,9 @@ dependencies:
   # Spinning progress bar widgets
   flutter_spinkit: "^4.1.1"
 
-  
-  
+  # Unique id generation
+  uuid: 2.0.4
+
 
 dev_dependencies:
   flutter_test:
