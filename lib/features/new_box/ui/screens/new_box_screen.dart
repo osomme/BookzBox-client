@@ -571,33 +571,35 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                 ],
               ),
             ),
-            Visibility(
-              visible: widget.newBoxStore.isPublishing,
-              child: Align(
-                alignment: Alignment.center,
-                child: Container(
-                  margin: const EdgeInsets.only(top: 128),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                    color: Colors.black26,
-                  ),
-                  padding: const EdgeInsets.all(48),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(
-                        S.of(context).newBoxIsPublishing,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 24,
+            Observer(
+              builder: (_) => Visibility(
+                visible: widget.newBoxStore.isPublishing,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 128),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                      color: Colors.black26,
+                    ),
+                    padding: const EdgeInsets.all(48),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(
+                          S.of(context).newBoxIsPublishing,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 24,
+                          ),
                         ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 24),
-                        child: CircularProgressIndicator(),
-                      ),
-                    ],
+                        Container(
+                          margin: const EdgeInsets.only(top: 24),
+                          child: CircularProgressIndicator(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

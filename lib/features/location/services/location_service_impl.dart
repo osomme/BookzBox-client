@@ -19,4 +19,21 @@ class LocationService implements ILocationService {
       return none();
     }
   }
+
+  @override
+  Future<Position> getCoarseLocation() async {
+    Geolocator geolocator = Geolocator()..forceAndroidLocationManager = true;
+
+    GeolocationStatus geolocationStatus = await geolocator.checkGeolocationPermissionStatus();
+    print("Permission status:" + geolocationStatus.toString());
+    if (geolocationStatus != GeolocationStatus.granted) return null;
+
+    bool isLocationActive = await geolocator.isLocationServiceEnabled();
+    print("Is location service enabled? " + isLocationActive.toString());
+    if (!isLocationActive) return null;
+
+    Position pos = await geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.lowest);
+    print("Position: " + pos.toString());
+    return pos;
+  }
 }
