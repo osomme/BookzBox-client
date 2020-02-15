@@ -16,13 +16,13 @@ extension BooksExtensions on List<Book> {
     final pairs = List<_Pair>();
     map.forEach((k, v) => pairs.add(_Pair(k, v)));
     pairs.sort((a, b) {
-      final cmp = b.k.compareTo(a.k);
+      final cmp = b.v.compareTo(a.v);
       if (cmp == 0) {
-        return b.v.compareTo(a.v);
+        return b.k.compareTo(a.k);
       }
       return cmp;
     });
-    return pairs.map((x) => x.k.toUpperCase()).take(3).toSet().join(', ');
+    return pairs.map((x) => x.k.toUpperCase()).toSet().take(3).join(', ');
   }
 }
 
