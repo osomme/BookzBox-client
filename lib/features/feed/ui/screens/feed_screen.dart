@@ -4,7 +4,6 @@ import 'package:bookzbox/features/feed/stores/box_item_store.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +26,7 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: 0, viewportFraction: 0.85);
+    _pageController = PageController(initialPage: 0, viewportFraction: 0.8);
   }
 
   @override
@@ -40,25 +39,25 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 36.0),
-        child: Observer(builder: (_) {
-          if (widget.feedStore.initialLoadingOngoing) {
-            return Center(
-              child: SpinKitThreeBounce(
-                color: Theme.of(context).primaryColor,
-              ),
-            );
-          }
-          if (widget.feedStore.boxes.isEmpty) {
-            return Center(
-              child: Text(S.of(context).feedNoBoxesFound),
-            );
-          } else {
-            return _mainContent();
-          }
-        }),
-      ),
+      body: Observer(builder: (_) {
+        if (widget.feedStore.initialLoadingOngoing) {
+          return Center(
+            child: SpinKitThreeBounce(
+              color: Theme.of(context).primaryColor,
+            ),
+          );
+        }
+        if (widget.feedStore.boxes.isEmpty) {
+          return Center(
+            child: Text(S.of(context).feedNoBoxesFound),
+          );
+        } else {
+          return Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: _mainContent(),
+          );
+        }
+      }),
     );
   }
 
