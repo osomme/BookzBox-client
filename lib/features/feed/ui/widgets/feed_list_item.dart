@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/feed/stores/box_item_store.dart';
 import 'package:bookzbox/features/location/services/location_service.dart';
@@ -153,36 +151,44 @@ class FeedListItem extends StatelessWidget {
   Widget _twoBooksCoverImages(BuildContext context) {
     const height = 180.0;
     const width = 147.0;
-    return Column(
-      children: <Widget>[
-        Container(
-          child: _bookToImage(height, box.books[0]),
-          height: height,
-          width: width,
-        ),
-        SizedBox(height: 5.0),
-        Container(
-          child: _bookToImage(height, box.books[1]),
-          height: height,
-          width: width,
-        ),
-      ],
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.50,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            child: _bookToImage(height, box.books[0]),
+            height: height,
+            width: width,
+          ),
+          SizedBox(height: 5.0),
+          Container(
+            child: _bookToImage(height, box.books[1]),
+            height: height,
+            width: width,
+          ),
+        ],
+      ),
     );
   }
 
   Widget _threeBooksCoverImages(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        IgnorePointer(
-          child: _coverImageGridView(200.0, count: 2),
-        ),
-        Container(
-          padding: EdgeInsets.all(5.0),
-          child: _bookToImage(200.0, box.books[2]),
-          height: 185.0,
-          width: 130.0,
-        ),
-      ],
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.50,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          IgnorePointer(
+            child: _coverImageGridView(200.0, count: 2),
+          ),
+          Container(
+            padding: EdgeInsets.all(5.0),
+            child: _bookToImage(200.0, box.books[2]),
+            height: 185.0,
+            width: 130.0,
+          ),
+        ],
+      ),
     );
   }
 
@@ -230,17 +236,6 @@ class FeedListItem extends StatelessWidget {
           Image.asset('assets/images/book_cover_placeholder.jpeg'),
     );
   }
-
-  /*
-  (b) => Image(
-      height: 150.0,
-      image: b.thumbnailUrl != null
-          ? NetworkImage(b.thumbnailUrl)
-          : AssetImage(
-              'assets/images/book_cover_placeholder.jpeg'), //TODO: Replace with better placeholder
-      fit: BoxFit.fill,
-    ),
-  */
 
   Column _categoryAndTitleColumn(BuildContext context) {
     return Column(
