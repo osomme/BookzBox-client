@@ -318,7 +318,6 @@ class FeedListItem extends StatelessWidget {
             style: Theme.of(ctx).primaryTextTheme.subhead,
           );
         }
-        print('Location has been found: ${snapshot.data.isSome()}');
         return Text(
           snapshot.data
               .map((p) => p.toLocationString())
