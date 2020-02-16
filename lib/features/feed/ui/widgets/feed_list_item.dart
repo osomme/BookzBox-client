@@ -312,11 +312,6 @@ class FeedListItem extends StatelessWidget {
             size: 20.0,
             color: Theme.of(ctx).primaryIconTheme.color,
           );
-        } else if (snapshot.hasError) {
-          return Text(
-            S.of(ctx).feedNoLocationData,
-            style: Theme.of(ctx).primaryTextTheme.subhead,
-          );
         }
         return Text(
           snapshot.data

@@ -27,22 +27,6 @@ class BoxFeedListItem {
     @required this.status,
   });
 
-  @override
-  String toString() {
-    final books = this.books.map((b) => b.toString()).join(', ');
-    return '''
-    id: $id
-    publishedId: $publisherId
-    publishedOn: $publishedOn
-    title: $title
-    description: $description
-    lat: $lat
-    lng: $lng
-    status: $status
-    books: $books
-    ''';
-  }
-
   factory BoxFeedListItem.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data;
 

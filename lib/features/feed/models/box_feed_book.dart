@@ -9,10 +9,6 @@ class BoxFeedBook {
     @required this.thumbnailUrl,
   });
 
-  @override
-  String toString() =>
-      '[BOOK] categories: ${categories.join(', ')}, thumbnailUrl: $thumbnailUrl';
-
   factory BoxFeedBook.fromFirebase(Map<dynamic, dynamic> book) => BoxFeedBook(
         categories: List.from(book['categories']),
         thumbnailUrl: book['thumbnailUrl'] as String,
