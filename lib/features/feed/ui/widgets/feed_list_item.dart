@@ -1,4 +1,5 @@
 import 'package:bookzbox/features/box/models/models.dart';
+import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/feed/stores/box_item_store.dart';
 import 'package:bookzbox/features/location/services/location_service.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -24,7 +25,7 @@ class FeedListItem extends StatelessWidget {
 
   final PageController _pageController;
   final int index;
-  final Box box;
+  final BoxFeedListItem box;
   final BoxItemStore store;
   final ILocationService locationService;
 
@@ -216,7 +217,7 @@ class FeedListItem extends StatelessWidget {
       .map((b) => _bookToImage(height, b))
       .toList();
 
-  CachedNetworkImage _bookToImage(double height, Book book) {
+  CachedNetworkImage _bookToImage(double height, BoxFeedBook book) {
     return CachedNetworkImage(
       imageBuilder: (ctx, imageProvider) => Container(
         height: height,
@@ -304,17 +305,12 @@ class FeedListItem extends StatelessWidget {
 
   FutureBuilder<Option<Placemark>> _locationBuilder() {
     return FutureBuilder<Option<Placemark>>(
-      future: locationService.getLocationDataFrom(box.latitude, box.longitude),
+      future: locationService.getLocationDataFrom(box.lat, box.lng),
       builder: (ctx, snapshot) {
         if (!snapshot.hasData) {
           return SpinKitPulse(
             size: 20.0,
             color: Theme.of(ctx).primaryIconTheme.color,
-          );
-        } else if (snapshot.hasError) {
-          return Text(
-            S.of(ctx).feedNoLocationData,
-            style: Theme.of(ctx).primaryTextTheme.subhead,
           );
         }
         return Text(

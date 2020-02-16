@@ -1,6 +1,5 @@
 import 'package:bookzbox/common/errors/error_types.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
-import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/feed/feed.dart';
 import 'package:mobx/mobx.dart';
 
@@ -11,7 +10,7 @@ class BoxItemStore = _BoxItemStore with _$BoxItemStore;
 abstract class _BoxItemStore with Store {
   final IBoxLikeRepository _repo;
   final IAuthService _authService;
-  final Box _box;
+  final BoxFeedListItem _box;
 
   @observable
   bool _isLoading = false;

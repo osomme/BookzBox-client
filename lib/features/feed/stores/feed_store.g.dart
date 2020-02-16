@@ -14,12 +14,12 @@ mixin _$FeedStore on _FeedStore, Store {
   @override
   NetworkError get error =>
       (_$errorComputed ??= Computed<NetworkError>(() => super.error)).value;
-  Computed<ObservableList<Box>> _$boxesComputed;
+  Computed<ObservableList<BoxFeedListItem>> _$boxesComputed;
 
   @override
-  ObservableList<Box> get boxes =>
-      (_$boxesComputed ??= Computed<ObservableList<Box>>(() => super.boxes))
-          .value;
+  ObservableList<BoxFeedListItem> get boxes => (_$boxesComputed ??=
+          Computed<ObservableList<BoxFeedListItem>>(() => super.boxes))
+      .value;
   Computed<bool> _$initialLoadingOngoingComputed;
 
   @override
@@ -42,14 +42,14 @@ mixin _$FeedStore on _FeedStore, Store {
   final _$_boxesAtom = Atom(name: '_FeedStore._boxes');
 
   @override
-  ObservableList<Box> get _boxes {
+  ObservableList<BoxFeedListItem> get _boxes {
     _$_boxesAtom.context.enforceReadPolicy(_$_boxesAtom);
     _$_boxesAtom.reportObserved();
     return super._boxes;
   }
 
   @override
-  set _boxes(ObservableList<Box> value) {
+  set _boxes(ObservableList<BoxFeedListItem> value) {
     _$_boxesAtom.context.conditionallyRunInAction(() {
       super._boxes = value;
       _$_boxesAtom.reportChanged();

@@ -3,3 +3,4 @@ export './ui/widgets/widgets.dart';
 export './service/service.dart';
 export './repositories/repository.dart';
 export './stores/stores.dart';
+export './models/models.dart';
