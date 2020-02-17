@@ -9,13 +9,13 @@ class LocationService implements ILocationService {
   @override
   Future<Option<Placemark>> getLocationDataFrom(double lat, double lng) async {
     try {
-      final results = await Geolocator().placemarkFromCoordinates(lng, lat);
-      if (results.isEmpty) {
+      final results = await Geolocator().placemarkFromCoordinates(lat, lng);
+      if (results == null || results.isEmpty) {
         return none();
       }
       return some(results.first);
     } on PlatformException catch (e) {
-      print('Error while attempting to map coordinates to location: $e');
+      print(e);
       return none();
     }
   }

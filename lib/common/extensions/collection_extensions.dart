@@ -1,6 +1,6 @@
-import 'package:bookzbox/features/box/models/models.dart';
+import 'package:bookzbox/features/feed/feed.dart';
 
-extension BooksExtensions on List<Book> {
+extension BooksExtensions on List<BoxFeedBook> {
   /// Maps a list of books to a string consisting of the category
   /// names of the three most popular genres in the list.
   String toCategoryString() {

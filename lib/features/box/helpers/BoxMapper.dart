@@ -12,7 +12,7 @@ class BoxMapper {
       "publisher": box.publisher.uid,
       "books": serializedBooks,
       "status": box.status.index,
-      "publishDateTime": box.publishDateTime.millisecondsSinceEpoch,
+      "publishDateTime": box.publishDateTime,
       "latitude": box.latitude,
       "longitude": box.longitude,
       "title": box.title,
