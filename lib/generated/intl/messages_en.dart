@@ -54,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "homeNavBarSearchLabel" : MessageLookupByLibrary.simpleMessage("Search"),
     "newBoxAddBookButton" : MessageLookupByLibrary.simpleMessage("ADD BOOK"),
     "newBoxBookAuthor" : MessageLookupByLibrary.simpleMessage("Author"),
+    "newBoxBookNotFound" : MessageLookupByLibrary.simpleMessage("Book not found"),
     "newBoxBookPublished" : MessageLookupByLibrary.simpleMessage("Published"),
     "newBoxBooksTitle" : MessageLookupByLibrary.simpleMessage("Books"),
     "newBoxCancelDialog" : MessageLookupByLibrary.simpleMessage("CANCEL"),

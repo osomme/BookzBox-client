@@ -389,6 +389,15 @@ class S {
     );
   }
 
+  String get newBoxBookNotFound {
+    return Intl.message(
+      'Book not found',
+      name: 'newBoxBookNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get homeNavBarFeedLabel {
     return Intl.message(
       'Feed',

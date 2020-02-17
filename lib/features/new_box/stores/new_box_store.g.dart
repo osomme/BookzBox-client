@@ -9,11 +9,11 @@ part of 'new_box_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$NewBoxStore on _NewBoxStore, Store {
-  Computed<String> _$isbnErrorMsgComputed;
+  Computed<LookupError> _$isbnErrorComputed;
 
   @override
-  String get isbnErrorMsg =>
-      (_$isbnErrorMsgComputed ??= Computed<String>(() => super.isbnErrorMsg))
+  LookupError get isbnError =>
+      (_$isbnErrorComputed ??= Computed<LookupError>(() => super.isbnError))
           .value;
   Computed<ObservableList<Book>> _$booksComputed;
 
@@ -43,12 +43,12 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
   String get boxDescription => (_$boxDescriptionComputed ??=
           Computed<String>(() => super.boxDescription))
       .value;
-  Computed<String> _$lookupErrorMsgComputed;
+  Computed<LookupError> _$lookupErrorComputed;
 
   @override
-  String get lookupErrorMsg => (_$lookupErrorMsgComputed ??=
-          Computed<String>(() => super.lookupErrorMsg))
-      .value;
+  LookupError get lookupError =>
+      (_$lookupErrorComputed ??= Computed<LookupError>(() => super.lookupError))
+          .value;
   Computed<BoxError> _$titleErrorComputed;
 
   @override
@@ -153,21 +153,21 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
     }, _$_boxDescriptionAtom, name: '${_$_boxDescriptionAtom.name}_set');
   }
 
-  final _$_lookupErrorMsgAtom = Atom(name: '_NewBoxStore._lookupErrorMsg');
+  final _$_lookupErrorAtom = Atom(name: '_NewBoxStore._lookupError');
 
   @override
-  String get _lookupErrorMsg {
-    _$_lookupErrorMsgAtom.context.enforceReadPolicy(_$_lookupErrorMsgAtom);
-    _$_lookupErrorMsgAtom.reportObserved();
-    return super._lookupErrorMsg;
+  LookupError get _lookupError {
+    _$_lookupErrorAtom.context.enforceReadPolicy(_$_lookupErrorAtom);
+    _$_lookupErrorAtom.reportObserved();
+    return super._lookupError;
   }
 
   @override
-  set _lookupErrorMsg(String value) {
-    _$_lookupErrorMsgAtom.context.conditionallyRunInAction(() {
-      super._lookupErrorMsg = value;
-      _$_lookupErrorMsgAtom.reportChanged();
-    }, _$_lookupErrorMsgAtom, name: '${_$_lookupErrorMsgAtom.name}_set');
+  set _lookupError(LookupError value) {
+    _$_lookupErrorAtom.context.conditionallyRunInAction(() {
+      super._lookupError = value;
+      _$_lookupErrorAtom.reportChanged();
+    }, _$_lookupErrorAtom, name: '${_$_lookupErrorAtom.name}_set');
   }
 
   final _$_booksAtom = Atom(name: '_NewBoxStore._books');
@@ -285,6 +285,16 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
   }
 
   @override
+  void setCurrentBook(Book book) {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.setCurrentBook(book);
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setBoxTitle(String title) {
     final _$actionInfo = _$_NewBoxStoreActionController.startAction();
     try {
@@ -305,10 +315,10 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
   }
 
   @override
-  void setLookupErrorMsg(String msg) {
+  void setLookupError(LookupError err) {
     final _$actionInfo = _$_NewBoxStoreActionController.startAction();
     try {
-      return super.setLookupErrorMsg(msg);
+      return super.setLookupError(err);
     } finally {
       _$_NewBoxStoreActionController.endAction(_$actionInfo);
     }

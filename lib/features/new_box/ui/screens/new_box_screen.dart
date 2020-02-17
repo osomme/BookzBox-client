@@ -1,6 +1,7 @@
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/models/book.dart';
 import 'package:bookzbox/features/new_box/models/box_error.dart';
+import 'package:bookzbox/features/new_box/models/lookup_error.dart';
 import 'package:bookzbox/features/new_box/stores/new_box_store.dart';
 import 'package:bookzbox/features/new_box/ui/widgets/book_card_widget.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -311,7 +312,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
 
   void popIsbnDialog(BuildContext ctx) {
     Navigator.of(ctx).pop();
-    widget.newBoxStore.setLookupErrorMsg('');
+    widget.newBoxStore.setLookupError(LookupError.None);
   }
 
   Future<void> showIsbnDialog() async {
@@ -332,7 +333,9 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
             children: <Widget>[
               Observer(
                 builder: (_) => Text(
-                  widget.newBoxStore.lookupErrorMsg,
+                  (widget.newBoxStore.lookupError == LookupError.NotFound
+                      ? S.of(context).newBoxBookNotFound
+                      : ''),
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 14,
@@ -347,8 +350,10 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                           keyboardType: TextInputType.number,
                           onChanged: (value) => widget.newBoxStore.setIsbn(value),
                           decoration: InputDecoration(
-                            counterText: "",
-                            errorText: widget.newBoxStore.isbnErrorMsg,
+                            counterText: '',
+                            errorText: (widget.newBoxStore.isbnError == LookupError.InvalidIsbn
+                                ? S.of(context).newBoxIsbnInvalid
+                                : ''),
                           ),
                         )),
             ],

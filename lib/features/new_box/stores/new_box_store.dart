@@ -3,6 +3,7 @@ import 'package:bookzbox/features/box/models/book.dart';
 import 'package:bookzbox/features/box/models/box.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/features/new_box/models/box_error.dart';
+import 'package:bookzbox/features/new_box/models/lookup_error.dart';
 import 'package:bookzbox/features/new_box/repositories/book_repository.dart';
 import 'package:bookzbox/features/new_box/repositories/box_repository.dart';
 import 'package:bookzbox/features/new_box/services/publish_error.dart';
@@ -37,7 +38,7 @@ abstract class _NewBoxStore with Store {
   String _boxDescription;
 
   @observable
-  String _lookupErrorMsg;
+  LookupError _lookupError = LookupError.None;
 
   @observable
   ObservableList<Book> _books = new ObservableList();
@@ -73,7 +74,7 @@ abstract class _NewBoxStore with Store {
     _isLoadingBook = false;
 
     if (_currentBook == null) {
-      _lookupErrorMsg = 'Book not found';
+      _lookupError = LookupError.NotFound;
       return false;
     }
 
@@ -121,11 +122,11 @@ abstract class _NewBoxStore with Store {
   void setIsbn(String isbn) => _isbn = isbn;
 
   @computed
-  String get isbnErrorMsg {
+  LookupError get isbnError {
     if (_isbn == null) {
       return null;
     }
-    return !isISBN(_isbn) ? "Invalid ISBN" : '';
+    return !isISBN(_isbn) ? LookupError.InvalidIsbn : LookupError.None;
   }
 
   @computed
@@ -133,6 +134,9 @@ abstract class _NewBoxStore with Store {
 
   @computed
   Book get currentBook => _currentBook;
+
+  @action
+  void setCurrentBook(Book book) => _currentBook = book;
 
   @computed
   bool get isLoadingBook => _isLoadingBook;
@@ -153,10 +157,10 @@ abstract class _NewBoxStore with Store {
   void setBoxDescription(String description) => _boxDescription = description;
 
   @computed
-  String get lookupErrorMsg => (_lookupErrorMsg == null ? '' : _lookupErrorMsg);
+  LookupError get lookupError => _lookupError;
 
   @action
-  void setLookupErrorMsg(String msg) => _lookupErrorMsg = msg;
+  void setLookupError(LookupError err) => _lookupError = err;
 
   @computed
   BoxError get titleError => _titleError;

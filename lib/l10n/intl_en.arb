@@ -39,6 +39,7 @@
     "newBoxNoBooks": "A box must have at least 1 book",
     "newBoxFieldPlaceholder": "Unknown",
     "newBoxIsPublishing": "Publishing..",
+    "newBoxBookNotFound": "Book not found",
     "homeNavBarFeedLabel": "Feed",
     "homeNavBarSearchLabel": "Search",
     "homeNavBarActivityLabel": "Activity",
