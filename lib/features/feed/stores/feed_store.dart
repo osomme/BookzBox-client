@@ -76,6 +76,9 @@ abstract class _FeedStore with Store {
 
   @action
   Future<void> _initialFetch() async {
+    if (boxes.isNotEmpty) {
+      return;
+    }
     _error = null;
     _initialLoadingOngoing = true;
     final result = await _repo.getBoxesFrom(

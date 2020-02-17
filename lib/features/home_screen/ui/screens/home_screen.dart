@@ -1,7 +1,7 @@
 import 'package:bookzbox/features/activity/ui/screens/activity_screen.dart';
 import 'package:bookzbox/features/feed/ui/screens/feed_screen.dart';
+import 'package:bookzbox/features/map/box_map.dart';
 import 'package:bookzbox/features/profile/ui/screens/profile_screen.dart';
-import 'package:bookzbox/features/search/ui/screens/search_screen.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,17 +30,24 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
+      body: PageView.builder(
+        physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
-        onPageChanged: (index) {
-          setState(() => _currentTab = index);
+        onPageChanged: (index) => setState(() => _currentTab = index),
+        itemBuilder: (BuildContext context, int index) {
+          switch (index) {
+            case 0:
+              return Provider.of<FeedScreen>(context);
+            case 1:
+              return BoxMapScreen.instance;
+            case 2:
+              return ActivityScreen();
+            case 3:
+              return ProfileScreen();
+            default:
+              throw 'Index ($index) must be in range 0-3';
+          }
         },
-        children: <Widget>[
-          Provider.of<FeedScreen>(context),
-          SearchScreen(),
-          ActivityScreen(),
-          ProfileScreen(),
-        ],
       ),
       bottomNavigationBar: _bottomNavBar(),
     );
@@ -63,9 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         BottomNavigationBarItem(
-          title: Text(S.of(context).homeNavBarSearchLabel),
+          title: Text(S.of(context).homeNavBarMapLabel),
           icon: Icon(
-            Icons.search,
+            Icons.map,
           ),
         ),
         BottomNavigationBarItem(

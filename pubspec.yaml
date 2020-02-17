@@ -21,18 +21,32 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter  
+
+  # Cupertino icon pack
   cupertino_icons: ^0.1.2
+  
+  # MobX stores
   mobx: ^0.4.0
+
+  # MobX Flutter widgets
   flutter_mobx: ^0.3.4
+
+  # Dependency injection
   provider: ^4.0.1
+
+  # Icon pack
   flutter_icons: ^1.0.0+1
+
+  # Validators for validating email, isbn codes.
   validators: ^2.0.0+1
+
   # Firebase
   firebase_core: ^0.4.3+2
   firebase_auth: ^0.15.3+1
   firebase_analytics: ^5.0.9
   cloud_firestore: ^0.13.0+1  
   google_sign_in: ^4.1.1      
+
   # Http client
   http: ^0.12.0+4
 
@@ -53,6 +67,9 @@ dependencies:
   
   # Unique id generation
   uuid: 2.0.4
+
+  # Google Maps for Flutter
+  google_maps_flutter: ^0.5.23+1
 
 
 dev_dependencies:
@@ -80,8 +97,7 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - assets/
-    - assets/images/book_cover_demo.jpg
-    - assets/images/book_cover_placeholder.jpeg
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

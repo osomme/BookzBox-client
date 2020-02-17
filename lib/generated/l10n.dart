@@ -407,10 +407,10 @@ class S {
     );
   }
 
-  String get homeNavBarSearchLabel {
+  String get homeNavBarMapLabel {
     return Intl.message(
-      'Search',
-      name: 'homeNavBarSearchLabel',
+      'Map',
+      name: 'homeNavBarMapLabel',
       desc: '',
       args: [],
     );

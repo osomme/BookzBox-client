@@ -10,6 +10,7 @@ class FirebaseFeedService implements IFeedService {
   @override
   Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxesFrom(
       int number, DateTime fromDate) async {
+    print('Fetching feed boxes...');
     final boxes = await firebase
         .collection('boxes')
         .where('publishDateTime', isGreaterThan: Timestamp.fromDate(fromDate))
