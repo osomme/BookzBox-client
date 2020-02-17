@@ -12,46 +12,71 @@ class BoxMapScreen extends StatefulWidget {
 }
 
 class _BoxMapScreenState extends State<BoxMapScreen> {
-  final LatLng _center = const LatLng(45.521563, -122.677433);
+  final locations = [LatLng(45.521563, -122.677433), LatLng(45.521563, -122.70)];
 
-  final Map<String, Marker> _markers = {};
+  final Map<String, Marker> markers = {};
 
-  GoogleMapController _mapController;
+  GoogleMapController mapController;
 
-  void _onMapCreated(GoogleMapController controller) async {
-    _mapController = controller;
+  LatLng currentCamPos;
+
+  int iconSize = 50;
+
+  int oldIconSize = 0;
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+    reloadMarkers();
+  }
+
+  void reloadMarkers() async {
+    if (iconSize == oldIconSize) {
+      // If icon size is the same as last time icons were updated, do not re-render them again, to save performance.
+      return;
+    }
 
     final markerIcon =
-        await AssetLoader.getBytesFromAsset('assets/images/box-map-icon.png', 125)
+        await AssetLoader.getBytesFromAsset('assets/images/box-map-icon.png', iconSize)
             .then((b) => BitmapDescriptor.fromBytes(b));
 
+    oldIconSize = iconSize;
+
+    print('Creating new markers with icon size: $iconSize');
     setState(() {
-      _markers['m1'] = Marker(
+      markers['m1'] = Marker(
         markerId: MarkerId('1'),
-        position: _center,
+        position: locations.first,
         onTap: () => print('Tapped marker 1'),
         icon: markerIcon,
       );
 
-      _markers['m2'] = Marker(
+      markers['m2'] = Marker(
         markerId: MarkerId('2'),
-        position: _center,
+        position: locations.last,
         onTap: () => print('Tapped marker 2'),
         icon: markerIcon,
       );
     });
   }
 
+  void _onCameraIdle() => reloadMarkers();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GoogleMap(
-        markers: _markers.values.toSet(),
+        markers: markers.values.toSet(),
         onMapCreated: _onMapCreated,
         initialCameraPosition: CameraPosition(
-          target: _center,
+          target: locations.first,
           zoom: 11.0,
         ),
+        onCameraIdle: _onCameraIdle,
+        onCameraMove: (camPos) {
+          currentCamPos = camPos.target;
+          iconSize = camPos.zoom.round() * 7;
+        },
+        myLocationButtonEnabled: false,
       ),
     );
   }
