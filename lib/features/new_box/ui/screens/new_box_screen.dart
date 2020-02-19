@@ -318,6 +318,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
   }
 
   Future<void> showIsbnDialog() async {
+    widget.newBoxStore.setLookupError(LookupError.None);
     return showDialog<void>(
       context: context,
       barrierDismissible: true,

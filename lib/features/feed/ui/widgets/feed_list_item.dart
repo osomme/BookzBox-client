@@ -228,7 +228,7 @@ class FeedListItem extends StatelessWidget {
           ),
         ),
       ),
-      imageUrl: book.thumbnailUrl,
+      imageUrl: book.thumbnailUrl ?? '',
       placeholder: (ctx, url) => SpinKitPulse(
         size: 20.0,
         color: Theme.of(ctx).primaryIconTheme.color,

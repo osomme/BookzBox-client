@@ -62,6 +62,7 @@ abstract class _NewBoxStore with Store {
   Future<bool> findBook() async {
     if (_isbn == null || !isISBN(_isbn)) return false;
 
+    _lookupError = LookupError.None;
     _isLoadingBook = true;
     final result = await _bookRepository.isbnLookup(_isbn.replaceAll('-', ''));
     result.fold(
