@@ -1,7 +1,8 @@
-import 'package:bookzbox/features/location/services/location_service.dart';
+import 'package:bookzbox/features/location/location.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart';
 
 /// Provides various methods for location based services.
 class LocationService implements ILocationService {
@@ -21,19 +22,15 @@ class LocationService implements ILocationService {
   }
 
   @override
-  Future<Position> getCoarseLocation() async {
-    Geolocator geolocator = Geolocator()..forceAndroidLocationManager = true;
-
-    GeolocationStatus geolocationStatus = await geolocator.checkGeolocationPermissionStatus();
-    print("Permission status:" + geolocationStatus.toString());
-    if (geolocationStatus != GeolocationStatus.granted) return null;
-
-    bool isLocationActive = await geolocator.isLocationServiceEnabled();
-    print("Is location service enabled? " + isLocationActive.toString());
-    if (!isLocationActive) return null;
-
-    Position pos = await geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.lowest);
-    print("Position: " + pos.toString());
-    return pos;
+  Future<Either<String, LatLng>> getLocation() async {
+    try {
+      final latLng = await Location()
+          .getLocation()
+          .then((p) => LatLng(latitude: p.latitude, longitude: p.longitude));
+      return right(latLng);
+    } on PlatformException catch (e) {
+      print(e);
+      return left(e.code);
+    }
   }
 }

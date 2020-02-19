@@ -1,1 +1,1 @@
-enum PublishError { Invalid, TimeOut }
+enum PublishError { Invalid, TimeOut, NoLocation }

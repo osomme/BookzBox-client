@@ -59,9 +59,11 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
   }
 
   Future<void> publishAndClosePage(BuildContext ctx, final User publisher) async {
-    final result = (await widget.newBoxStore.publishBox(publisher));
-    result.fold((error) => print("Publish error"),
-        (box) => Navigator.of(ctx).pop()); // TODO navigate to details page?
+    final result = await widget.newBoxStore.publishBox(publisher);
+    result.fold(
+      (error) => print("Publish error"), //TODO: Handle error
+      (box) => Navigator.of(ctx).pop(),
+    ); // TODO navigate to details page?
   }
 
   Container publishButton(BuildContext context, final User user) {
@@ -76,8 +78,8 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                 margin: const EdgeInsets.only(right: 2.0),
                 child: Text(
                   S.of(context).newBoxPublishTip,
-                  style:
-                      TextStyle(color: Theme.of(context).accentColor, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                      color: Theme.of(context).accentColor, fontWeight: FontWeight.w600),
                 ),
               ),
               Icon(
@@ -351,9 +353,10 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                           onChanged: (value) => widget.newBoxStore.setIsbn(value),
                           decoration: InputDecoration(
                             counterText: '',
-                            errorText: (widget.newBoxStore.isbnError == LookupError.InvalidIsbn
-                                ? S.of(context).newBoxIsbnInvalid
-                                : ''),
+                            errorText:
+                                (widget.newBoxStore.isbnError == LookupError.InvalidIsbn
+                                    ? S.of(context).newBoxIsbnInvalid
+                                    : ''),
                           ),
                         )),
             ],
@@ -374,10 +377,12 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                   builder: (_) => FlatButton(
                     child: Text(
                       S.of(context).newBoxFindBook,
-                      style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
+                      style: TextStyle(
+                          color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
                     ),
-                    onPressed: () =>
-                        widget.newBoxStore.isLoadingBook ? null : handleBookLookup(context),
+                    onPressed: () => widget.newBoxStore.isLoadingBook
+                        ? null
+                        : handleBookLookup(context),
                   ),
                 ),
               ],
@@ -463,7 +468,8 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                                   margin: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
                                   child: Text(
                                     S.of(context).newBoxBookAuthor + ":",
-                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                    style: TextStyle(
+                                        fontSize: 14, fontWeight: FontWeight.w500),
                                   ),
                                 ),
                                 Text(
@@ -484,7 +490,8 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                                   margin: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
                                   child: Text(
                                     S.of(context).newBoxBookPublished + ":",
-                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                    style: TextStyle(
+                                        fontSize: 14, fontWeight: FontWeight.w500),
                                   ),
                                 ),
                                 Text(
@@ -541,7 +548,8 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                 FlatButton(
                   child: Text(
                     S.of(context).newBoxAddBookButton,
-                    style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
+                    style: TextStyle(
+                        color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
                   ),
                   onPressed: () => addBookAndCloseDialog(context),
                 ),
