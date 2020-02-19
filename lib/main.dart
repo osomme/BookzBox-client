@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
         ...bookProviders,
         ...feedProviders,
         ...commonServicesProviders,
+        ...profileProviders,
       ],
       child: MaterialApp(
         routes: {

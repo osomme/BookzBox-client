@@ -16,6 +16,8 @@ import 'package:bookzbox/features/new_box/services/publish_service.dart';
 import 'package:bookzbox/features/new_box/services/publish_service_impl.dart';
 import 'package:bookzbox/features/new_box/stores/new_box_store.dart';
 import 'package:bookzbox/features/new_box/ui/screens/new_box_screen.dart';
+import 'package:bookzbox/features/profile/stores/profile_store.dart';
+import 'package:bookzbox/features/profile/ui/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 final authProviders = [
@@ -94,6 +96,15 @@ final feedProviders = [
   ),
   ProxyProvider<FeedStore, FeedScreen>(
     update: (_, store, __) => FeedScreen(feedStore: store),
+  ),
+];
+
+final profileProviders = [
+  Provider<ProfileStore>(
+    create: (_) => ProfileStore(),
+  ),
+  ProxyProvider<ProfileStore, ProfileScreen>(
+    update: (_, store, __) => ProfileScreen(profileStore: store),
   ),
 ];
 

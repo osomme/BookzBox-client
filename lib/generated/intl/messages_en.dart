@@ -71,6 +71,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "newBoxPublishTip" : MessageLookupByLibrary.simpleMessage("Publish"),
     "newBoxRemoveBook" : MessageLookupByLibrary.simpleMessage("Delete"),
     "newBoxTitle" : MessageLookupByLibrary.simpleMessage("Create a box"),
-    "newBoxTitleTitle" : MessageLookupByLibrary.simpleMessage("Title")
+    "newBoxTitleTitle" : MessageLookupByLibrary.simpleMessage("Title"),
+    "profileBoxesTabLabel" : MessageLookupByLibrary.simpleMessage("MY BOXES"),
+    "profileLogout" : MessageLookupByLibrary.simpleMessage("Log out"),
+    "profileMeTabLabel" : MessageLookupByLibrary.simpleMessage("ME"),
+    "profilePreferencesTabLabel" : MessageLookupByLibrary.simpleMessage("PREFERENCES")
   };
 }

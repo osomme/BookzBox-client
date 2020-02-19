@@ -487,6 +487,42 @@ class S {
       args: [],
     );
   }
+
+  String get profileLogout {
+    return Intl.message(
+      'Log out',
+      name: 'profileLogout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileMeTabLabel {
+    return Intl.message(
+      'ME',
+      name: 'profileMeTabLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileBoxesTabLabel {
+    return Intl.message(
+      'MY BOXES',
+      name: 'profileBoxesTabLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profilePreferencesTabLabel {
+    return Intl.message(
+      'PREFERENCES',
+      name: 'profilePreferencesTabLabel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

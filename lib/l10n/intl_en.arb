@@ -49,5 +49,9 @@
     "feedBooks": "BOOKS",
     "feedLocation": "LOCATION",
     "feedNoLocationData": "No data",
-    "feedNoBoxesFound": "No boxes found... Try changing your preferences!"
+    "feedNoBoxesFound": "No boxes found... Try changing your preferences!",
+    "profileLogout": "Log out",
+    "profileMeTabLabel": "ME",
+    "profileBoxesTabLabel": "MY BOXES",
+    "profilePreferencesTabLabel": "PREFERENCES"
 }
