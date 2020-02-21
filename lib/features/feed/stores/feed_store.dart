@@ -50,6 +50,7 @@ abstract class _FeedStore with Store {
   _FeedStore(this._repo);
 
   Future<void> init() async {
+    /*
     await _initialFetch();
     // Creates a reaction that checks if the current index is less than 5. If it is,
     // it will load a new batch of boxes.
@@ -60,6 +61,7 @@ abstract class _FeedStore with Store {
         _incrementalLoad();
       }
     });
+    */
   }
 
   @action
