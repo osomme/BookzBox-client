@@ -51,5 +51,12 @@
     "feedNoLocationData": "No data",
     "feedNoBoxesFound": "No boxes found... Try changing your preferences!",
     "mapErrorNoLocationPermission": "Location permissions must be enabled",
-    "mapErrorBoxesError": "Failed to retrieve boxes"
+    "mapErrorBoxesError": "Failed to retrieve boxes",
+    "mapNoImages": "No Images",
+    "mapDescription": "Description",
+    "mapNoDescription": "No description",
+    "mapPublishedOn": "Published",
+    "mapProfileLabel": "Profile",
+    "mapDetailsLabel": "Details",
+    "mapFavoriteLabel": "Favorite"
 }

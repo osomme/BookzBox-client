@@ -1,4 +1,5 @@
 import 'package:bookzbox/features/map/box_map.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class BoxMapItem {
@@ -21,4 +22,19 @@ class BoxMapItem {
     @required this.boxId,
     @required this.books,
   });
+
+  factory BoxMapItem.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data;
+
+    return BoxMapItem(
+      boxId: data['id'] as String,
+      publishedById: data['publisher'] as String,
+      books: MapBookItem.fromFirebaseList(data['books']),
+      publishedOn: (data['publishDateTime'] as Timestamp).toDate(),
+      latitude: data['latitude'] as double,
+      longitude: data['longitude'] as double,
+      title: data['title'] as String,
+      description: (data['description'] as String) ?? '',
+    );
+  }
 }

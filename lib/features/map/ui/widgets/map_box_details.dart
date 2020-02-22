@@ -1,4 +1,5 @@
 import 'package:bookzbox/features/map/box_map.dart';
+import 'package:bookzbox/generated/l10n.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -98,7 +99,7 @@ class ModalBoxDetails extends StatelessWidget {
         )
       : Container(
           child: Text(
-            'No Images',
+            S.of(context).mapNoImages,
             style: Theme.of(context).primaryTextTheme.body2,
           ),
         );
@@ -108,13 +109,15 @@ class ModalBoxDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Description',
+          S.of(context).mapDescription,
           style:
               Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
         ),
         SizedBox(height: 5.0),
         Text(
-          box.description,
+          (box.description == null || box.description.isEmpty)
+              ? S.of(context).mapNoDescription
+              : box.description,
           style: Theme.of(context).primaryTextTheme.body2,
         ),
       ],
@@ -126,7 +129,7 @@ class ModalBoxDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Published on',
+          S.of(context).mapPublishedOn,
           style:
               Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
         ),
@@ -145,19 +148,19 @@ class ModalBoxDetails extends StatelessWidget {
       children: <Widget>[
         _button(
           icon: Icon(Icons.person),
-          label: 'Profile',
+          label: S.of(context).mapProfileLabel,
           color: Theme.of(context).accentColor,
           onClick: () => print('Clicked profile'),
         ),
         _button(
           icon: Icon(Icons.zoom_in),
-          label: 'Details',
+          label: S.of(context).mapDetailsLabel,
           color: Theme.of(context).accentColor,
           onClick: () => print('Clicked details'),
         ),
         _button(
           icon: Icon(Icons.favorite),
-          label: 'Favorite',
+          label: S.of(context).mapFavoriteLabel,
           onClick: () => print('Clicked favorite'),
           color: Theme.of(context).accentColor,
         ),

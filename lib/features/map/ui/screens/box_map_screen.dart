@@ -72,14 +72,16 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   ReactionDisposer boxesListener() {
     return autorun((_) async {
       final markerIcon = await loadIcon();
-      markers = widget.mapStore.boxes.map((b) {
-        return Marker(
-          markerId: MarkerId(b.boxId),
-          position: LatLng(b.latitude, b.longitude),
-          onTap: () => buildDetailsWidget(b),
-          icon: markerIcon,
-        );
-      }).toSet();
+      setState(() {
+        markers = widget.mapStore.boxes.map((b) {
+          return Marker(
+            markerId: MarkerId(b.boxId),
+            position: LatLng(b.latitude, b.longitude),
+            onTap: () => buildDetailsWidget(b),
+            icon: markerIcon,
+          );
+        }).toSet();
+      });
     });
   }
 

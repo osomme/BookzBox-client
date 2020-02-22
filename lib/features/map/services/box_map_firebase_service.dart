@@ -1,10 +1,21 @@
 import 'package:bookzbox/features/map/box_map.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
 class BoxMapFirebaseService implements IMapBoxService {
+  final _firestore = Firestore.instance;
+
   @override
-  Future<Either<MapError, List<BoxMapItem>>> getAllBoxes() {
-    return Future.value(right(_boxes));
+  Future<Either<MapError, List<BoxMapItem>>> getAllBoxes() async {
+    try {
+      final boxes = await _firestore.collection('boxes').getDocuments().then(
+          (docs) => docs.documents.map((b) => BoxMapItem.fromFirestore(b)).toList());
+
+      return right(boxes);
+    } catch (e) {
+      print(e);
+      return left(MapError.boxError);
+    }
   }
 }
 
@@ -31,8 +42,8 @@ final _boxes = [
     ],
     description:
         'Sup yall its me coming back with a longer description. These things can go all the way up to 300 characters i believe. I do not believe that I will go that high, but you never know, I am testing to see if this scales well when there is more text than it usually would be. I still have quite a bit to go before the text limit runs out, which is at 500. Closin gup on 400 now, just a few more to go!',
-    latitude: 45.521563,
-    longitude: -122.677433,
+    latitude: 59.1303617,
+    longitude: 11.3543517,
     publishedOn: DateTime.now(),
     publishedById: 'me',
     title: 'Box title 1',
@@ -41,8 +52,8 @@ final _boxes = [
     boxId: '1',
     books: <MapBookItem>[],
     description: 'Here comes the second box...',
-    latitude: 45.521563,
-    longitude: -122.70,
+    latitude: 59.19,
+    longitude: 11.3543517,
     publishedOn: DateTime.now(),
     publishedById: 'me',
     title: 'This is the second box',
@@ -51,8 +62,8 @@ final _boxes = [
     boxId: '2',
     books: <MapBookItem>[],
     description: 'And this is the description of the third box, here, it, goes. Okay?',
-    latitude: 45.54,
-    longitude: -122.65,
+    latitude: 59.26,
+    longitude: 11.26,
     publishedOn: DateTime.now(),
     publishedById: 'me',
     title: 'Third sample box',
