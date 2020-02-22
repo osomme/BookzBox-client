@@ -9,39 +9,56 @@ part of 'map_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$MapStore on _MapStore, Store {
-  Computed<BoxFeedListItem> _$boxComputed;
+  Computed<List<BoxMapItem>> _$boxesComputed;
 
   @override
-  BoxFeedListItem get box =>
-      (_$boxComputed ??= Computed<BoxFeedListItem>(() => super.box)).value;
-  Computed<bool> _$detailsWindowOpenComputed;
-
-  @override
-  bool get detailsWindowOpen => (_$detailsWindowOpenComputed ??=
-          Computed<bool>(() => super.detailsWindowOpen))
-      .value;
+  List<BoxMapItem> get boxes =>
+      (_$boxesComputed ??= Computed<List<BoxMapItem>>(() => super.boxes)).value;
   Computed<Option<LatLng>> _$userPositionComputed;
 
   @override
   Option<LatLng> get userPosition => (_$userPositionComputed ??=
           Computed<Option<LatLng>>(() => super.userPosition))
       .value;
-
-  final _$_boxAtom = Atom(name: '_MapStore._box');
+  Computed<bool> _$isLoadingBoxesComputed;
 
   @override
-  BoxFeedListItem get _box {
-    _$_boxAtom.context.enforceReadPolicy(_$_boxAtom);
-    _$_boxAtom.reportObserved();
-    return super._box;
+  bool get isLoadingBoxes =>
+      (_$isLoadingBoxesComputed ??= Computed<bool>(() => super.isLoadingBoxes))
+          .value;
+
+  final _$_boxesAtom = Atom(name: '_MapStore._boxes');
+
+  @override
+  List<BoxMapItem> get _boxes {
+    _$_boxesAtom.context.enforceReadPolicy(_$_boxesAtom);
+    _$_boxesAtom.reportObserved();
+    return super._boxes;
   }
 
   @override
-  set _box(BoxFeedListItem value) {
-    _$_boxAtom.context.conditionallyRunInAction(() {
-      super._box = value;
-      _$_boxAtom.reportChanged();
-    }, _$_boxAtom, name: '${_$_boxAtom.name}_set');
+  set _boxes(List<BoxMapItem> value) {
+    _$_boxesAtom.context.conditionallyRunInAction(() {
+      super._boxes = value;
+      _$_boxesAtom.reportChanged();
+    }, _$_boxesAtom, name: '${_$_boxesAtom.name}_set');
+  }
+
+  final _$_isLoadingBoxesAtom = Atom(name: '_MapStore._isLoadingBoxes');
+
+  @override
+  bool get _isLoadingBoxes {
+    _$_isLoadingBoxesAtom.context.enforceReadPolicy(_$_isLoadingBoxesAtom);
+    _$_isLoadingBoxesAtom.reportObserved();
+    return super._isLoadingBoxes;
+  }
+
+  @override
+  set _isLoadingBoxes(bool value) {
+    _$_isLoadingBoxesAtom.context.conditionallyRunInAction(() {
+      super._isLoadingBoxes = value;
+      _$_isLoadingBoxesAtom.reportChanged();
+    }, _$_isLoadingBoxesAtom, name: '${_$_isLoadingBoxesAtom.name}_set');
   }
 
   final _$_userPositionAtom = Atom(name: '_MapStore._userPosition');
@@ -69,25 +86,10 @@ mixin _$MapStore on _MapStore, Store {
         .run(() => super._fetchUserLocation());
   }
 
-  final _$_MapStoreActionController = ActionController(name: '_MapStore');
+  final _$_fetchBoxesAsyncAction = AsyncAction('_fetchBoxes');
 
   @override
-  void setCurrentBox(BoxFeedListItem box) {
-    final _$actionInfo = _$_MapStoreActionController.startAction();
-    try {
-      return super.setCurrentBox(box);
-    } finally {
-      _$_MapStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void removeCurrentBox() {
-    final _$actionInfo = _$_MapStoreActionController.startAction();
-    try {
-      return super.removeCurrentBox();
-    } finally {
-      _$_MapStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> _fetchBoxes() {
+    return _$_fetchBoxesAsyncAction.run(() => super._fetchBoxes());
   }
 }

@@ -106,8 +106,11 @@ final commonServicesProviders = [
 ];
 
 final mapProviders = [
-  ProxyProvider<ILocationService, MapStore>(
-    update: (_, locationService, __) => MapStore(locationService),
+  ProxyProvider<IMapBoxService, IBoxMapRepository>(
+    update: (_, service, __) => BoxMapFirebaseRepository(service),
+  ),
+  ProxyProvider2<ILocationService, IBoxMapRepository, MapStore>(
+    update: (_, locationService, repo, __) => MapStore(locationService, repo),
   ),
   ProxyProvider<MapStore, BoxMapScreen>(
     update: (ctx, store, _) => BoxMapScreen(
