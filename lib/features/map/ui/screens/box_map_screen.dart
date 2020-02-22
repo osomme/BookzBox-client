@@ -32,6 +32,12 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   int oldIconSize = 0;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    listeners.add(errorListener());
+  }
+
+  @override
   void dispose() {
     listeners.forEach((listener) => listener());
     super.dispose();
@@ -41,6 +47,16 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
     mapController = controller;
     listeners.addAll([boxesListener(), userLocationListener()]);
     reloadMarkers();
+  }
+
+  ReactionDisposer errorListener() {
+    return autorun((_) {
+      if (widget.mapStore.error != null) {
+        Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text(widget.mapStore.error.toErrorString(context))),
+        );
+      }
+    });
   }
 
   ReactionDisposer userLocationListener() {

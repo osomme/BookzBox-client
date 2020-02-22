@@ -20,6 +20,11 @@ mixin _$MapStore on _MapStore, Store {
   Option<LatLng> get userPosition => (_$userPositionComputed ??=
           Computed<Option<LatLng>>(() => super.userPosition))
       .value;
+  Computed<MapError> _$errorComputed;
+
+  @override
+  MapError get error =>
+      (_$errorComputed ??= Computed<MapError>(() => super.error)).value;
   Computed<bool> _$isLoadingBoxesComputed;
 
   @override
@@ -59,6 +64,23 @@ mixin _$MapStore on _MapStore, Store {
       super._isLoadingBoxes = value;
       _$_isLoadingBoxesAtom.reportChanged();
     }, _$_isLoadingBoxesAtom, name: '${_$_isLoadingBoxesAtom.name}_set');
+  }
+
+  final _$_errorAtom = Atom(name: '_MapStore._error');
+
+  @override
+  MapError get _error {
+    _$_errorAtom.context.enforceReadPolicy(_$_errorAtom);
+    _$_errorAtom.reportObserved();
+    return super._error;
+  }
+
+  @override
+  set _error(MapError value) {
+    _$_errorAtom.context.conditionallyRunInAction(() {
+      super._error = value;
+      _$_errorAtom.reportChanged();
+    }, _$_errorAtom, name: '${_$_errorAtom.name}_set');
   }
 
   final _$_userPositionAtom = Atom(name: '_MapStore._userPosition');

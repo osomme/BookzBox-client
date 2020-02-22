@@ -487,6 +487,24 @@ class S {
       args: [],
     );
   }
+
+  String get mapErrorNoLocationPermission {
+    return Intl.message(
+      'Location permissions must be enabled',
+      name: 'mapErrorNoLocationPermission',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapErrorBoxesError {
+    return Intl.message(
+      'Failed to retrieve boxes',
+      name: 'mapErrorBoxesError',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

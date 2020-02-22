@@ -52,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "homeNavBarFeedLabel" : MessageLookupByLibrary.simpleMessage("Feed"),
     "homeNavBarMapLabel" : MessageLookupByLibrary.simpleMessage("Map"),
     "homeNavBarProfileLabel" : MessageLookupByLibrary.simpleMessage("Profile"),
+    "mapErrorBoxesError" : MessageLookupByLibrary.simpleMessage("Failed to retrieve boxes"),
+    "mapErrorNoLocationPermission" : MessageLookupByLibrary.simpleMessage("Location permissions must be enabled"),
     "newBoxAddBookButton" : MessageLookupByLibrary.simpleMessage("ADD BOOK"),
     "newBoxBookAuthor" : MessageLookupByLibrary.simpleMessage("Author"),
     "newBoxBookNotFound" : MessageLookupByLibrary.simpleMessage("Book not found"),

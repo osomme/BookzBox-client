@@ -49,5 +49,7 @@
     "feedBooks": "BOOKS",
     "feedLocation": "LOCATION",
     "feedNoLocationData": "No data",
-    "feedNoBoxesFound": "No boxes found... Try changing your preferences!"
+    "feedNoBoxesFound": "No boxes found... Try changing your preferences!",
+    "mapErrorNoLocationPermission": "Location permissions must be enabled",
+    "mapErrorBoxesError": "Failed to retrieve boxes"
 }

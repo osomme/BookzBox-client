@@ -19,6 +19,9 @@ abstract class _MapStore with Store {
   bool _isLoadingBoxes = false;
 
   @observable
+  MapError _error;
+
+  @observable
   Option<LatLng> _userPosition = none();
 
   _MapStore(this._locationService, this._repository) {
@@ -33,13 +36,17 @@ abstract class _MapStore with Store {
   Option<LatLng> get userPosition => _userPosition;
 
   @computed
+  MapError get error => _error;
+
+  @computed
   bool get isLoadingBoxes => _isLoadingBoxes;
 
   @action
   Future<void> _fetchUserLocation() async {
+    _error = null;
     final location = await _locationService.getLocation();
     location.fold(
-      (error) => print('Failed to get user location with error: $error'),
+      (error) => _error = MapError.noLocationPermissions,
       (loc) {
         print('Location found: $loc');
         _userPosition = some(loc);
@@ -49,10 +56,11 @@ abstract class _MapStore with Store {
 
   @action
   Future<void> _fetchBoxes() async {
+    _error = null;
     _isLoadingBoxes = true;
     final result = await _repository.getAllBoxes();
     result.fold(
-      (error) => print('Failed to load boxes with error: $error'),
+      (error) => _error = error,
       (boxes) => _boxes = boxes,
     );
     _isLoadingBoxes = false;

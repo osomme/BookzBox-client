@@ -5,3 +5,4 @@ export './helpers/asset_loader.dart';
 export './models/models.dart';
 export './services/services.dart';
 export './repositories/repositories.dart';
+export './errors/errors.dart';
