@@ -74,6 +74,8 @@ dependencies:
   # Obtaining user location coordinates
   location: ^2.4.0
 
+  # UI Widget
+  sliding_up_panel: ^1.0.0
 
 dev_dependencies:
   flutter_test:

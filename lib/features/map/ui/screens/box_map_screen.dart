@@ -3,12 +3,14 @@ import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/home_screen/helpers/asset_loader.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class BoxMapScreen extends StatefulWidget {
-  BoxMapScreen._privConstructor();
+  final MapStore mapStore;
 
-  static final instance = BoxMapScreen._privConstructor();
+  const BoxMapScreen({Key key, this.mapStore}) : super(key: key);
 
   @override
   _BoxMapScreenState createState() => _BoxMapScreenState();
@@ -81,22 +83,50 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
 
   void _onCameraIdle() => reloadMarkers();
 
+  Widget _floatingPanel() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(24.0)),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 20.0,
+            color: Colors.grey,
+          ),
+        ],
+      ),
+      margin: const EdgeInsets.all(24.0),
+      child: Observer(
+        builder: (_) => Center(
+          child: Text("This is the SlidingUpPanel when open"),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        markers: markers,
-        onMapCreated: _onMapCreated,
-        initialCameraPosition: CameraPosition(
-          target: startPos,
-          zoom: 11.0,
+      body: Observer(
+        builder: (_) => SlidingUpPanel(
+          minHeight: 0.0,
+          renderPanelSheet: false,
+          panel: _floatingPanel(),
+          body: GoogleMap(
+            markers: markers,
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: startPos,
+              zoom: 11.0,
+            ),
+            onCameraIdle: _onCameraIdle,
+            onCameraMove: (camPos) {
+              currentCamPos = camPos.target;
+              iconSize = camPos.zoom.round() * 7;
+            },
+            myLocationButtonEnabled: false,
+          ),
         ),
-        onCameraIdle: _onCameraIdle,
-        onCameraMove: (camPos) {
-          currentCamPos = camPos.target;
-          iconSize = camPos.zoom.round() * 7;
-        },
-        myLocationButtonEnabled: false,
       ),
     );
   }
