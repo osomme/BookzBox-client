@@ -1,11 +1,9 @@
 import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/feed/feed.dart';
-import 'package:bookzbox/features/home_screen/helpers/asset_loader.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class BoxMapScreen extends StatefulWidget {
   final MapStore mapStore;
@@ -52,26 +50,28 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
         return Marker(
           markerId: MarkerId(b.id),
           position: LatLng(b.lat, b.lng),
-          onTap: () => buildDetails(b),
+          onTap: () => buildDetailsWidget(b),
           icon: markerIcon,
         );
       }).toSet();
     });
   }
 
-  void buildDetails(BoxFeedListItem box) {
+  void buildDetailsWidget(BoxFeedListItem box) {
     print('Pressed box with id: ${box.id}');
 
-    //Scaffold.of(context).showBottomSheet();
-    showModalBottomSheet<void>(
+    //widget.mapStore.setCurrentBox(box);
+
+    showDialog(
       context: context,
-      shape: ContinuousRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15.0),
-          topRight: Radius.circular(15.0),
+      builder: (_) => Dialog(
+        backgroundColor: Theme.of(context).primaryColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+        child: Container(
+          child: SingleChildScrollView(child: ModalBoxDetails(box: box)),
+          height: 500.0,
         ),
       ),
-      builder: (ctx) => bottomDetailsModal(box),
     );
   }
 
@@ -84,49 +84,33 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   void _onCameraIdle() => reloadMarkers();
 
   Widget _floatingPanel() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(24.0)),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 20.0,
-            color: Colors.grey,
-          ),
-        ],
-      ),
-      margin: const EdgeInsets.all(24.0),
-      child: Observer(
-        builder: (_) => Center(
-          child: Text("This is the SlidingUpPanel when open"),
-        ),
-      ),
-    );
+    return widget.mapStore.detailsWindowOpen
+        ? Center(
+            child: Observer(
+              builder: (_) => SingleChildScrollView(
+                child: ModalBoxDetails(box: widget.mapStore.box),
+              ),
+            ),
+          )
+        : SizedBox.shrink();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Observer(
-        builder: (_) => SlidingUpPanel(
-          minHeight: 0.0,
-          renderPanelSheet: false,
-          panel: _floatingPanel(),
-          body: GoogleMap(
-            markers: markers,
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: startPos,
-              zoom: 11.0,
-            ),
-            onCameraIdle: _onCameraIdle,
-            onCameraMove: (camPos) {
-              currentCamPos = camPos.target;
-              iconSize = camPos.zoom.round() * 7;
-            },
-            myLocationButtonEnabled: false,
-          ),
+      body: GoogleMap(
+        markers: markers,
+        onMapCreated: _onMapCreated,
+        initialCameraPosition: CameraPosition(
+          target: startPos,
+          zoom: 11.0,
         ),
+        onCameraIdle: _onCameraIdle,
+        onCameraMove: (camPos) {
+          currentCamPos = camPos.target;
+          iconSize = camPos.zoom.round() * 7;
+        },
+        myLocationButtonEnabled: false,
       ),
     );
   }

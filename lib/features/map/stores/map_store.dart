@@ -7,11 +7,17 @@ class MapStore = _MapStore with _$MapStore;
 
 abstract class _MapStore with Store {
   @observable
-  BoxFeedListItem box;
+  BoxFeedListItem _box;
 
   @computed
-  bool get detailsWindowOpen => box != null;
+  BoxFeedListItem get box => _box;
+
+  @computed
+  bool get detailsWindowOpen => _box != null;
 
   @action
-  void setCurrentBox(BoxFeedListItem box) => this.box = box;
+  void setCurrentBox(BoxFeedListItem box) => this._box = box;
+
+  @action
+  void removeCurrentBox() => _box = null;
 }

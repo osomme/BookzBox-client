@@ -11,24 +11,21 @@ class ModalBoxDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).primaryColor,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 4.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                _titleText(context),
-                SizedBox(height: 20.0),
-                _images(context),
-                SizedBox(height: 10.0),
-              ],
-            ),
-            _mainTextContent(context),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 4.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              _titleText(context),
+              SizedBox(height: 20.0),
+              _images(context),
+              SizedBox(height: 10.0),
+            ],
+          ),
+          _mainTextContent(context),
+        ],
       ),
     );
   }
@@ -46,37 +43,45 @@ class ModalBoxDetails extends StatelessWidget {
   }
 
   Widget _images(BuildContext context) => box.books.any((b) => b.thumbnailUrl != null)
-      ? Container(
-          width: MediaQuery.of(context).size.width,
-          height: 175.0,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: box.books.length,
-            itemBuilder: (ctx, i) {
-              return Row(
-                children: <Widget>[
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
+      ? Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 175.0,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: box.books.length,
+                itemBuilder: (ctx, i) {
+                  return Row(
                     children: <Widget>[
-                      Container(
-                        height: 150.0,
-                        width: 100.0,
-                        child: (box.books[i].thumbnailUrl != null)
-                            ? Image.network(box.books[i].thumbnailUrl, fit: BoxFit.fill)
-                            : Image.asset('assets/images/book_cover_placeholder.jpeg',
-                                fit: BoxFit.fill),
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Container(
+                            height: 150.0,
+                            width: 100.0,
+                            child: (box.books[i].thumbnailUrl != null)
+                                ? Image.network(box.books[i].thumbnailUrl,
+                                    fit: BoxFit.fill)
+                                : Image.asset('assets/images/book_cover_placeholder.jpeg',
+                                    fit: BoxFit.fill),
+                          ),
+                          SizedBox(height: 2.0),
+                          Text(
+                            box.books[i].categories.first ?? '',
+                            style: Theme.of(context).primaryTextTheme.caption,
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 2.0),
-                      Text(
-                        box.books[i].categories.first ?? '',
-                        style: Theme.of(context).primaryTextTheme.caption,
-                      ),
+                      (i + 1) < box.books.length
+                          ? SizedBox(width: 5.0)
+                          : SizedBox.shrink(),
                     ],
-                  ),
-                  (i + 1) < box.books.length ? SizedBox(width: 5.0) : SizedBox.shrink(),
-                ],
-              );
-            },
+                  );
+                },
+              ),
+            ),
           ),
         )
       : Container(
@@ -95,6 +100,7 @@ class ModalBoxDetails extends StatelessWidget {
           style:
               Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
         ),
+        SizedBox(height: 5.0),
         Text(
           box.description,
           style: Theme.of(context).primaryTextTheme.body2,
@@ -112,6 +118,7 @@ class ModalBoxDetails extends StatelessWidget {
           style:
               Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
         ),
+        SizedBox(height: 5.0),
         Text(
           box.publishedOn.toIso8601String(),
           style: Theme.of(context).primaryTextTheme.body2,
@@ -121,22 +128,6 @@ class ModalBoxDetails extends StatelessWidget {
   }
 
   Widget _buttonBar(BuildContext context) {
-    /*
-    return ButtonBar(
-      children: <Widget>[
-        RaisedButton.icon(
-          onPressed: () => print('sup'),
-          icon: Icon(Icons.person),
-          label: Text('Profile'),
-        ),
-        RaisedButton.icon(
-          onPressed: () => print('sup'),
-          icon: Icon(Icons.zoom_in),
-          label: Text('Details'),
-        ),
-      ],
-    );
-    */
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
