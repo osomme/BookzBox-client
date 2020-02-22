@@ -106,8 +106,8 @@ final commonServicesProviders = [
 ];
 
 final mapProviders = [
-  Provider<MapStore>(
-    create: (_) => MapStore(),
+  ProxyProvider<ILocationService, MapStore>(
+    update: (_, locationService, __) => MapStore(locationService),
   ),
   ProxyProvider<MapStore, BoxMapScreen>(
     update: (ctx, store, _) => BoxMapScreen(

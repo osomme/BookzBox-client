@@ -3,18 +3,25 @@ import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mobx/mobx.dart';
 
 class BoxMapScreen extends StatefulWidget {
   final MapStore mapStore;
 
-  const BoxMapScreen({Key key, this.mapStore}) : super(key: key);
+  const BoxMapScreen({
+    Key key,
+    this.mapStore,
+  }) : super(key: key);
 
   @override
   _BoxMapScreenState createState() => _BoxMapScreenState();
 }
 
 class _BoxMapScreenState extends State<BoxMapScreen> {
-  final startPos = LatLng(45.521563, -122.677433);
+  ReactionDisposer userPosListener;
+
+  // Default camera pos. (Halden)
+  final startPos = LatLng(59.1303617, 11.3543517);
 
   Set<Marker> markers = Set();
 
@@ -22,12 +29,25 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
 
   LatLng currentCamPos;
 
-  int iconSize = 77;
+  int iconSize = 84;
 
   int oldIconSize = 0;
 
+  @override
+  void dispose() {
+    userPosListener?.call();
+    super.dispose();
+  }
+
   void onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    userPosListener = autorun((_) async {
+      await mapController.moveCamera(
+        CameraUpdate.newLatLng(widget.mapStore.userPosition
+            .map((p) => LatLng(p.latitude, p.longitude))
+            .getOrElse(() => startPos)),
+      );
+    });
     reloadMarkers();
   }
 
@@ -82,7 +102,7 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
         onMapCreated: onMapCreated,
         initialCameraPosition: CameraPosition(
           target: startPos,
-          zoom: 11.0,
+          zoom: 12.0,
         ),
         onCameraIdle: onCameraIdle,
         onCameraMove: (camPos) {

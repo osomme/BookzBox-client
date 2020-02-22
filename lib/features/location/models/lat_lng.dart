@@ -9,4 +9,7 @@ class LatLng {
     @required this.latitude,
     @required this.longitude,
   });
+
+  @override
+  String toString() => '[LatLng] latitude: $latitude, longitude: $longitude';
 }
