@@ -1,4 +1,3 @@
-import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:dartz/dartz.dart';
@@ -14,7 +13,7 @@ abstract class _MapStore with Store {
   final IBoxMapRepository _repository;
 
   @observable
-  List<BoxMapItem> _boxes;
+  List<BoxMapItem> _boxes = List();
 
   @observable
   bool _isLoadingBoxes = false;
@@ -23,6 +22,7 @@ abstract class _MapStore with Store {
   Option<LatLng> _userPosition = none();
 
   _MapStore(this._locationService, this._repository) {
+    _fetchBoxes();
     _fetchUserLocation();
   }
 

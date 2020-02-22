@@ -1,5 +1,3 @@
-import 'package:bookzbox/features/box/models/models.dart';
-import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,7 +16,7 @@ class BoxMapScreen extends StatefulWidget {
 }
 
 class _BoxMapScreenState extends State<BoxMapScreen> {
-  ReactionDisposer userPosListener;
+  List<ReactionDisposer> listeners = List();
 
   // Default camera pos. (Halden)
   final startPos = LatLng(59.1303617, 11.3543517);
@@ -35,20 +33,38 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
 
   @override
   void dispose() {
-    userPosListener?.call();
+    listeners.forEach((listener) => listener());
     super.dispose();
   }
 
   void onMapCreated(GoogleMapController controller) {
     mapController = controller;
-    userPosListener = autorun((_) async {
+    listeners.addAll([boxesListener(), userLocationListener()]);
+    reloadMarkers();
+  }
+
+  ReactionDisposer userLocationListener() {
+    return autorun((_) async {
       await mapController.moveCamera(
         CameraUpdate.newLatLng(widget.mapStore.userPosition
             .map((p) => LatLng(p.latitude, p.longitude))
             .getOrElse(() => startPos)),
       );
     });
-    reloadMarkers();
+  }
+
+  ReactionDisposer boxesListener() {
+    return autorun((_) async {
+      final markerIcon = await loadIcon();
+      markers = widget.mapStore.boxes.map((b) {
+        return Marker(
+          markerId: MarkerId(b.boxId),
+          position: LatLng(b.latitude, b.longitude),
+          onTap: () => buildDetailsWidget(b),
+          icon: markerIcon,
+        );
+      }).toSet();
+    });
   }
 
   void reloadMarkers() async {
@@ -57,26 +73,21 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
       return;
     }
 
-    final markerIcon =
-        await AssetLoader.getBytesFromAsset('assets/images/box-map-icon.png', iconSize)
-            .then((b) => BitmapDescriptor.fromBytes(b));
-
+    final markerIcon = await loadIcon();
     oldIconSize = iconSize;
 
     print('Creating new markers with icon size: $iconSize');
     setState(() {
-      markers = _boxes.map((b) {
-        return Marker(
-          markerId: MarkerId(b.id),
-          position: LatLng(b.lat, b.lng),
-          onTap: () => buildDetailsWidget(b),
-          icon: markerIcon,
-        );
-      }).toSet();
+      markers = markers.map((m) => m.copyWith(iconParam: markerIcon)).toSet();
     });
   }
 
-  void buildDetailsWidget(BoxFeedListItem box) {
+  Future<BitmapDescriptor> loadIcon() async {
+    return await AssetLoader.getBytesFromAsset('assets/images/box-map-icon.png', iconSize)
+        .then((b) => BitmapDescriptor.fromBytes(b));
+  }
+
+  void buildDetailsWidget(BoxMapItem box) {
     showDialog(
       context: context,
       builder: (_) => Dialog(
@@ -114,57 +125,3 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
     );
   }
 }
-
-final _boxes = [
-  BoxFeedListItem(
-    id: '0',
-    books: <BoxFeedBook>[
-      BoxFeedBook(
-          categories: ['Action'],
-          thumbnailUrl:
-              'http://2.bp.blogspot.com/-LJSpEbfis3s/Tv56jNiYRAI/AAAAAAAAKMo/dbqxU7d7Dbk/s1600/harry+potter+book+7+cover+deathly+hallows.jpg'),
-      BoxFeedBook(
-          categories: ['Comedy'],
-          thumbnailUrl: 'http://mediaroom.scholastic.com/files/HP4cover.jpg'),
-      BoxFeedBook(
-          categories: ['Thriller'],
-          thumbnailUrl:
-              'https://ewedit.files.wordpress.com/2016/09/dh-uk-kids-jacket-art.jpg?w=426'),
-      BoxFeedBook(
-          categories: ['Educational'],
-          thumbnailUrl:
-              'https://upload.wikimedia.org/wikipedia/en/4/48/ErnestHemmingway_ForWhomTheBellTolls.jpg'),
-      BoxFeedBook(categories: ['Action'], thumbnailUrl: null),
-    ],
-    description:
-        'Sup yall its me coming back with a longer description. These things can go all the way up to 300 characters i believe. I do not believe that I will go that high, but you never know, I am testing to see if this scales well when there is more text than it usually would be. I still have quite a bit to go before the text limit runs out, which is at 500. Closin gup on 400 now, just a few more to go!',
-    lat: 45.521563,
-    lng: -122.677433,
-    publishedOn: DateTime.now(),
-    publisherId: 'me',
-    status: BoxStatus.public,
-    title: 'Box title 1',
-  ),
-  BoxFeedListItem(
-    id: '1',
-    books: <BoxFeedBook>[],
-    description: 'Here comes the second box...',
-    lat: 45.521563,
-    lng: -122.70,
-    publishedOn: DateTime.now(),
-    publisherId: 'me',
-    status: BoxStatus.public,
-    title: 'This is the second box',
-  ),
-  BoxFeedListItem(
-    id: '2',
-    books: <BoxFeedBook>[],
-    description: 'And this is the description of the third box, here, it, goes. Okay?',
-    lat: 45.54,
-    lng: -122.65,
-    publishedOn: DateTime.now(),
-    publisherId: 'me',
-    status: BoxStatus.public,
-    title: 'Third sample box',
-  ),
-];

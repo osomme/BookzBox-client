@@ -106,6 +106,9 @@ final commonServicesProviders = [
 ];
 
 final mapProviders = [
+  Provider<IMapBoxService>(
+    create: (_) => BoxMapFirebaseService(),
+  ),
   ProxyProvider<IMapBoxService, IBoxMapRepository>(
     update: (_, service, __) => BoxMapFirebaseRepository(service),
   ),

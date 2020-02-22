@@ -1,10 +1,10 @@
-import 'package:bookzbox/features/feed/feed.dart';
+import 'package:bookzbox/features/map/box_map.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ModalBoxDetails extends StatelessWidget {
-  final BoxFeedListItem box;
+  final BoxMapItem box;
 
   const ModalBoxDetails({
     Key key,
