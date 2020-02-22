@@ -1,5 +1,7 @@
 import 'package:bookzbox/features/feed/feed.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ModalBoxDetails extends StatelessWidget {
   final BoxFeedListItem box;
@@ -11,22 +13,19 @@ class ModalBoxDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 4.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              _titleText(context),
-              SizedBox(height: 20.0),
-              _images(context),
-              SizedBox(height: 10.0),
-            ],
-          ),
-          _mainTextContent(context),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            _titleText(context),
+            SizedBox(height: 20.0),
+            _images(context),
+            SizedBox(height: 10.0),
+          ],
+        ),
+        _mainTextContent(context),
+      ],
     );
   }
 
@@ -43,12 +42,12 @@ class ModalBoxDetails extends StatelessWidget {
   }
 
   Widget _images(BuildContext context) => box.books.any((b) => b.thumbnailUrl != null)
-      ? Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 175.0,
+      ? Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 175.0,
+            child: Center(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: box.books.length,
@@ -61,11 +60,24 @@ class ModalBoxDetails extends StatelessWidget {
                           Container(
                             height: 150.0,
                             width: 100.0,
-                            child: (box.books[i].thumbnailUrl != null)
-                                ? Image.network(box.books[i].thumbnailUrl,
-                                    fit: BoxFit.fill)
-                                : Image.asset('assets/images/book_cover_placeholder.jpeg',
-                                    fit: BoxFit.fill),
+                            child: CachedNetworkImage(
+                              imageBuilder: (ctx, imageProvider) => Container(
+                                height: 150.0,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                              imageUrl: box.books[i].thumbnailUrl ?? '',
+                              placeholder: (ctx, url) => SpinKitPulse(
+                                size: 20.0,
+                                color: Theme.of(ctx).primaryIconTheme.color,
+                              ),
+                              errorWidget: (ctx, url, error) => Image.asset(
+                                  'assets/images/book_cover_placeholder.jpeg'), //TODO: Replace with better placeholder?
+                            ),
                           ),
                           SizedBox(height: 2.0),
                           Text(
@@ -134,20 +146,20 @@ class ModalBoxDetails extends StatelessWidget {
         _button(
           icon: Icon(Icons.person),
           label: 'Profile',
-          color: Colors.blue,
+          color: Theme.of(context).accentColor,
           onClick: () => print('Clicked profile'),
         ),
         _button(
           icon: Icon(Icons.zoom_in),
           label: 'Details',
-          color: Colors.red,
+          color: Theme.of(context).accentColor,
           onClick: () => print('Clicked details'),
         ),
         _button(
           icon: Icon(Icons.favorite),
           label: 'Favorite',
           onClick: () => print('Clicked favorite'),
-          color: Colors.orange,
+          color: Theme.of(context).accentColor,
         ),
       ],
     );

@@ -2,7 +2,6 @@ import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class BoxMapScreen extends StatefulWidget {
@@ -27,7 +26,7 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
 
   int oldIconSize = 0;
 
-  void _onMapCreated(GoogleMapController controller) {
+  void onMapCreated(GoogleMapController controller) {
     mapController = controller;
     reloadMarkers();
   }
@@ -58,54 +57,34 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   }
 
   void buildDetailsWidget(BoxFeedListItem box) {
-    print('Pressed box with id: ${box.id}');
-
-    //widget.mapStore.setCurrentBox(box);
-
     showDialog(
       context: context,
       builder: (_) => Dialog(
         backgroundColor: Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
         child: Container(
-          child: SingleChildScrollView(child: ModalBoxDetails(box: box)),
-          height: 500.0,
+          child: SingleChildScrollView(
+            child: ModalBoxDetails(box: box),
+          ),
+          height: MediaQuery.of(context).size.height * 0.75,
         ),
       ),
     );
   }
 
-  Widget bottomDetailsModal(BoxFeedListItem box) {
-    return SingleChildScrollView(
-      child: ModalBoxDetails(box: box),
-    );
-  }
-
-  void _onCameraIdle() => reloadMarkers();
-
-  Widget _floatingPanel() {
-    return widget.mapStore.detailsWindowOpen
-        ? Center(
-            child: Observer(
-              builder: (_) => SingleChildScrollView(
-                child: ModalBoxDetails(box: widget.mapStore.box),
-              ),
-            ),
-          )
-        : SizedBox.shrink();
-  }
+  void onCameraIdle() => reloadMarkers();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GoogleMap(
         markers: markers,
-        onMapCreated: _onMapCreated,
+        onMapCreated: onMapCreated,
         initialCameraPosition: CameraPosition(
           target: startPos,
           zoom: 11.0,
         ),
-        onCameraIdle: _onCameraIdle,
+        onCameraIdle: onCameraIdle,
         onCameraMove: (camPos) {
           currentCamPos = camPos.target;
           iconSize = camPos.zoom.round() * 7;
