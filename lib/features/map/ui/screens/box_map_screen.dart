@@ -1,7 +1,12 @@
+import 'package:bookzbox/common/di/providers.dart';
+import 'package:bookzbox/features/authentication/authentication.dart';
+import 'package:bookzbox/features/feed/feed.dart';
+import 'package:bookzbox/features/feed/stores/box_like_store.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 class BoxMapScreen extends StatefulWidget {
   final MapStore mapStore;
@@ -113,7 +118,19 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
         child: Container(
           child: SingleChildScrollView(
-            child: ModalBoxDetails(box: box),
+            child: MultiProvider(
+              providers: boxLikeProviders,
+              child: Consumer<IBoxLikeRepository>(
+                builder: (_, likeRepo, __) => ModalBoxDetails(
+                  box: box,
+                  likeStore: BoxLikeStore(
+                    likeRepo,
+                    Provider.of<IAuthService>(context),
+                    box.boxId,
+                  ),
+                ),
+              ),
+            ),
           ),
           height: MediaQuery.of(context).size.height * 0.75,
         ),

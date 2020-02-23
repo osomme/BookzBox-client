@@ -78,6 +78,15 @@ final mainProviders = [
   ),
 ];
 
+final boxLikeProviders = [
+  Provider<IBoxLikeService>(
+    create: (_) => FirebaseBoxLikeService(),
+  ),
+  ProxyProvider<IBoxLikeService, IBoxLikeRepository>(
+    update: (_, service, __) => BoxLikeRepository(service),
+  ),
+];
+
 final feedProviders = [
   Provider<IFeedService>(
     create: (_) => FirebaseFeedService(),
@@ -88,12 +97,7 @@ final feedProviders = [
   ProxyProvider<IFeedRepository, FeedStore>(
     update: (_, repo, __) => FeedStore(repo),
   ),
-  Provider<IBoxLikeService>(
-    create: (_) => FirebaseBoxLikeService(),
-  ),
-  ProxyProvider<IBoxLikeService, IBoxLikeRepository>(
-    update: (_, service, __) => BoxLikeRepository(service),
-  ),
+  ...boxLikeProviders,
   ProxyProvider<FeedStore, FeedScreen>(
     update: (_, store, __) => FeedScreen(feedStore: store),
   ),

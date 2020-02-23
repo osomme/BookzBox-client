@@ -560,10 +560,10 @@ class S {
     );
   }
 
-  String get mapFavoriteLabel {
+  String get mapLikeLabel {
     return Intl.message(
-      'Favorite',
-      name: 'mapFavoriteLabel',
+      'Like',
+      name: 'mapLikeLabel',
       desc: '',
       args: [],
     );

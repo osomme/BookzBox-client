@@ -56,7 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "mapDetailsLabel" : MessageLookupByLibrary.simpleMessage("Details"),
     "mapErrorBoxesError" : MessageLookupByLibrary.simpleMessage("Failed to retrieve boxes"),
     "mapErrorNoLocationPermission" : MessageLookupByLibrary.simpleMessage("Location permissions must be enabled"),
-    "mapFavoriteLabel" : MessageLookupByLibrary.simpleMessage("Favorite"),
+    "mapLikeLabel" : MessageLookupByLibrary.simpleMessage("Like"),
     "mapNoDescription" : MessageLookupByLibrary.simpleMessage("No description"),
     "mapNoImages" : MessageLookupByLibrary.simpleMessage("No Images"),
     "mapProfileLabel" : MessageLookupByLibrary.simpleMessage("Profile"),
