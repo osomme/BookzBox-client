@@ -523,6 +523,51 @@ class S {
       args: [],
     );
   }
+
+  String get profileRatingCardTitle {
+    return Intl.message(
+      'Rating',
+      name: 'profileRatingCardTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileRatingCardSubTitle {
+    return Intl.message(
+      'The rating is based on the feedback left by other users after a trade or interaction.',
+      name: 'profileRatingCardSubTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileTradesTitle {
+    return Intl.message(
+      'Trades',
+      name: 'profileTradesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileJoinDateTitle {
+    return Intl.message(
+      'Member since',
+      name: 'profileJoinDateTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileNewBoxTitle {
+    return Intl.message(
+      'New box',
+      name: 'profileNewBoxTitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

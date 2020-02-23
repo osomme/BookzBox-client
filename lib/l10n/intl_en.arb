@@ -53,5 +53,10 @@
     "profileLogout": "Log out",
     "profileMeTabLabel": "ME",
     "profileBoxesTabLabel": "MY BOXES",
-    "profilePreferencesTabLabel": "PREFERENCES"
+    "profilePreferencesTabLabel": "PREFERENCES",
+    "profileRatingCardTitle": "Rating",
+    "profileRatingCardSubTitle": "The rating is based on the feedback left by other users after a trade or interaction.",
+    "profileTradesTitle": "Trades",
+    "profileJoinDateTitle": "Member since",
+    "profileNewBoxTitle": "New box"
 }

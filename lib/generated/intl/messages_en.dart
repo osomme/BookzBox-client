@@ -73,8 +73,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "newBoxTitle" : MessageLookupByLibrary.simpleMessage("Create a box"),
     "newBoxTitleTitle" : MessageLookupByLibrary.simpleMessage("Title"),
     "profileBoxesTabLabel" : MessageLookupByLibrary.simpleMessage("MY BOXES"),
+    "profileJoinDateTitle" : MessageLookupByLibrary.simpleMessage("Member since"),
     "profileLogout" : MessageLookupByLibrary.simpleMessage("Log out"),
     "profileMeTabLabel" : MessageLookupByLibrary.simpleMessage("ME"),
-    "profilePreferencesTabLabel" : MessageLookupByLibrary.simpleMessage("PREFERENCES")
+    "profileNewBoxTitle" : MessageLookupByLibrary.simpleMessage("New box"),
+    "profilePreferencesTabLabel" : MessageLookupByLibrary.simpleMessage("PREFERENCES"),
+    "profileRatingCardSubTitle" : MessageLookupByLibrary.simpleMessage("The rating is based on the feedback left by other users after a trade or interaction."),
+    "profileRatingCardTitle" : MessageLookupByLibrary.simpleMessage("Rating"),
+    "profileTradesTitle" : MessageLookupByLibrary.simpleMessage("Trades")
   };
 }
