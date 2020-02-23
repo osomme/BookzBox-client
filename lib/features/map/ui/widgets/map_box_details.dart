@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 
 class ModalBoxDetails extends StatelessWidget {
   final BoxMapItem box;
@@ -155,7 +156,7 @@ class ModalBoxDetails extends StatelessWidget {
         ),
         SizedBox(height: 5.0),
         Text(
-          box.publishedOn.toIso8601String(),
+          DateFormat.yMMMd().add_jm().format(box.publishedOn),
           style: Theme.of(context).primaryTextTheme.body2,
         ),
       ],

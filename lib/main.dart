@@ -7,10 +7,14 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:bookzbox/common/extensions/color_extensions.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  initializeDateFormatting();
+  runApp(MyApp());
+}
 
 final FirebaseAnalytics _analytics = FirebaseAnalytics();
 
