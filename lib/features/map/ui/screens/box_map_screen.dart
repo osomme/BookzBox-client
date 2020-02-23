@@ -3,6 +3,8 @@ import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/feed/stores/box_like_store.dart';
 import 'package:bookzbox/features/map/box_map.dart';
+import 'package:dartz/dartz.dart' as Dartz;
+import 'package:bookzbox/features/location/models/lat_lng.dart' as LatLngModel;
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
@@ -24,7 +26,7 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   List<ReactionDisposer> listeners = List();
 
   // Default camera pos. (Halden)
-  final startPos = LatLng(59.1303617, 11.3543517);
+  final startPos = const LatLng(59.1303617, 11.3543517);
 
   Set<Marker> markers = Set();
 
@@ -39,7 +41,10 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    listeners.add(errorListener());
+    listeners.addAll([
+      boxesListener(),
+      errorListener(),
+    ]);
   }
 
   @override
@@ -50,7 +55,7 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
 
   void onMapCreated(GoogleMapController controller) {
     mapController = controller;
-    listeners.addAll([boxesListener(), userLocationListener()]);
+    listeners.add(userLocationListener());
     reloadMarkers();
   }
 
@@ -65,28 +70,36 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   }
 
   ReactionDisposer userLocationListener() {
-    return autorun((_) async {
-      await mapController.moveCamera(
-        CameraUpdate.newLatLng(widget.mapStore.userPosition
-            .map((p) => LatLng(p.latitude, p.longitude))
-            .getOrElse(() => startPos)),
-      );
+    return autorun((_) {
+      final location = widget.mapStore.userPosition;
+      onUserLocationObtained(location);
     });
   }
 
   ReactionDisposer boxesListener() {
-    return autorun((_) async {
-      final markerIcon = await loadIcon();
-      setState(() {
-        markers = widget.mapStore.boxes.map((b) {
-          return Marker(
-            markerId: MarkerId(b.boxId),
-            position: LatLng(b.latitude, b.longitude),
-            onTap: () => buildDetailsWidget(b),
-            icon: markerIcon,
-          );
-        }).toSet();
-      });
+    return autorun((_) {
+      onBoxesLoaded(widget.mapStore.boxes);
+    });
+  }
+
+  Future<void> onUserLocationObtained(
+      Dartz.Option<LatLngModel.LatLng> userLocation) async {
+    await mapController.moveCamera(CameraUpdate.newLatLng(userLocation
+        .map((p) => LatLng(p.latitude, p.longitude))
+        .getOrElse(() => startPos)));
+  }
+
+  Future<void> onBoxesLoaded(List<BoxMapItem> boxes) async {
+    final markerIcon = await loadIcon();
+    setState(() {
+      markers = boxes.map((b) {
+        return Marker(
+          markerId: MarkerId(b.boxId),
+          position: LatLng(b.latitude, b.longitude),
+          onTap: () => buildDetailsWidget(b),
+          icon: markerIcon,
+        );
+      }).toSet();
     });
   }
 

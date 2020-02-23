@@ -64,5 +64,6 @@ abstract class _MapStore with Store {
       (boxes) => _boxes = boxes,
     );
     _isLoadingBoxes = false;
+    print('Finished loading boxes, length: ${_boxes.length}');
   }
 }
