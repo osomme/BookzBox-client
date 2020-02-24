@@ -84,7 +84,7 @@ class FeedListItem extends StatelessWidget {
       child: Column(
         children: <Widget>[
           _topTextRow(context),
-          SizedBox(height: 5.0),
+          SizedBox(height: 10.0),
           Builder(builder: (ctx) {
             if (box.books.length >= 4) {
               return _expandedCoverImages(context);
@@ -96,7 +96,7 @@ class FeedListItem extends StatelessWidget {
               return _singleBookCoverImage(context);
             }
           }),
-          SizedBox(height: 5.0),
+          SizedBox(height: 10.0),
           _categoryAndTitleColumn(context),
           SizedBox(height: 2.5),
           _description(context),
