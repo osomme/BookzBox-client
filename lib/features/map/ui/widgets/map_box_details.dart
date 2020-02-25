@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/feed/stores/box_like_store.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -209,7 +210,8 @@ class ModalBoxDetails extends StatelessWidget {
       context,
       child: Icon(Icons.zoom_in),
       label: S.of(context).mapDetailsLabel,
-      onClick: () => print('Clicked details'),
+      onClick: () =>
+          Navigator.pushNamed(context, Screens.boxDetails, arguments: box.boxId),
     );
   }
 

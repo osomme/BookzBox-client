@@ -1,6 +1,7 @@
 import 'package:bookzbox/common/di/providers.dart';
 import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
+import 'package:bookzbox/features/box_details/ui/screens/box_details_screen.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -52,6 +53,14 @@ class MyApp extends StatelessWidget {
                 ),
               ),
           Screens.home: (ctx) => Provider.of<HomeScreen>(ctx),
+        },
+        onGenerateRoute: (settings) {
+          if (settings.name == Screens.boxDetails) {
+            final String boxId = settings.arguments;
+            return MaterialPageRoute(builder: (ctx) {
+              return BoxDetailsScreen(boxId: boxId);
+            });
+          }
         },
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: _analytics),
