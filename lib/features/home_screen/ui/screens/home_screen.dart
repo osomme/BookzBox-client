@@ -1,4 +1,3 @@
-import 'package:bookzbox/common/di/providers.dart';
 import 'package:bookzbox/features/activity/ui/screens/activity_screen.dart';
 import 'package:bookzbox/features/feed/ui/screens/feed_screen.dart';
 import 'package:bookzbox/features/map/box_map.dart';
