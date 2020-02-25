@@ -19,6 +19,12 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static m0(amount) => "${Intl.plural(amount, one: '1 day ago', other: '${amount} days ago')}";
+
+  static m1(amount) => "${Intl.plural(amount, one: '1 day ago', other: '${amount} days ago')}";
+
+  static m2(numMin) => "${numMin} min ago";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appName" : MessageLookupByLibrary.simpleMessage("BookzBox"),
@@ -42,6 +48,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "authSelectGoogle" : MessageLookupByLibrary.simpleMessage("Log in with Google"),
     "authSelectNewAcct" : MessageLookupByLibrary.simpleMessage("Don\'t have an account? Create a new one"),
     "authUsername" : MessageLookupByLibrary.simpleMessage("Username"),
+    "boxCancelVisibilityChange" : MessageLookupByLibrary.simpleMessage("CANCEL"),
+    "boxConfirmVisibilityChange" : MessageLookupByLibrary.simpleMessage("CONFIRM"),
+    "boxPublishedDaysAgo" : m0,
+    "boxPublishedHoursAgo" : m1,
+    "boxPublishedMinAgo" : m2,
+    "boxStatusPrivate" : MessageLookupByLibrary.simpleMessage("PRIVATE"),
+    "boxStatusPrivateDesc" : MessageLookupByLibrary.simpleMessage("Only you can see this box."),
+    "boxStatusPublic" : MessageLookupByLibrary.simpleMessage("PUBLIC"),
+    "boxStatusPublicDesc" : MessageLookupByLibrary.simpleMessage("Everyone can see this box."),
+    "boxStatusTraded" : MessageLookupByLibrary.simpleMessage("TRADED"),
+    "boxVisibilityChangeDialogTitle" : MessageLookupByLibrary.simpleMessage("Change box visibility"),
     "feedBooks" : MessageLookupByLibrary.simpleMessage("BOOKS"),
     "feedDescription" : MessageLookupByLibrary.simpleMessage("Description"),
     "feedLocation" : MessageLookupByLibrary.simpleMessage("LOCATION"),
@@ -80,6 +97,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "newBoxPublishTip" : MessageLookupByLibrary.simpleMessage("Publish"),
     "newBoxRemoveBook" : MessageLookupByLibrary.simpleMessage("Delete"),
     "newBoxTitle" : MessageLookupByLibrary.simpleMessage("Create a box"),
-    "newBoxTitleTitle" : MessageLookupByLibrary.simpleMessage("Title")
+    "newBoxTitleTitle" : MessageLookupByLibrary.simpleMessage("Title"),
+    "profileBoxDetailsBtn" : MessageLookupByLibrary.simpleMessage("DETAILS"),
+    "profileBoxesTabLabel" : MessageLookupByLibrary.simpleMessage("MY BOXES"),
+    "profileChangeVisibilityBtn" : MessageLookupByLibrary.simpleMessage("CHANGE VISIBILITY"),
+    "profileJoinDateTitle" : MessageLookupByLibrary.simpleMessage("Member since"),
+    "profileLogout" : MessageLookupByLibrary.simpleMessage("Log out"),
+    "profileMeTabLabel" : MessageLookupByLibrary.simpleMessage("ME"),
+    "profileNewBoxFAB" : MessageLookupByLibrary.simpleMessage("NEW BOX"),
+    "profileNewBoxTitle" : MessageLookupByLibrary.simpleMessage("New box"),
+    "profilePreferencesTabLabel" : MessageLookupByLibrary.simpleMessage("PREFERENCES"),
+    "profileRatingCardSubTitle" : MessageLookupByLibrary.simpleMessage("The rating is based on the feedback left by other users after a trade or interaction."),
+    "profileRatingCardTitle" : MessageLookupByLibrary.simpleMessage("Rating"),
+    "profileTradesTitle" : MessageLookupByLibrary.simpleMessage("Trades")
   };
 }

@@ -488,6 +488,11 @@ class S {
     );
   }
 
+  String get profileLogout {
+    return Intl.message(
+      'Log out',
+      name: 'profileLogout',
+
   String get mapErrorNoLocationPermission {
     return Intl.message(
       'Location permissions must be enabled',
@@ -496,6 +501,11 @@ class S {
       args: [],
     );
   }
+
+  String get profileMeTabLabel {
+    return Intl.message(
+      'ME',
+      name: 'profileMeTabLabel',
 
   String get mapErrorBoxesError {
     return Intl.message(
@@ -506,6 +516,11 @@ class S {
     );
   }
 
+  String get profileBoxesTabLabel {
+    return Intl.message(
+      'MY BOXES',
+      name: 'profileBoxesTabLabel',
+
   String get mapNoImages {
     return Intl.message(
       'No Images',
@@ -514,6 +529,11 @@ class S {
       args: [],
     );
   }
+
+  String get profilePreferencesTabLabel {
+    return Intl.message(
+      'PREFERENCES',
+      name: 'profilePreferencesTabLabel',
 
   String get mapDescription {
     return Intl.message(
@@ -524,6 +544,11 @@ class S {
     );
   }
 
+  String get profileRatingCardTitle {
+    return Intl.message(
+      'Rating',
+      name: 'profileRatingCardTitle',
+
   String get mapNoDescription {
     return Intl.message(
       'No description',
@@ -532,6 +557,11 @@ class S {
       args: [],
     );
   }
+
+  String get profileRatingCardSubTitle {
+    return Intl.message(
+      'The rating is based on the feedback left by other users after a trade or interaction.',
+      name: 'profileRatingCardSubTitle',
 
   String get mapPublishedOn {
     return Intl.message(
@@ -542,6 +572,11 @@ class S {
     );
   }
 
+  String get profileTradesTitle {
+    return Intl.message(
+      'Trades',
+      name: 'profileTradesTitle',
+
   String get mapProfileLabel {
     return Intl.message(
       'Profile',
@@ -551,6 +586,11 @@ class S {
     );
   }
 
+  String get profileJoinDateTitle {
+    return Intl.message(
+      'Member since',
+      name: 'profileJoinDateTitle',
+
   String get mapDetailsLabel {
     return Intl.message(
       'Details',
@@ -559,6 +599,141 @@ class S {
       args: [],
     );
   }
+
+  String get profileNewBoxTitle {
+    return Intl.message(
+      'New box',
+      name: 'profileNewBoxTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileNewBoxFAB {
+    return Intl.message(
+      'NEW BOX',
+      name: 'profileNewBoxFAB',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileBoxDetailsBtn {
+    return Intl.message(
+      'DETAILS',
+      name: 'profileBoxDetailsBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileChangeVisibilityBtn {
+    return Intl.message(
+      'CHANGE VISIBILITY',
+      name: 'profileChangeVisibilityBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxStatusPublic {
+    return Intl.message(
+      'PUBLIC',
+      name: 'boxStatusPublic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxStatusPublicDesc {
+    return Intl.message(
+      'Everyone can see this box.',
+      name: 'boxStatusPublicDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxStatusPrivate {
+    return Intl.message(
+      'PRIVATE',
+      name: 'boxStatusPrivate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxStatusPrivateDesc {
+    return Intl.message(
+      'Only you can see this box.',
+      name: 'boxStatusPrivateDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxStatusTraded {
+    return Intl.message(
+      'TRADED',
+      name: 'boxStatusTraded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String boxPublishedMinAgo(dynamic numMin) {
+    return Intl.message(
+      '$numMin min ago',
+      name: 'boxPublishedMinAgo',
+      desc: '',
+      args: [numMin],
+    );
+  }
+
+  String boxPublishedHoursAgo(dynamic amount) {
+    return Intl.plural(
+      amount,
+      one: '1 day ago',
+      other: '$amount days ago',
+      name: 'boxPublishedHoursAgo',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  String boxPublishedDaysAgo(dynamic amount) {
+    return Intl.plural(
+      amount,
+      one: '1 day ago',
+      other: '$amount days ago',
+      name: 'boxPublishedDaysAgo',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  String get boxCancelVisibilityChange {
+    return Intl.message(
+      'CANCEL',
+      name: 'boxCancelVisibilityChange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxConfirmVisibilityChange {
+    return Intl.message(
+      'CONFIRM',
+      name: 'boxConfirmVisibilityChange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxVisibilityChangeDialogTitle {
+    return Intl.message(
+      'Change box visibility',
+      name: 'boxVisibilityChangeDialogTitle',
 
   String get mapLikeLabel {
     return Intl.message(

@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
             case 2:
               return ActivityScreen();
             case 3:
-              return ProfileScreen();
+              return Provider.of<ProfileScreen>(context);
             default:
               throw 'Index ($index) must be in range 0-3';
           }

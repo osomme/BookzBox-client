@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
         ...bookProviders,
         ...feedProviders,
         ...commonServicesProviders,
+        ...profileProviders,
         ...mapProviders,
       ],
       child: MaterialApp(
