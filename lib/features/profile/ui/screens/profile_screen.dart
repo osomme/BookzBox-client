@@ -1,9 +1,12 @@
+import 'package:bookzbox/features/box/models/box.dart';
+import 'package:bookzbox/features/box/models/my_box.dart';
 import 'package:bookzbox/features/new_box/ui/screens/new_box_screen.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
 import 'package:bookzbox/features/profile/ui/screens/boxes_tab.dart';
 import 'package:bookzbox/features/profile/ui/screens/me_tab.dart';
 import 'package:bookzbox/features/profile/ui/screens/preferences_tab.dart';
 import 'package:bookzbox/features/profile/ui/widgets/custom_tab_bar.dart';
+import 'package:bookzbox/features/profile/ui/widgets/my_box_list_item.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';

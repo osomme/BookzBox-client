@@ -568,6 +568,136 @@ class S {
       args: [],
     );
   }
+
+  String get profileNewBoxFAB {
+    return Intl.message(
+      'NEW BOX',
+      name: 'profileNewBoxFAB',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileBoxDetailsBtn {
+    return Intl.message(
+      'DETAILS',
+      name: 'profileBoxDetailsBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileChangeVisibilityBtn {
+    return Intl.message(
+      'CHANGE VISIBILITY',
+      name: 'profileChangeVisibilityBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxStatusPublic {
+    return Intl.message(
+      'PUBLIC',
+      name: 'boxStatusPublic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxStatusPublicDesc {
+    return Intl.message(
+      'Everyone can see this box.',
+      name: 'boxStatusPublicDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxStatusPrivate {
+    return Intl.message(
+      'PRIVATE',
+      name: 'boxStatusPrivate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxStatusPrivateDesc {
+    return Intl.message(
+      'Only you can see this box.',
+      name: 'boxStatusPrivateDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxStatusTraded {
+    return Intl.message(
+      'TRADED',
+      name: 'boxStatusTraded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String boxPublishedMinAgo(dynamic numMin) {
+    return Intl.message(
+      '$numMin min ago',
+      name: 'boxPublishedMinAgo',
+      desc: '',
+      args: [numMin],
+    );
+  }
+
+  String boxPublishedHoursAgo(dynamic amount) {
+    return Intl.plural(
+      amount,
+      one: '1 day ago',
+      other: '$amount days ago',
+      name: 'boxPublishedHoursAgo',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  String boxPublishedDaysAgo(dynamic amount) {
+    return Intl.plural(
+      amount,
+      one: '1 day ago',
+      other: '$amount days ago',
+      name: 'boxPublishedDaysAgo',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  String get boxCancelVisibilityChange {
+    return Intl.message(
+      'CANCEL',
+      name: 'boxCancelVisibilityChange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxConfirmVisibilityChange {
+    return Intl.message(
+      'CONFIRM',
+      name: 'boxConfirmVisibilityChange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxVisibilityChangeDialogTitle {
+    return Intl.message(
+      'Change box visibility',
+      name: 'boxVisibilityChangeDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
