@@ -3,14 +3,14 @@ import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/feed/feed.dart';
 import 'package:mobx/mobx.dart';
 
-part 'box_item_store.g.dart';
+part 'box_like_store.g.dart';
 
-class BoxItemStore = _BoxItemStore with _$BoxItemStore;
+class BoxLikeStore = _BoxLikeStore with _$BoxLikeStore;
 
-abstract class _BoxItemStore with Store {
+abstract class _BoxLikeStore with Store {
   final IBoxLikeRepository _repo;
   final IAuthService _authService;
-  final BoxFeedListItem _box;
+  final String _boxId;
 
   @observable
   bool _isLoading = false;
@@ -21,7 +21,7 @@ abstract class _BoxItemStore with Store {
   @observable
   NetworkError _error;
 
-  _BoxItemStore(this._repo, this._authService, this._box) {
+  _BoxLikeStore(this._repo, this._authService, this._boxId) {
     _checkIfLiked();
   }
 
@@ -51,7 +51,7 @@ abstract class _BoxItemStore with Store {
 
   @action
   Future<void> _removeLike() async {
-    final result = await _repo.removeLike(_box.id, (await _authService.user).uid);
+    final result = await _repo.removeLike(_boxId, (await _authService.user).uid);
     result.fold(
       (error) => _error = error,
       (success) => _isLiked = false,
@@ -60,7 +60,7 @@ abstract class _BoxItemStore with Store {
 
   @action
   Future<void> _addLike() async {
-    final result = await _repo.likeBox(_box.id, (await _authService.user).uid);
+    final result = await _repo.likeBox(_boxId, (await _authService.user).uid);
     result.fold(
       (error) => _error = error,
       (success) => _isLiked = true,
@@ -70,7 +70,7 @@ abstract class _BoxItemStore with Store {
   @action
   Future<void> _checkIfLiked() async {
     _isLoading = true;
-    final result = await _repo.isBoxLiked(_box.id, (await _authService.user).uid);
+    final result = await _repo.isBoxLiked(_boxId, (await _authService.user).uid);
     result.fold(
       (error) => _error = error,
       (likeStatus) => _isLiked = likeStatus,

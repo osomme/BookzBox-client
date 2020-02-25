@@ -487,6 +487,87 @@ class S {
       args: [],
     );
   }
+
+  String get mapErrorNoLocationPermission {
+    return Intl.message(
+      'Location permissions must be enabled',
+      name: 'mapErrorNoLocationPermission',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapErrorBoxesError {
+    return Intl.message(
+      'Failed to retrieve boxes',
+      name: 'mapErrorBoxesError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapNoImages {
+    return Intl.message(
+      'No Images',
+      name: 'mapNoImages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapDescription {
+    return Intl.message(
+      'Description',
+      name: 'mapDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapNoDescription {
+    return Intl.message(
+      'No description',
+      name: 'mapNoDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapPublishedOn {
+    return Intl.message(
+      'Published',
+      name: 'mapPublishedOn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapProfileLabel {
+    return Intl.message(
+      'Profile',
+      name: 'mapProfileLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapDetailsLabel {
+    return Intl.message(
+      'Details',
+      name: 'mapDetailsLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapLikeLabel {
+    return Intl.message(
+      'Like',
+      name: 'mapLikeLabel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

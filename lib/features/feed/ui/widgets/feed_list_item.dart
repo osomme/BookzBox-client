@@ -1,5 +1,5 @@
 import 'package:bookzbox/features/feed/feed.dart';
-import 'package:bookzbox/features/feed/stores/box_item_store.dart';
+import 'package:bookzbox/features/feed/stores/box_like_store.dart';
 import 'package:bookzbox/features/location/services/location_service.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -25,7 +25,7 @@ class FeedListItem extends StatelessWidget {
   final PageController _pageController;
   final int index;
   final BoxFeedListItem box;
-  final BoxItemStore store;
+  final BoxLikeStore store;
   final ILocationService locationService;
 
   @override

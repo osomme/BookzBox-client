@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'box_item_store.dart';
+part of 'box_like_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,7 +8,7 @@ part of 'box_item_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$BoxItemStore on _BoxItemStore, Store {
+mixin _$BoxLikeStore on _BoxLikeStore, Store {
   Computed<bool> _$isLoadingComputed;
 
   @override
@@ -26,7 +26,7 @@ mixin _$BoxItemStore on _BoxItemStore, Store {
           Computed<NetworkError>(() => super.errorMessage))
       .value;
 
-  final _$_isLoadingAtom = Atom(name: '_BoxItemStore._isLoading');
+  final _$_isLoadingAtom = Atom(name: '_BoxLikeStore._isLoading');
 
   @override
   bool get _isLoading {
@@ -43,7 +43,7 @@ mixin _$BoxItemStore on _BoxItemStore, Store {
     }, _$_isLoadingAtom, name: '${_$_isLoadingAtom.name}_set');
   }
 
-  final _$_isLikedAtom = Atom(name: '_BoxItemStore._isLiked');
+  final _$_isLikedAtom = Atom(name: '_BoxLikeStore._isLiked');
 
   @override
   bool get _isLiked {
@@ -60,7 +60,7 @@ mixin _$BoxItemStore on _BoxItemStore, Store {
     }, _$_isLikedAtom, name: '${_$_isLikedAtom.name}_set');
   }
 
-  final _$_errorAtom = Atom(name: '_BoxItemStore._error');
+  final _$_errorAtom = Atom(name: '_BoxLikeStore._error');
 
   @override
   NetworkError get _error {

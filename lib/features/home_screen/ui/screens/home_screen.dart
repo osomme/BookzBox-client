@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/di/providers.dart';
 import 'package:bookzbox/features/activity/ui/screens/activity_screen.dart';
 import 'package:bookzbox/features/feed/ui/screens/feed_screen.dart';
 import 'package:bookzbox/features/map/box_map.dart';
@@ -39,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
             case 0:
               return Provider.of<FeedScreen>(context);
             case 1:
-              return BoxMapScreen.instance;
+              return Provider.of<BoxMapScreen>(context);
             case 2:
               return ActivityScreen();
             case 3:

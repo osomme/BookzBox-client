@@ -73,7 +73,9 @@ dependencies:
 
   # Obtaining user location coordinates
   location: ^2.4.0
-
+  
+  # Internationalization support for formatting DateTime objects to localized string.
+  intl: ^0.16.0
 
 dev_dependencies:
   flutter_test:
