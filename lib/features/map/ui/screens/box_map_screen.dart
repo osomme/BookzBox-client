@@ -25,7 +25,7 @@ class BoxMapScreen extends StatefulWidget {
 class _BoxMapScreenState extends State<BoxMapScreen> {
   List<ReactionDisposer> listeners = List();
 
-  // Default camera pos. (Halden)
+  // Default camera pos. (Halden, Norway)
   final startPos = const LatLng(59.1303617, 11.3543517);
 
   Set<Marker> markers = Set();
@@ -69,18 +69,11 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
     });
   }
 
-  ReactionDisposer userLocationListener() {
-    return autorun((_) {
-      final location = widget.mapStore.userPosition;
-      onUserLocationObtained(location);
-    });
-  }
+  ReactionDisposer userLocationListener() =>
+      autorun((_) => onUserLocationObtained(widget.mapStore.userPosition));
 
-  ReactionDisposer boxesListener() {
-    return autorun((_) {
-      onBoxesLoaded(widget.mapStore.boxes);
-    });
-  }
+  ReactionDisposer boxesListener() =>
+      autorun((_) => onBoxesLoaded(widget.mapStore.boxes));
 
   Future<void> onUserLocationObtained(
       Dartz.Option<LatLngModel.LatLng> userLocation) async {
@@ -129,23 +122,20 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
       builder: (_) => Dialog(
         backgroundColor: Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
-        child: Container(
-          child: SingleChildScrollView(
-            child: MultiProvider(
-              providers: boxLikeProviders,
-              child: Consumer<IBoxLikeRepository>(
-                builder: (_, likeRepo, __) => ModalBoxDetails(
-                  box: box,
-                  likeStore: BoxLikeStore(
-                    likeRepo,
-                    Provider.of<IAuthService>(context),
-                    box.boxId,
-                  ),
+        child: SingleChildScrollView(
+          child: MultiProvider(
+            providers: boxLikeProviders,
+            child: Consumer<IBoxLikeRepository>(
+              builder: (_, likeRepo, __) => ModalBoxDetails(
+                box: box,
+                likeStore: BoxLikeStore(
+                  likeRepo,
+                  Provider.of<IAuthService>(context),
+                  box.boxId,
                 ),
               ),
             ),
           ),
-          height: MediaQuery.of(context).size.height * 0.75,
         ),
       ),
     );

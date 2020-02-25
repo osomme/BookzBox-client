@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentTab = 1;
+  int _currentTab = 0;
   PageController _pageController;
 
   @override

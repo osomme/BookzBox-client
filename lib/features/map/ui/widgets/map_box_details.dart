@@ -125,7 +125,7 @@ class ModalBoxDetails extends StatelessWidget {
     );
   }
 
-  Widget _descriptionAndUsername(BuildContext context) {
+  Widget _description(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -140,6 +140,8 @@ class ModalBoxDetails extends StatelessWidget {
               ? S.of(context).mapNoDescription
               : box.description,
           style: Theme.of(context).primaryTextTheme.body2,
+          maxLines: 7,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
@@ -258,7 +260,7 @@ class ModalBoxDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _descriptionAndUsername(context),
+          _description(context),
           SizedBox(height: 20.0),
           _publishedOnText(context),
           SizedBox(height: 20.0),
