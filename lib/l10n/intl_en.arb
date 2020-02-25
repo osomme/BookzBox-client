@@ -72,5 +72,14 @@
     "boxPublishedDaysAgo": "{amount, plural, one{1 day ago} other{{amount} days ago}}",
     "boxCancelVisibilityChange": "CANCEL",
     "boxConfirmVisibilityChange": "CONFIRM",
-    "boxVisibilityChangeDialogTitle": "Change box visibility"
+    "boxVisibilityChangeDialogTitle": "Change box visibility",
+    "mapErrorNoLocationPermission": "Location permissions must be enabled",
+    "mapErrorBoxesError": "Failed to retrieve boxes",
+    "mapNoImages": "No Images",
+    "mapDescription": "Description",
+    "mapNoDescription": "No description",
+    "mapPublishedOn": "Published",
+    "mapProfileLabel": "Profile",
+    "mapDetailsLabel": "Details",
+    "mapLikeLabel": "Like"
 }

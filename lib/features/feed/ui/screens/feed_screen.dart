@@ -1,6 +1,6 @@
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/feed/feed.dart';
-import 'package:bookzbox/features/feed/stores/box_item_store.dart';
+import 'package:bookzbox/features/feed/stores/box_like_store.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -73,10 +73,10 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
             index: index,
             box: widget.feedStore.boxes[index],
             locationService: Provider.of<ILocationService>(context),
-            store: BoxItemStore(
+            store: BoxLikeStore(
               Provider.of<IBoxLikeRepository>(context),
               Provider.of<IAuthService>(context),
-              widget.feedStore.boxes[index],
+              widget.feedStore.boxes[index].id,
             ),
           ),
         ),

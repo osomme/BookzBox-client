@@ -56,7 +56,7 @@ dependencies:
   # Dartz
   dartz: ^0.8.9
 
-  # Geolocator (obtaining user location and converting lat lng coords to location data)
+  # Geolocator (converting lat lng coords to location data strings)
   geolocator: ^5.2.0
 
   # Spinning progress bar widgets
@@ -71,6 +71,11 @@ dependencies:
   # Google Maps for Flutter
   google_maps_flutter: ^0.5.23+1
 
+  # Obtaining user location coordinates
+  location: ^2.4.0
+  
+  # Internationalization support for formatting DateTime objects to localized string.
+  intl: ^0.16.0
 
 dev_dependencies:
   flutter_test:

@@ -6,6 +6,7 @@ import 'package:bookzbox/features/feed/service/box_like_service_impl.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/features/location/services/location_service.dart';
+import 'package:bookzbox/features/map/box_map.dart';
 import 'package:bookzbox/features/new_box/repositories/book_repository.dart';
 import 'package:bookzbox/features/new_box/repositories/book_repository_impl.dart';
 import 'package:bookzbox/features/new_box/repositories/box_repository.dart';
@@ -65,7 +66,8 @@ final bookProviders = [
     create: (_) => LocationService(),
   ),
   ProxyProvider3<IBookRepository, IBoxRepository, ILocationService, NewBoxStore>(
-    update: (_, bookRepo, boxRepo, locService, __) => NewBoxStore(bookRepo, boxRepo, locService),
+    update: (_, bookRepo, boxRepo, locService, __) =>
+        NewBoxStore(bookRepo, boxRepo, locService),
   ),
   ProxyProvider<NewBoxStore, NewBoxScreen>(
     update: (_, store, __) => NewBoxScreen(store),
@@ -75,6 +77,15 @@ final bookProviders = [
 final mainProviders = [
   Provider<HomeScreen>(
     create: (_) => HomeScreen(),
+  ),
+];
+
+final boxLikeProviders = [
+  Provider<IBoxLikeService>(
+    create: (_) => FirebaseBoxLikeService(),
+  ),
+  ProxyProvider<IBoxLikeService, IBoxLikeRepository>(
+    update: (_, service, __) => BoxLikeRepository(service),
   ),
 ];
 
@@ -88,12 +99,7 @@ final feedProviders = [
   ProxyProvider<IFeedRepository, FeedStore>(
     update: (_, repo, __) => FeedStore(repo),
   ),
-  Provider<IBoxLikeService>(
-    create: (_) => FirebaseBoxLikeService(),
-  ),
-  ProxyProvider<IBoxLikeService, IBoxLikeRepository>(
-    update: (_, service, __) => BoxLikeRepository(service),
-  ),
+  ...boxLikeProviders,
   ProxyProvider<FeedStore, FeedScreen>(
     update: (_, store, __) => FeedScreen(feedStore: store),
   ),
@@ -111,5 +117,22 @@ final profileProviders = [
 final commonServicesProviders = [
   Provider<ILocationService>(
     create: (_) => LocationService(),
+  ),
+];
+
+final mapProviders = [
+  Provider<IMapBoxService>(
+    create: (_) => BoxMapFirebaseService(),
+  ),
+  ProxyProvider<IMapBoxService, IBoxMapRepository>(
+    update: (_, service, __) => BoxMapFirebaseRepository(service),
+  ),
+  ProxyProvider2<ILocationService, IBoxMapRepository, MapStore>(
+    update: (_, locationService, repo, __) => MapStore(locationService, repo),
+  ),
+  ProxyProvider<MapStore, BoxMapScreen>(
+    update: (ctx, store, _) => BoxMapScreen(
+      mapStore: store,
+    ),
   ),
 ];

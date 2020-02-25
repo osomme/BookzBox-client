@@ -101,5 +101,5 @@ abstract class _FeedStore with Store {
   }
 
   /// Disposes the resources that the store is using.
-  void dispose() => _listener();
+  void dispose() => _listener?.call();
 }

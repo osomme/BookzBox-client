@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
             case 0:
               return Provider.of<FeedScreen>(context);
             case 1:
-              return BoxMapScreen.instance;
+              return Provider.of<BoxMapScreen>(context);
             case 2:
               return ActivityScreen();
             case 3:

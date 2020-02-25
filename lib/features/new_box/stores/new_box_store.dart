@@ -8,7 +8,6 @@ import 'package:bookzbox/features/new_box/repositories/book_repository.dart';
 import 'package:bookzbox/features/new_box/repositories/box_repository.dart';
 import 'package:bookzbox/features/new_box/services/publish_error.dart';
 import 'package:dartz/dartz.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:mobx/mobx.dart';
 import 'package:validators/validators.dart';
 
@@ -63,6 +62,7 @@ abstract class _NewBoxStore with Store {
   Future<bool> findBook() async {
     if (_isbn == null || !isISBN(_isbn)) return false;
 
+    _lookupError = LookupError.None;
     _isLoadingBook = true;
     final result = await _bookRepository.isbnLookup(_isbn.replaceAll('-', ''));
     result.fold(
@@ -86,21 +86,30 @@ abstract class _NewBoxStore with Store {
     if (!isBoxContentValid()) return left(PublishError.Invalid);
     _isPublishing = true;
 
-    Position pos = await _locationService.getCoarseLocation();
-    Box toPublish = Box(
-        id: null,
-        publisher: user,
-        books: _books,
-        status: BoxStatus.public,
-        publishDateTime: DateTime.now(),
-        latitude: pos.latitude ?? 0.0,
-        longitude: pos.longitude ?? 0.0,
-        title: _boxTitle,
-        description: _boxDescription);
-    final res = await _boxRepository.publish(toPublish);
+    final location = await _locationService.getLocation();
+    final result = location.fold(
+      (error) {
+        print('Failed to obtain location in new_box_store with error code: $error');
+        return left(PublishError.NoLocation);
+      },
+      (p) async {
+        final box = Box(
+          id: null,
+          publisher: user,
+          books: _books,
+          status: BoxStatus.public,
+          publishDateTime: DateTime.now(),
+          latitude: p.latitude,
+          longitude: p.longitude,
+          title: _boxTitle,
+          description: _boxDescription,
+        );
+        return await _boxRepository.publish(box);
+      },
+    );
 
     _isPublishing = false;
-    return res;
+    return result;
   }
 
   @action

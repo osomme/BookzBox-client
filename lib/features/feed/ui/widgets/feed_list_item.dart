@@ -1,6 +1,5 @@
-import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/feed/feed.dart';
-import 'package:bookzbox/features/feed/stores/box_item_store.dart';
+import 'package:bookzbox/features/feed/stores/box_like_store.dart';
 import 'package:bookzbox/features/location/services/location_service.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -26,7 +25,7 @@ class FeedListItem extends StatelessWidget {
   final PageController _pageController;
   final int index;
   final BoxFeedListItem box;
-  final BoxItemStore store;
+  final BoxLikeStore store;
   final ILocationService locationService;
 
   @override
@@ -70,33 +69,46 @@ class FeedListItem extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 30.0),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      _topTextRow(context),
-                      SizedBox(height: 20.0),
-                      Builder(builder: (ctx) {
-                        if (box.books.length >= 4) {
-                          return _expandedCoverImages(context);
-                        } else if (box.books.length == 3) {
-                          return _threeBooksCoverImages(context);
-                        } else if (box.books.length == 2) {
-                          return _twoBooksCoverImages(context);
-                        } else {
-                          return _singleBookCoverImage(context);
-                        }
-                      }),
-                      SizedBox(height: 20.0),
-                      _categoryAndTitleColumn(context),
-                    ],
-                  ),
-                ),
+                child: _body(context),
               ),
             ),
             _likeButton(context),
           ],
         ),
       ),
+    );
+  }
+
+  SingleChildScrollView _body(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          _topTextRow(context),
+          SizedBox(height: 10.0),
+          Builder(builder: (ctx) {
+            if (box.books.length >= 4) {
+              return _expandedCoverImages(context);
+            } else if (box.books.length == 3) {
+              return _threeBooksCoverImages(context);
+            } else if (box.books.length == 2) {
+              return _twoBooksCoverImages(context);
+            } else {
+              return _singleBookCoverImage(context);
+            }
+          }),
+          SizedBox(height: 10.0),
+          _categoryAndTitleColumn(context),
+          SizedBox(height: 2.5),
+          _description(context),
+        ],
+      ),
+    );
+  }
+
+  Text _description(BuildContext context) {
+    return Text(
+      box.description ?? '',
+      style: Theme.of(context).primaryTextTheme.subhead.copyWith(fontSize: 12.5),
     );
   }
 
@@ -228,7 +240,7 @@ class FeedListItem extends StatelessWidget {
           ),
         ),
       ),
-      imageUrl: book.thumbnailUrl,
+      imageUrl: book.thumbnailUrl ?? '',
       placeholder: (ctx, url) => SpinKitPulse(
         size: 20.0,
         color: Theme.of(ctx).primaryIconTheme.color,

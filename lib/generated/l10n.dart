@@ -492,6 +492,11 @@ class S {
     return Intl.message(
       'Log out',
       name: 'profileLogout',
+
+  String get mapErrorNoLocationPermission {
+    return Intl.message(
+      'Location permissions must be enabled',
+      name: 'mapErrorNoLocationPermission',
       desc: '',
       args: [],
     );
@@ -501,6 +506,11 @@ class S {
     return Intl.message(
       'ME',
       name: 'profileMeTabLabel',
+
+  String get mapErrorBoxesError {
+    return Intl.message(
+      'Failed to retrieve boxes',
+      name: 'mapErrorBoxesError',
       desc: '',
       args: [],
     );
@@ -510,6 +520,11 @@ class S {
     return Intl.message(
       'MY BOXES',
       name: 'profileBoxesTabLabel',
+
+  String get mapNoImages {
+    return Intl.message(
+      'No Images',
+      name: 'mapNoImages',
       desc: '',
       args: [],
     );
@@ -519,6 +534,11 @@ class S {
     return Intl.message(
       'PREFERENCES',
       name: 'profilePreferencesTabLabel',
+
+  String get mapDescription {
+    return Intl.message(
+      'Description',
+      name: 'mapDescription',
       desc: '',
       args: [],
     );
@@ -528,6 +548,11 @@ class S {
     return Intl.message(
       'Rating',
       name: 'profileRatingCardTitle',
+
+  String get mapNoDescription {
+    return Intl.message(
+      'No description',
+      name: 'mapNoDescription',
       desc: '',
       args: [],
     );
@@ -537,6 +562,11 @@ class S {
     return Intl.message(
       'The rating is based on the feedback left by other users after a trade or interaction.',
       name: 'profileRatingCardSubTitle',
+
+  String get mapPublishedOn {
+    return Intl.message(
+      'Published',
+      name: 'mapPublishedOn',
       desc: '',
       args: [],
     );
@@ -546,6 +576,11 @@ class S {
     return Intl.message(
       'Trades',
       name: 'profileTradesTitle',
+
+  String get mapProfileLabel {
+    return Intl.message(
+      'Profile',
+      name: 'mapProfileLabel',
       desc: '',
       args: [],
     );
@@ -555,6 +590,11 @@ class S {
     return Intl.message(
       'Member since',
       name: 'profileJoinDateTitle',
+
+  String get mapDetailsLabel {
+    return Intl.message(
+      'Details',
+      name: 'mapDetailsLabel',
       desc: '',
       args: [],
     );
@@ -694,6 +734,11 @@ class S {
     return Intl.message(
       'Change box visibility',
       name: 'boxVisibilityChangeDialogTitle',
+
+  String get mapLikeLabel {
+    return Intl.message(
+      'Like',
+      name: 'mapLikeLabel',
       desc: '',
       args: [],
     );
