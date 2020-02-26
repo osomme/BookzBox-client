@@ -107,7 +107,9 @@ class FeedListItem extends StatelessWidget {
 
   Text _description(BuildContext context) {
     return Text(
-      box.description ?? '',
+      (box.description == null || box.description.isEmpty)
+          ? S.of(context).feedNoDescription
+          : box.description,
       style: Theme.of(context).primaryTextTheme.subhead.copyWith(fontSize: 12.5),
     );
   }
@@ -166,21 +168,23 @@ class FeedListItem extends StatelessWidget {
     const width = 147.0;
     return Container(
       height: MediaQuery.of(context).size.height * 0.50,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            child: _bookToImage(height, box.books[0]),
-            height: height,
-            width: width,
-          ),
-          SizedBox(height: 5.0),
-          Container(
-            child: _bookToImage(height, box.books[1]),
-            height: height,
-            width: width,
-          ),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              child: _bookToImage(height, box.books[0]),
+              height: height,
+              width: width,
+            ),
+            SizedBox(height: 5.0),
+            Container(
+              child: _bookToImage(height, box.books[1]),
+              height: height,
+              width: width,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -188,19 +192,21 @@ class FeedListItem extends StatelessWidget {
   Widget _threeBooksCoverImages(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.50,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          IgnorePointer(
-            child: _coverImageGridView(200.0, count: 2),
-          ),
-          Container(
-            padding: EdgeInsets.all(5.0),
-            child: _bookToImage(200.0, box.books[2]),
-            height: 185.0,
-            width: 130.0,
-          ),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            IgnorePointer(
+              child: _coverImageGridView(200.0, count: 2),
+            ),
+            Container(
+              padding: EdgeInsets.all(5.0),
+              child: _bookToImage(200.0, box.books[2]),
+              height: 185.0,
+              width: 130.0,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -63,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "feedDescription" : MessageLookupByLibrary.simpleMessage("Description"),
     "feedLocation" : MessageLookupByLibrary.simpleMessage("LOCATION"),
     "feedNoBoxesFound" : MessageLookupByLibrary.simpleMessage("No boxes found... Try changing your preferences!"),
+    "feedNoDescription" : MessageLookupByLibrary.simpleMessage("No description"),
     "feedNoLocationData" : MessageLookupByLibrary.simpleMessage("No data"),
     "feedTitle" : MessageLookupByLibrary.simpleMessage("Top Boxes"),
     "homeNavBarActivityLabel" : MessageLookupByLibrary.simpleMessage("Activity"),

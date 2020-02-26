@@ -81,5 +81,6 @@
     "mapPublishedOn": "Published",
     "mapProfileLabel": "Profile",
     "mapDetailsLabel": "Details",
-    "mapLikeLabel": "Like"
+    "mapLikeLabel": "Like",
+    "feedNoDescription": "No description"
 }
