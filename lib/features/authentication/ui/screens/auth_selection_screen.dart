@@ -102,12 +102,23 @@ class AuthSelectionScreen extends StatelessWidget {
                                   ? null
                                   : () => Navigator.pushNamed(
                                       context, Screens.emailNewAccount),
-                              child: Text(
-                                S.of(context).authSelectNewAcct,
-                                style: TextStyle(
-                                  fontSize: 12.0,
-                                  color: Colors.lightBlue[300],
-                                ),
+                              child: Row(
+                                children: <Widget>[
+                                  Text(
+                                    S.of(context).authSelectNewAcct,
+                                    style: TextStyle(
+                                      fontSize: 12.0,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    S.of(context).authNewAccountNavigate,
+                                    style: TextStyle(
+                                      fontSize: 12.0,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],

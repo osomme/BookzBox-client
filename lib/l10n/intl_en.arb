@@ -10,7 +10,7 @@
     "authSelectGoogle": "Log in with Google",
     "authSelectFacebook": "Log in with Facebook",
     "authSelectEmail": "Log in with Email",
-    "authSelectNewAcct": "Don't have an account? Create a new one",
+    "authSelectNewAcct": "Don't have an account? ",
     "authErrorEmailAlreadyUsed": "Email has already been used",
     "authErrorInvalidEmail": "Invalid email address",
     "authErrorWeakPassword": "Password is too weak",
@@ -82,5 +82,6 @@
     "mapProfileLabel": "Profile",
     "mapDetailsLabel": "Details",
     "mapLikeLabel": "Like",
-    "feedNoDescription": "No description"
+    "feedNoDescription": "No description",
+    "authNewAccountNavigate": "Create a new one"
 }

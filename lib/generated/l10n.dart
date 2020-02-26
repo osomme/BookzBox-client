@@ -130,7 +130,7 @@ class S {
 
   String get authSelectNewAcct {
     return Intl.message(
-      'Don\'t have an account? Create a new one',
+      'Don\'t have an account? ',
       name: 'authSelectNewAcct',
       desc: '',
       args: [],
@@ -784,6 +784,15 @@ class S {
     return Intl.message(
       'No description',
       name: 'feedNoDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authNewAccountNavigate {
+    return Intl.message(
+      'Create a new one',
+      name: 'authNewAccountNavigate',
       desc: '',
       args: [],
     );
