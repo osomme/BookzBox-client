@@ -2,6 +2,7 @@ import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/box_details/ui/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class BoxDetailsScreen extends StatefulWidget {
   final String boxId;
@@ -20,7 +21,33 @@ class _BoxDetailsScreenState extends State<BoxDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: BoxDetails(box: _testBox),
+      body: NestedScrollView(
+        body: BoxDetails(box: _testBox),
+        headerSliverBuilder: (ctx, innerBoxIsScrolled) {
+          return [
+            SliverAppBar(
+              expandedHeight: 50.0,
+              floating: true,
+              pinned: false,
+              snap: true,
+              flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
+                title: Text('Box Details'),
+              ),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.person),
+                  onPressed: () => print('Go to user profile clicked'),
+                ),
+                IconButton(
+                  icon: Icon(MaterialCommunityIcons.heart),
+                  onPressed: () => print('Add box to favorites clicked'),
+                ),
+              ],
+            ),
+          ];
+        },
+      ),
     );
   }
 }

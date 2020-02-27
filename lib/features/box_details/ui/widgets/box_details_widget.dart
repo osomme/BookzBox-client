@@ -1,6 +1,5 @@
 import 'package:bookzbox/common/widgets/circular_button.dart';
 import 'package:bookzbox/features/box/models/models.dart';
-import 'package:bookzbox/common/extensions/extensions.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,12 +40,13 @@ class BoxDetails extends StatelessWidget {
       padding: EdgeInsets.only(
         left: 30.0,
         right: 30.0,
-        top: 50.0,
+        top: 25.0,
       ),
       color: Theme.of(context).primaryColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          /*
           GestureDetector(
             onTap: () => Navigator.pop(context),
             child: Icon(
@@ -54,8 +54,9 @@ class BoxDetails extends StatelessWidget {
               size: 30.0,
               color: Theme.of(context).primaryTextTheme.title.color,
             ),
-          ),
+          ),          
           SizedBox(height: 30.0),
+          */
           BookSwiper(books: box.books),
           SizedBox(height: 50.0),
         ],
@@ -76,48 +77,29 @@ class BoxDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: 30.0),
-            Text(
-              'Description',
-              style: _boxInfoHeader,
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              box.description,
-              style: _boxInfoBody,
-            ),
-            SizedBox(height: 30.0),
-            Text(
-              'About the seller',
-              style: _boxInfoHeader,
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              'Registered 4 months ago',
-              style: _boxInfoBody,
-            ),
-            Text(
-              'Very positive feedback',
-              style: _boxInfoBody,
-            ),
-            SizedBox(height: 30.0),
-            Text('Location', style: _boxInfoHeader),
-            SizedBox(height: 10.0),
-            Text('Gausel, Stavanger, Rogaland',
-                style: _boxInfoBody), //TODO: Add location service dependency
-            SizedBox(height: 30.0),
-            Text('Status', style: _boxInfoHeader),
-            SizedBox(height: 10.0),
-            Text('Active', style: _boxInfoBody),
-            SizedBox(height: 30.0),
-            Text('Published On', style: _boxInfoHeader),
-            SizedBox(height: 10.0),
-            Text('23. April 2020', style: _boxInfoBody),
-            SizedBox(height: 30.0),
-            _buttonBar(context),
-            SizedBox(height: 30.0),
+            _boxInfoPair('Description', [box.description]),
+            _boxInfoPair('About the seller',
+                ['Registered 4 months ago', 'Very positive feedback']),
+            _boxInfoPair('Location', ['Gausel, Stavanger, Rogaland']),
+            _boxInfoPair('Status', ['Active']),
+            _boxInfoPair('Published On', ['23. April 2020']),
+            //_buttonBar(context),
+            SizedBox(height: 25.0),
           ],
         ),
       ),
+    );
+  }
+
+  Column _boxInfoPair(String header, List<String> content) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(header, style: _boxInfoHeader),
+        SizedBox(height: 10.0),
+        ...content.map((s) => Text(s, style: _boxInfoBody)),
+        SizedBox(height: 30.0),
+      ],
     );
   }
 
