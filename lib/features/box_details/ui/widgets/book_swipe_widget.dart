@@ -102,6 +102,8 @@ class _BookSwiperState extends State<BookSwiper> {
                   ? 'No synopsis'
                   : book.synopsis,
               maxLines: 100,
+              textStyle:
+                  Theme.of(context).primaryTextTheme.subhead.copyWith(fontSize: 13.0),
             ),
           ],
         ),
@@ -131,7 +133,8 @@ class _BookSwiperState extends State<BookSwiper> {
     );
   }
 
-  Widget _bookDetailsTextCol(String header, String content, {int maxLines = 2}) {
+  Widget _bookDetailsTextCol(String header, String content,
+      {int maxLines = 2, TextStyle textStyle}) {
     return Flexible(
       fit: FlexFit.tight,
       flex: 1,
@@ -152,7 +155,7 @@ class _BookSwiperState extends State<BookSwiper> {
             SizedBox(height: 2.5),
             Text(
               content,
-              style: Theme.of(context).primaryTextTheme.subhead,
+              style: textStyle ?? Theme.of(context).primaryTextTheme.subhead,
               maxLines: maxLines,
               overflow: TextOverflow.ellipsis,
             ),

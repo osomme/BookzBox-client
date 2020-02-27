@@ -11,12 +11,12 @@ class BoxDetails extends StatelessWidget {
   const BoxDetails({Key key, this.box}) : super(key: key);
 
   static const _boxInfoHeader = TextStyle(
-    fontSize: 24.0,
+    fontSize: 20.0,
     fontWeight: FontWeight.w600,
   );
 
   static const _boxInfoBody = TextStyle(
-    fontSize: 16.0,
+    fontSize: 14.0,
     color: Colors.black87,
   );
 
@@ -46,17 +46,6 @@ class BoxDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          /*
-          GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: Icon(
-              Icons.arrow_back,
-              size: 30.0,
-              color: Theme.of(context).primaryTextTheme.title.color,
-            ),
-          ),          
-          SizedBox(height: 30.0),
-          */
           BookSwiper(books: box.books),
           SizedBox(height: 50.0),
         ],
@@ -66,6 +55,7 @@ class BoxDetails extends StatelessWidget {
 
   Container _details(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width,
       transform: Matrix4.translationValues(0.0, -20.0, 0.0),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -83,7 +73,6 @@ class BoxDetails extends StatelessWidget {
             _boxInfoPair('Location', ['Gausel, Stavanger, Rogaland']),
             _boxInfoPair('Status', ['Active']),
             _boxInfoPair('Published On', ['23. April 2020']),
-            //_buttonBar(context),
             SizedBox(height: 25.0),
           ],
         ),
@@ -97,12 +86,13 @@ class BoxDetails extends StatelessWidget {
       children: <Widget>[
         Text(header, style: _boxInfoHeader),
         SizedBox(height: 10.0),
-        ...content.map((s) => Text(s, style: _boxInfoBody)),
+        ...content.map((s) => Text(s ?? '--', style: _boxInfoBody)),
         SizedBox(height: 30.0),
       ],
     );
   }
 
+  //TODO: Remove?
   Row _buttonBar(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -1,19 +1,26 @@
-import 'package:bookzbox/features/authentication/authentication.dart';
-import 'package:bookzbox/features/box/models/models.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class BoxDetailsScreen extends StatefulWidget {
   final String boxId;
+  final BoxDetailsStore store;
 
   const BoxDetailsScreen({
     Key key,
     @required this.boxId,
+    @required this.store,
   }) : super(key: key);
 
   @override
-  _BoxDetailsScreenState createState() => _BoxDetailsScreenState();
+  _BoxDetailsScreenState createState() {
+    store.fetchBoxDetails(boxId);
+    return _BoxDetailsScreenState();
+  }
 }
 
 class _BoxDetailsScreenState extends State<BoxDetailsScreen> {
@@ -22,7 +29,24 @@ class _BoxDetailsScreenState extends State<BoxDetailsScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: NestedScrollView(
-        body: BoxDetails(box: _testBox),
+        body: Observer(
+          builder: (ctx) {
+            if (widget.store.isLoading) {
+              return Center(
+                child: SpinKitThreeBounce(
+                  color: Theme.of(context).primaryColor,
+                ),
+              );
+            } else if (widget.store.error != null) {
+              return Center(
+                //TODO: Replace with localized error text
+                child: Text('Failed to load box'),
+              );
+            }
+
+            return BoxDetails(box: widget.store.box);
+          },
+        ),
         headerSliverBuilder: (ctx, innerBoxIsScrolled) {
           return [
             SliverAppBar(
@@ -31,8 +55,24 @@ class _BoxDetailsScreenState extends State<BoxDetailsScreen> {
               pinned: false,
               snap: true,
               flexibleSpace: FlexibleSpaceBar(
-                centerTitle: true,
-                title: Text('Box Details'),
+                centerTitle: false,
+                title: Padding(
+                  padding: EdgeInsets.only(right: 90.0),
+                  child: Observer(
+                    builder: (ctx) {
+                      if (widget.store.isLoading) {
+                        return Text('Loading...');
+                      } else if (widget.store.error != null) {
+                        return Text('Error');
+                      }
+                      return AutoSizeText(
+                        widget.store.box.title,
+                        minFontSize: 10.0,
+                        maxLines: 1,
+                      );
+                    },
+                  ),
+                ),
               ),
               actions: <Widget>[
                 IconButton(
@@ -51,67 +91,3 @@ class _BoxDetailsScreenState extends State<BoxDetailsScreen> {
     );
   }
 }
-
-final _testBox = Box(
-  id: '1',
-  publisher: User('123'),
-  books: _books,
-  status: BoxStatus.public,
-  publishDateTime: DateTime.now(),
-  latitude: 13.23213,
-  longitude: 122.232,
-  title: 'Some old books that are no longer needed',
-  description:
-      'This is just a collection of books that I no longer have any use for and I wish to clear up some space that I need to install my enormous TV set so that I can watch the news. Thank you.',
-);
-
-final _books = [
-  Book(
-      isbn10: '232ASADEAE',
-      isbn13: 'ASD3223ASDA23',
-      title: 'Harry Potter and the Prisoner of Azkaban',
-      subtitle: '',
-      authors: ['J.K. Rowling'],
-      pageCount: 582,
-      publishYear: 2003,
-      synopsis:
-          'This is a book about a boy that has some kind of special power or whatever. There\'s some evil bad dude who wants to kill Harry but nobody knows why. Harry also has two friends that do everything for him.',
-      categories: ['Action', 'Drama', 'Comedy'],
-      fullSizeImageUrl: 'https://ewedit.files.wordpress.com/2016/09/kkhp7-lg.jpg?w=402'),
-  Book(
-      isbn10: '232ASADEAE',
-      isbn13: 'ASD3223ASDA23',
-      title: 'Star Wars 2',
-      subtitle: '',
-      authors: ['Some dmmy', 'Another dummy'],
-      pageCount: 321,
-      publishYear: 1956,
-      synopsis: 'A science-fiction movie about some strange planets and religious nuts',
-      categories: ['Action', 'Drama', 'Comedy'],
-      fullSizeImageUrl:
-          'https://ewedit.files.wordpress.com/2016/09/harry01english.jpg?w=408'),
-  Book(
-      isbn10: '232ASADEAE',
-      isbn13: 'ASD3223ASDA23',
-      title: 'Lord of the Rings',
-      subtitle: '',
-      authors: ['J.R.R. Tolkien'],
-      pageCount: 582,
-      publishYear: 2003,
-      synopsis:
-          'This is a book about a boy that has some kind of special power or whatever. There\'s some evil bad dude who wants to kill Harry but nobody knows why. Harry also has two friends that do everything for him.',
-      categories: ['Action', 'Drama', 'Comedy'],
-      thumbnailUrl:
-          'https://yabookreviewer.files.wordpress.com/2013/07/harry-potter-half-blood-prince-new-cover.jpg'),
-  Book(
-      isbn10: '232ASADEAE',
-      isbn13: 'ASD3223ASDA23',
-      title: 'Harry Potter and the Prisoner of Azkaban',
-      subtitle: 'A fantasy book about a boy',
-      authors: ['J.K. Rowling'],
-      pageCount: 582,
-      publishYear: 2003,
-      synopsis:
-          'This is a book about a boy that has some kind of special power or whatever. There\'s some evil bad dude who wants to kill Harry but nobody knows why. Harry also has two friends that do everything for him.',
-      categories: ['Action', 'Drama', 'Comedy']),
-];

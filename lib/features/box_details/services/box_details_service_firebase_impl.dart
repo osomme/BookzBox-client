@@ -4,7 +4,7 @@ import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
-class BoxDetailsFirebase implements IBoxDetailsService {
+class BoxDetailsFirebaseService implements IBoxDetailsService {
   final _firestore = Firestore.instance;
 
   @override
