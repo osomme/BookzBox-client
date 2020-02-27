@@ -568,6 +568,204 @@ class S {
       args: [],
     );
   }
+
+  String get detailsLoading {
+    return Intl.message(
+      'Loading',
+      name: 'detailsLoading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsErrorAppBar {
+    return Intl.message(
+      'Error',
+      name: 'detailsErrorAppBar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsFailedToLoadBox {
+    return Intl.message(
+      'Failed to load box',
+      name: 'detailsFailedToLoadBox',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsDescription {
+    return Intl.message(
+      'Description',
+      name: 'detailsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsAboutSeller {
+    return Intl.message(
+      'About the seller',
+      name: 'detailsAboutSeller',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsLocation {
+    return Intl.message(
+      'Location',
+      name: 'detailsLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsStatus {
+    return Intl.message(
+      'Status',
+      name: 'detailsStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsPublishedOn {
+    return Intl.message(
+      'Published On',
+      name: 'detailsPublishedOn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsBookTitle {
+    return Intl.message(
+      'Title',
+      name: 'detailsBookTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsBookSynopsis {
+    return Intl.message(
+      'Synopsis',
+      name: 'detailsBookSynopsis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsBookCondition {
+    return Intl.message(
+      'Condition',
+      name: 'detailsBookCondition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsBookPages {
+    return Intl.message(
+      'Pages',
+      name: 'detailsBookPages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsBookAuthor {
+    return Intl.message(
+      'Author',
+      name: 'detailsBookAuthor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsBookPublisher {
+    return Intl.message(
+      'Publisher',
+      name: 'detailsBookPublisher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsBookCategories {
+    return Intl.message(
+      'Categories',
+      name: 'detailsBookCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsBookPublished {
+    return Intl.message(
+      'Published',
+      name: 'detailsBookPublished',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsBookNoSynopsis {
+    return Intl.message(
+      'No synopsis',
+      name: 'detailsBookNoSynopsis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxStatusPublic {
+    return Intl.message(
+      'Public',
+      name: 'boxStatusPublic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxStatusPrivate {
+    return Intl.message(
+      'Private',
+      name: 'boxStatusPrivate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxStatusTraded {
+    return Intl.message(
+      'Traded',
+      name: 'boxStatusTraded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsLocationLoading {
+    return Intl.message(
+      'Loading location name...',
+      name: 'detailsLocationLoading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get detailsNoLocation {
+    return Intl.message(
+      'No location data',
+      name: 'detailsNoLocation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

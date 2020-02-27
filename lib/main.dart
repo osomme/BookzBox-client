@@ -3,7 +3,10 @@ import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/screens/box_details_screen.dart';
+import 'package:bookzbox/features/feed/feed.dart';
+import 'package:bookzbox/features/feed/stores/box_like_store.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
+import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -56,15 +59,26 @@ class MyApp extends StatelessWidget {
           Screens.home: (ctx) => Provider.of<HomeScreen>(ctx),
         },
         onGenerateRoute: (settings) {
+          // If destination route is box details screen:
           if (settings.name == Screens.boxDetails) {
             final String boxId = settings.arguments;
             return MaterialPageRoute(builder: (ctx) {
               return MultiProvider(
-                providers: boxDetailsProviders,
+                providers: [
+                  ...boxDetailsProviders,
+                  ...boxLikeProviders,
+                  ...commonServicesProviders,
+                ],
                 child: Consumer<BoxDetailsStore>(
-                  builder: (_, store, __) => BoxDetailsScreen(
+                  builder: (ctx, store, __) => BoxDetailsScreen(
                     boxId: boxId,
                     store: store,
+                    likeStore: BoxLikeStore(
+                      Provider.of<IBoxLikeRepository>(ctx),
+                      Provider.of<IAuthService>(ctx),
+                      boxId,
+                    ),
+                    locationService: Provider.of<ILocationService>(ctx),
                   ),
                 ),
               );

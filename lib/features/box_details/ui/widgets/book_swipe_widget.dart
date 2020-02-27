@@ -1,4 +1,5 @@
 import 'package:bookzbox/features/box/models/models.dart';
+import 'package:bookzbox/generated/l10n.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -90,16 +91,20 @@ class _BookSwiperState extends State<BookSwiper> {
       children: <Widget>[
         Row(
           children: <Widget>[
-            _bookDetailsTextCol('Title', book.title ?? '--', maxLines: 3),
+            _bookDetailsTextCol(
+              S.of(context).detailsBookTitle,
+              book.title ?? '--',
+              maxLines: 3,
+            ),
           ],
         ),
         SizedBox(height: rowGap),
         Row(
           children: <Widget>[
             _bookDetailsTextCol(
-              'Synopsis',
+              S.of(context).detailsBookSynopsis,
               (book.synopsis == null || book.synopsis.isEmpty)
-                  ? 'No synopsis'
+                  ? S.of(context).detailsBookNoSynopsis
                   : book.synopsis,
               maxLines: 100,
               textStyle:
@@ -111,22 +116,28 @@ class _BookSwiperState extends State<BookSwiper> {
         Row(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            _bookDetailsTextCol('Condition', '--'), //TODO: Add logic for book condition.
-            _bookDetailsTextCol('Pages', book.pageCount?.toString() ?? '--'),
+            //TODO: Add logic for book condition.
+            _bookDetailsTextCol(S.of(context).detailsBookCondition, '--'),
+            _bookDetailsTextCol(
+                S.of(context).detailsBookPages, book.pageCount?.toString() ?? '--'),
           ],
         ),
         SizedBox(height: rowGap),
         Row(
           children: <Widget>[
-            _bookDetailsTextCol('Author', book.authors?.join(', ') ?? '--'),
-            _bookDetailsTextCol('Publisher', book.publisher ?? '--'),
+            _bookDetailsTextCol(
+                S.of(context).detailsBookAuthor, book.authors?.join(', ') ?? '--'),
+            _bookDetailsTextCol(
+                S.of(context).detailsBookPublisher, book.publisher ?? '--'),
           ],
         ),
         SizedBox(height: rowGap),
         Row(
           children: <Widget>[
-            _bookDetailsTextCol('Categories', book.categories?.join(', ') ?? '--'),
-            _bookDetailsTextCol('Published', book.publishYear?.toString() ?? '--'),
+            _bookDetailsTextCol(
+                S.of(context).detailsBookCategories, book.categories?.join(', ') ?? '--'),
+            _bookDetailsTextCol(S.of(context).detailsBookPublished,
+                (book.publishYear == -1) ? book.publishYear.toString() : '--'),
           ],
         ),
       ],
