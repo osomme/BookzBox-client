@@ -31,7 +31,7 @@ class BoxFeedListItem {
     Map data = doc.data;
 
     return BoxFeedListItem(
-      id: data['id'] as String,
+      id: doc.documentID,
       publisherId: data['publisher'] as String,
       books: BoxFeedBook.fromFirebaseList(data['books']),
       publishedOn: (data['publishDateTime'] as Timestamp).toDate(),
