@@ -131,7 +131,7 @@ class _BookSwiperState extends State<BookSwiper> {
     );
   }
 
-  Widget _bookDetailsTextCol(String header, String content, {int maxLines}) {
+  Widget _bookDetailsTextCol(String header, String content, {int maxLines = 2}) {
     return Flexible(
       fit: FlexFit.tight,
       flex: 1,
@@ -153,7 +153,7 @@ class _BookSwiperState extends State<BookSwiper> {
             Text(
               content,
               style: Theme.of(context).primaryTextTheme.subhead,
-              maxLines: maxLines ?? 2,
+              maxLines: maxLines,
               overflow: TextOverflow.ellipsis,
             ),
           ],
