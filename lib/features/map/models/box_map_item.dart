@@ -27,7 +27,7 @@ class BoxMapItem {
     Map data = doc.data;
 
     return BoxMapItem(
-      boxId: data['id'] as String,
+      boxId: doc.documentID,
       publishedById: data['publisher'] as String,
       books: MapBookItem.fromFirebaseList(data['books']),
       publishedOn: (data['publishDateTime'] as Timestamp).toDate(),

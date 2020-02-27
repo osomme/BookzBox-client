@@ -1,16 +1,14 @@
+import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/helpers/BookMapper.dart';
 import 'package:bookzbox/features/box/models/models.dart';
-import 'package:uuid/uuid.dart';
+import 'package:bookzbox/features/box/helpers/status_extensions.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BoxMapper {
   static Map<String, dynamic> map(final Box box) {
-    List<Map<String, dynamic>> serializedBooks = List();
-    box.books.forEach((book) => serializedBooks.add(BookMapper.map(book)));
-
     return {
-      "id": Uuid().v1(),
       "publisher": box.publisher.uid,
-      "books": serializedBooks,
+      "books": box.books.map((b) => BookMapper.map(b)).toList(),
       "status": box.status.index,
       "publishDateTime": box.publishDateTime,
       "latitude": box.latitude,
@@ -18,5 +16,21 @@ class BoxMapper {
       "title": box.title,
       "description": box.description
     };
+  }
+
+  static Box fromFirebase(DocumentSnapshot doc) {
+    final data = doc.data;
+
+    return Box(
+      id: doc.documentID,
+      publisher: User(data['publisher'] as String),
+      books: BookMapper.booksFromFirebase(data['books']),
+      status: (data['status'] as int).toBoxStatus(),
+      publishDateTime: (data['publishDateTime'] as Timestamp).toDate(),
+      latitude: data['latitude'],
+      longitude: data['longitude'],
+      title: data['title'],
+      description: data['description'],
+    );
   }
 }

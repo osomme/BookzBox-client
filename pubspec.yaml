@@ -77,6 +77,12 @@ dependencies:
   # Internationalization support for formatting DateTime objects to localized string.
   intl: ^0.16.0
 
+  # Carousel widgets
+  flutter_swiper: ^1.1.6
+
+  # Automatically resizing text widget 
+  auto_size_text: ^2.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

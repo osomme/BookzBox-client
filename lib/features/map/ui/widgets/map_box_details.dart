@@ -1,3 +1,5 @@
+import 'package:bookzbox/common/screens/screen_names.dart';
+import 'package:bookzbox/common/widgets/circular_button.dart';
 import 'package:bookzbox/features/feed/stores/box_like_store.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -177,81 +179,44 @@ class ModalBoxDetails extends StatelessWidget {
   }
 
   Widget _likeButton(BuildContext context) {
-    return _actionButton(
-      context,
-      child: Observer(builder: (_) {
-        if (likeStore.isLoading) {
-          return SpinKitPulse(
-            size: 25.0,
+    return CircularButton(
+        child: Observer(builder: (_) {
+          if (likeStore.isLoading) {
+            return SpinKitPulse(
+              size: 25.0,
+              color: Theme.of(context).accentIconTheme.color,
+            );
+          }
+          return Icon(
+            likeStore.isLiked
+                ? MaterialCommunityIcons.heart
+                : MaterialCommunityIcons.heart_outline,
             color: Theme.of(context).accentIconTheme.color,
+            size: 25.0,
           );
-        }
-        return Icon(
-          likeStore.isLiked
-              ? MaterialCommunityIcons.heart
-              : MaterialCommunityIcons.heart_outline,
-          color: Theme.of(context).accentIconTheme.color,
-          size: 25.0,
-        );
-      }),
-      label: S.of(context).mapLikeLabel,
-      onClick: () {
-        if (likeStore.isLoading) {
-          return;
-        }
-        likeStore.toggleLikeStatus();
-      },
-    );
+        }),
+        label: S.of(context).mapLikeLabel,
+        onClick: () {
+          if (likeStore.isLoading) {
+            return;
+          }
+          likeStore.toggleLikeStatus();
+        });
   }
 
   Widget _detailsButton(BuildContext context) {
-    return _actionButton(
-      context,
-      child: Icon(Icons.zoom_in),
-      label: S.of(context).mapDetailsLabel,
-      onClick: () => print('Clicked details'),
-    );
+    return CircularButton(
+        child: Icon(Icons.zoom_in),
+        label: S.of(context).mapDetailsLabel,
+        onClick: () =>
+            Navigator.pushNamed(context, Screens.boxDetails, arguments: box.boxId));
   }
 
   Widget _profileButton(BuildContext context) {
-    return _actionButton(
-      context,
-      child: Icon(Icons.person),
-      label: S.of(context).mapProfileLabel,
-      onClick: () => print('Clicked profile'),
-    );
-  }
-
-  Widget _actionButton(BuildContext context,
-      {Widget child, String label, Function onClick}) {
-    return Column(
-      children: <Widget>[
-        RawMaterialButton(
-          padding: EdgeInsets.all(10.0),
-          shape: CircleBorder(),
-          elevation: 2.0,
-          fillColor: Theme.of(context).accentColor,
-          child: Container(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).accentColor,
-                  blurRadius: 9.0,
-                  spreadRadius: 2.0,
-                ),
-              ],
-            ),
-            child: child,
-          ),
-          onPressed: onClick,
-        ),
-        SizedBox(height: 5.0),
-        Text(
-          label,
-          style: TextStyle(color: Colors.white),
-        ),
-      ],
-    );
+    return CircularButton(
+        child: Icon(Icons.person),
+        label: S.of(context).mapProfileLabel,
+        onClick: () => print('Clicked profile'));
   }
 
   _mainTextContent(BuildContext context) {

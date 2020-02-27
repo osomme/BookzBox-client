@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/feed/stores/box_like_store.dart';
 import 'package:bookzbox/features/location/services/location_service.dart';
@@ -49,7 +50,7 @@ class FeedListItem extends StatelessWidget {
       },
       animation: _pageController,
       child: GestureDetector(
-        onTap: () => print('Box clicked'),
+        onTap: () => Navigator.pushNamed(context, Screens.boxDetails, arguments: box.id),
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[

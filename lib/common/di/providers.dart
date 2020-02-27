@@ -1,5 +1,7 @@
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/authentication/errors/auth_error_handling.dart';
+import 'package:bookzbox/features/box_details/box_details.dart';
+import 'package:bookzbox/features/box_details/ui/screens/box_details_screen.dart';
 import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/feed/service/box_like_service.dart';
 import 'package:bookzbox/features/feed/service/box_like_service_impl.dart';
@@ -134,5 +136,17 @@ final mapProviders = [
     update: (ctx, store, _) => BoxMapScreen(
       mapStore: store,
     ),
+  ),
+];
+
+final boxDetailsProviders = [
+  Provider<IBoxDetailsService>(
+    create: (_) => BoxDetailsFirebaseService(),
+  ),
+  ProxyProvider<IBoxDetailsService, IBoxDetailsRepository>(
+    update: (_, service, __) => BoxDetailsRepository(service),
+  ),
+  ProxyProvider<IBoxDetailsRepository, BoxDetailsStore>(
+    update: (_, repo, __) => BoxDetailsStore(repo),
   ),
 ];
