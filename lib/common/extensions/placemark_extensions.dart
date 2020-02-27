@@ -34,6 +34,6 @@ extension PlacemarkExtensions on Placemark {
     if (this.country.isNotEmpty) {
       results.add(this.country);
     }
-    return results.where((s) => s != null && s.isNotEmpty).join(', ');
+    return results.join(', ');
   }
 }

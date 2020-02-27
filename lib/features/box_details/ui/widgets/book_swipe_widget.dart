@@ -137,7 +137,7 @@ class _BookSwiperState extends State<BookSwiper> {
             _bookDetailsTextCol(
                 S.of(context).detailsBookCategories, book.categories?.join(', ') ?? '--'),
             _bookDetailsTextCol(S.of(context).detailsBookPublished,
-                (book.publishYear == -1) ? book.publishYear.toString() : '--'),
+                (book.publishYear != -1) ? book.publishYear.toString() : '--'),
           ],
         ),
       ],
