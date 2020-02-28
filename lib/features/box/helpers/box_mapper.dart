@@ -1,5 +1,5 @@
 import 'package:bookzbox/features/authentication/authentication.dart';
-import 'package:bookzbox/features/box/helpers/BookMapper.dart';
+import 'package:bookzbox/features/box/helpers/book_mapper.dart';
 import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/box/helpers/status_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

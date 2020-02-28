@@ -1,4 +1,4 @@
-import 'package:bookzbox/features/box/helpers/BoxMapper.dart';
+import 'package:bookzbox/features/box/helpers/box_mapper.dart';
 import 'package:bookzbox/features/box/models/box.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bookzbox/features/new_box/services/publish_error.dart';
