@@ -4,6 +4,7 @@ import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:bookzbox/features/box/helpers/status_extensions.dart';
 
 class MyBoxListItem extends StatelessWidget {
   static const TextStyle cardTitleStyle = TextStyle(
@@ -21,20 +22,6 @@ class MyBoxListItem extends StatelessWidget {
     @required this.onChangeVisibilityPressed,
     @required this.box,
   });
-
-  String getPrintableBoxStatus(BuildContext ctx) {
-    switch (box.status) {
-      case BoxStatus.private:
-        return S.of(ctx).boxStatusPrivate;
-
-      case BoxStatus.traded:
-        return S.of(ctx).boxStatusTraded;
-
-      case BoxStatus.public:
-      default:
-        return S.of(ctx).boxStatusPublic;
-    }
-  }
 
   bool shouldGetInMinutes(DateTime time) {
     return DateTime.now().difference(time).inMinutes < 60;
@@ -112,7 +99,7 @@ class MyBoxListItem extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 4.0),
                                   child: Text(
-                                    getPrintableBoxStatus(context),
+                                    box.status.toLocalizedString(context).toUpperCase(),
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600,

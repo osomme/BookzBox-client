@@ -596,15 +596,6 @@ class S {
     );
   }
 
-  String get boxStatusPublic {
-    return Intl.message(
-      'PUBLIC',
-      name: 'boxStatusPublic',
-      desc: '',
-      args: [],
-    );
-  }
-
   String get boxStatusPublicDesc {
     return Intl.message(
       'Everyone can see this box.',
@@ -614,28 +605,10 @@ class S {
     );
   }
 
-  String get boxStatusPrivate {
-    return Intl.message(
-      'PRIVATE',
-      name: 'boxStatusPrivate',
-      desc: '',
-      args: [],
-    );
-  }
-
   String get boxStatusPrivateDesc {
     return Intl.message(
       'Only you can see this box.',
       name: 'boxStatusPrivateDesc',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get boxStatusTraded {
-    return Intl.message(
-      'TRADED',
-      name: 'boxStatusTraded',
       desc: '',
       args: [],
     );
@@ -766,6 +739,24 @@ class S {
     return Intl.message(
       'Details',
       name: 'mapDetailsLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get feedNoDescription {
+    return Intl.message(
+      'No description',
+      name: 'feedNoDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get authNewAccountNavigate {
+    return Intl.message(
+      'Create a new one',
+      name: 'authNewAccountNavigate',
       desc: '',
       args: [],
     );
@@ -973,24 +964,6 @@ class S {
     return Intl.message(
       'No location data',
       name: 'detailsNoLocation',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get feedNoDescription {
-    return Intl.message(
-      'No description',
-      name: 'feedNoDescription',
-      desc: '',
-      args: [],
-    );
-  }
-
-  String get authNewAccountNavigate {
-    return Intl.message(
-      'Create a new one',
-      name: 'authNewAccountNavigate',
       desc: '',
       args: [],
     );
