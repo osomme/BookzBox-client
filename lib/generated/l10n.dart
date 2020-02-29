@@ -256,7 +256,7 @@ class S {
 
   String get newBoxIsbnDialogTitle {
     return Intl.message(
-      'Enter ISBN',
+      'Find book by ISBN',
       name: 'newBoxIsbnDialogTitle',
       desc: '',
       args: [],
@@ -267,6 +267,42 @@ class S {
     return Intl.message(
       'Invalid ISBN',
       name: 'newBoxIsbnInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxIsbnInfoText {
+    return Intl.message(
+      'ISBN is typically found on the back of a book.',
+      name: 'newBoxIsbnInfoText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxIsbnInfoExampleIsbn {
+    return Intl.message(
+      'ISBN 978-0-45-152634-2',
+      name: 'newBoxIsbnInfoExampleIsbn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxIsbnInfoExampleIsbnPlain {
+    return Intl.message(
+      '9780451526342',
+      name: 'newBoxIsbnInfoExampleIsbnPlain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxIsbnFieldHelpText {
+    return Intl.message(
+      'Enter ISBN',
+      name: 'newBoxIsbnFieldHelpText',
       desc: '',
       args: [],
     );
@@ -393,6 +429,42 @@ class S {
     return Intl.message(
       'Book not found',
       name: 'newBoxBookNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxAddBookHelpText {
+    return Intl.message(
+      'Add books by clicking the button below',
+      name: 'newBoxAddBookHelpText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxTitleHintText {
+    return Intl.message(
+      'All my Harry Potter books',
+      name: 'newBoxTitleHintText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxDescriptionHintText {
+    return Intl.message(
+      'Looking to trade all my Harry Potter books. Only the last book in the series is missing.',
+      name: 'newBoxDescriptionHintText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxIsbnHintText {
+    return Intl.message(
+      '978-0-45-152634-2',
+      name: 'newBoxIsbnHintText',
       desc: '',
       args: [],
     );

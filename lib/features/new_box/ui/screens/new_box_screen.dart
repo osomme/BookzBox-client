@@ -78,8 +78,8 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                 margin: const EdgeInsets.only(right: 2.0),
                 child: Text(
                   S.of(context).newBoxPublishTip,
-                  style: TextStyle(
-                      color: Theme.of(context).accentColor, fontWeight: FontWeight.w600),
+                  style:
+                      TextStyle(color: Theme.of(context).accentColor, fontWeight: FontWeight.w600),
                 ),
               ),
               Icon(
@@ -101,26 +101,6 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
       color: Theme.of(context).primaryColor,
       child: Container(
         margin: EdgeInsets.fromLTRB(16.0, 6.0, 16.0, 6.0),
-        child: Column(
-          children: <Widget>[
-            Text(
-              S.of(context).newBoxTitle,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            Text(
-              S.of(context).newBoxInfo,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -181,14 +161,14 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
     );
   }
 
-  Container triangleBackgroundWidget(BuildContext context) {
+  Container gradientBackgroundWidget(BuildContext context) {
     return new Container(
-      height: 64,
+      height: 24,
       constraints: BoxConstraints(minWidth: double.infinity),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment(0.02, 0.0),
+            begin: Alignment(1.0, -1.0),
+            end: Alignment(1.0, 0.2),
             stops: const [0.6, 0.7],
             colors: <Color>[
               Theme.of(context).primaryColor,
@@ -228,12 +208,14 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                   child: Observer(
                     builder: (_) => Text(
                       (widget.newBoxStore.bookCountError == BoxError.None
-                          ? ''
+                          ? S.of(context).newBoxAddBookHelpText
                           : S.of(context).newBoxNoBooks),
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.red[900],
+                        color: (widget.newBoxStore.bookCountError == BoxError.None
+                            ? Colors.black
+                            : Colors.red[900]),
                       ),
                     ),
                   ),
@@ -285,6 +267,9 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
           TextField(
             maxLength: 50,
             maxLengthEnforced: true,
+            decoration: InputDecoration(
+              hintText: S.of(context).newBoxTitleHintText,
+            ),
             onChanged: (value) => widget.newBoxStore.setBoxTitle(value),
           ),
         ],
@@ -305,6 +290,9 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
             maxLengthEnforced: true,
             maxLines: 5,
             minLines: 5,
+            decoration: InputDecoration(
+              hintText: S.of(context).newBoxDescriptionHintText,
+            ),
             onChanged: (value) => widget.newBoxStore.setBoxDescription(value),
           )
         ],
@@ -326,40 +314,102 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
         return AlertDialog(
           title: Text(
             S.of(context).newBoxIsbnDialogTitle,
-            style: TextStyle(fontSize: 15),
+            style: TextStyle(
+              fontSize: 18,
+            ),
           ),
-          titlePadding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 4.0),
-          contentPadding: EdgeInsets.fromLTRB(18.0, 0.0, 18.0, 2.0),
+          titlePadding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0),
+          contentPadding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 2.0),
           backgroundColor: Color.fromRGBO(252, 241, 233, 1.0),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Observer(
-                builder: (_) => Text(
-                  (widget.newBoxStore.lookupError == LookupError.NotFound
-                      ? S.of(context).newBoxBookNotFound
-                      : ''),
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.red[900],
-                  ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 6.0),
+                padding: const EdgeInsets.all(8.0),
+                color: Colors.grey[200],
+                child: Stack(
+                  children: <Widget>[
+                    Icon(
+                      MaterialIcons.info_outline,
+                      color: Colors.grey[800],
+                      size: 20,
+                    ),
+                    Center(
+                      child: Column(
+                        children: <Widget>[
+                          Center(
+                            child: Text(
+                              S.of(context).newBoxIsbnInfoExampleIsbn,
+                              style: TextStyle(
+                                fontSize: 12.0,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            FontAwesome.barcode,
+                            size: 64,
+                          ),
+                          Center(
+                            child: Text(
+                              S.of(context).newBoxIsbnInfoExampleIsbnPlain,
+                              style: TextStyle(
+                                fontSize: 12.0,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4),
+                            child: Center(
+                              child: Text(
+                                S.of(context).newBoxIsbnInfoText,
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Observer(
-                  builder: (_) => widget.newBoxStore.isLoadingBook
-                      ? Center(child: CircularProgressIndicator())
-                      : TextField(
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) => widget.newBoxStore.setIsbn(value),
-                          decoration: InputDecoration(
-                            counterText: '',
-                            errorText:
-                                (widget.newBoxStore.isbnError == LookupError.InvalidIsbn
+              Container(
+                padding: const EdgeInsets.fromLTRB(18.0, 0.0, 18.0, 0.0),
+                child: Column(
+                  children: <Widget>[
+                    Observer(
+                      builder: (_) => Text(
+                        (widget.newBoxStore.lookupError == LookupError.NotFound
+                            ? S.of(context).newBoxBookNotFound
+                            : ''),
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.red[900],
+                        ),
+                      ),
+                    ),
+                    Observer(
+                      builder: (_) => widget.newBoxStore.isLoadingBook
+                          ? Center(child: CircularProgressIndicator())
+                          : TextField(
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) => widget.newBoxStore.setIsbn(value),
+                              decoration: InputDecoration(
+                                hintText: S.of(context).newBoxIsbnHintText,
+                                helperText: S.of(context).newBoxIsbnFieldHelpText,
+                                counterText: '',
+                                errorText: (widget.newBoxStore.isbnError == LookupError.InvalidIsbn
                                     ? S.of(context).newBoxIsbnInvalid
-                                    : ''),
-                          ),
-                        )),
+                                    : null),
+                              ),
+                            ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
           actions: <Widget>[
@@ -378,12 +428,10 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                   builder: (_) => FlatButton(
                     child: Text(
                       S.of(context).newBoxFindBook,
-                      style: TextStyle(
-                          color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
+                      style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
                     ),
-                    onPressed: () => widget.newBoxStore.isLoadingBook
-                        ? null
-                        : handleBookLookup(context),
+                    onPressed: () =>
+                        widget.newBoxStore.isLoadingBook ? null : handleBookLookup(context),
                   ),
                 ),
               ],
@@ -469,8 +517,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                                   margin: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
                                   child: Text(
                                     S.of(context).newBoxBookAuthor + ":",
-                                    style: TextStyle(
-                                        fontSize: 14, fontWeight: FontWeight.w500),
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                                   ),
                                 ),
                                 Text(
@@ -491,8 +538,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                                   margin: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
                                   child: Text(
                                     S.of(context).newBoxBookPublished + ":",
-                                    style: TextStyle(
-                                        fontSize: 14, fontWeight: FontWeight.w500),
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                                   ),
                                 ),
                                 Text(
@@ -549,8 +595,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                 FlatButton(
                   child: Text(
                     S.of(context).newBoxAddBookButton,
-                    style: TextStyle(
-                        color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
+                    style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
                   ),
                   onPressed: () => addBookAndCloseDialog(context),
                 ),
@@ -578,7 +623,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                 children: <Widget>[
                   customTopBar(context, authStore),
                   infoText(context),
-                  triangleBackgroundWidget(context),
+                  gradientBackgroundWidget(context),
                   booksWidget(context),
                   boxTitleWidget(context),
                   boxDescriptionWidget(context)

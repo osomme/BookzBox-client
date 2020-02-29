@@ -21,7 +21,7 @@ class ProfileScreen extends StatefulWidget {
     @required this.authStore,
   }) : super(key: key) {
     if (profileStore.isMyProfile) {
-      profileStore.setUserId(authStore.user.uid);
+      profileStore.setUserId(authStore.user?.uid);
     }
     profileStore.init();
   }
