@@ -506,9 +506,27 @@ class S {
     );
   }
 
-  String get profileBoxesTabLabel {
+  String get profileOtherTabLabel {
+    return Intl.message(
+      'ABOUT',
+      name: 'profileOtherTabLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileMyBoxesTabLabel {
     return Intl.message(
       'MY BOXES',
+      name: 'profileMyBoxesTabLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileBoxesTabLabel {
+    return Intl.message(
+      'BOXES',
       name: 'profileBoxesTabLabel',
       desc: '',
       args: [],

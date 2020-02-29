@@ -7,6 +7,9 @@ import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/feed/stores/box_like_store.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/location/location.dart';
+import 'package:bookzbox/features/profile/models/profile.dart';
+import 'package:bookzbox/features/profile/stores/profile_store.dart';
+import 'package:bookzbox/features/profile/ui/screens/profile_screen.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -39,8 +42,8 @@ class MyApp extends StatelessWidget {
         ...bookProviders,
         ...feedProviders,
         ...commonServicesProviders,
-        ...profileProviders,
         ...mapProviders,
+        ...myProfileProviders,
       ],
       child: MaterialApp(
         routes: {
@@ -80,6 +83,23 @@ class MyApp extends StatelessWidget {
                       boxId,
                     ),
                     locationService: Provider.of<ILocationService>(ctx),
+                  ),
+                ),
+              );
+            });
+          } else if (settings.name == Screens.profile) {
+            final String userId = settings.arguments;
+            return MaterialPageRoute(builder: (ctx) {
+              return MultiProvider(
+                providers: [
+                  Provider<ProfileStore>(
+                    create: (_) => ProfileStore(userId),
+                  ),
+                ],
+                child: Consumer<ProfileScreen>(
+                  builder: (ctx, screen, __) => ProfileScreen(
+                    profileStore: Provider.of<ProfileStore>(ctx),
+                    authStore: Provider.of<AuthStore>(ctx),
                   ),
                 ),
               );

@@ -52,93 +52,101 @@ class MeTab extends StatelessWidget {
                       stat: '',
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              margin: const EdgeInsets.all(2.0),
-                              child: MaterialButton(
-                                color: Theme.of(context).primaryColor,
-                                onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (ctx) => Provider.of<NewBoxScreen>(ctx))),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 12),
-                                      child: Icon(
-                                        FontAwesome5Solid.box_open,
-                                        size: 20,
-                                        color: Theme.of(context).accentColor,
+                  (profileStore.isMyProfile
+                      ? Expanded(
+                          child: Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    margin: const EdgeInsets.all(2.0),
+                                    child: MaterialButton(
+                                      color: Theme.of(context).primaryColor,
+                                      onPressed: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (ctx) => Provider.of<NewBoxScreen>(ctx))),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: EdgeInsets.only(right: 12),
+                                            child: Icon(
+                                              FontAwesome5Solid.box_open,
+                                              size: 20,
+                                              color: Theme.of(context).accentColor,
+                                            ),
+                                          ),
+                                          Text(
+                                            S.of(context).profileNewBoxTitle,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                color: Theme.of(context).accentColor),
+                                          ),
+                                        ],
+                                      ),
+                                      elevation: 1.0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6.0),
+                                        side: BorderSide(
+                                          width: 2.0,
+                                          color: Theme.of(context).accentColor,
+                                        ),
                                       ),
                                     ),
-                                    Text(
-                                      S.of(context).profileNewBoxTitle,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          color: Theme.of(context).accentColor),
-                                    ),
-                                  ],
-                                ),
-                                elevation: 1.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6.0),
-                                  side: BorderSide(
-                                    width: 2.0,
-                                    color: Theme.of(context).accentColor,
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              margin: const EdgeInsets.all(2.0),
-                              child: MaterialButton(
-                                color: Colors.red[100],
-                                onPressed: () => authStore.logOut(),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 12),
-                                      child: Icon(
-                                        Icons.exit_to_app,
-                                        size: 20,
-                                        color: Colors.black,
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    margin: const EdgeInsets.all(2.0),
+                                    child: MaterialButton(
+                                      color: Colors.red[100],
+                                      onPressed: () => authStore.logOut(),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: EdgeInsets.only(right: 12),
+                                            child: Icon(
+                                              Icons.exit_to_app,
+                                              size: 20,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          Text(
+                                            S.of(context).profileLogout,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      elevation: 1.0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6.0),
+                                        side: BorderSide(
+                                          width: 2.0,
+                                          color: Colors.red,
+                                        ),
                                       ),
                                     ),
-                                    Text(
-                                      S.of(context).profileLogout,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                elevation: 1.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6.0),
-                                  side: BorderSide(
-                                    width: 2.0,
-                                    color: Colors.red,
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
+                        )
+                      : Expanded(
+                          child: StatsCard(
+                            // TODO: add another stat
+                            title: '',
+                            stat: '',
+                          ),
+                        )),
                 ],
               ),
             ),

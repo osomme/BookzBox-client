@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/widgets/widgets.dart';
 import 'package:bookzbox/features/feed/stores/box_like_store.dart';
@@ -90,14 +91,17 @@ class _BoxDetailsScreenState extends State<BoxDetailsScreen> {
                     icon: Icon(widget.likeStore.isLiked
                         ? MaterialCommunityIcons.heart
                         : MaterialCommunityIcons.heart_outline),
-                    onPressed: () => widget.likeStore.isLoading
-                        ? null
-                        : widget.likeStore.toggleLikeStatus(),
+                    onPressed: () =>
+                        widget.likeStore.isLoading ? null : widget.likeStore.toggleLikeStatus(),
                   ),
                 ),
                 IconButton(
                   icon: Icon(Icons.person),
-                  onPressed: () => print('Go to user profile clicked'),
+                  onPressed: () => Navigator.pushNamed(
+                    context,
+                    Screens.profile,
+                    arguments: widget.store.box.publisher.uid,
+                  ),
                 ),
               ],
             ),

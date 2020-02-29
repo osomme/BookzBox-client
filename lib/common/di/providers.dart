@@ -68,8 +68,7 @@ final bookProviders = [
     create: (_) => LocationService(),
   ),
   ProxyProvider3<IBookRepository, IBoxRepository, ILocationService, NewBoxStore>(
-    update: (_, bookRepo, boxRepo, locService, __) =>
-        NewBoxStore(bookRepo, boxRepo, locService),
+    update: (_, bookRepo, boxRepo, locService, __) => NewBoxStore(bookRepo, boxRepo, locService),
   ),
   ProxyProvider<NewBoxStore, NewBoxScreen>(
     update: (_, store, __) => NewBoxScreen(store),
@@ -107,12 +106,15 @@ final feedProviders = [
   ),
 ];
 
-final profileProviders = [
+final myProfileProviders = [
   Provider<ProfileStore>(
-    create: (_) => ProfileStore(),
+    create: (_) => ProfileStore(null),
   ),
-  ProxyProvider<ProfileStore, ProfileScreen>(
-    update: (_, store, __) => ProfileScreen(profileStore: store),
+  ProxyProvider2<ProfileStore, AuthStore, ProfileScreen>(
+    update: (_, profileStore, authStore, __) => ProfileScreen(
+      profileStore: profileStore,
+      authStore: authStore,
+    ),
   ),
 ];
 

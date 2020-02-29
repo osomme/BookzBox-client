@@ -97,19 +97,22 @@ class BoxesTab extends StatelessWidget {
                 },
               ),
               box: store.myBoxes[index],
+              isMyBox: store.isMyProfile,
             );
           }),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.push(
-            context, MaterialPageRoute(builder: (ctx) => Provider.of<NewBoxScreen>(ctx))),
-        label: Text(
-          S.of(context).profileNewBoxFAB,
-        ),
-        icon: Icon(
-          FontAwesome5Solid.box_open,
-          size: 20,
-        ),
-      ),
+      floatingActionButton: (store.isMyProfile
+          ? FloatingActionButton.extended(
+              onPressed: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (ctx) => Provider.of<NewBoxScreen>(ctx))),
+              label: Text(
+                S.of(context).profileNewBoxFAB,
+              ),
+              icon: Icon(
+                FontAwesome5Solid.box_open,
+                size: 20,
+              ),
+            )
+          : null),
     );
   }
 }

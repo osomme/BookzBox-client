@@ -51,9 +51,8 @@ class ModalBoxDetails extends StatelessWidget {
     );
   }
 
-  Widget _images(BuildContext context) => box.books.any((b) => b.thumbnailUrl != null)
-      ? _imageList(context)
-      : _noImagesText(context);
+  Widget _images(BuildContext context) =>
+      box.books.any((b) => b.thumbnailUrl != null) ? _imageList(context) : _noImagesText(context);
 
   Padding _imageList(BuildContext context) {
     return Padding(
@@ -133,8 +132,7 @@ class ModalBoxDetails extends StatelessWidget {
       children: <Widget>[
         Text(
           S.of(context).mapDescription,
-          style:
-              Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
+          style: Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
         ),
         SizedBox(height: 5.0),
         Text(
@@ -155,8 +153,7 @@ class ModalBoxDetails extends StatelessWidget {
       children: <Widget>[
         Text(
           S.of(context).mapPublishedOn,
-          style:
-              Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
+          style: Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
         ),
         SizedBox(height: 5.0),
         Text(
@@ -188,9 +185,7 @@ class ModalBoxDetails extends StatelessWidget {
             );
           }
           return Icon(
-            likeStore.isLiked
-                ? MaterialCommunityIcons.heart
-                : MaterialCommunityIcons.heart_outline,
+            likeStore.isLiked ? MaterialCommunityIcons.heart : MaterialCommunityIcons.heart_outline,
             color: Theme.of(context).accentIconTheme.color,
             size: 25.0,
           );
@@ -208,15 +203,14 @@ class ModalBoxDetails extends StatelessWidget {
     return CircularButton(
         child: Icon(Icons.zoom_in),
         label: S.of(context).mapDetailsLabel,
-        onClick: () =>
-            Navigator.pushNamed(context, Screens.boxDetails, arguments: box.boxId));
+        onClick: () => Navigator.pushNamed(context, Screens.boxDetails, arguments: box.boxId));
   }
 
   Widget _profileButton(BuildContext context) {
     return CircularButton(
         child: Icon(Icons.person),
         label: S.of(context).mapProfileLabel,
-        onClick: () => print('Clicked profile'));
+        onClick: () => Navigator.pushNamed(context, Screens.profile, arguments: box.publishedById));
   }
 
   _mainTextContent(BuildContext context) {

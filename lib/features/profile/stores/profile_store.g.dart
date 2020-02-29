@@ -15,6 +15,16 @@ mixin _$ProfileStore on _ProfileStore, Store {
   BoxStatus get currentBoxStatus => (_$currentBoxStatusComputed ??=
           Computed<BoxStatus>(() => super.currentBoxStatus))
       .value;
+  Computed<Profile> _$profileComputed;
+
+  @override
+  Profile get profile =>
+      (_$profileComputed ??= Computed<Profile>(() => super.profile)).value;
+  Computed<bool> _$isMyProfileComputed;
+
+  @override
+  bool get isMyProfile =>
+      (_$isMyProfileComputed ??= Computed<bool>(() => super.isMyProfile)).value;
 
   final _$myBoxesAtom = Atom(name: '_ProfileStore.myBoxes');
 
@@ -33,21 +43,38 @@ mixin _$ProfileStore on _ProfileStore, Store {
     }, _$myBoxesAtom, name: '${_$myBoxesAtom.name}_set');
   }
 
-  final _$profileAtom = Atom(name: '_ProfileStore.profile');
+  final _$_isMyProfileAtom = Atom(name: '_ProfileStore._isMyProfile');
 
   @override
-  Profile get profile {
-    _$profileAtom.context.enforceReadPolicy(_$profileAtom);
-    _$profileAtom.reportObserved();
-    return super.profile;
+  bool get _isMyProfile {
+    _$_isMyProfileAtom.context.enforceReadPolicy(_$_isMyProfileAtom);
+    _$_isMyProfileAtom.reportObserved();
+    return super._isMyProfile;
   }
 
   @override
-  set profile(Profile value) {
-    _$profileAtom.context.conditionallyRunInAction(() {
-      super.profile = value;
-      _$profileAtom.reportChanged();
-    }, _$profileAtom, name: '${_$profileAtom.name}_set');
+  set _isMyProfile(bool value) {
+    _$_isMyProfileAtom.context.conditionallyRunInAction(() {
+      super._isMyProfile = value;
+      _$_isMyProfileAtom.reportChanged();
+    }, _$_isMyProfileAtom, name: '${_$_isMyProfileAtom.name}_set');
+  }
+
+  final _$_profileAtom = Atom(name: '_ProfileStore._profile');
+
+  @override
+  Profile get _profile {
+    _$_profileAtom.context.enforceReadPolicy(_$_profileAtom);
+    _$_profileAtom.reportObserved();
+    return super._profile;
+  }
+
+  @override
+  set _profile(Profile value) {
+    _$_profileAtom.context.conditionallyRunInAction(() {
+      super._profile = value;
+      _$_profileAtom.reportChanged();
+    }, _$_profileAtom, name: '${_$_profileAtom.name}_set');
   }
 
   final _$_currentBoxStatusAtom = Atom(name: '_ProfileStore._currentBoxStatus');
@@ -67,8 +94,45 @@ mixin _$ProfileStore on _ProfileStore, Store {
     }, _$_currentBoxStatusAtom, name: '${_$_currentBoxStatusAtom.name}_set');
   }
 
+  final _$_userIdAtom = Atom(name: '_ProfileStore._userId');
+
+  @override
+  String get _userId {
+    _$_userIdAtom.context.enforceReadPolicy(_$_userIdAtom);
+    _$_userIdAtom.reportObserved();
+    return super._userId;
+  }
+
+  @override
+  set _userId(String value) {
+    _$_userIdAtom.context.conditionallyRunInAction(() {
+      super._userId = value;
+      _$_userIdAtom.reportChanged();
+    }, _$_userIdAtom, name: '${_$_userIdAtom.name}_set');
+  }
+
   final _$_ProfileStoreActionController =
       ActionController(name: '_ProfileStore');
+
+  @override
+  void init() {
+    final _$actionInfo = _$_ProfileStoreActionController.startAction();
+    try {
+      return super.init();
+    } finally {
+      _$_ProfileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setUserId(String uid) {
+    final _$actionInfo = _$_ProfileStoreActionController.startAction();
+    try {
+      return super.setUserId(uid);
+    } finally {
+      _$_ProfileStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setCurrentBoxStatus(BoxStatus status) {

@@ -1,7 +1,6 @@
 import 'package:bookzbox/features/box/models/box.dart';
 import 'package:bookzbox/features/box/models/my_box.dart';
 import 'package:bookzbox/features/profile/models/profile.dart';
-import 'package:bookzbox/features/profile/ui/widgets/my_box_list_item.dart';
 import 'package:mobx/mobx.dart';
 
 part 'profile_store.g.dart';
@@ -13,13 +12,32 @@ abstract class _ProfileStore with Store {
   ObservableList<MyBox> myBoxes = new ObservableList();
 
   @observable
-  Profile profile = Profile(rating: 340, tradeCount: 15, joinDate: DateTime.now());
+  bool _isMyProfile;
+
+  @observable
+  Profile _profile = Profile(
+    userId: null,
+    displayName: 'John443',
+    rating: 0,
+    tradeCount: 0,
+    joinDate: DateTime.now(),
+  );
 
   /// The box status of the currently focused box.
   @observable
   BoxStatus _currentBoxStatus = BoxStatus.public;
 
-  _ProfileStore() {
+  @observable
+  String _userId;
+
+  /// Constructor
+  /// [userId] must be null if this is 'my' profile, otherwise
+  ///          it should be the user id of the profile to view.
+  _ProfileStore(String userId) {
+    _isMyProfile = userId == null;
+    _userId = userId;
+
+    // TODO remove after backend loading is implemented.
     myBoxes.add(
       MyBox(
         id: 'abc',
@@ -31,9 +49,24 @@ abstract class _ProfileStore with Store {
     );
   }
 
+  /// Run once on load.
+  @action
+  void init() {
+    // TODO: load profile based on _userId
+  }
+
+  @action
+  void setUserId(String uid) => _userId = uid;
+
   @computed
   BoxStatus get currentBoxStatus => _currentBoxStatus;
 
   @action
   void setCurrentBoxStatus(BoxStatus status) => _currentBoxStatus = status;
+
+  @computed
+  Profile get profile => _profile;
+
+  @computed
+  bool get isMyProfile => _isMyProfile;
 }

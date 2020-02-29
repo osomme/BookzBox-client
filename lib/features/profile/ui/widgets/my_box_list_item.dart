@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/box/models/box.dart';
 import 'package:bookzbox/features/box/models/my_box.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -17,10 +18,12 @@ class MyBoxListItem extends StatelessWidget {
 
   final MyBox box;
   final VoidCallback onChangeVisibilityPressed;
+  final bool isMyBox;
 
   MyBoxListItem({
     @required this.onChangeVisibilityPressed,
     @required this.box,
+    @required this.isMyBox,
   });
 
   bool shouldGetInMinutes(DateTime time) {
@@ -142,20 +145,23 @@ class MyBoxListItem extends StatelessWidget {
               ),
               Row(
                 children: <Widget>[
+                  (isMyBox
+                      ? Expanded(
+                          child: FlatButton(
+                            onPressed: onChangeVisibilityPressed,
+                            child: Text(
+                              S.of(context).profileChangeVisibilityBtn,
+                              style: TextStyle(
+                                color: Colors.purple[200],
+                              ),
+                            ),
+                          ),
+                        )
+                      : Spacer()),
                   Expanded(
                     child: FlatButton(
-                      onPressed: onChangeVisibilityPressed,
-                      child: Text(
-                        S.of(context).profileChangeVisibilityBtn,
-                        style: TextStyle(
-                          color: Colors.purple[200],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: FlatButton(
-                      onPressed: () => print('DETAILS'), // TODO: navigate to box details page
+                      onPressed: () =>
+                          Navigator.pushNamed(context, Screens.boxDetails, arguments: box.id),
                       child: Text(
                         S.of(context).profileBoxDetailsBtn,
                         style: TextStyle(

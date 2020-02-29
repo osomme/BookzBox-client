@@ -5,4 +5,5 @@ abstract class Screens {
   static final emailNewAccount = 'email_new_account';
   static final authSelect = 'auth_selection';
   static final boxDetails = 'box_details';
+  static final profile = 'profile_screen';
 }

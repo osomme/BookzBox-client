@@ -33,6 +33,20 @@ class RatingCard extends StatelessWidget {
     @required this.rating,
   }) : super(key: key);
 
+  String getRatingText() {
+    if (rating == 0) {
+      return rating.toString();
+    }
+    return (rating > 0 ? '+' + rating.toString() : '-' + rating.toString());
+  }
+
+  Color getRatingColor() {
+    if (rating == 0) {
+      return Colors.white;
+    }
+    return (rating > 0 ? Colors.green : Colors.red);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -77,9 +91,8 @@ class RatingCard extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 16, bottom: 24),
                   child: Text(
-                    (rating > 0 ? '+' + rating.toString() : '-' + rating.toString()),
-                    style:
-                        cardMainContentStyle.apply(color: (rating > 0 ? Colors.green : Colors.red)),
+                    getRatingText(),
+                    style: cardMainContentStyle.apply(color: getRatingColor()),
                     textAlign: TextAlign.center,
                   ),
                 )
