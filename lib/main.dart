@@ -8,6 +8,7 @@ import 'package:bookzbox/features/feed/stores/box_like_store.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/features/profile/models/profile.dart';
+import 'package:bookzbox/features/profile/repositories/profile_repository.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
 import 'package:bookzbox/features/profile/ui/screens/profile_screen.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -92,8 +93,8 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (ctx) {
               return MultiProvider(
                 providers: [
-                  Provider<ProfileStore>(
-                    create: (_) => ProfileStore(userId),
+                  ProxyProvider<IProfileRepository, ProfileStore>(
+                    update: (_, repo, __) => ProfileStore(repo, userId),
                   ),
                 ],
                 child: Consumer<ProfileScreen>(

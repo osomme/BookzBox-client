@@ -1,6 +1,7 @@
 import 'package:bookzbox/features/box/models/box.dart';
 import 'package:bookzbox/features/box/models/my_box.dart';
 import 'package:bookzbox/features/profile/models/profile.dart';
+import 'package:bookzbox/features/profile/repositories/profile_repository.dart';
 import 'package:mobx/mobx.dart';
 
 part 'profile_store.g.dart';
@@ -8,6 +9,8 @@ part 'profile_store.g.dart';
 class ProfileStore = _ProfileStore with _$ProfileStore;
 
 abstract class _ProfileStore with Store {
+  IProfileRepository _profileRepo;
+
   @observable
   ObservableList<MyBox> myBoxes = new ObservableList();
 
@@ -33,12 +36,17 @@ abstract class _ProfileStore with Store {
   /// Constructor
   /// [userId] must be null if this is 'my' profile, otherwise
   ///          it should be the user id of the profile to view.
-  _ProfileStore(String userId) {
+  _ProfileStore(IProfileRepository profileRepo, String userId) {
+    _profileRepo = profileRepo;
     _isMyProfile = userId == null;
     _userId = userId;
 
-    // TODO remove after backend loading is implemented.
+    if (_isMyProfile && _profileRepo.hasCachedProfile()) {
+      _profile = _profileRepo.getCachedProfile();
+    }
+
     myBoxes.add(
+      // TODO remove after backend loading is implemented.
       MyBox(
         id: 'abc',
         status: BoxStatus.public,

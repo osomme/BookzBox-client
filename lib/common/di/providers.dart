@@ -19,6 +19,10 @@ import 'package:bookzbox/features/new_box/services/publish_service.dart';
 import 'package:bookzbox/features/new_box/services/publish_service_impl.dart';
 import 'package:bookzbox/features/new_box/stores/new_box_store.dart';
 import 'package:bookzbox/features/new_box/ui/screens/new_box_screen.dart';
+import 'package:bookzbox/features/profile/models/mem_cache.dart';
+import 'package:bookzbox/features/profile/models/profile_mem_cache.dart';
+import 'package:bookzbox/features/profile/repositories/profile_repository.dart';
+import 'package:bookzbox/features/profile/repositories/profile_repository_impl.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
 import 'package:bookzbox/features/profile/ui/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
@@ -107,8 +111,14 @@ final feedProviders = [
 ];
 
 final myProfileProviders = [
-  Provider<ProfileStore>(
-    create: (_) => ProfileStore(null),
+  Provider<IMemCache>(
+    create: (_) => ProfileMemCache(),
+  ),
+  ProxyProvider<IMemCache, IProfileRepository>(
+    update: (_, cache, __) => ProfileRepository(cache),
+  ),
+  ProxyProvider<IProfileRepository, ProfileStore>(
+    update: (_, repo, __) => ProfileStore(repo, null),
   ),
   ProxyProvider2<ProfileStore, AuthStore, ProfileScreen>(
     update: (_, profileStore, authStore, __) => ProfileScreen(
