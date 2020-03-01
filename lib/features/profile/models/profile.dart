@@ -5,6 +5,7 @@ class Profile {
   final String displayName;
   final int rating;
   final int tradeCount;
+  final String photoUrl;
 
   /// The date of user registration.
   final DateTime joinDate;
@@ -15,5 +16,6 @@ class Profile {
     @required this.rating,
     @required this.tradeCount,
     @required this.joinDate,
+    @required this.photoUrl,
   });
 }

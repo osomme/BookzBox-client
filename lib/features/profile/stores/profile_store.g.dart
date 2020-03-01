@@ -9,12 +9,6 @@ part of 'profile_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ProfileStore on _ProfileStore, Store {
-  Computed<BoxStatus> _$currentBoxStatusComputed;
-
-  @override
-  BoxStatus get currentBoxStatus => (_$currentBoxStatusComputed ??=
-          Computed<BoxStatus>(() => super.currentBoxStatus))
-      .value;
   Computed<Profile> _$profileComputed;
 
   @override
@@ -25,23 +19,12 @@ mixin _$ProfileStore on _ProfileStore, Store {
   @override
   bool get isMyProfile =>
       (_$isMyProfileComputed ??= Computed<bool>(() => super.isMyProfile)).value;
-
-  final _$myBoxesAtom = Atom(name: '_ProfileStore.myBoxes');
-
-  @override
-  ObservableList<MyBox> get myBoxes {
-    _$myBoxesAtom.context.enforceReadPolicy(_$myBoxesAtom);
-    _$myBoxesAtom.reportObserved();
-    return super.myBoxes;
-  }
+  Computed<String> _$profileLoadErrorComputed;
 
   @override
-  set myBoxes(ObservableList<MyBox> value) {
-    _$myBoxesAtom.context.conditionallyRunInAction(() {
-      super.myBoxes = value;
-      _$myBoxesAtom.reportChanged();
-    }, _$myBoxesAtom, name: '${_$myBoxesAtom.name}_set');
-  }
+  String get profileLoadError => (_$profileLoadErrorComputed ??=
+          Computed<String>(() => super.profileLoadError))
+      .value;
 
   final _$_isMyProfileAtom = Atom(name: '_ProfileStore._isMyProfile');
 
@@ -77,23 +60,6 @@ mixin _$ProfileStore on _ProfileStore, Store {
     }, _$_profileAtom, name: '${_$_profileAtom.name}_set');
   }
 
-  final _$_currentBoxStatusAtom = Atom(name: '_ProfileStore._currentBoxStatus');
-
-  @override
-  BoxStatus get _currentBoxStatus {
-    _$_currentBoxStatusAtom.context.enforceReadPolicy(_$_currentBoxStatusAtom);
-    _$_currentBoxStatusAtom.reportObserved();
-    return super._currentBoxStatus;
-  }
-
-  @override
-  set _currentBoxStatus(BoxStatus value) {
-    _$_currentBoxStatusAtom.context.conditionallyRunInAction(() {
-      super._currentBoxStatus = value;
-      _$_currentBoxStatusAtom.reportChanged();
-    }, _$_currentBoxStatusAtom, name: '${_$_currentBoxStatusAtom.name}_set');
-  }
-
   final _$_userIdAtom = Atom(name: '_ProfileStore._userId');
 
   @override
@@ -109,6 +75,23 @@ mixin _$ProfileStore on _ProfileStore, Store {
       super._userId = value;
       _$_userIdAtom.reportChanged();
     }, _$_userIdAtom, name: '${_$_userIdAtom.name}_set');
+  }
+
+  final _$_profileLoadErrorAtom = Atom(name: '_ProfileStore._profileLoadError');
+
+  @override
+  String get _profileLoadError {
+    _$_profileLoadErrorAtom.context.enforceReadPolicy(_$_profileLoadErrorAtom);
+    _$_profileLoadErrorAtom.reportObserved();
+    return super._profileLoadError;
+  }
+
+  @override
+  set _profileLoadError(String value) {
+    _$_profileLoadErrorAtom.context.conditionallyRunInAction(() {
+      super._profileLoadError = value;
+      _$_profileLoadErrorAtom.reportChanged();
+    }, _$_profileLoadErrorAtom, name: '${_$_profileLoadErrorAtom.name}_set');
   }
 
   final _$_ProfileStoreActionController =
@@ -129,16 +112,6 @@ mixin _$ProfileStore on _ProfileStore, Store {
     final _$actionInfo = _$_ProfileStoreActionController.startAction();
     try {
       return super.setUserId(uid);
-    } finally {
-      _$_ProfileStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setCurrentBoxStatus(BoxStatus status) {
-    final _$actionInfo = _$_ProfileStoreActionController.startAction();
-    try {
-      return super.setCurrentBoxStatus(status);
     } finally {
       _$_ProfileStoreActionController.endAction(_$actionInfo);
     }

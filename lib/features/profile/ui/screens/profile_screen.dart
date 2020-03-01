@@ -1,4 +1,5 @@
 import 'package:bookzbox/features/profile/models/profile.dart';
+import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
 import 'package:bookzbox/features/profile/ui/screens/boxes_tab.dart';
 import 'package:bookzbox/features/profile/ui/screens/me_tab.dart';
@@ -7,23 +8,26 @@ import 'package:bookzbox/features/profile/ui/widgets/custom_tab_bar.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../authentication/authentication.dart';
 
 class ProfileScreen extends StatefulWidget {
   final ProfileStore profileStore;
   final AuthStore authStore;
+  final ProfileBoxStore profileBoxStore;
 
   ProfileScreen({
     Key key,
     @required this.profileStore,
     @required this.authStore,
+    @required this.profileBoxStore,
   }) : super(key: key) {
     if (profileStore.isMyProfile) {
       profileStore.setUserId(authStore.user?.uid);
     }
     profileStore.init();
+    profileBoxStore.init();
   }
 
   @override
@@ -75,7 +79,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         authStore: widget.authStore,
       ),
       BoxesTab(
-        store: widget.profileStore,
+        profileStore: widget.profileStore,
+        boxStore: widget.profileBoxStore,
       ),
     ];
     if (widget.profileStore.isMyProfile) {
@@ -103,7 +108,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     } else {
       return AppBar(
-        title: Text(widget.profileStore.profile.displayName),
+        title: Observer(builder: (_) {
+          return Text(widget.profileStore.profile.displayName);
+        }),
         bottom: tabBar,
       );
     }

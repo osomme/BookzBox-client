@@ -1,5 +1,7 @@
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/authentication/errors/auth_error_handling.dart';
+import 'package:bookzbox/features/box/services/box_loader_service.dart';
+import 'package:bookzbox/features/box/services/box_loader_service_impl.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/screens/box_details_screen.dart';
 import 'package:bookzbox/features/feed/feed.dart';
@@ -23,6 +25,9 @@ import 'package:bookzbox/features/profile/models/mem_cache.dart';
 import 'package:bookzbox/features/profile/models/profile_mem_cache.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository_impl.dart';
+import 'package:bookzbox/features/profile/services/profile_service.dart';
+import 'package:bookzbox/features/profile/services/profile_service_impl.dart';
+import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
 import 'package:bookzbox/features/profile/ui/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
@@ -59,14 +64,16 @@ final loginProviders = [
 
 final bookProviders = [
   Provider<IBookService>(create: (_) => BookService.instance),
+  Provider<IBoxLoaderService>(create: (_) => BoxLoaderService()),
   ProxyProvider<IBookService, IBookRepository>(
     update: (_, service, __) => BookRepository(service),
   ),
   Provider<IPublishService>(
     create: (_) => PublishService.instance,
   ),
-  ProxyProvider<IPublishService, IBoxRepository>(
-    update: (_, service, __) => BoxRepository(service),
+  ProxyProvider2<IPublishService, IBoxLoaderService, IBoxRepository>(
+    update: (_, publishService, boxLoaderService, __) =>
+        BoxRepository(publishService, boxLoaderService),
   ),
   Provider<ILocationService>(
     create: (_) => LocationService(),
@@ -114,16 +121,26 @@ final myProfileProviders = [
   Provider<IMemCache>(
     create: (_) => ProfileMemCache(),
   ),
-  ProxyProvider<IMemCache, IProfileRepository>(
-    update: (_, cache, __) => ProfileRepository(cache),
+  Provider<IProfileService>(
+    create: (_) => ProfileService(),
+  ),
+  ProxyProvider2<IMemCache, IProfileService, IProfileRepository>(
+    update: (_, cache, profileService, __) => ProfileRepository(
+      cache,
+      profileService,
+    ),
   ),
   ProxyProvider<IProfileRepository, ProfileStore>(
     update: (_, repo, __) => ProfileStore(repo, null),
   ),
-  ProxyProvider2<ProfileStore, AuthStore, ProfileScreen>(
-    update: (_, profileStore, authStore, __) => ProfileScreen(
+  ProxyProvider<IBoxRepository, ProfileBoxStore>(
+    update: (_, repo, __) => ProfileBoxStore(repo),
+  ),
+  ProxyProvider3<ProfileStore, AuthStore, ProfileBoxStore, ProfileScreen>(
+    update: (_, profileStore, authStore, profileBoxStore, __) => ProfileScreen(
       profileStore: profileStore,
       authStore: authStore,
+      profileBoxStore: profileBoxStore,
     ),
   ),
 ];

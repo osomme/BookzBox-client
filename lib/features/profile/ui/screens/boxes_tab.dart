@@ -1,5 +1,6 @@
 import 'package:bookzbox/features/box/models/box.dart';
 import 'package:bookzbox/features/new_box/ui/screens/new_box_screen.dart';
+import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
 import 'package:bookzbox/features/profile/ui/widgets/my_box_list_item.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -11,11 +12,13 @@ import 'package:provider/provider.dart';
 
 /// Represents the my boxes tab on the profile page
 class BoxesTab extends StatelessWidget {
-  final ProfileStore store;
+  final ProfileStore profileStore;
+  final ProfileBoxStore boxStore;
 
   BoxesTab({
     Key key,
-    @required this.store,
+    @required this.profileStore,
+    @required this.boxStore,
   }) : super(key: key);
 
   void changeVisibilityAndCloseDialog(BuildContext ctx) {
@@ -27,7 +30,7 @@ class BoxesTab extends StatelessWidget {
     return Scaffold(
       body: ListView.builder(
           padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 70.0),
-          itemCount: store.myBoxes.length,
+          itemCount: boxStore.myBoxes.length,
           itemBuilder: (BuildContext context, int index) {
             return MyBoxListItem(
               onChangeVisibilityPressed: () => showDialog<void>(
@@ -50,8 +53,8 @@ class BoxesTab extends StatelessWidget {
                               ),
                             ),
                             value: BoxStatus.public,
-                            groupValue: store.currentBoxStatus,
-                            onChanged: (BoxStatus value) => store.setCurrentBoxStatus(value),
+                            groupValue: boxStore.currentBoxStatus,
+                            onChanged: (BoxStatus value) => boxStore.setCurrentBoxStatus(value),
                             activeColor: Colors.deepPurple[900],
                           ),
                         ),
@@ -63,8 +66,8 @@ class BoxesTab extends StatelessWidget {
                               S.of(context).boxStatusPrivateDesc,
                               style: TextStyle(color: Colors.black),
                             ),
-                            groupValue: store.currentBoxStatus,
-                            onChanged: (BoxStatus value) => store.setCurrentBoxStatus(value),
+                            groupValue: boxStore.currentBoxStatus,
+                            onChanged: (BoxStatus value) => boxStore.setCurrentBoxStatus(value),
                             activeColor: Colors.deepPurple[900],
                           ),
                         ),
@@ -96,11 +99,11 @@ class BoxesTab extends StatelessWidget {
                   );
                 },
               ),
-              box: store.myBoxes[index],
-              isMyBox: store.isMyProfile,
+              box: boxStore.myBoxes[index],
+              isMyBox: profileStore.isMyProfile,
             );
           }),
-      floatingActionButton: (store.isMyProfile
+      floatingActionButton: (profileStore.isMyProfile
           ? FloatingActionButton.extended(
               onPressed: () => Navigator.push(
                   context, MaterialPageRoute(builder: (ctx) => Provider.of<NewBoxScreen>(ctx))),

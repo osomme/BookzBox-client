@@ -6,6 +6,7 @@ import 'package:bookzbox/features/profile/ui/widgets/stats_card.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 /// Represents the me tab on the profile page
@@ -22,22 +23,28 @@ class MeTab extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
-            RatingCard(
-              rating: profileStore.profile.rating,
-            ),
+            Observer(builder: (_) {
+              return RatingCard(
+                rating: profileStore.profile.rating,
+              );
+            }),
             Row(
               children: <Widget>[
                 Expanded(
-                  child: StatsCard(
-                    title: S.of(context).profileTradesTitle,
-                    stat: profileStore.profile.tradeCount.toString(),
-                  ),
+                  child: Observer(builder: (_) {
+                    return StatsCard(
+                      title: S.of(context).profileTradesTitle,
+                      stat: profileStore.profile.tradeCount.toString(),
+                    );
+                  }),
                 ),
                 Expanded(
-                  child: StatsCard(
-                    title: S.of(context).profileJoinDateTitle,
-                    stat: profileStore.profile.joinDate.year.toString(),
-                  ),
+                  child: Observer(builder: (_) {
+                    return StatsCard(
+                      title: S.of(context).profileJoinDateTitle,
+                      stat: profileStore.profile.joinDate.year.toString(),
+                    );
+                  }),
                 ),
               ],
             ),
