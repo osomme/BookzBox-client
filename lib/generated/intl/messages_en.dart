@@ -37,7 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "authErrorUnknown" : MessageLookupByLibrary.simpleMessage("Unknown error"),
     "authErrorUserNotFound" : MessageLookupByLibrary.simpleMessage("User not found"),
     "authErrorWeakPassword" : MessageLookupByLibrary.simpleMessage("Password is too weak"),
-    "authErrorWrongPassword" : MessageLookupByLibrary.simpleMessage("Wrong password"),
+    "authErrorWrongPassword" : MessageLookupByLibrary.simpleMessage("Incorrect password"),
     "authLogInBtn" : MessageLookupByLibrary.simpleMessage("Log In"),
     "authNavToLogIn" : MessageLookupByLibrary.simpleMessage("Log in with existing account"),
     "authNavToRegistration" : MessageLookupByLibrary.simpleMessage("Create new account"),

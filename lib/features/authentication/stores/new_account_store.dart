@@ -20,7 +20,7 @@ abstract class _NewAccountStore extends LoginCredentialsStore with Store {
     // Removes whitespace from username and checks if there are non-word charcters in the username.
     final anyIllegalChars = RegExp(r'\W').hasMatch(_username.replaceAll(' ', ''));
     return (_username.length < 5 || _username.length > 14) || anyIllegalChars
-        ? 'Username invalid'
+        ? 'Username must be between 5 and 14 characters' //TODO: Replace with localized string
         : null;
   }
 

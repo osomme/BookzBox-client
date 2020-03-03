@@ -193,7 +193,7 @@ class S {
 
   String get authErrorWrongPassword {
     return Intl.message(
-      'Wrong password',
+      'Incorrect password',
       name: 'authErrorWrongPassword',
       desc: '',
       args: [],
