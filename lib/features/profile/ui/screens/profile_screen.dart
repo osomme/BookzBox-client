@@ -5,12 +5,18 @@ import 'package:bookzbox/features/profile/ui/screens/boxes_tab.dart';
 import 'package:bookzbox/features/profile/ui/screens/me_tab.dart';
 import 'package:bookzbox/features/profile/ui/screens/preferences_tab.dart';
 import 'package:bookzbox/features/profile/ui/widgets/custom_tab_bar.dart';
+import 'package:bookzbox/features/profile/ui/widgets/profile_avatar.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../authentication/authentication.dart';
+
+// The actions a user can take in the overflow menu.
+enum UserOverflowAction {
+  Logout,
+}
 
 class ProfileScreen extends StatefulWidget {
   final ProfileStore profileStore;
@@ -103,8 +109,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
 
     if (widget.profileStore.isMyProfile) {
-      return CustomTabBar(
-        tabBar: tabBar,
+      return AppBar(
+        actions: <Widget>[
+          Container(
+            margin: const EdgeInsets.only(top: 16, right: 16),
+            child: Row(
+              children: <Widget>[
+                Observer(
+                  builder: (_) => Container(
+                    margin: const EdgeInsets.only(right: 12.0),
+                    child: Text(
+                      S
+                          .of(context)
+                          .profileDisplayNameGreeting(widget.profileStore.profile.displayName),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontStyle: FontStyle.italic,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black,
+                            blurRadius: 1.0,
+                            offset: Offset(1.0, 1.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                PopupMenuButton<UserOverflowAction>(
+                  child: Observer(
+                    builder: (_) => ProfileAvatar(
+                      displayName: widget.profileStore.profile.displayName,
+                      profileImgUrl: widget.profileStore.profile.photoUrl,
+                    ),
+                  ),
+                  onSelected: (UserOverflowAction result) {
+                    if (result == UserOverflowAction.Logout) {
+                      widget.authStore.logOut();
+                    }
+                  },
+                  itemBuilder: (BuildContext context) => <PopupMenuEntry<UserOverflowAction>>[
+                    PopupMenuItem(
+                      height: 48.0,
+                      value: UserOverflowAction.Logout,
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.exit_to_app,
+                            size: 20,
+                            color: Colors.black,
+                          ),
+                          Text(
+                            S.of(context).profileLogout,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+        bottom: tabBar,
       );
     } else {
       return AppBar(

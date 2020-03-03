@@ -25,6 +25,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m2(numMin) => "${numMin} min ago";
 
+  static m3(displayName) => "Hi, ${displayName}";
+
+  static m4(amount) => "${Intl.plural(amount, one: '1 day ago', other: '${amount} days ago')}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appName" : MessageLookupByLibrary.simpleMessage("BookzBox"),
@@ -129,10 +133,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "newBoxTitle" : MessageLookupByLibrary.simpleMessage("Create a box"),
     "newBoxTitleHintText" : MessageLookupByLibrary.simpleMessage("All my Harry Potter books"),
     "newBoxTitleTitle" : MessageLookupByLibrary.simpleMessage("Title"),
+    "profileActivityStatusActive" : MessageLookupByLibrary.simpleMessage("Active now"),
+    "profileActivityStatusAway" : MessageLookupByLibrary.simpleMessage("Away"),
+    "profileActivityStatusCardTitle" : MessageLookupByLibrary.simpleMessage("Activity status"),
+    "profileActivityStatusOffline" : MessageLookupByLibrary.simpleMessage("Offline"),
+    "profileActivityStatusSubTitle" : MessageLookupByLibrary.simpleMessage("Status:"),
     "profileBoxDetailsBtn" : MessageLookupByLibrary.simpleMessage("DETAILS"),
     "profileBoxesTabLabel" : MessageLookupByLibrary.simpleMessage("BOXES"),
     "profileChangeVisibilityBtn" : MessageLookupByLibrary.simpleMessage("CHANGE VISIBILITY"),
+    "profileDisplayNameGreeting" : m3,
     "profileJoinDateTitle" : MessageLookupByLibrary.simpleMessage("Member since"),
+    "profileLastSeenDaysAgo" : m4,
+    "profileLastSeenText" : MessageLookupByLibrary.simpleMessage("Last seen:"),
+    "profileLastSeenToday" : MessageLookupByLibrary.simpleMessage("Today"),
+    "profileLastSeenYesterday" : MessageLookupByLibrary.simpleMessage("Yesterday"),
     "profileLogout" : MessageLookupByLibrary.simpleMessage("Log out"),
     "profileMeTabLabel" : MessageLookupByLibrary.simpleMessage("ME"),
     "profileMyBoxesTabLabel" : MessageLookupByLibrary.simpleMessage("MY BOXES"),

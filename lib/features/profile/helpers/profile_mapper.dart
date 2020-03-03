@@ -12,8 +12,9 @@ class ProfileMapper {
       displayName: data['displayName'] as String,
       photoUrl: data['photoURL'] as String,
       joinDate: (data['registeredOn'] as Timestamp).toDate(),
-      tradeCount: (data.containsKey('tradeCount') ? data['tradeCount'] as int : -1),
-      rating: (data.containsKey('rating') ? data['rating'] as int : -1),
+      lastSeen: (data['lastSeen'] as Timestamp).toDate(),
+      tradeCount: (data.containsKey('tradeCount') ? data['tradeCount'] as int : 0),
+      rating: (data.containsKey('rating') ? data['rating'] as int : 0),
     );
   }
 }

@@ -8,14 +8,6 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:bookzbox/features/box/helpers/status_extensions.dart';
 
 class MyBoxListItem extends StatelessWidget {
-  static const TextStyle cardTitleStyle = TextStyle(
-    color: Colors.white,
-    fontWeight: FontWeight.w700,
-    fontSize: 18,
-    letterSpacing: 1.05,
-    shadows: <Shadow>[Shadow(color: Colors.black54, blurRadius: 2.0, offset: Offset(1, 1))],
-  );
-
   final MyBox box;
   final VoidCallback onChangeVisibilityPressed;
   final bool isMyBox;
@@ -87,7 +79,20 @@ class MyBoxListItem extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             box.title,
-                            style: cardTitleStyle,
+                            style: Theme.of(context).primaryTextTheme.subhead.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                              letterSpacing: 1.05,
+                              shadows: <Shadow>[
+                                Shadow(
+                                  color: Colors.black54,
+                                  blurRadius: 2.0,
+                                  offset: Offset(1, 1),
+                                ),
+                              ],
+                            ),
+                            overflow: TextOverflow.fade,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 6.0),
