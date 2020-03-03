@@ -10,12 +10,4 @@ extension StringExtensions on String {
     }
     return sb.toString();
   }
-
-  /// Appends ellipsis to the string, if the length of the string is exactly the length of the parameter.
-  String appendEllipsisWhenLength(int length) {
-    if (length == this.length) {
-      return this + '...';
-    }
-    return this;
-  }
 }

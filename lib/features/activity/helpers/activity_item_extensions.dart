@@ -3,50 +3,67 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 extension ActivityItemMapper on ActivityItem {
-  ActivityListItem toListItem() {
+  /// Maps a ActivityItem to a ActivityListItem to be displayed in a list view.
+  ActivityListItem toListItem(BuildContext context) {
     if (this.type is MessageActivity) {
-      return _messageToListItem(this.type as MessageActivity);
+      return _messageToListItem(this.type as MessageActivity, this.timestamp, this.read);
     } else if (this.type is LikeActivity) {
-      return _likeToListItem(this.type as LikeActivity);
+      return _likeToListItem(this.type as LikeActivity, this.timestamp, this.read);
     } else if (this.type is MatchActivity) {
-      return _matchToListItem(this.type as MatchActivity);
+      return _matchToListItem(this.type as MatchActivity, this.timestamp, this.read);
     }
     return _unknownActivityItem();
   }
 }
 
-ActivityListItem _messageToListItem(MessageActivity activity) {
+ActivityListItem _messageToListItem(
+    MessageActivity activity, DateTime timestamp, bool read) {
   return ActivityListItem(
-    leadingIcon: Icon(Icons.chat),
-    title: '${activity.username} sent you a message',
-    subtitle: activity.newMessageSnippet,
+    leading: Icon(Icons.chat),
+    subtitleTexts: [
+      ActivityItemTextParam(content: activity.username, bold: true),
+      ActivityItemTextParam(content: ' wrote: ${activity.newMessageSnippet}'),
+    ],
+    date: timestamp,
     onClick: () => print('Clicked on message activity'),
+    read: read,
   );
 }
 
-ActivityListItem _likeToListItem(LikeActivity activity) {
+ActivityListItem _likeToListItem(LikeActivity activity, DateTime timestamp, bool read) {
   return ActivityListItem(
-    leadingIcon: Icon(MaterialCommunityIcons.heart),
-    title: '${activity.likedByUsername} liked your box',
-    subtitle: 'Click to see their profile and explore their boxes',
+    leading: Icon(MaterialCommunityIcons.heart),
+    subtitleTexts: [
+      ActivityItemTextParam(content: activity.likedByUsername, bold: true),
+      ActivityItemTextParam(content: ' liked your box: '),
+      ActivityItemTextParam(content: activity.boxTitle, bold: true),
+    ],
+    date: timestamp,
     onClick: () => print('Clicked on like activity'),
+    read: read,
+    //trailing: IconButton(icon: Icon(Icons.person), onPressed: () => print('')),
   );
 }
 
-ActivityListItem _matchToListItem(MatchActivity matchActivity) {
+ActivityListItem _matchToListItem(
+    MatchActivity matchActivity, DateTime timestamp, bool read) {
   return ActivityListItem(
-    leadingIcon: Icon(Icons.people),
-    title: '${matchActivity.matchUserName} has matched with you!',
-    subtitle: 'Click to start chatting',
+    leading: Icon(Icons.people),
+    subtitleTexts: [
+      ActivityItemTextParam(content: matchActivity.matchUserName, bold: true),
+      ActivityItemTextParam(content: ' has matched with you'),
+    ],
+    date: timestamp,
     onClick: () => print('Clicked on match item'),
+    read: read,
   );
 }
 
 ActivityListItem _unknownActivityItem() {
   return ActivityListItem(
-    leadingIcon: Icon(Icons.error),
-    title: 'Unknown',
-    subtitle: 'Unknown activity',
+    leading: Icon(Icons.error),
+    subtitleTexts: [ActivityItemTextParam(content: 'Unknown activity')],
     onClick: null,
+    read: false,
   );
 }

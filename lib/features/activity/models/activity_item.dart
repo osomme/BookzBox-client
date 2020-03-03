@@ -6,10 +6,14 @@ class ActivityItem {
   final ActivityType type;
   final DateTime timestamp;
 
+  /// Has the activity item been read by the user.
+  final bool read;
+
   ActivityItem({
     @required this.id,
     @required this.type,
     @required this.timestamp,
+    @required this.read,
   });
 }
 
@@ -23,6 +27,7 @@ final testActivityFeedItems = [
       boxTitle: 'Old school books',
     ),
     timestamp: DateTime.now().subtract(Duration(hours: 5)),
+    read: false,
   ),
   ActivityItem(
     id: '2',
@@ -33,6 +38,7 @@ final testActivityFeedItems = [
       chatId: '',
     ),
     timestamp: DateTime.now().subtract(Duration(days: 2)),
+    read: true,
   ),
   ActivityItem(
     id: '3',
@@ -43,5 +49,6 @@ final testActivityFeedItems = [
           'Hey, I would like to trade with you. This is an extended message to test how it looks when a message is quite long.',
     ),
     timestamp: DateTime.now().subtract(Duration(days: 43)),
+    read: true,
   ),
 ];

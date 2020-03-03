@@ -11,15 +11,13 @@ class _ActivityScreenState extends State<ActivityScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Activity Screen'),
+        title: Text('Recent activity'),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-          child: ListView.builder(
-            itemCount: testActivityFeedItems.length,
-            itemBuilder: (ctx, i) => testActivityFeedItems[i].toListItem(),
-          ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+        child: ListView.builder(
+          itemCount: testActivityFeedItems.length,
+          itemBuilder: (ctx, i) => testActivityFeedItems[i].toListItem(context),
         ),
       ),
     );
