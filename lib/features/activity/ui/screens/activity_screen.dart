@@ -1,3 +1,4 @@
+import 'package:bookzbox/features/activity/activity.dart';
 import 'package:flutter/material.dart';
 
 class ActivityScreen extends StatefulWidget {
@@ -13,7 +14,13 @@ class _ActivityScreenState extends State<ActivityScreen> {
         title: Text('Activity Screen'),
       ),
       body: Center(
-        child: Text('Activity Screen'),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+          child: ListView.builder(
+            itemCount: testActivityFeedItems.length,
+            itemBuilder: (ctx, i) => testActivityFeedItems[i].toListItem(),
+          ),
+        ),
       ),
     );
   }
