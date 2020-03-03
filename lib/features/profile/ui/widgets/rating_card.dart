@@ -37,7 +37,7 @@ class RatingCard extends StatelessWidget {
     if (rating == 0) {
       return rating.toString();
     }
-    return (rating > 0 ? '+' + rating.toString() : '-' + rating.toString());
+    return (rating > 0 ? '+' + rating.toString() : rating.toString());
   }
 
   Color getRatingColor() {
