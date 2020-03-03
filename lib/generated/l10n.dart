@@ -470,6 +470,24 @@ class S {
     );
   }
 
+  String get newBoxShowIsbnInfoText {
+    return Intl.message(
+      'Show ISBN info',
+      name: 'newBoxShowIsbnInfoText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxHideIsbnInfoText {
+    return Intl.message(
+      'Hide ISBN info',
+      name: 'newBoxHideIsbnInfoText',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get homeNavBarFeedLabel {
     return Intl.message(
       'Feed',

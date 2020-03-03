@@ -324,55 +324,88 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(bottom: 6.0),
-                padding: const EdgeInsets.all(8.0),
-                color: Colors.grey[200],
-                child: Stack(
-                  children: <Widget>[
-                    Icon(
-                      MaterialIcons.info_outline,
-                      color: Colors.grey[800],
-                      size: 20,
-                    ),
-                    Center(
-                      child: Column(
-                        children: <Widget>[
-                          Center(
-                            child: Text(
-                              S.of(context).newBoxIsbnInfoExampleIsbn,
-                              style: TextStyle(
-                                fontSize: 12.0,
-                              ),
-                            ),
+              GestureDetector(
+                onTap: widget.newBoxStore.toggleIsbnInfoBoxExpandedStatus,
+                child: Container(
+                  padding: const EdgeInsets.only(left: 18),
+                  child: Row(
+                    children: <Widget>[
+                      Observer(
+                        builder: (_) => Text(
+                          (widget.newBoxStore.isIsbnInfoBoxExpanded
+                              ? S.of(context).newBoxHideIsbnInfoText
+                              : S.of(context).newBoxShowIsbnInfoText),
+                          style: TextStyle(
+                            color: Colors.grey[800],
                           ),
-                          Icon(
-                            FontAwesome.barcode,
-                            size: 64,
-                          ),
-                          Center(
-                            child: Text(
-                              S.of(context).newBoxIsbnInfoExampleIsbnPlain,
-                              style: TextStyle(
-                                fontSize: 12.0,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 4),
-                            child: Center(
-                              child: Text(
-                                S.of(context).newBoxIsbnInfoText,
-                                style: TextStyle(
-                                  fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      Observer(
+                        builder: (_) => Icon(
+                          (widget.newBoxStore.isIsbnInfoBoxExpanded
+                              ? MaterialIcons.expand_less
+                              : MaterialIcons.expand_more),
+                          color: Colors.grey[800],
+                          size: 32,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Observer(
+                builder: (_) => AnimatedContainer(
+                  height: (widget.newBoxStore.isIsbnInfoBoxExpanded ? 155 : 0),
+                  duration: Duration(
+                    seconds: 1,
+                  ),
+                  curve: Curves.easeOutExpo,
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 6.0),
+                    padding: const EdgeInsets.all(8.0),
+                    color: Colors.grey[200],
+                    child: Stack(
+                      children: <Widget>[
+                        Center(
+                          child: Column(
+                            children: <Widget>[
+                              Center(
+                                child: Text(
+                                  S.of(context).newBoxIsbnInfoExampleIsbn,
+                                  style: TextStyle(
+                                    fontSize: 12.0,
+                                  ),
                                 ),
                               ),
-                            ),
+                              Icon(
+                                FontAwesome.barcode,
+                                size: 64,
+                              ),
+                              Center(
+                                child: Text(
+                                  S.of(context).newBoxIsbnInfoExampleIsbnPlain,
+                                  style: TextStyle(
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 4),
+                                child: Center(
+                                  child: Text(
+                                    S.of(context).newBoxIsbnInfoText,
+                                    style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
               Container(

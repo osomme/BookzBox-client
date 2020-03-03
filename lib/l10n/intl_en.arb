@@ -48,6 +48,8 @@
     "newBoxTitleHintText": "All my Harry Potter books",
     "newBoxDescriptionHintText": "Looking to trade all my Harry Potter books. Only the last book in the series is missing.",
     "newBoxIsbnHintText": "978-0-45-152634-2",
+    "newBoxShowIsbnInfoText": "Show ISBN info",
+    "newBoxHideIsbnInfoText": "Hide ISBN info",
     "homeNavBarFeedLabel": "Feed",
     "homeNavBarMapLabel": "Map",
     "homeNavBarActivityLabel": "Activity",

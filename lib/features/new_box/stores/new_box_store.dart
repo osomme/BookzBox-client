@@ -51,6 +51,9 @@ abstract class _NewBoxStore with Store {
   @observable
   bool _isPublishing = false;
 
+  @observable
+  bool _isIsbnInfoBoxExpanded = false;
+
   _NewBoxStore(this._bookRepository, this._boxRepository, this._locationService);
 
   /// Attempts to find a book by using the user provided ISBN.
@@ -219,4 +222,13 @@ abstract class _NewBoxStore with Store {
     _titleError = BoxError.None;
     return true;
   }
+
+  @computed
+  bool get isIsbnInfoBoxExpanded => _isIsbnInfoBoxExpanded;
+
+  @action
+  void setIsbnInfoBoxExpandedStatus(bool expanded) => _isIsbnInfoBoxExpanded = expanded;
+
+  @action
+  void toggleIsbnInfoBoxExpandedStatus() => _isIsbnInfoBoxExpanded = !_isIsbnInfoBoxExpanded;
 }

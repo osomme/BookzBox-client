@@ -67,6 +67,12 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
   bool get isPublishing =>
       (_$isPublishingComputed ??= Computed<bool>(() => super.isPublishing))
           .value;
+  Computed<bool> _$isIsbnInfoBoxExpandedComputed;
+
+  @override
+  bool get isIsbnInfoBoxExpanded => (_$isIsbnInfoBoxExpandedComputed ??=
+          Computed<bool>(() => super.isIsbnInfoBoxExpanded))
+      .value;
 
   final _$_isbnAtom = Atom(name: '_NewBoxStore._isbn');
 
@@ -238,6 +244,26 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
     }, _$_isPublishingAtom, name: '${_$_isPublishingAtom.name}_set');
   }
 
+  final _$_isIsbnInfoBoxExpandedAtom =
+      Atom(name: '_NewBoxStore._isIsbnInfoBoxExpanded');
+
+  @override
+  bool get _isIsbnInfoBoxExpanded {
+    _$_isIsbnInfoBoxExpandedAtom.context
+        .enforceReadPolicy(_$_isIsbnInfoBoxExpandedAtom);
+    _$_isIsbnInfoBoxExpandedAtom.reportObserved();
+    return super._isIsbnInfoBoxExpanded;
+  }
+
+  @override
+  set _isIsbnInfoBoxExpanded(bool value) {
+    _$_isIsbnInfoBoxExpandedAtom.context.conditionallyRunInAction(() {
+      super._isIsbnInfoBoxExpanded = value;
+      _$_isIsbnInfoBoxExpandedAtom.reportChanged();
+    }, _$_isIsbnInfoBoxExpandedAtom,
+        name: '${_$_isIsbnInfoBoxExpandedAtom.name}_set');
+  }
+
   final _$findBookAsyncAction = AsyncAction('findBook');
 
   @override
@@ -359,6 +385,26 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
     final _$actionInfo = _$_NewBoxStoreActionController.startAction();
     try {
       return super.validateTitle();
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setIsbnInfoBoxExpandedStatus(bool expanded) {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.setIsbnInfoBoxExpandedStatus(expanded);
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void toggleIsbnInfoBoxExpandedStatus() {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.toggleIsbnInfoBoxExpandedStatus();
     } finally {
       _$_NewBoxStoreActionController.endAction(_$actionInfo);
     }
