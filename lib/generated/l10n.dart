@@ -310,7 +310,7 @@ class S {
 
   String get newBoxTitle {
     return Intl.message(
-      'Create a box',
+      'Create a new box',
       name: 'newBoxTitle',
       desc: '',
       args: [],

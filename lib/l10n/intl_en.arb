@@ -30,7 +30,7 @@
     "newBoxIsbnInfoExampleIsbn": "ISBN 978-0-45-152634-2",
     "newBoxIsbnInfoExampleIsbnPlain": "9780451526342",
     "newBoxIsbnFieldHelpText": "Enter ISBN",
-    "newBoxTitle": "Create a box",
+    "newBoxTitle": "Create a new box",
     "newBoxInfo": "Creating a box is easy. First, add the books you want to trade. Second, write a catchy title and a short description. Finally, publish!",
     "newBoxBooksTitle": "Books",
     "newBoxTitleTitle": "Title",

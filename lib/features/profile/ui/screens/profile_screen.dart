@@ -143,6 +143,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     builder: (_) => ProfileAvatar(
                       displayName: widget.profileStore.profile.displayName,
                       profileImgUrl: widget.profileStore.profile.photoUrl,
+                      circleColor: Colors.grey[600],
+                      forceCircleColor: true,
                     ),
                   ),
                   onSelected: (UserOverflowAction result) {

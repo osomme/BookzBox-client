@@ -130,7 +130,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "newBoxPublishTip" : MessageLookupByLibrary.simpleMessage("Publish"),
     "newBoxRemoveBook" : MessageLookupByLibrary.simpleMessage("Delete"),
     "newBoxShowIsbnInfoText" : MessageLookupByLibrary.simpleMessage("Show ISBN info"),
-    "newBoxTitle" : MessageLookupByLibrary.simpleMessage("Create a box"),
+    "newBoxTitle" : MessageLookupByLibrary.simpleMessage("Create a new box"),
     "newBoxTitleHintText" : MessageLookupByLibrary.simpleMessage("All my Harry Potter books"),
     "newBoxTitleTitle" : MessageLookupByLibrary.simpleMessage("Title"),
     "profileActivityStatusActive" : MessageLookupByLibrary.simpleMessage("Active now"),

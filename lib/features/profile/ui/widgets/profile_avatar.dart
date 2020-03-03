@@ -19,7 +19,7 @@ class ProfileAvatar extends StatelessWidget {
   }) : super(key: key);
 
   Color getCircleColor() {
-    if (forceCircleColor) {
+    if (forceCircleColor || displayName == null || displayName.isEmpty) {
       return circleColor;
     }
     // Material design guidelines state that the color must be the same
