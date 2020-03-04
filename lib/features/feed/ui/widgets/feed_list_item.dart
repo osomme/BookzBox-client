@@ -1,6 +1,6 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/feed/feed.dart';
-import 'package:bookzbox/features/feed/stores/box_like_store.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/location/services/location_service.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:cached_network_image/cached_network_image.dart';

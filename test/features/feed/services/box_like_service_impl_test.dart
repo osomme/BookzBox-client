@@ -1,5 +1,5 @@
 import 'package:bookzbox/features/authentication/authentication.dart';
-import 'package:bookzbox/features/feed/service/box_like_service_impl.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

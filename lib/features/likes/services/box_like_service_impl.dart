@@ -1,5 +1,5 @@
 import 'package:bookzbox/common/errors/error_types.dart';
-import 'package:bookzbox/features/feed/service/box_like_service.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:dartz/dartz.dart';
 
 class FirebaseBoxLikeService implements IBoxLikeService {

@@ -1,6 +1,6 @@
 import 'package:bookzbox/common/errors/error_types.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
-import 'package:bookzbox/features/feed/feed.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:mobx/mobx.dart';
 
 part 'box_like_store.g.dart';

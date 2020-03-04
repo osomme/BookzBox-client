@@ -5,9 +5,8 @@ import 'package:bookzbox/features/box/services/box_loader_service_impl.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/screens/box_details_screen.dart';
 import 'package:bookzbox/features/feed/feed.dart';
-import 'package:bookzbox/features/feed/service/box_like_service.dart';
-import 'package:bookzbox/features/feed/service/box_like_service_impl.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/features/location/services/location_service.dart';
 import 'package:bookzbox/features/map/box_map.dart';
@@ -79,7 +78,8 @@ final bookProviders = [
     create: (_) => LocationService(),
   ),
   ProxyProvider3<IBookRepository, IBoxRepository, ILocationService, NewBoxStore>(
-    update: (_, bookRepo, boxRepo, locService, __) => NewBoxStore(bookRepo, boxRepo, locService),
+    update: (_, bookRepo, boxRepo, locService, __) =>
+        NewBoxStore(bookRepo, boxRepo, locService),
   ),
   ProxyProvider<NewBoxStore, NewBoxScreen>(
     update: (_, store, __) => NewBoxScreen(store),

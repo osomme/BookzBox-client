@@ -1,4 +1,5 @@
 import 'package:bookzbox/features/activity/activity.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -9,9 +10,8 @@ extension ActivityItemMapper on ActivityItem {
     if (this.type is MessageActivity) {
       return _messageToListItem(
           this.type as MessageActivity, this.timestamp, this.read, context);
-    } else if (this.type is LikeActivity) {
-      return _likeToListItem(
-          this.type as LikeActivity, this.timestamp, this.read, context);
+    } else if (this.type is Like) {
+      return _likeToListItem(this.type as Like, this.timestamp, this.read, context);
     } else if (this.type is MatchActivity) {
       return _matchToListItem(
           this.type as MatchActivity, this.timestamp, this.read, context);
@@ -38,7 +38,7 @@ ActivityListItem _messageToListItem(
 }
 
 ActivityListItem _likeToListItem(
-    LikeActivity activity, DateTime timestamp, bool read, BuildContext ctx) {
+    Like activity, DateTime timestamp, bool read, BuildContext ctx) {
   return ActivityListItem(
     leading: Icon(MaterialCommunityIcons.heart),
     subtitleTexts: [

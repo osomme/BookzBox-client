@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/widgets/widgets.dart';
-import 'package:bookzbox/features/feed/stores/box_like_store.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';

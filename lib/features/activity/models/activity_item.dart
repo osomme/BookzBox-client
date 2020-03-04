@@ -1,4 +1,5 @@
 import 'package:bookzbox/features/activity/models/models.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:flutter/material.dart';
 
 class ActivityItem {
@@ -21,7 +22,7 @@ class ActivityItem {
 final testActivityFeedItems = [
   ActivityItem(
     id: '1',
-    type: LikeActivity(
+    type: Like(
       likedByUserId: '',
       likedByUsername: 'Hans Hansen',
       boxTitle: 'Old school books',
