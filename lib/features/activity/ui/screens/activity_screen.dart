@@ -39,19 +39,9 @@ class _ActivityScreenState extends State<ActivityScreen> {
         ),
         body: TabBarView(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-              child: ListView.builder(
-                itemCount: testActivityFeedItems.length,
-                itemBuilder: (ctx, i) => testActivityFeedItems[i].toListItem(context),
-              ),
-            ),
-            Center(
-              child: Text('Messages tab'),
-            ),
-            Center(
-              child: Text('Likes tab'),
-            ),
+            ActivityFeedTab(),
+            ChatFeedTab(),
+            LikedBoxesTab(),
           ],
         ),
       ),
