@@ -1,5 +1,4 @@
-import 'package:bookzbox/features/box/models/box.dart';
-import 'package:bookzbox/features/box/models/my_box.dart';
+import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/profile/ui/widgets/my_box_list_item.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class LikedBoxesTab extends StatelessWidget {
       child: ListView.builder(
         itemCount: 3,
         itemBuilder: (ctx, i) {
-          return MyBoxListItem(
+          return MiniBoxListItem(
             box: _testBoxes[i],
             shouldShowLeftButton: true,
             leftButtonText: S.of(context).activityBoxFeedRemoveLike,
@@ -29,21 +28,21 @@ class LikedBoxesTab extends StatelessWidget {
 }
 
 final _testBoxes = [
-  MyBox(
+  MiniBox(
     id: 'fewafwaef',
     status: BoxStatus.public,
     publishDateTime: DateTime.now().subtract(Duration(days: 2)),
     title: 'Test box 1',
     bookThumbnailUrl: null,
   ),
-  MyBox(
+  MiniBox(
     id: 'wefwaef',
     status: BoxStatus.private,
     publishDateTime: DateTime.now().subtract(Duration(days: 1)),
     title: 'Test box 2',
     bookThumbnailUrl: null,
   ),
-  MyBox(
+  MiniBox(
     id: 'awrwar',
     status: BoxStatus.traded,
     publishDateTime: DateTime.now().subtract(Duration(minutes: 2)),

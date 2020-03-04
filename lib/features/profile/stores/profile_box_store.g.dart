@@ -12,29 +12,28 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
   Computed<BoxStatus> _$currentBoxStatusComputed;
 
   @override
-  BoxStatus get currentBoxStatus => (_$currentBoxStatusComputed ??=
-          Computed<BoxStatus>(() => super.currentBoxStatus))
-      .value;
+  BoxStatus get currentBoxStatus =>
+      (_$currentBoxStatusComputed ??= Computed<BoxStatus>(() => super.currentBoxStatus))
+          .value;
 
   final _$myBoxesAtom = Atom(name: '_ProfileBoxStore.myBoxes');
 
   @override
-  ObservableList<MyBox> get myBoxes {
+  ObservableList<MiniBox> get myBoxes {
     _$myBoxesAtom.context.enforceReadPolicy(_$myBoxesAtom);
     _$myBoxesAtom.reportObserved();
     return super.myBoxes;
   }
 
   @override
-  set myBoxes(ObservableList<MyBox> value) {
+  set myBoxes(ObservableList<MiniBox> value) {
     _$myBoxesAtom.context.conditionallyRunInAction(() {
       super.myBoxes = value;
       _$myBoxesAtom.reportChanged();
     }, _$myBoxesAtom, name: '${_$myBoxesAtom.name}_set');
   }
 
-  final _$_currentBoxStatusAtom =
-      Atom(name: '_ProfileBoxStore._currentBoxStatus');
+  final _$_currentBoxStatusAtom = Atom(name: '_ProfileBoxStore._currentBoxStatus');
 
   @override
   BoxStatus get _currentBoxStatus {
@@ -51,8 +50,7 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
     }, _$_currentBoxStatusAtom, name: '${_$_currentBoxStatusAtom.name}_set');
   }
 
-  final _$_ProfileBoxStoreActionController =
-      ActionController(name: '_ProfileBoxStore');
+  final _$_ProfileBoxStoreActionController = ActionController(name: '_ProfileBoxStore');
 
   @override
   void init() {

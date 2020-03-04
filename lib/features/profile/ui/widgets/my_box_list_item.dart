@@ -1,5 +1,5 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
-import 'package:bookzbox/features/box/models/my_box.dart';
+import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +11,13 @@ import 'package:bookzbox/common/extensions/extensions.dart';
 /// [shouldShowLeftButton] must never be null.
 /// [onLeftButtonPressed] cannot be null if [shouldShowLeftButton] is set to true.
 /// [leftButtonText] cannot be null if [shouldShowLeftButton] is set to true.
-class MyBoxListItem extends StatelessWidget {
-  final MyBox box;
+class MiniBoxListItem extends StatelessWidget {
+  final MiniBox box;
   final VoidCallback onLeftButtonPressed;
   final String leftButtonText;
   final bool shouldShowLeftButton;
 
-  MyBoxListItem({
+  MiniBoxListItem({
     @required this.box,
     this.leftButtonText,
     this.onLeftButtonPressed,

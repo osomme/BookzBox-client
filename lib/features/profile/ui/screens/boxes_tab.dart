@@ -32,7 +32,7 @@ class BoxesTab extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 70.0),
           itemCount: boxStore.myBoxes.length,
           itemBuilder: (BuildContext context, int index) {
-            return MyBoxListItem(
+            return MiniBoxListItem(
               leftButtonText: S.of(context).profileChangeVisibilityBtn,
               onLeftButtonPressed: () => showDialog<void>(
                 context: context,
