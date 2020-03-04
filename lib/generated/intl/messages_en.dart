@@ -21,16 +21,34 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m0(amount) => "${Intl.plural(amount, one: '1 day ago', other: '${amount} days ago')}";
 
-  static m1(amount) => "${Intl.plural(amount, one: '1 day ago', other: '${amount} days ago')}";
+  static m1(amount) => "${Intl.plural(amount, one: '1 hour ago', other: '${amount} hours ago')}";
 
   static m2(numMin) => "${numMin} min ago";
 
-  static m3(displayName) => "Hi, ${displayName}";
+  static m3(amount) => "${Intl.plural(amount, one: '1 day ago', other: '${amount} days ago')}";
 
-  static m4(amount) => "${Intl.plural(amount, one: '1 day ago', other: '${amount} days ago')}";
+  static m4(amount) => "${Intl.plural(amount, one: '1 hour ago', other: '${amount} hours ago')}";
+
+  static m5(amount) => "${Intl.plural(amount, one: '1 minute ago', other: '${amount} minutes ago')}";
+
+  static m6(amount) => "${Intl.plural(amount, one: '1 second ago', other: '${amount} seconds ago')}";
+
+  static m7(displayName) => "Hi, ${displayName}";
+
+  static m8(amount) => "${Intl.plural(amount, one: '1 day ago', other: '${amount} days ago')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "activityBoxFeedRemoveLike" : MessageLookupByLibrary.simpleMessage("REMOVE LIKE"),
+    "activityItemLikeMiddle" : MessageLookupByLibrary.simpleMessage(" liked your box: "),
+    "activityItemMatchPost" : MessageLookupByLibrary.simpleMessage(" has matched with you"),
+    "activityItemMessagePost" : MessageLookupByLibrary.simpleMessage(" wrote: "),
+    "activityItemUnknown" : MessageLookupByLibrary.simpleMessage("Unknown activity"),
+    "activityNewItem" : MessageLookupByLibrary.simpleMessage("New"),
+    "activityScreenAppBarTitle" : MessageLookupByLibrary.simpleMessage("Recent activity"),
+    "activityTabLabelActivity" : MessageLookupByLibrary.simpleMessage("Activity"),
+    "activityTabLabelLikes" : MessageLookupByLibrary.simpleMessage("Likes"),
+    "activityTabLabelMessages" : MessageLookupByLibrary.simpleMessage("Messages"),
     "appName" : MessageLookupByLibrary.simpleMessage("BookzBox"),
     "authEmail" : MessageLookupByLibrary.simpleMessage("E-mail"),
     "authErrorCredsAlreadyExists" : MessageLookupByLibrary.simpleMessage("There already exists a user with that email address"),
@@ -64,6 +82,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "boxStatusPublicDesc" : MessageLookupByLibrary.simpleMessage("Everyone can see this box."),
     "boxStatusTraded" : MessageLookupByLibrary.simpleMessage("Traded"),
     "boxVisibilityChangeDialogTitle" : MessageLookupByLibrary.simpleMessage("Change box visibility"),
+    "dateDaysAgo" : m3,
+    "dateHoursAgo" : m4,
+    "dateMinutesAgo" : m5,
+    "dateSecondsAgo" : m6,
     "detailsAboutSeller" : MessageLookupByLibrary.simpleMessage("About the seller"),
     "detailsBookAuthor" : MessageLookupByLibrary.simpleMessage("Author"),
     "detailsBookCategories" : MessageLookupByLibrary.simpleMessage("Categories"),
@@ -141,9 +163,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileBoxDetailsBtn" : MessageLookupByLibrary.simpleMessage("DETAILS"),
     "profileBoxesTabLabel" : MessageLookupByLibrary.simpleMessage("BOXES"),
     "profileChangeVisibilityBtn" : MessageLookupByLibrary.simpleMessage("CHANGE VISIBILITY"),
-    "profileDisplayNameGreeting" : m3,
+    "profileDisplayNameGreeting" : m7,
     "profileJoinDateTitle" : MessageLookupByLibrary.simpleMessage("Member since"),
-    "profileLastSeenDaysAgo" : m4,
+    "profileLastSeenDaysAgo" : m8,
     "profileLastSeenText" : MessageLookupByLibrary.simpleMessage("Last seen:"),
     "profileLastSeenToday" : MessageLookupByLibrary.simpleMessage("Today"),
     "profileLastSeenYesterday" : MessageLookupByLibrary.simpleMessage("Yesterday"),

@@ -6,6 +6,7 @@ class ProfileAvatar extends StatelessWidget {
   final String displayName;
   final Color circleColor;
   final bool forceCircleColor;
+  final double radius;
 
   /// Constructor
   /// [profileImgUrl] Link to profile image, can be NULL.
@@ -16,6 +17,7 @@ class ProfileAvatar extends StatelessWidget {
     @required this.displayName,
     this.circleColor = Colors.grey,
     this.forceCircleColor = false,
+    this.radius = 16.0,
   }) : super(key: key);
 
   Color getCircleColor() {
@@ -70,7 +72,7 @@ class ProfileAvatar extends StatelessWidget {
     return CircleAvatar(
       backgroundImage: (profileImgUrl == null ? null : NetworkImage(profileImgUrl)),
       backgroundColor: getCircleColor(),
-      radius: 16,
+      radius: radius,
       foregroundColor: Colors.white,
       child: Text(
         (displayName.isNotEmpty ? displayName[0].toUpperCase() : ''),

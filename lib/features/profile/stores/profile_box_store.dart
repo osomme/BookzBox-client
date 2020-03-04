@@ -1,5 +1,4 @@
-import 'package:bookzbox/features/box/models/box.dart';
-import 'package:bookzbox/features/box/models/my_box.dart';
+import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/new_box/repositories/box_repository.dart';
 import 'package:mobx/mobx.dart';
 
@@ -11,7 +10,7 @@ abstract class _ProfileBoxStore with Store {
   final IBoxRepository _boxRepository;
 
   @observable
-  ObservableList<MyBox> myBoxes = new ObservableList();
+  ObservableList<MiniBox> myBoxes = new ObservableList();
 
   /// The box status of the currently focused box.
   @observable
@@ -20,7 +19,7 @@ abstract class _ProfileBoxStore with Store {
   _ProfileBoxStore(this._boxRepository) {
     myBoxes.add(
       // TODO remove after backend loading is implemented.
-      MyBox(
+      MiniBox(
         id: 'abc',
         status: BoxStatus.public,
         publishDateTime: DateTime.now(),

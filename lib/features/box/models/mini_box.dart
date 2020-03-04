@@ -2,7 +2,7 @@ import 'package:bookzbox/features/box/models/box.dart';
 import 'package:flutter/material.dart';
 
 /// Represents a minimal version of a box.
-class MyBox {
+class MiniBox {
   final String id;
   final BoxStatus status;
   final DateTime publishDateTime;
@@ -11,7 +11,7 @@ class MyBox {
   /// The URL to the thumbnail of the first book in the box.
   final String bookThumbnailUrl;
 
-  MyBox({
+  MiniBox({
     @required this.id,
     @required this.status,
     @required this.publishDateTime,
