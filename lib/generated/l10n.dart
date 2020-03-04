@@ -1266,6 +1266,42 @@ class S {
       args: [amount],
     );
   }
+
+  String get activityBoxFeedRemoveLike {
+    return Intl.message(
+      'REMOVE LIKE',
+      name: 'activityBoxFeedRemoveLike',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityTabLabelActivity {
+    return Intl.message(
+      'Activity',
+      name: 'activityTabLabelActivity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityTabLabelMessages {
+    return Intl.message(
+      'Messages',
+      name: 'activityTabLabelMessages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityTabLabelLikes {
+    return Intl.message(
+      'Likes',
+      name: 'activityTabLabelLikes',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

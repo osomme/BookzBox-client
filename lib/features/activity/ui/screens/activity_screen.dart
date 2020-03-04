@@ -23,15 +23,15 @@ class _ActivityScreenState extends State<ActivityScreen> {
             indicatorWeight: 3.5,
             tabs: [
               Tab(
-                text: 'Activity',
+                text: S.of(context).activityTabLabelActivity,
                 icon: Icon(Icons.notifications),
               ),
               Tab(
-                text: 'Messages',
+                text: S.of(context).activityTabLabelMessages,
                 icon: Icon(Icons.chat),
               ),
               Tab(
-                text: 'Likes',
+                text: S.of(context).activityTabLabelLikes,
                 icon: Icon(MaterialCommunityIcons.heart),
               ),
             ],

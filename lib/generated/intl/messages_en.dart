@@ -39,12 +39,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "activityBoxFeedRemoveLike" : MessageLookupByLibrary.simpleMessage("REMOVE LIKE"),
     "activityItemLikeMiddle" : MessageLookupByLibrary.simpleMessage(" liked your box: "),
     "activityItemMatchPost" : MessageLookupByLibrary.simpleMessage(" has matched with you"),
     "activityItemMessagePost" : MessageLookupByLibrary.simpleMessage(" wrote: "),
     "activityItemUnknown" : MessageLookupByLibrary.simpleMessage("Unknown activity"),
     "activityNewItem" : MessageLookupByLibrary.simpleMessage("New"),
     "activityScreenAppBarTitle" : MessageLookupByLibrary.simpleMessage("Recent activity"),
+    "activityTabLabelActivity" : MessageLookupByLibrary.simpleMessage("Activity"),
+    "activityTabLabelLikes" : MessageLookupByLibrary.simpleMessage("Likes"),
+    "activityTabLabelMessages" : MessageLookupByLibrary.simpleMessage("Messages"),
     "appName" : MessageLookupByLibrary.simpleMessage("BookzBox"),
     "authEmail" : MessageLookupByLibrary.simpleMessage("E-mail"),
     "authErrorCredsAlreadyExists" : MessageLookupByLibrary.simpleMessage("There already exists a user with that email address"),

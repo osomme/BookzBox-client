@@ -134,5 +134,9 @@
     "dateSecondsAgo": "{amount, plural, one{1 second ago} other{{amount} seconds ago}}",
     "dateMinutesAgo": "{amount, plural, one{1 minute ago} other{{amount} minutes ago}}",
     "dateDaysAgo": "{amount, plural, one{1 day ago} other{{amount} days ago}}",
-    "dateHoursAgo": "{amount, plural, one{1 hour ago} other{{amount} hours ago}}"
+    "dateHoursAgo": "{amount, plural, one{1 hour ago} other{{amount} hours ago}}",
+    "activityBoxFeedRemoveLike": "REMOVE LIKE",
+    "activityTabLabelActivity": "Activity",
+    "activityTabLabelMessages": "Messages",
+    "activityTabLabelLikes": "Likes"
 }

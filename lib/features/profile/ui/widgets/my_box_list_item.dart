@@ -7,15 +7,21 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:bookzbox/features/box/helpers/status_extensions.dart';
 import 'package:bookzbox/common/extensions/extensions.dart';
 
+/// Creates a box list item.
+/// [shouldShowLeftButton] must never be null.
+/// [onLeftButtonPressed] cannot be null if [shouldShowLeftButton] is set to true.
+/// [leftButtonText] cannot be null if [shouldShowLeftButton] is set to true.
 class MyBoxListItem extends StatelessWidget {
   final MyBox box;
-  final VoidCallback onChangeVisibilityPressed;
-  final bool isMyBox;
+  final VoidCallback onLeftButtonPressed;
+  final String leftButtonText;
+  final bool shouldShowLeftButton;
 
   MyBoxListItem({
-    @required this.onChangeVisibilityPressed,
     @required this.box,
-    @required this.isMyBox,
+    this.leftButtonText,
+    this.onLeftButtonPressed,
+    this.shouldShowLeftButton = true,
   });
 
   @override
@@ -132,19 +138,19 @@ class MyBoxListItem extends StatelessWidget {
               ),
               Row(
                 children: <Widget>[
-                  (isMyBox
+                  (shouldShowLeftButton
                       ? Expanded(
                           child: FlatButton(
-                            onPressed: onChangeVisibilityPressed,
+                            onPressed: onLeftButtonPressed,
                             child: Text(
-                              S.of(context).profileChangeVisibilityBtn,
+                              leftButtonText ?? '',
                               style: TextStyle(
                                 color: Colors.purple[200],
                               ),
                             ),
                           ),
                         )
-                      : Spacer()),
+                      : SizedBox.shrink()),
                   Expanded(
                     child: FlatButton(
                       onPressed: () => Navigator.pushNamed(context, Screens.boxDetails,
