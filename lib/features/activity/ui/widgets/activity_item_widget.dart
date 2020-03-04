@@ -1,3 +1,5 @@
+import 'package:bookzbox/common/extensions/extensions.dart';
+import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class ActivityListItem extends StatelessWidget {
@@ -50,11 +52,11 @@ class ActivityListItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text('42 minutes ago'),
+                Text(date.toTimeDifferenceString(context)),
                 read
                     ? SizedBox.shrink()
                     : Text(
-                        'New',
+                        S.of(context).activityNewItem,
                         style: Theme.of(context).textTheme.body1.copyWith(
                               color: Colors.black,
                               fontWeight: FontWeight.w700,

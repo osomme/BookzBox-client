@@ -1,11 +1,11 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
-import 'package:bookzbox/features/box/models/box.dart';
 import 'package:bookzbox/features/box/models/my_box.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:bookzbox/features/box/helpers/status_extensions.dart';
+import 'package:bookzbox/common/extensions/extensions.dart';
 
 class MyBoxListItem extends StatelessWidget {
   static const TextStyle cardTitleStyle = TextStyle(
@@ -13,7 +13,9 @@ class MyBoxListItem extends StatelessWidget {
     fontWeight: FontWeight.w700,
     fontSize: 18,
     letterSpacing: 1.05,
-    shadows: <Shadow>[Shadow(color: Colors.black54, blurRadius: 2.0, offset: Offset(1, 1))],
+    shadows: <Shadow>[
+      Shadow(color: Colors.black54, blurRadius: 2.0, offset: Offset(1, 1))
+    ],
   );
 
   final MyBox box;
@@ -25,24 +27,6 @@ class MyBoxListItem extends StatelessWidget {
     @required this.box,
     @required this.isMyBox,
   });
-
-  bool shouldGetInMinutes(DateTime time) {
-    return DateTime.now().difference(time).inMinutes < 60;
-  }
-
-  bool shouldGetInHours(DateTime time) {
-    return DateTime.now().difference(time).inHours < 24;
-  }
-
-  String getDaysSinceString(BuildContext ctx, DateTime time) {
-    if (shouldGetInMinutes(time)) {
-      return S.of(ctx).boxPublishedMinAgo(DateTime.now().difference(time).inMinutes);
-    } else if (shouldGetInHours(time)) {
-      return S.of(ctx).boxPublishedHoursAgo(DateTime.now().difference(time).inHours);
-    } else {
-      return S.of(ctx).boxPublishedDaysAgo(DateTime.now().difference(time).inDays);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +110,7 @@ class MyBoxListItem extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 4.0),
                                   child: Text(
-                                    getDaysSinceString(context, box.publishDateTime),
+                                    box.publishDateTime.toTimeDifferenceString(context),
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600,
@@ -160,8 +144,8 @@ class MyBoxListItem extends StatelessWidget {
                       : Spacer()),
                   Expanded(
                     child: FlatButton(
-                      onPressed: () =>
-                          Navigator.pushNamed(context, Screens.boxDetails, arguments: box.id),
+                      onPressed: () => Navigator.pushNamed(context, Screens.boxDetails,
+                          arguments: box.id),
                       child: Text(
                         S.of(context).profileBoxDetailsBtn,
                         style: TextStyle(

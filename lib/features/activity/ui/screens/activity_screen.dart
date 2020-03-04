@@ -1,4 +1,5 @@
 import 'package:bookzbox/features/activity/activity.dart';
+import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class ActivityScreen extends StatefulWidget {
@@ -11,7 +12,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recent activity'),
+        title: Text(S.of(context).activityScreenAppBarTitle),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),

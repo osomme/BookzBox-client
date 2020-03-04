@@ -26,7 +26,7 @@ final testActivityFeedItems = [
       likedByUsername: 'Hans Hansen',
       boxTitle: 'Old school books',
     ),
-    timestamp: DateTime.now().subtract(Duration(hours: 5)),
+    timestamp: DateTime.now().subtract(Duration(seconds: 13)),
     read: false,
   ),
   ActivityItem(
@@ -37,7 +37,7 @@ final testActivityFeedItems = [
       boxTitle: 'Some thriller stuff',
       chatId: '',
     ),
-    timestamp: DateTime.now().subtract(Duration(days: 2)),
+    timestamp: DateTime.now().subtract(Duration(hours: 2)),
     read: true,
   ),
   ActivityItem(

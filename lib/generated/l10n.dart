@@ -734,8 +734,8 @@ class S {
   String boxPublishedHoursAgo(dynamic amount) {
     return Intl.plural(
       amount,
-      one: '1 day ago',
-      other: '$amount days ago',
+      one: '1 hour ago',
+      other: '$amount hours ago',
       name: 'boxPublishedHoursAgo',
       desc: '',
       args: [amount],
@@ -1074,6 +1074,104 @@ class S {
       name: 'detailsNoLocation',
       desc: '',
       args: [],
+    );
+  }
+
+  String get activityItemMessagePost {
+    return Intl.message(
+      ' wrote: ',
+      name: 'activityItemMessagePost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityItemLikeMiddle {
+    return Intl.message(
+      ' liked your box: ',
+      name: 'activityItemLikeMiddle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityItemMatchPost {
+    return Intl.message(
+      ' has matched with you',
+      name: 'activityItemMatchPost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityItemUnknown {
+    return Intl.message(
+      'Unknown activity',
+      name: 'activityItemUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityNewItem {
+    return Intl.message(
+      'New',
+      name: 'activityNewItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityScreenAppBarTitle {
+    return Intl.message(
+      'Recent activity',
+      name: 'activityScreenAppBarTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String dateSecondsAgo(dynamic amount) {
+    return Intl.plural(
+      amount,
+      one: '1 second ago',
+      other: '$amount seconds ago',
+      name: 'dateSecondsAgo',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  String dateMinutesAgo(dynamic amount) {
+    return Intl.plural(
+      amount,
+      one: '1 minute ago',
+      other: '$amount minutes ago',
+      name: 'dateMinutesAgo',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  String dateDaysAgo(dynamic amount) {
+    return Intl.plural(
+      amount,
+      one: '1 day ago',
+      other: '$amount days ago',
+      name: 'dateDaysAgo',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  String dateHoursAgo(dynamic amount) {
+    return Intl.plural(
+      amount,
+      one: '1 hour ago',
+      other: '$amount hours ago',
+      name: 'dateHoursAgo',
+      desc: '',
+      args: [amount],
     );
   }
 }
