@@ -25,15 +25,13 @@ class BoxDetailsScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BoxDetailsScreenState createState() {
-    store.fetchBoxDetails(boxId);
-    return _BoxDetailsScreenState();
-  }
+  _BoxDetailsScreenState createState() => _BoxDetailsScreenState();
 }
 
 class _BoxDetailsScreenState extends State<BoxDetailsScreen> {
   @override
   Widget build(BuildContext context) {
+    widget.store.fetchBoxDetails(widget.boxId);
     return Scaffold(
       backgroundColor: Colors.white,
       body: NestedScrollView(
@@ -91,8 +89,9 @@ class _BoxDetailsScreenState extends State<BoxDetailsScreen> {
                     icon: Icon(widget.likeStore.isLiked
                         ? MaterialCommunityIcons.heart
                         : MaterialCommunityIcons.heart_outline),
-                    onPressed: () =>
-                        widget.likeStore.isLoading ? null : widget.likeStore.toggleLikeStatus(),
+                    onPressed: () => widget.likeStore.isLoading
+                        ? null
+                        : widget.likeStore.toggleLikeStatus(),
                   ),
                 ),
                 IconButton(

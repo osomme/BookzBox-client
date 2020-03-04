@@ -310,7 +310,7 @@ class S {
 
   String get newBoxTitle {
     return Intl.message(
-      'Create a box',
+      'Create a new box',
       name: 'newBoxTitle',
       desc: '',
       args: [],
@@ -699,6 +699,98 @@ class S {
     return Intl.message(
       'CHANGE VISIBILITY',
       name: 'profileChangeVisibilityBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String profileDisplayNameGreeting(dynamic displayName) {
+    return Intl.message(
+      'Hi, $displayName',
+      name: 'profileDisplayNameGreeting',
+      desc: '',
+      args: [displayName],
+    );
+  }
+
+  String get profileActivityStatusCardTitle {
+    return Intl.message(
+      'Activity status',
+      name: 'profileActivityStatusCardTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileLastSeenText {
+    return Intl.message(
+      'Last seen:',
+      name: 'profileLastSeenText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileLastSeenToday {
+    return Intl.message(
+      'Today',
+      name: 'profileLastSeenToday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileLastSeenYesterday {
+    return Intl.message(
+      'Yesterday',
+      name: 'profileLastSeenYesterday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String profileLastSeenDaysAgo(dynamic amount) {
+    return Intl.plural(
+      amount,
+      one: '1 day ago',
+      other: '$amount days ago',
+      name: 'profileLastSeenDaysAgo',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  String get profileActivityStatusSubTitle {
+    return Intl.message(
+      'Status:',
+      name: 'profileActivityStatusSubTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileActivityStatusActive {
+    return Intl.message(
+      'Active now',
+      name: 'profileActivityStatusActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileActivityStatusAway {
+    return Intl.message(
+      'Away',
+      name: 'profileActivityStatusAway',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get profileActivityStatusOffline {
+    return Intl.message(
+      'Offline',
+      name: 'profileActivityStatusOffline',
       desc: '',
       args: [],
     );

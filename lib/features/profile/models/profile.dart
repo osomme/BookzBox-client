@@ -10,6 +10,9 @@ class Profile {
   /// The date of user registration.
   final DateTime joinDate;
 
+  /// The last date stored by Firebase for this user.
+  final DateTime lastSeen;
+
   Profile({
     @required this.userId,
     @required this.displayName,
@@ -17,5 +20,6 @@ class Profile {
     @required this.tradeCount,
     @required this.joinDate,
     @required this.photoUrl,
+    @required this.lastSeen,
   });
 }

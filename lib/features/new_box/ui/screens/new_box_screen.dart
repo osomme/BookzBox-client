@@ -163,18 +163,42 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
 
   Container gradientBackgroundWidget(BuildContext context) {
     return new Container(
-      height: 24,
-      constraints: BoxConstraints(minWidth: double.infinity),
+      padding: const EdgeInsets.only(
+        bottom: 16,
+      ),
+      constraints: BoxConstraints(
+        minWidth: double.infinity,
+      ),
       decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
         gradient: LinearGradient(
             begin: Alignment(1.0, -1.0),
             end: Alignment(1.0, 0.2),
-            stops: const [0.6, 0.7],
+            stops: const [0.9, 1.0],
             colors: <Color>[
               Theme.of(context).primaryColor,
               Theme.of(context).accentColor,
             ],
             tileMode: TileMode.clamp),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
+        child: Text(
+          S.of(context).newBoxTitle,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 15,
+            shadows: <Shadow>[
+              Shadow(
+                blurRadius: 1.0,
+                color: Colors.black,
+                offset: Offset(1.0, 1.0),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -355,7 +379,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
               ),
               Observer(
                 builder: (_) => AnimatedContainer(
-                  height: (widget.newBoxStore.isIsbnInfoBoxExpanded ? 155 : 0),
+                  height: (widget.newBoxStore.isIsbnInfoBoxExpanded ? 165 : 0),
                   duration: Duration(
                     seconds: 1,
                   ),

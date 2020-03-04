@@ -1,5 +1,3 @@
-import 'package:bookzbox/features/box/models/box.dart';
-import 'package:bookzbox/features/box/models/my_box.dart';
 import 'package:bookzbox/features/profile/models/profile.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository.dart';
 import 'package:mobx/mobx.dart';
@@ -21,6 +19,7 @@ abstract class _ProfileStore with Store {
     rating: 0,
     tradeCount: 0,
     joinDate: DateTime.now(),
+    lastSeen: DateTime.now(),
     photoUrl: '',
   );
 

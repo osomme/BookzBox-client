@@ -23,13 +23,5 @@ class ProfileService extends IProfileService {
     }
 
     return (fetchedProfile != null ? right(fetchedProfile) : left(error));
-    // return right(Profile(
-    //   userId: 'abdfsdf453k2ad',
-    //   displayName: 'John443',
-    //   rating: 110,
-    //   tradeCount: 8,
-    //   joinDate: DateTime.now(),
-    //   photoUrl: '',
-    // ));
   }
 }
