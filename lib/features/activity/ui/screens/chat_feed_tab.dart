@@ -1,6 +1,7 @@
 import 'package:bookzbox/features/activity/activity.dart';
 import 'package:bookzbox/features/profile/ui/widgets/profile_avatar.dart';
 import 'package:bookzbox/common/extensions/extensions.dart';
+import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class ChatFeedTab extends StatelessWidget {
@@ -43,9 +44,23 @@ class ChatFeedTab extends StatelessWidget {
                         .copyWith(fontSize: 12.5, fontStyle: FontStyle.italic),
                   ),
                   SizedBox(height: 5.0),
-                  Text(
-                    chatItem.timestamp.toTimeDifferenceString(context),
-                    style: Theme.of(context).textTheme.caption,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        chatItem.timestamp.toTimeDifferenceString(context),
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                      chatItem.read
+                          ? SizedBox.shrink()
+                          : Text(
+                              S.of(context).activityNewItem,
+                              style: Theme.of(context).textTheme.body1.copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                            ),
+                    ],
                   ),
                 ],
               ),

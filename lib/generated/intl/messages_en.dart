@@ -33,9 +33,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m6(amount) => "${Intl.plural(amount, one: '1 second ago', other: '${amount} seconds ago')}";
 
-  static m3(displayName) => "Hi, ${displayName}";
+  static m7(displayName) => "Hi, ${displayName}";
 
-  static m4(amount) => "${Intl.plural(amount, one: '1 day ago', other: '${amount} days ago')}";
+  static m8(amount) => "${Intl.plural(amount, one: '1 day ago', other: '${amount} days ago')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -159,9 +159,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileBoxDetailsBtn" : MessageLookupByLibrary.simpleMessage("DETAILS"),
     "profileBoxesTabLabel" : MessageLookupByLibrary.simpleMessage("BOXES"),
     "profileChangeVisibilityBtn" : MessageLookupByLibrary.simpleMessage("CHANGE VISIBILITY"),
-    "profileDisplayNameGreeting" : m3,
+    "profileDisplayNameGreeting" : m7,
     "profileJoinDateTitle" : MessageLookupByLibrary.simpleMessage("Member since"),
-    "profileLastSeenDaysAgo" : m4,
+    "profileLastSeenDaysAgo" : m8,
     "profileLastSeenText" : MessageLookupByLibrary.simpleMessage("Last seen:"),
     "profileLastSeenToday" : MessageLookupByLibrary.simpleMessage("Today"),
     "profileLastSeenYesterday" : MessageLookupByLibrary.simpleMessage("Yesterday"),
