@@ -1,17 +1,41 @@
 import 'package:bookzbox/features/activity/activity.dart';
 import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/generated/l10n.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 extension ActivityItemMapper on ActivityItem {
+  /// Maps a Like ActivityItem to a Firestore compatible map. [this] must have
+  ///  a type property which is an instance of Like.
+  Map<String, dynamic> toFirestore() {
+    return {
+      'typename': 'like',
+      'data': _typeToMap(this.type),
+      'timestamp': Timestamp.fromDate(this.timestamp),
+      'read': false,
+    };
+  }
+
+  Map<String, dynamic> _typeToMap(ActivityType type) {
+    if (type is LikeActivity) {
+      return {
+        'likedByUserId': type.likedByUserId,
+        'boxId': type.boxId,
+      };
+    } else {
+      throw 'Not implemented yet';
+    }
+  }
+
   /// Maps a ActivityItem to a ActivityListItem to be displayed in a list view.
   ActivityListItem toListItem(BuildContext context) {
     if (this.type is MessageActivity) {
       return _messageToListItem(
           this.type as MessageActivity, this.timestamp, this.read, context);
-    } else if (this.type is Like) {
-      return _likeToListItem(this.type as Like, this.timestamp, this.read, context);
+    } else if (this.type is LikeActivity) {
+      return _likeToListItem(
+          this.type as LikeActivity, this.timestamp, this.read, context);
     } else if (this.type is MatchActivity) {
       return _matchToListItem(
           this.type as MatchActivity, this.timestamp, this.read, context);
@@ -38,7 +62,7 @@ ActivityListItem _messageToListItem(
 }
 
 ActivityListItem _likeToListItem(
-    Like activity, DateTime timestamp, bool read, BuildContext ctx) {
+    LikeActivity activity, DateTime timestamp, bool read, BuildContext ctx) {
   return ActivityListItem(
     leading: Icon(MaterialCommunityIcons.heart),
     subtitleTexts: [

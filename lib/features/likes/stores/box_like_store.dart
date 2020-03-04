@@ -21,8 +21,11 @@ abstract class _BoxLikeStore with Store {
   @observable
   NetworkError _error;
 
-  _BoxLikeStore(this._repo, this._authService, this._boxId) {
-    _checkIfLiked();
+  _BoxLikeStore(this._repo, this._authService, this._boxId,
+      {bool shouldImmediatlyCheckStatus = true}) {
+    if (shouldImmediatlyCheckStatus) {
+      _checkIfLiked();
+    }
   }
 
   /// True if the store is currently loading the like status, false otherwise.
@@ -60,7 +63,7 @@ abstract class _BoxLikeStore with Store {
 
   @action
   Future<void> _addLike() async {
-    final result = await _repo.likeBox(_boxId, (await _authService.user).uid);
+    final result = await _repo.addLike(_boxId, (await _authService.user).uid);
     result.fold(
       (error) => _error = error,
       (success) => _isLiked = true,

@@ -22,10 +22,11 @@ class ActivityItem {
 final testActivityFeedItems = [
   ActivityItem(
     id: '1',
-    type: Like(
+    type: LikeActivity(
       likedByUserId: '',
       likedByUsername: 'Hans Hansen',
       boxTitle: 'Old school books',
+      boxId: '',
     ),
     timestamp: DateTime.now().subtract(Duration(seconds: 13)),
     read: false,

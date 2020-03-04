@@ -12,7 +12,7 @@ void main() {
     setUp(() => service = FirebaseBoxLikeService());
 
     test('[isBoxLiked] should return true if user has liked the box', () async {
-      await service.likeBox(boxId, user.uid);
+      await service.addLike(boxId, user.uid);
       final result = await service.isBoxLiked(boxId, user.uid);
       result.fold(
         (error) => fail(error.toString()),
@@ -29,7 +29,7 @@ void main() {
     });
 
     test('[likeBox] should return true when successful', () async {
-      final result = await service.likeBox(boxId, user.uid);
+      final result = await service.addLike(boxId, user.uid);
       result.fold(
         (error) => fail(error.toString()),
         (res) => expect(res, isTrue),
