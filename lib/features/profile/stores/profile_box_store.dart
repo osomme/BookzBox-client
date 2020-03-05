@@ -13,28 +13,48 @@ abstract class _ProfileBoxStore with Store {
   @observable
   ObservableList<MiniBox> myBoxes = new ObservableList();
 
+  @observable
+  MiniBox _currentBox;
+
   /// The box status of the currently focused box.
   @observable
   BoxStatus _currentBoxStatus = BoxStatus.public;
+
+  @observable
+  BoxStatus _startBoxStatus = BoxStatus.public;
 
   /// [true] if currently fetching boxes, otherwise [false].
   @observable
   bool _isLoading = false;
 
+  /// [true] if this is the first change for the current box, otherwise [false].
+  @observable
+  bool _isFirstVisibilityChange = false;
+
+  @observable
+  String _updateError = '';
+
   _ProfileBoxStore(this._boxRepository);
 
   @action
-  void init(String userId) {
+  void init(String userId, bool myProfile) {
     if (userId == null || userId.isEmpty) {
       return;
     }
     _isLoading = true;
-    _boxRepository.fetchUserBoxes(userId).then((result) => handleResult(result));
+    if (myProfile) {
+      _boxRepository.fetchUserBoxes(userId).then((result) => handleResult(result));
+    } else {
+      _boxRepository.fetchOtherUsersBoxes(userId).then((result) => handleResult(result));
+    }
   }
 
   @action
   void handleResult(Either<String, List<MiniBox>> res) {
-    res.fold((err) => handleFetchError(err), (boxes) => handleFetchSuccess(boxes));
+    res.fold(
+      (err) => handleFetchError(err),
+      (boxes) => handleFetchSuccess(boxes),
+    );
     _isLoading = false;
   }
 
@@ -49,6 +69,37 @@ abstract class _ProfileBoxStore with Store {
     myBoxes.addAll(boxes);
   }
 
+  /// Updates the currently focused box [_currentBox] with the status
+  /// represented by [_currentBoxStatus].
+  @action
+  Future updateBoxVisibility() async {
+    if (_startBoxStatus == _currentBoxStatus) {
+      // Don't update as there is no change.
+      return;
+    }
+    _currentBox.status = _currentBoxStatus;
+    final fullBoxRes = await _boxRepository.getBox(_currentBox.id);
+    fullBoxRes.fold(
+      (err) => print(err),
+      (box) async {
+        box.status = _currentBoxStatus;
+        final updateRes = await _boxRepository.updateStatus(box);
+        handleUpdateRes(updateRes);
+      },
+    );
+  }
+
+  @action
+  void handleUpdateRes(Either<String, Box> res) {
+    res.fold(
+      (err) {
+        print(err);
+        _updateError = err;
+      },
+      (box) => print("Update success!"),
+    );
+  }
+
   @computed
   BoxStatus get currentBoxStatus => _currentBoxStatus;
 
@@ -60,4 +111,28 @@ abstract class _ProfileBoxStore with Store {
 
   @action
   void setIsLoading(bool isLoading) => _isLoading = isLoading;
+
+  @computed
+  MiniBox get currentBox => _currentBox;
+
+  @action
+  void setCurrentBox(MiniBox box) => _currentBox = box;
+
+  @computed
+  bool get isFirstVisibilityChange => _isFirstVisibilityChange;
+
+  @action
+  void setIsFirstVisibilityChange(bool isFirstChange) => _isFirstVisibilityChange = isFirstChange;
+
+  @computed
+  BoxStatus get startBoxStatus => _startBoxStatus;
+
+  @action
+  void setStartBoxStatus(BoxStatus status) => _startBoxStatus = status;
+
+  @computed
+  String get updateError => _updateError;
+
+  @action
+  void setUpdateError(String err) => _updateError = err;
 }

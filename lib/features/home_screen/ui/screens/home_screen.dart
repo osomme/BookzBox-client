@@ -1,6 +1,9 @@
 import 'package:bookzbox/features/activity/ui/screens/activity_screen.dart';
+import 'package:bookzbox/features/authentication/stores/auth_store.dart';
 import 'package:bookzbox/features/feed/ui/screens/feed_screen.dart';
 import 'package:bookzbox/features/map/box_map.dart';
+import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
+import 'package:bookzbox/features/profile/stores/profile_store.dart';
 import 'package:bookzbox/features/profile/ui/screens/profile_screen.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
             case 2:
               return ActivityScreen();
             case 3:
-              return Provider.of<ProfileScreen>(context);
+              return ProfileScreen(
+                authStore: Provider.of<AuthStore>(context),
+                profileBoxStore: Provider.of<ProfileBoxStore>(context),
+                profileStore: Provider.of<ProfileStore>(context),
+              );
             default:
               throw 'Index ($index) must be in range 0-3';
           }

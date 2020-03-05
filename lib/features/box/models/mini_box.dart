@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 /// Represents a minimal version of a box.
 class MiniBox {
   final String id;
-  final BoxStatus status;
+  BoxStatus status;
   final DateTime publishDateTime;
   final String title;
 

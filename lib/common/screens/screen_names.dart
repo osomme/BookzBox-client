@@ -6,4 +6,5 @@ abstract class Screens {
   static final authSelect = 'auth_selection';
   static final boxDetails = 'box_details';
   static final profile = 'profile_screen';
+  static final myProfile = 'my_profile_screen';
 }

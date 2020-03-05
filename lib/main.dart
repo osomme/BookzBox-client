@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
         ...commonServicesProviders,
         ...mapProviders,
         ...myProfileProviders,
+        ...boxDetailsProviders,
       ],
       child: MaterialApp(
         routes: {

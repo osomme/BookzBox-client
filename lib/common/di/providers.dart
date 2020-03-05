@@ -2,6 +2,8 @@ import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/authentication/errors/auth_error_handling.dart';
 import 'package:bookzbox/features/box/services/box_loader_service.dart';
 import 'package:bookzbox/features/box/services/box_loader_service_impl.dart';
+import 'package:bookzbox/features/box/services/box_updater_service.dart';
+import 'package:bookzbox/features/box/services/box_updater_service_impl.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/screens/box_details_screen.dart';
 import 'package:bookzbox/features/feed/feed.dart';
@@ -63,6 +65,7 @@ final loginProviders = [
 ];
 
 final bookProviders = [
+  ...boxDetailsProviders,
   Provider<IBookService>(create: (_) => BookService.instance),
   Provider<IBoxLoaderService>(create: (_) => BoxLoaderService()),
   ProxyProvider<IBookService, IBookRepository>(
@@ -71,9 +74,13 @@ final bookProviders = [
   Provider<IPublishService>(
     create: (_) => PublishService.instance,
   ),
-  ProxyProvider2<IPublishService, IBoxLoaderService, IBoxRepository>(
-    update: (_, publishService, boxLoaderService, __) =>
-        BoxRepository(publishService, boxLoaderService),
+  Provider<IBoxUpdaterService>(
+    create: (_) => BoxUpdaterService(),
+  ),
+  ProxyProvider4<IPublishService, IBoxLoaderService, IBoxDetailsService, IBoxUpdaterService,
+      IBoxRepository>(
+    update: (_, publishService, boxLoaderService, detailsService, updaterService, __) =>
+        BoxRepository(publishService, boxLoaderService, detailsService, updaterService),
   ),
   Provider<ILocationService>(
     create: (_) => LocationService(),

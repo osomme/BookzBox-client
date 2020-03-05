@@ -9,7 +9,7 @@ class Box {
   final String id;
   final User publisher;
   final List<Book> books;
-  final BoxStatus status;
+  BoxStatus status;
   final DateTime publishDateTime;
   final double latitude;
   final double longitude;

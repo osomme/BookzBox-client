@@ -9,7 +9,7 @@ class MiniBoxMapper {
     final Map<String, dynamic> data = ds.data;
     print(data);
     return MiniBox(
-      id: data['uid'] as String,
+      id: ds.documentID,
       status: (data['status'] as int).toBoxStatus(),
       publishDateTime: (data['publishDateTime'] as Timestamp).toDate(),
       title: data['title'],

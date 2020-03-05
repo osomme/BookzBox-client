@@ -3,4 +3,6 @@ import 'package:dartz/dartz.dart';
 
 abstract class IBoxLoaderService {
   Future<Either<String, List<MiniBox>>> loadForUser(String userId);
+
+  Future<Either<String, List<MiniBox>>> loadForOtherUser(String userId);
 }

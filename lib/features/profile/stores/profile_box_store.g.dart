@@ -20,6 +20,30 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
   @override
   bool get isLoading =>
       (_$isLoadingComputed ??= Computed<bool>(() => super.isLoading)).value;
+  Computed<MiniBox> _$currentBoxComputed;
+
+  @override
+  MiniBox get currentBox =>
+      (_$currentBoxComputed ??= Computed<MiniBox>(() => super.currentBox))
+          .value;
+  Computed<bool> _$isFirstVisibilityChangeComputed;
+
+  @override
+  bool get isFirstVisibilityChange => (_$isFirstVisibilityChangeComputed ??=
+          Computed<bool>(() => super.isFirstVisibilityChange))
+      .value;
+  Computed<BoxStatus> _$startBoxStatusComputed;
+
+  @override
+  BoxStatus get startBoxStatus => (_$startBoxStatusComputed ??=
+          Computed<BoxStatus>(() => super.startBoxStatus))
+      .value;
+  Computed<String> _$updateErrorComputed;
+
+  @override
+  String get updateError =>
+      (_$updateErrorComputed ??= Computed<String>(() => super.updateError))
+          .value;
 
   final _$myBoxesAtom = Atom(name: '_ProfileBoxStore.myBoxes');
 
@@ -36,6 +60,23 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
       super.myBoxes = value;
       _$myBoxesAtom.reportChanged();
     }, _$myBoxesAtom, name: '${_$myBoxesAtom.name}_set');
+  }
+
+  final _$_currentBoxAtom = Atom(name: '_ProfileBoxStore._currentBox');
+
+  @override
+  MiniBox get _currentBox {
+    _$_currentBoxAtom.context.enforceReadPolicy(_$_currentBoxAtom);
+    _$_currentBoxAtom.reportObserved();
+    return super._currentBox;
+  }
+
+  @override
+  set _currentBox(MiniBox value) {
+    _$_currentBoxAtom.context.conditionallyRunInAction(() {
+      super._currentBox = value;
+      _$_currentBoxAtom.reportChanged();
+    }, _$_currentBoxAtom, name: '${_$_currentBoxAtom.name}_set');
   }
 
   final _$_currentBoxStatusAtom =
@@ -56,6 +97,23 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
     }, _$_currentBoxStatusAtom, name: '${_$_currentBoxStatusAtom.name}_set');
   }
 
+  final _$_startBoxStatusAtom = Atom(name: '_ProfileBoxStore._startBoxStatus');
+
+  @override
+  BoxStatus get _startBoxStatus {
+    _$_startBoxStatusAtom.context.enforceReadPolicy(_$_startBoxStatusAtom);
+    _$_startBoxStatusAtom.reportObserved();
+    return super._startBoxStatus;
+  }
+
+  @override
+  set _startBoxStatus(BoxStatus value) {
+    _$_startBoxStatusAtom.context.conditionallyRunInAction(() {
+      super._startBoxStatus = value;
+      _$_startBoxStatusAtom.reportChanged();
+    }, _$_startBoxStatusAtom, name: '${_$_startBoxStatusAtom.name}_set');
+  }
+
   final _$_isLoadingAtom = Atom(name: '_ProfileBoxStore._isLoading');
 
   @override
@@ -73,14 +131,59 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
     }, _$_isLoadingAtom, name: '${_$_isLoadingAtom.name}_set');
   }
 
+  final _$_isFirstVisibilityChangeAtom =
+      Atom(name: '_ProfileBoxStore._isFirstVisibilityChange');
+
+  @override
+  bool get _isFirstVisibilityChange {
+    _$_isFirstVisibilityChangeAtom.context
+        .enforceReadPolicy(_$_isFirstVisibilityChangeAtom);
+    _$_isFirstVisibilityChangeAtom.reportObserved();
+    return super._isFirstVisibilityChange;
+  }
+
+  @override
+  set _isFirstVisibilityChange(bool value) {
+    _$_isFirstVisibilityChangeAtom.context.conditionallyRunInAction(() {
+      super._isFirstVisibilityChange = value;
+      _$_isFirstVisibilityChangeAtom.reportChanged();
+    }, _$_isFirstVisibilityChangeAtom,
+        name: '${_$_isFirstVisibilityChangeAtom.name}_set');
+  }
+
+  final _$_updateErrorAtom = Atom(name: '_ProfileBoxStore._updateError');
+
+  @override
+  String get _updateError {
+    _$_updateErrorAtom.context.enforceReadPolicy(_$_updateErrorAtom);
+    _$_updateErrorAtom.reportObserved();
+    return super._updateError;
+  }
+
+  @override
+  set _updateError(String value) {
+    _$_updateErrorAtom.context.conditionallyRunInAction(() {
+      super._updateError = value;
+      _$_updateErrorAtom.reportChanged();
+    }, _$_updateErrorAtom, name: '${_$_updateErrorAtom.name}_set');
+  }
+
+  final _$updateBoxVisibilityAsyncAction = AsyncAction('updateBoxVisibility');
+
+  @override
+  Future<dynamic> updateBoxVisibility() {
+    return _$updateBoxVisibilityAsyncAction
+        .run(() => super.updateBoxVisibility());
+  }
+
   final _$_ProfileBoxStoreActionController =
       ActionController(name: '_ProfileBoxStore');
 
   @override
-  void init(String userId) {
+  void init(String userId, bool myProfile) {
     final _$actionInfo = _$_ProfileBoxStoreActionController.startAction();
     try {
-      return super.init(userId);
+      return super.init(userId, myProfile);
     } finally {
       _$_ProfileBoxStoreActionController.endAction(_$actionInfo);
     }
@@ -117,6 +220,16 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
   }
 
   @override
+  void handleUpdateRes(Either<String, Box> res) {
+    final _$actionInfo = _$_ProfileBoxStoreActionController.startAction();
+    try {
+      return super.handleUpdateRes(res);
+    } finally {
+      _$_ProfileBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setCurrentBoxStatus(BoxStatus status) {
     final _$actionInfo = _$_ProfileBoxStoreActionController.startAction();
     try {
@@ -131,6 +244,46 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
     final _$actionInfo = _$_ProfileBoxStoreActionController.startAction();
     try {
       return super.setIsLoading(isLoading);
+    } finally {
+      _$_ProfileBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCurrentBox(MiniBox box) {
+    final _$actionInfo = _$_ProfileBoxStoreActionController.startAction();
+    try {
+      return super.setCurrentBox(box);
+    } finally {
+      _$_ProfileBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setIsFirstVisibilityChange(bool isFirstChange) {
+    final _$actionInfo = _$_ProfileBoxStoreActionController.startAction();
+    try {
+      return super.setIsFirstVisibilityChange(isFirstChange);
+    } finally {
+      _$_ProfileBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setStartBoxStatus(BoxStatus status) {
+    final _$actionInfo = _$_ProfileBoxStoreActionController.startAction();
+    try {
+      return super.setStartBoxStatus(status);
+    } finally {
+      _$_ProfileBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setUpdateError(String err) {
+    final _$actionInfo = _$_ProfileBoxStoreActionController.startAction();
+    try {
+      return super.setUpdateError(err);
     } finally {
       _$_ProfileBoxStoreActionController.endAction(_$actionInfo);
     }
