@@ -53,6 +53,6 @@ abstract class _MyLikedBoxesStore with Store {
   }
 
   void dispose() {
-    _streamSubscription.cancel();
+    _streamSubscription?.cancel();
   }
 }

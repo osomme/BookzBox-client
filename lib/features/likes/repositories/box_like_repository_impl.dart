@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:bookzbox/common/errors/error_types.dart';
 import 'package:bookzbox/features/likes/likes.dart';
 import 'package:dartz/dartz.dart';
@@ -8,11 +10,6 @@ class BoxLikeRepository implements IBoxLikeRepository {
 
   BoxLikeRepository(this._service);
 
-  /// Checks if the box belonging to the passed boxId parameter is liked by the user with the passed userId.
-  @override
-  Future<Either<NetworkError, bool>> isBoxLiked(String boxId, String userId) =>
-      _service.isBoxLiked(boxId, userId);
-
   /// Unmarks the box with the passed box id as liked by the user.
   @override
   Future<Either<NetworkError, bool>> removeLike(String boxId, String userId) =>
@@ -22,4 +19,9 @@ class BoxLikeRepository implements IBoxLikeRepository {
   @override
   Future<Either<NetworkError, bool>> addLike(String boxId, String userId) =>
       _service.addLike(boxId, userId);
+
+  /// Gets a broadcast stream containing a list of all the likes belonging to the user passed in the [userId] parameter.
+  @override
+  Future<Stream<HashSet<String>>> likesStreamFor(String userId) =>
+      _service.likesStreamFor(userId);
 }

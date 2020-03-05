@@ -113,7 +113,7 @@ final mainProviders = [
 
 final boxLikeProviders = [
   Provider<IBoxLikeService>(
-    create: (_) => FirebaseBoxLikeService(),
+    create: (_) => FirebaseBoxLikeService.instance,
   ),
   ProxyProvider<IBoxLikeService, IBoxLikeRepository>(
     update: (_, service, __) => BoxLikeRepository(service),

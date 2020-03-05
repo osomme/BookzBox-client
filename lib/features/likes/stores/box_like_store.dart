@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:collection';
+
 import 'package:bookzbox/common/errors/error_types.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/likes/likes.dart';
@@ -11,6 +14,8 @@ abstract class _BoxLikeStore with Store {
   final IBoxLikeRepository _repo;
   final IAuthService _authService;
   final String _boxId;
+
+  StreamSubscription<HashSet<String>> _streamSubscription;
 
   @observable
   bool _isLoading = false;
@@ -44,6 +49,7 @@ abstract class _BoxLikeStore with Store {
   @action
   Future<void> toggleLikeStatus() async {
     _isLoading = true;
+    _error = null;
     if (isLiked) {
       await _removeLike();
     } else {
@@ -57,7 +63,7 @@ abstract class _BoxLikeStore with Store {
     final result = await _repo.removeLike(_boxId, (await _authService.user).uid);
     result.fold(
       (error) => _error = error,
-      (success) => _isLiked = false,
+      (success) => print('Removed like from box: $_boxId'),
     );
   }
 
@@ -66,18 +72,26 @@ abstract class _BoxLikeStore with Store {
     final result = await _repo.addLike(_boxId, (await _authService.user).uid);
     result.fold(
       (error) => _error = error,
-      (success) => _isLiked = true,
+      (success) => print('Liked box: $_boxId'),
     );
   }
 
   @action
   Future<void> _checkIfLiked() async {
     _isLoading = true;
-    final result = await _repo.isBoxLiked(_boxId, (await _authService.user).uid);
-    result.fold(
-      (error) => _error = error,
-      (likeStatus) => _isLiked = likeStatus,
+    final uid = (await _authService.user).uid;
+    final stream = await _repo.likesStreamFor(uid);
+    _streamSubscription = stream.listen(
+      (data) {
+        final liked = data.contains(_boxId);
+        if (liked != _isLiked) {
+          _isLiked = liked;
+        }
+      },
+      onError: (error) => print('Error while listening to likes stream: $error'),
     );
     _isLoading = false;
   }
+
+  void dispose() => _streamSubscription?.cancel();
 }

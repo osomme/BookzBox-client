@@ -4,7 +4,7 @@ import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/location/services/location_service.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dartz/dartz.dart';
+import 'package:dartz/dartz.dart' as Dartz;
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -12,30 +12,40 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:bookzbox/common/extensions/extensions.dart';
 
-class FeedListItem extends StatelessWidget {
+class FeedListItem extends StatefulWidget {
   const FeedListItem({
     Key key,
-    @required PageController pageController,
+    @required this.pageController,
     @required this.index,
     @required this.box,
     @required this.store,
     @required this.locationService,
-  })  : _pageController = pageController,
-        super(key: key);
+  }) : super(key: key);
 
-  final PageController _pageController;
+  final PageController pageController;
   final int index;
   final BoxFeedListItem box;
   final BoxLikeStore store;
   final ILocationService locationService;
 
   @override
+  _FeedListItemState createState() => _FeedListItemState();
+}
+
+class _FeedListItemState extends State<FeedListItem> {
+  @override
+  void dispose() {
+    widget.store.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      builder: (context, widget) {
+      builder: (context, wdgt) {
         var value = 1.0;
-        if (_pageController.position.haveDimensions) {
-          value = _pageController.page - index;
+        if (widget.pageController.position.haveDimensions) {
+          value = widget.pageController.page - widget.index;
           value = (1 - value.abs() * 0.3).clamp(0.0, 1.0);
         }
         return Center(
@@ -44,13 +54,14 @@ class FeedListItem extends StatelessWidget {
                 MediaQuery.of(context).size.height *
                 0.85,
             width: Curves.easeInOut.transform(value) * 400.0,
-            child: widget,
+            child: wdgt,
           ),
         );
       },
-      animation: _pageController,
+      animation: widget.pageController,
       child: GestureDetector(
-        onTap: () => Navigator.pushNamed(context, Screens.boxDetails, arguments: box.id),
+        onTap: () =>
+            Navigator.pushNamed(context, Screens.boxDetails, arguments: widget.box.id),
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
@@ -87,11 +98,11 @@ class FeedListItem extends StatelessWidget {
           _topTextRow(context),
           SizedBox(height: 10.0),
           Builder(builder: (ctx) {
-            if (box.books.length >= 4) {
+            if (widget.box.books.length >= 4) {
               return _expandedCoverImages(context);
-            } else if (box.books.length == 3) {
+            } else if (widget.box.books.length == 3) {
               return _threeBooksCoverImages(context);
-            } else if (box.books.length == 2) {
+            } else if (widget.box.books.length == 2) {
               return _twoBooksCoverImages(context);
             } else {
               return _singleBookCoverImage(context);
@@ -108,9 +119,9 @@ class FeedListItem extends StatelessWidget {
 
   Text _description(BuildContext context) {
     return Text(
-      (box.description == null || box.description.isEmpty)
+      (widget.box.description == null || widget.box.description.isEmpty)
           ? S.of(context).feedNoDescription
-          : box.description,
+          : widget.box.description,
       style: Theme.of(context).primaryTextTheme.subhead.copyWith(fontSize: 12.5),
     );
   }
@@ -135,7 +146,7 @@ class FeedListItem extends StatelessWidget {
               Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
         ),
         Text(
-          '${box.books.length}',
+          '${widget.box.books.length}',
           style: Theme.of(context).primaryTextTheme.subhead,
         ),
       ],
@@ -160,7 +171,7 @@ class FeedListItem extends StatelessWidget {
     final height = MediaQuery.of(context).size.height * 0.50;
     return Container(
       height: height,
-      child: _bookToImage(height, box.books.first),
+      child: _bookToImage(height, widget.box.books.first),
     );
   }
 
@@ -174,13 +185,13 @@ class FeedListItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              child: _bookToImage(height, box.books[0]),
+              child: _bookToImage(height, widget.box.books[0]),
               height: height,
               width: width,
             ),
             SizedBox(height: 5.0),
             Container(
-              child: _bookToImage(height, box.books[1]),
+              child: _bookToImage(height, widget.box.books[1]),
               height: height,
               width: width,
             ),
@@ -202,7 +213,7 @@ class FeedListItem extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.all(5.0),
-              child: _bookToImage(200.0, box.books[2]),
+              child: _bookToImage(200.0, widget.box.books[2]),
               height: 185.0,
               width: 130.0,
             ),
@@ -231,8 +242,8 @@ class FeedListItem extends StatelessWidget {
     );
   }
 
-  List<CachedNetworkImage> _extractImages(double height, {int count}) => box.books
-      .take(count ?? box.books.length)
+  List<CachedNetworkImage> _extractImages(double height, {int count}) => widget.box.books
+      .take(count ?? widget.box.books.length)
       .map((b) => _bookToImage(height, b))
       .toList();
 
@@ -261,14 +272,14 @@ class FeedListItem extends StatelessWidget {
     return Column(
       children: <Widget>[
         Text(
-          box.books.toCategoryString(),
+          widget.box.books.toCategoryString(),
           style:
               Theme.of(context).primaryTextTheme.overline.copyWith(color: Colors.white70),
           overflow: TextOverflow.ellipsis,
         ),
         SizedBox(height: 5.0),
         Text(
-          box.title,
+          widget.box.title,
           style: Theme.of(context).primaryTextTheme.subtitle,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
@@ -297,14 +308,14 @@ class FeedListItem extends StatelessWidget {
             ],
           ),
           child: Observer(builder: (_) {
-            if (store.isLoading) {
+            if (widget.store.isLoading) {
               return SpinKitPulse(
                 size: 30.0,
                 color: Theme.of(context).accentIconTheme.color,
               );
             }
             return Icon(
-              store.isLiked
+              widget.store.isLiked
                   ? MaterialCommunityIcons.heart
                   : MaterialCommunityIcons.heart_outline,
               color: Theme.of(context).accentIconTheme.color,
@@ -313,18 +324,18 @@ class FeedListItem extends StatelessWidget {
           }),
         ),
         onPressed: () {
-          if (store.isLoading) {
+          if (widget.store.isLoading) {
             return;
           }
-          store.toggleLikeStatus();
+          widget.store.toggleLikeStatus();
         },
       ),
     );
   }
 
-  FutureBuilder<Option<Placemark>> _locationBuilder() {
-    return FutureBuilder<Option<Placemark>>(
-      future: locationService.getLocationDataFrom(box.lat, box.lng),
+  FutureBuilder<Dartz.Option<Placemark>> _locationBuilder() {
+    return FutureBuilder<Dartz.Option<Placemark>>(
+      future: widget.locationService.getLocationDataFrom(widget.box.lat, widget.box.lng),
       builder: (ctx, snapshot) {
         if (!snapshot.hasData) {
           return SpinKitPulse(

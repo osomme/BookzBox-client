@@ -5,27 +5,18 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Firebase box like service', () {
     //TODO: Update tests after implementing actual Firebase service.
-    var service = FirebaseBoxLikeService();
+    var service = FirebaseBoxLikeService.instance;
     final user = User('abcd');
     final boxId = 'box1';
 
-    setUp(() => service = FirebaseBoxLikeService());
+    setUp(() => service = FirebaseBoxLikeService.instance);
 
     test('[isBoxLiked] should return true if user has liked the box', () async {
-      await service.addLike(boxId, user.uid);
-      final result = await service.isBoxLiked(boxId, user.uid);
-      result.fold(
-        (error) => fail(error.toString()),
-        (x) => expect(x, isTrue),
-      );
+      fail('To be implemented');
     });
 
     test('[isBoxLiked] should return false if user has not liked the box', () async {
-      final result = await service.isBoxLiked(boxId, user.uid);
-      result.fold(
-        (error) => fail(error.toString()),
-        (x) => expect(x, isFalse),
-      );
+      fail('To be implemented');
     });
 
     test('[likeBox] should return true when successful', () async {

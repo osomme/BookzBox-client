@@ -30,6 +30,12 @@ class BoxDetailsScreen extends StatefulWidget {
 
 class _BoxDetailsScreenState extends State<BoxDetailsScreen> {
   @override
+  void dispose() {
+    widget.likeStore.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     widget.store.fetchBoxDetails(widget.boxId);
     return Scaffold(

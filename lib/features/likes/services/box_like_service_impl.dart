@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:bookzbox/common/errors/error_types.dart';
 import 'package:bookzbox/features/likes/likes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,47 +10,26 @@ class FirebaseBoxLikeService implements IBoxLikeService {
 
   final Map<String, String> _boxLikeCache = {};
 
+  FirebaseBoxLikeService._privateConstructor();
+
+  static final instance = FirebaseBoxLikeService._privateConstructor();
+
   bool _hasLoadedFromNetwork = false;
 
-  @override
-  Future<Either<NetworkError, bool>> isBoxLiked(String boxId, String userId) async {
-    if (_boxLikeCache.containsKey(boxId)) {
-      // Box is already in cache of liked boxes.
-      print('Like is in cache');
-      return right(true);
-    }
-
-    if (_hasLoadedFromNetwork) {
-      // Likes have already been loaded, but the box is not in the cache.
-      return right(false);
-    }
-
-    try {
-      print('Fetching like statuses from server');
-      final snap = await _firestore
-          .collection('likes')
-          .where('likedByUserId', isEqualTo: userId)
-          .getDocuments();
-      _hasLoadedFromNetwork = true;
-      if (snap.documents.isEmpty) {
-        return right(false);
-      } else {
-        print('Number of likes loaded from server: ${snap.documents.length}');
-        var isBoxLiked = false;
-        snap.documents.forEach((doc) {
-          final id = doc.data['boxId'];
-          if (id == boxId) {
-            isBoxLiked = true;
-          }
-          _boxLikeCache[id] = doc.documentID;
-        });
-        return right(isBoxLiked);
-      }
-    } catch (e) {
-      print('Error while attempting to load likes: $e');
-      _hasLoadedFromNetwork = false;
-      return left(NetworkError.noInternet);
-    }
+  Future<Stream<HashSet<String>>> likesStreamFor(String userId) async {
+    return _firestore
+        .collection('likes')
+        .where('likedByUserId', isEqualTo: userId)
+        .snapshots()
+        .map(
+          (snap) => snap.documents.map((doc) {
+            final boxId = doc.data['boxId'];
+            _boxLikeCache[boxId] = doc.documentID;
+            return boxId;
+          }),
+        )
+        .map((iter) => HashSet<String>.from(iter))
+        .asBroadcastStream();
   }
 
   @override
@@ -74,8 +55,7 @@ class FirebaseBoxLikeService implements IBoxLikeService {
     };
 
     try {
-      final docRef = await _firestore.collection('likes').add(like);
-      _boxLikeCache[boxId] = docRef.documentID;
+      await _firestore.collection('likes').add(like);
       return right(true);
     } catch (e) {
       print('Error while attempting to add like: $e');
