@@ -1,40 +1,28 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
-import 'package:bookzbox/features/box/models/box.dart';
-import 'package:bookzbox/features/box/models/my_box.dart';
+import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:bookzbox/features/box/helpers/status_extensions.dart';
+import 'package:bookzbox/common/extensions/extensions.dart';
 
-class MyBoxListItem extends StatelessWidget {
-  final MyBox box;
-  final VoidCallback onChangeVisibilityPressed;
-  final bool isMyBox;
+/// Creates a box list item.
+/// [shouldShowLeftButton] must never be null.
+/// [onLeftButtonPressed] cannot be null if [shouldShowLeftButton] is set to true.
+/// [leftButtonText] cannot be null if [shouldShowLeftButton] is set to true.
+class MiniBoxListItem extends StatelessWidget {
+  final MiniBox box;
+  final VoidCallback onLeftButtonPressed;
+  final String leftButtonText;
+  final bool shouldShowLeftButton;
 
-  MyBoxListItem({
-    @required this.onChangeVisibilityPressed,
+  MiniBoxListItem({
     @required this.box,
-    @required this.isMyBox,
+    this.leftButtonText,
+    this.onLeftButtonPressed,
+    this.shouldShowLeftButton = true,
   });
-
-  bool shouldGetInMinutes(DateTime time) {
-    return DateTime.now().difference(time).inMinutes < 60;
-  }
-
-  bool shouldGetInHours(DateTime time) {
-    return DateTime.now().difference(time).inHours < 24;
-  }
-
-  String getDaysSinceString(BuildContext ctx, DateTime time) {
-    if (shouldGetInMinutes(time)) {
-      return S.of(ctx).boxPublishedMinAgo(DateTime.now().difference(time).inMinutes);
-    } else if (shouldGetInHours(time)) {
-      return S.of(ctx).boxPublishedHoursAgo(DateTime.now().difference(time).inHours);
-    } else {
-      return S.of(ctx).boxPublishedDaysAgo(DateTime.now().difference(time).inDays);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +118,7 @@ class MyBoxListItem extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 4.0),
                                   child: Text(
-                                    getDaysSinceString(context, box.publishDateTime),
+                                    box.publishDateTime.toTimeDifferenceString(context),
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600,
@@ -149,23 +137,23 @@ class MyBoxListItem extends StatelessWidget {
               ),
               Row(
                 children: <Widget>[
-                  (isMyBox
+                  (shouldShowLeftButton
                       ? Expanded(
                           child: FlatButton(
-                            onPressed: onChangeVisibilityPressed,
+                            onPressed: onLeftButtonPressed,
                             child: Text(
-                              S.of(context).profileChangeVisibilityBtn,
+                              leftButtonText ?? '',
                               style: TextStyle(
                                 color: Colors.purple[200],
                               ),
                             ),
                           ),
                         )
-                      : Spacer()),
+                      : SizedBox.shrink()),
                   Expanded(
                     child: FlatButton(
-                      onPressed: () =>
-                          Navigator.pushNamed(context, Screens.boxDetails, arguments: box.id),
+                      onPressed: () => Navigator.pushNamed(context, Screens.boxDetails,
+                          arguments: box.id),
                       child: Text(
                         S.of(context).profileBoxDetailsBtn,
                         style: TextStyle(

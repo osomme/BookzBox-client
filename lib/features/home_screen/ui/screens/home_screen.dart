@@ -1,8 +1,6 @@
-import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/activity/ui/screens/activity_screen.dart';
 import 'package:bookzbox/features/feed/ui/screens/feed_screen.dart';
 import 'package:bookzbox/features/map/box_map.dart';
-import 'package:bookzbox/features/profile/stores/profile_store.dart';
 import 'package:bookzbox/features/profile/ui/screens/profile_screen.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';

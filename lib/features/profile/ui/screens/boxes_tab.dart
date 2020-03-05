@@ -32,14 +32,16 @@ class BoxesTab extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 70.0),
           itemCount: boxStore.myBoxes.length,
           itemBuilder: (BuildContext context, int index) {
-            return MyBoxListItem(
-              onChangeVisibilityPressed: () => showDialog<void>(
+            return MiniBoxListItem(
+              leftButtonText: S.of(context).profileChangeVisibilityBtn,
+              onLeftButtonPressed: () => showDialog<void>(
                 context: context,
                 barrierDismissible: true,
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text(S.of(context).boxVisibilityChangeDialogTitle),
-                    contentPadding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 12.0),
+                    contentPadding:
+                        const EdgeInsets.only(left: 4.0, right: 4.0, top: 12.0),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
@@ -54,7 +56,8 @@ class BoxesTab extends StatelessWidget {
                             ),
                             value: BoxStatus.public,
                             groupValue: boxStore.currentBoxStatus,
-                            onChanged: (BoxStatus value) => boxStore.setCurrentBoxStatus(value),
+                            onChanged: (BoxStatus value) =>
+                                boxStore.setCurrentBoxStatus(value),
                             activeColor: Colors.deepPurple[900],
                           ),
                         ),
@@ -67,7 +70,8 @@ class BoxesTab extends StatelessWidget {
                               style: TextStyle(color: Colors.black),
                             ),
                             groupValue: boxStore.currentBoxStatus,
-                            onChanged: (BoxStatus value) => boxStore.setCurrentBoxStatus(value),
+                            onChanged: (BoxStatus value) =>
+                                boxStore.setCurrentBoxStatus(value),
                             activeColor: Colors.deepPurple[900],
                           ),
                         ),
@@ -89,7 +93,8 @@ class BoxesTab extends StatelessWidget {
                             child: Text(
                               S.of(context).boxConfirmVisibilityChange,
                               style: TextStyle(
-                                  color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
+                                  color: Colors.deepPurple[900],
+                                  fontWeight: FontWeight.w700),
                             ),
                             onPressed: () => changeVisibilityAndCloseDialog(context),
                           ),
@@ -100,13 +105,13 @@ class BoxesTab extends StatelessWidget {
                 },
               ),
               box: boxStore.myBoxes[index],
-              isMyBox: profileStore.isMyProfile,
+              shouldShowLeftButton: profileStore.isMyProfile,
             );
           }),
       floatingActionButton: (profileStore.isMyProfile
           ? FloatingActionButton.extended(
-              onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (ctx) => Provider.of<NewBoxScreen>(ctx))),
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (ctx) => Provider.of<NewBoxScreen>(ctx))),
               label: Text(
                 S.of(context).profileNewBoxFAB,
               ),
