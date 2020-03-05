@@ -1,20 +1,24 @@
 import 'package:badges/badges.dart';
 import 'package:bookzbox/features/activity/activity.dart';
 import 'package:bookzbox/features/activity/ui/screens/activity_screen.dart';
+import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/feed/ui/screens/feed_screen.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:bookzbox/features/profile/ui/screens/profile_screen.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   final ActivityFeedStore activityFeedStore;
+  final AuthStore authStore;
 
   const HomeScreen({
     Key key,
     @required this.activityFeedStore,
+    @required this.authStore,
   }) : super(key: key);
 
   @override
@@ -24,16 +28,23 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
   PageController _pageController;
+  ReactionDisposer _userAuthListener;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _currentTab);
+    _userAuthListener = autorun((_) {
+      if (widget.authStore.user != null) {
+        widget.activityFeedStore.loadFeed(widget.authStore.user.uid);
+      }
+    });
   }
 
   @override
   void dispose() {
     _pageController.dispose();
+    _userAuthListener();
     super.dispose();
   }
 

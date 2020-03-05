@@ -4,6 +4,7 @@ import 'package:bookzbox/features/profile/ui/widgets/custom_tab_bar.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ActivityScreen extends StatefulWidget {
   final ActivityFeedStore activityFeedStore;
@@ -32,17 +33,21 @@ class _ActivityScreenState extends State<ActivityScreen> {
             tabs: [
               Tab(
                 text: S.of(context).activityTabLabelActivity,
-                icon: Badge(
-                  showBadge: widget.activityFeedStore.hasUnread,
-                  badgeColor: Theme.of(context).accentColor,
-                  badgeContent: Text(
-                    '${widget.activityFeedStore.numUnread}',
-                    style:
-                        Theme.of(context).accentTextTheme.body1.copyWith(fontSize: 11.0),
-                  ),
-                  padding: EdgeInsets.all(6.0),
-                  child: Icon(
-                    Icons.notifications,
+                icon: Observer(
+                  builder: (_) => Badge(
+                    showBadge: widget.activityFeedStore.hasUnread,
+                    badgeColor: Theme.of(context).accentColor,
+                    badgeContent: Text(
+                      '${widget.activityFeedStore.numUnread}',
+                      style: Theme.of(context)
+                          .accentTextTheme
+                          .body1
+                          .copyWith(fontSize: 11.0),
+                    ),
+                    padding: EdgeInsets.all(6.0),
+                    child: Icon(
+                      Icons.notifications,
+                    ),
                   ),
                 ),
               ),

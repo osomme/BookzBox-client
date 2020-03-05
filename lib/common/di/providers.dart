@@ -101,8 +101,11 @@ final bookProviders = [
 
 final mainProviders = [
   ...activityFeedProviders,
-  ProxyProvider<ActivityFeedStore, HomeScreen>(
-    update: (_, store, __) => HomeScreen(activityFeedStore: store),
+  ProxyProvider2<AuthStore, ActivityFeedStore, HomeScreen>(
+    update: (_, authStore, feedStore, __) => HomeScreen(
+      activityFeedStore: feedStore,
+      authStore: authStore,
+    ),
   ),
 ];
 

@@ -15,10 +15,13 @@ class ActivityFeedTab extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Observer(
-        builder: (_) => ListView.builder(
-          itemCount: activityFeedStore.feedItems.length,
-          itemBuilder: (ctx, i) => activityFeedStore.feedItems[i].toListItem(context),
-        ),
+        builder: (_) => activityFeedStore.feedItems.length > 0
+            ? ListView.builder(
+                itemCount: activityFeedStore.feedItems.length,
+                itemBuilder: (ctx, i) =>
+                    activityFeedStore.feedItems[i].toListItem(context),
+              )
+            : Center(child: Text('You have no notifications')),
       ),
     );
   }

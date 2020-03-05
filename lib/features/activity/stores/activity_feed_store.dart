@@ -7,8 +7,6 @@ part 'activity_feed_store.g.dart';
 class ActivityFeedStore = _ActivityFeedStore with _$ActivityFeedStore;
 
 abstract class _ActivityFeedStore with Store {
-  ReactionDisposer _streamListener;
-
   final IActivtiyRepository _repository;
 
   @observable
@@ -28,14 +26,12 @@ abstract class _ActivityFeedStore with Store {
 
   @computed
   List<ActivityItem> get activityNotifications =>
-      _feedItems.where((i) => i.type is LikeActivity).toList();
+      _feedItems.where((i) => i.type is LikeActivity || i.type is MatchActivity).toList();
 
-  _ActivityFeedStore(this._repository) {
-    _loadFeed();
-  }
+  _ActivityFeedStore(this._repository);
 
-  void _loadFeed() async {
-    final stream = await _repository.activityFeed('5axl9AZfKSYPFMiLlZgLtn7eOxe2');
+  void loadFeed(String userId) async {
+    final stream = await _repository.activityFeed(userId);
     _feed = ObservableStream(stream);
     _feed.listen(
       (data) => _feedItems = data.toList(),
