@@ -58,6 +58,7 @@ class MyBoxListItem extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     (box.bookThumbnailUrl == null
                         ? Image.asset(
@@ -77,23 +78,21 @@ class MyBoxListItem extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            box.title,
-                            style: Theme.of(context).primaryTextTheme.subhead.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18,
-                              letterSpacing: 1.05,
-                              shadows: <Shadow>[
-                                Shadow(
-                                  color: Colors.black54,
-                                  blurRadius: 2.0,
-                                  offset: Offset(1, 1),
-                                ),
-                              ],
-                            ),
-                            overflow: TextOverflow.fade,
-                          ),
+                          Text(box.title,
+                              style: Theme.of(context).primaryTextTheme.subhead.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                                letterSpacing: 1.05,
+                                shadows: <Shadow>[
+                                  Shadow(
+                                    color: Colors.black54,
+                                    blurRadius: 2.0,
+                                    offset: Offset(1, 1),
+                                  ),
+                                ],
+                              ),
+                              overflow: TextOverflow.ellipsis),
                           Padding(
                             padding: const EdgeInsets.only(top: 6.0),
                             child: Row(

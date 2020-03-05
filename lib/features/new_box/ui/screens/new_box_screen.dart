@@ -1,11 +1,14 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/models/book.dart';
 import 'package:bookzbox/features/new_box/models/box_error.dart';
 import 'package:bookzbox/features/new_box/models/lookup_error.dart';
+import 'package:bookzbox/features/new_box/models/scan_error.dart';
 import 'package:bookzbox/features/new_box/stores/new_box_store.dart';
 import 'package:bookzbox/features/new_box/ui/widgets/book_card_widget.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -329,6 +332,21 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
     widget.newBoxStore.setLookupError(LookupError.None);
   }
 
+  String getIsbnScanErrorString(BuildContext ctx, ScanError err) {
+    switch (err) {
+      case ScanError.None:
+        return '';
+      case ScanError.BackPressed:
+        return '';
+      case ScanError.PermissionDenied:
+        return S.of(ctx).newBoxCameraPermissionDenied;
+      case ScanError.Unknown:
+        return S.of(ctx).newBoxUnknownScanError;
+      default:
+        throw ArgumentError;
+    }
+  }
+
   Future<void> showIsbnDialog() async {
     widget.newBoxStore.setLookupError(LookupError.None);
     return showDialog<void>(
@@ -433,6 +451,47 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                 ),
               ),
               Container(
+                margin: const EdgeInsets.fromLTRB(18.0, 4.0, 18.0, 8.0),
+                child: MaterialButton(
+                  onPressed: scanIsbn,
+                  child: Column(
+                    children: <Widget>[
+                      Observer(
+                        builder: (_) => Text(
+                          getIsbnScanErrorString(
+                            context,
+                            widget.newBoxStore.isbnScanError,
+                          ),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.red[900],
+                          ),
+                        ),
+                      ),
+                      Stack(
+                        alignment: Alignment.center,
+                        children: <Widget>[
+                          Center(
+                            child: Icon(
+                              Ionicons.md_qr_scanner,
+                              size: 112,
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              S.of(context).newBoxScanIsbnBtnText,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
                 padding: const EdgeInsets.fromLTRB(18.0, 0.0, 18.0, 0.0),
                 child: Column(
                   children: <Widget>[
@@ -497,6 +556,32 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
         );
       },
     );
+  }
+
+  /// Scans a barcode to read the ISBN.
+  Future scanIsbn() async {
+    try {
+      String result = await BarcodeScanner.scan();
+      print("Scanner result: " + result);
+      widget.newBoxStore.setIsbn(result);
+      handleBookLookup(context);
+      widget.newBoxStore.setIsbnScanError(ScanError.None);
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        print("User did not grant camera access.");
+        widget.newBoxStore.setIsbnScanError(ScanError.PermissionDenied);
+        //TODO: re-show permission dialog?
+      } else {
+        print("Error scanning: $e");
+        widget.newBoxStore.setIsbnScanError(ScanError.Unknown);
+      }
+    } on FormatException {
+      print("User returned from scanner without scanning anything (used back-button).");
+      widget.newBoxStore.setIsbnScanError(ScanError.BackPressed);
+    } catch (e) {
+      print("Error scanning: $e");
+      widget.newBoxStore.setIsbnScanError(ScanError.Unknown);
+    }
   }
 
   Future<void> showBookDialog() async {

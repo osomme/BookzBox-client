@@ -73,6 +73,12 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
   bool get isIsbnInfoBoxExpanded => (_$isIsbnInfoBoxExpandedComputed ??=
           Computed<bool>(() => super.isIsbnInfoBoxExpanded))
       .value;
+  Computed<ScanError> _$isbnScanErrorComputed;
+
+  @override
+  ScanError get isbnScanError => (_$isbnScanErrorComputed ??=
+          Computed<ScanError>(() => super.isbnScanError))
+      .value;
 
   final _$_isbnAtom = Atom(name: '_NewBoxStore._isbn');
 
@@ -264,6 +270,23 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
         name: '${_$_isIsbnInfoBoxExpandedAtom.name}_set');
   }
 
+  final _$_isbnScanErrorAtom = Atom(name: '_NewBoxStore._isbnScanError');
+
+  @override
+  ScanError get _isbnScanError {
+    _$_isbnScanErrorAtom.context.enforceReadPolicy(_$_isbnScanErrorAtom);
+    _$_isbnScanErrorAtom.reportObserved();
+    return super._isbnScanError;
+  }
+
+  @override
+  set _isbnScanError(ScanError value) {
+    _$_isbnScanErrorAtom.context.conditionallyRunInAction(() {
+      super._isbnScanError = value;
+      _$_isbnScanErrorAtom.reportChanged();
+    }, _$_isbnScanErrorAtom, name: '${_$_isbnScanErrorAtom.name}_set');
+  }
+
   final _$findBookAsyncAction = AsyncAction('findBook');
 
   @override
@@ -405,6 +428,16 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
     final _$actionInfo = _$_NewBoxStoreActionController.startAction();
     try {
       return super.toggleIsbnInfoBoxExpandedStatus();
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setIsbnScanError(ScanError err) {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.setIsbnScanError(err);
     } finally {
       _$_NewBoxStoreActionController.endAction(_$actionInfo);
     }

@@ -488,6 +488,33 @@ class S {
     );
   }
 
+  String get newBoxScanIsbnBtnText {
+    return Intl.message(
+      'Scan ISBN',
+      name: 'newBoxScanIsbnBtnText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxCameraPermissionDenied {
+    return Intl.message(
+      'This feature requires camera permission.',
+      name: 'newBoxCameraPermissionDenied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get newBoxUnknownScanError {
+    return Intl.message(
+      'Scan failed, please try again.',
+      name: 'newBoxUnknownScanError',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get homeNavBarFeedLabel {
     return Intl.message(
       'Feed',

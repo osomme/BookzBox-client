@@ -4,6 +4,7 @@ import 'package:bookzbox/features/box/models/box.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/features/new_box/models/box_error.dart';
 import 'package:bookzbox/features/new_box/models/lookup_error.dart';
+import 'package:bookzbox/features/new_box/models/scan_error.dart';
 import 'package:bookzbox/features/new_box/repositories/book_repository.dart';
 import 'package:bookzbox/features/new_box/repositories/box_repository.dart';
 import 'package:bookzbox/features/new_box/services/publish_error.dart';
@@ -53,6 +54,9 @@ abstract class _NewBoxStore with Store {
 
   @observable
   bool _isIsbnInfoBoxExpanded = false;
+
+  @observable
+  ScanError _isbnScanError = ScanError.None;
 
   _NewBoxStore(this._bookRepository, this._boxRepository, this._locationService);
 
@@ -231,4 +235,10 @@ abstract class _NewBoxStore with Store {
 
   @action
   void toggleIsbnInfoBoxExpandedStatus() => _isIsbnInfoBoxExpanded = !_isIsbnInfoBoxExpanded;
+
+  @computed
+  ScanError get isbnScanError => _isbnScanError;
+
+  @action
+  void setIsbnScanError(ScanError err) => _isbnScanError = err;
 }

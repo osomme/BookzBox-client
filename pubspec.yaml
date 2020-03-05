@@ -83,6 +83,9 @@ dependencies:
   # Automatically resizing text widget 
   auto_size_text: ^2.1.0
 
+  # Scanning ISBN using bar code
+  barcode_scan: ^2.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
