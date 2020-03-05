@@ -1320,6 +1320,15 @@ class S {
       args: [],
     );
   }
+
+  String get activityFailedBoxLoad {
+    return Intl.message(
+      'Failed to load liked boxes',
+      name: 'activityFailedBoxLoad',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

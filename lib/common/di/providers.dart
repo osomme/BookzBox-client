@@ -1,6 +1,8 @@
 import 'package:bookzbox/features/activity/activity.dart';
+import 'package:bookzbox/features/activity/stores/my_liked_boxes_store.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/authentication/errors/auth_error_handling.dart';
+import 'package:bookzbox/features/box/box.dart';
 import 'package:bookzbox/features/box/services/box_loader_service.dart';
 import 'package:bookzbox/features/box/services/box_loader_service_impl.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
@@ -194,5 +196,20 @@ final boxDetailsProviders = [
   ),
   ProxyProvider<IBoxDetailsRepository, BoxDetailsStore>(
     update: (_, repo, __) => BoxDetailsStore(repo),
+  ),
+];
+
+final boxLoaderProviders = [
+  Provider<IBoxLoaderService>(
+    create: (_) => BoxLoaderService(),
+  ),
+  ProxyProvider<IBoxLoaderService, IBoxLoaderRepository>(
+    update: (_, service, __) => BoxLoaderRepository(service),
+  ),
+];
+
+final likedBoxesStore = [
+  ProxyProvider<IBoxLoaderRepository, MyLikedBoxesStore>(
+    update: (_, repository, __) => MyLikedBoxesStore(repository),
   ),
 ];

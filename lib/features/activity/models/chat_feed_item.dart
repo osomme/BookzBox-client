@@ -26,7 +26,7 @@ final sampleChatItems = [
     chatId: '1',
     otherUserName: 'Lars Pettersen',
     otherUserThumbnail: null,
-    lastMessage: 'This is the last message, mmkay?',
+    lastMessage: 'Another sample text...',
     timestamp: DateTime.now().subtract(Duration(hours: 2)),
     read: true,
   ),

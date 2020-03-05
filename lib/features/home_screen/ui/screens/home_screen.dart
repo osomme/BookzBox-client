@@ -1,5 +1,7 @@
 import 'package:badges/badges.dart';
+import 'package:bookzbox/common/di/providers.dart';
 import 'package:bookzbox/features/activity/activity.dart';
+import 'package:bookzbox/features/activity/stores/my_liked_boxes_store.dart';
 import 'package:bookzbox/features/activity/ui/screens/activity_screen.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/feed/ui/screens/feed_screen.dart';
@@ -62,8 +64,18 @@ class _HomeScreenState extends State<HomeScreen> {
             case 1:
               return Provider.of<BoxMapScreen>(context);
             case 2:
-              return ActivityScreen(
-                activityFeedStore: widget.activityFeedStore,
+              return MultiProvider(
+                providers: [
+                  ...boxLoaderProviders,
+                  ...likedBoxesStore,
+                ],
+                child: Consumer<MyLikedBoxesStore>(
+                  builder: (ctx, likedBoxesStore, __) => ActivityScreen(
+                    userId: widget.authStore.user.uid,
+                    activityFeedStore: widget.activityFeedStore,
+                    boxLikeStore: likedBoxesStore,
+                  ),
+                ),
               );
             case 3:
               return Provider.of<ProfileScreen>(context);

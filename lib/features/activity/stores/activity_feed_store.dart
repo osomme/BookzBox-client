@@ -10,9 +10,6 @@ abstract class _ActivityFeedStore with Store {
   final IActivtiyRepository _repository;
 
   @observable
-  ObservableStream<Iterable<ActivityItem>> _feed;
-
-  @observable
   List<ActivityItem> _feedItems = List();
 
   @observable
@@ -38,8 +35,7 @@ abstract class _ActivityFeedStore with Store {
 
   void loadFeed(String userId) async {
     final stream = await _repository.activityFeed(userId);
-    _feed = ObservableStream(stream);
-    _feed.listen(
+    stream.listen(
       (data) {
         if (hasError) {
           _hasError = false;

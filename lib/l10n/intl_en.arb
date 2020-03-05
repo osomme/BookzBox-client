@@ -140,5 +140,6 @@
     "activityTabLabelMessages": "Messages",
     "activityTabLabelLikes": "Likes",
     "activityNoFeedItems": "You have no notifications",
-    "activityFeedErrorMessage": "Failed to load notifications"
+    "activityFeedErrorMessage": "Failed to load notifications",
+    "activityFailedBoxLoad": "Failed to load liked boxes"
 }
