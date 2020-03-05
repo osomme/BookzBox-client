@@ -1302,6 +1302,24 @@ class S {
       args: [],
     );
   }
+
+  String get activityNoFeedItems {
+    return Intl.message(
+      'You have no notifications',
+      name: 'activityNoFeedItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityFeedErrorMessage {
+    return Intl.message(
+      'Failed to load notifications',
+      name: 'activityFeedErrorMessage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

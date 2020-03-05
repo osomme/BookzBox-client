@@ -15,6 +15,9 @@ abstract class _ActivityFeedStore with Store {
   @observable
   List<ActivityItem> _feedItems = List();
 
+  @observable
+  bool _hasError = false;
+
   @computed
   List<ActivityItem> get feedItems => _feedItems;
 
@@ -28,14 +31,25 @@ abstract class _ActivityFeedStore with Store {
   List<ActivityItem> get activityNotifications =>
       _feedItems.where((i) => i.type is LikeActivity || i.type is MatchActivity).toList();
 
+  @computed
+  bool get hasError => _hasError;
+
   _ActivityFeedStore(this._repository);
 
   void loadFeed(String userId) async {
     final stream = await _repository.activityFeed(userId);
     _feed = ObservableStream(stream);
     _feed.listen(
-      (data) => _feedItems = data.toList(),
-      onError: (error) => print('Error while listening to activity feed stream: $error'),
+      (data) {
+        if (hasError) {
+          _hasError = false;
+        }
+        _feedItems = data.toList();
+      },
+      onError: (error) {
+        _hasError = true;
+        print('Error while listening to activity feed stream: $error');
+      },
     );
   }
 }

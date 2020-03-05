@@ -40,11 +40,13 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "activityBoxFeedRemoveLike" : MessageLookupByLibrary.simpleMessage("REMOVE LIKE"),
+    "activityFeedErrorMessage" : MessageLookupByLibrary.simpleMessage("Failed to load notifications"),
     "activityItemLikeMiddle" : MessageLookupByLibrary.simpleMessage(" liked your box: "),
     "activityItemMatchPost" : MessageLookupByLibrary.simpleMessage(" has matched with you"),
     "activityItemMessagePost" : MessageLookupByLibrary.simpleMessage(" wrote: "),
     "activityItemUnknown" : MessageLookupByLibrary.simpleMessage("Unknown activity"),
     "activityNewItem" : MessageLookupByLibrary.simpleMessage("New"),
+    "activityNoFeedItems" : MessageLookupByLibrary.simpleMessage("You have no notifications"),
     "activityScreenAppBarTitle" : MessageLookupByLibrary.simpleMessage("Recent activity"),
     "activityTabLabelActivity" : MessageLookupByLibrary.simpleMessage("Activity"),
     "activityTabLabelLikes" : MessageLookupByLibrary.simpleMessage("Likes"),
