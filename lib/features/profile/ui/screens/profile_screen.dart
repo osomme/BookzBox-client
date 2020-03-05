@@ -33,7 +33,7 @@ class ProfileScreen extends StatefulWidget {
       profileStore.setUserId(authStore.user?.uid);
     }
     profileStore.init();
-    profileBoxStore.init();
+    profileBoxStore.init(profileStore.userId);
   }
 
   @override

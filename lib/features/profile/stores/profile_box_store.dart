@@ -1,5 +1,6 @@
 import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/new_box/repositories/box_repository.dart';
+import 'package:dartz/dartz.dart';
 import 'package:mobx/mobx.dart';
 
 part 'profile_box_store.g.dart';
@@ -16,22 +17,36 @@ abstract class _ProfileBoxStore with Store {
   @observable
   BoxStatus _currentBoxStatus = BoxStatus.public;
 
-  _ProfileBoxStore(this._boxRepository) {
-    myBoxes.add(
-      // TODO remove after backend loading is implemented.
-      MiniBox(
-        id: 'abc',
-        status: BoxStatus.public,
-        publishDateTime: DateTime.now(),
-        title: 'All my Harry Potter books',
-        bookThumbnailUrl: null,
-      ),
-    );
+  /// [true] if currently fetching boxes, otherwise [false].
+  @observable
+  bool _isLoading = false;
+
+  _ProfileBoxStore(this._boxRepository);
+
+  @action
+  void init(String userId) {
+    if (userId == null || userId.isEmpty) {
+      return;
+    }
+    _isLoading = true;
+    _boxRepository.fetchUserBoxes(userId).then((result) => handleResult(result));
   }
 
   @action
-  void init() {
-    // TODO: load boxes
+  void handleResult(Either<String, List<MiniBox>> res) {
+    res.fold((err) => handleFetchError(err), (boxes) => handleFetchSuccess(boxes));
+    _isLoading = false;
+  }
+
+  @action
+  void handleFetchError(String err) {
+    print(err);
+  }
+
+  @action
+  void handleFetchSuccess(List<MiniBox> boxes) {
+    myBoxes.clear();
+    myBoxes.addAll(boxes);
   }
 
   @computed
@@ -39,4 +54,10 @@ abstract class _ProfileBoxStore with Store {
 
   @action
   void setCurrentBoxStatus(BoxStatus status) => _currentBoxStatus = status;
+
+  @computed
+  bool get isLoading => _isLoading;
+
+  @action
+  void setIsLoading(bool isLoading) => _isLoading = isLoading;
 }

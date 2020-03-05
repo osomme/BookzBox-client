@@ -48,88 +48,94 @@ class MiniBoxListItem extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    (box.bookThumbnailUrl == null
-                        ? Image.asset(
-                            'assets/images/book_cover_placeholder.jpeg',
-                            fit: BoxFit.fill,
-                            width: 70,
-                            height: 100,
-                          )
-                        : Image.network(
-                            box.bookThumbnailUrl,
-                            fit: BoxFit.fill,
-                            width: 70,
-                            height: 100,
-                          )),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(box.title,
-                              style: Theme.of(context).primaryTextTheme.subhead.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18,
-                                letterSpacing: 1.05,
-                                shadows: <Shadow>[
-                                  Shadow(
-                                    color: Colors.black54,
-                                    blurRadius: 2.0,
-                                    offset: Offset(1, 1),
+                    Expanded(
+                      flex: 1,
+                      child: (box.bookThumbnailUrl == null
+                          ? Image.asset(
+                              'assets/images/book_cover_placeholder.jpeg',
+                              fit: BoxFit.fill,
+                              width: 70,
+                              height: 100,
+                            )
+                          : Image.network(
+                              box.bookThumbnailUrl,
+                              fit: BoxFit.fill,
+                              width: 70,
+                              height: 100,
+                            )),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(box.title,
+                                style: Theme.of(context).primaryTextTheme.subhead.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18,
+                                  letterSpacing: 1.05,
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                      color: Colors.black54,
+                                      blurRadius: 2.0,
+                                      offset: Offset(1, 1),
+                                    ),
+                                  ],
+                                ),
+                                overflow: TextOverflow.ellipsis),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Icon(
+                                    MaterialCommunityIcons.eye,
+                                    size: 24.0,
+                                    color: Theme.of(context).accentColor,
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4.0),
+                                    child: Text(
+                                      box.status.toLocalizedString(context).toUpperCase(),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
-                              overflow: TextOverflow.ellipsis),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 6.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Icon(
-                                  MaterialCommunityIcons.eye,
-                                  size: 24.0,
-                                  color: Theme.of(context).accentColor,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 4.0),
-                                  child: Text(
-                                    box.status.toLocalizedString(context).toUpperCase(),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                )
-                              ],
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 6.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Icon(
-                                  MaterialCommunityIcons.cube_send,
-                                  size: 24.0,
-                                  color: Theme.of(context).accentColor,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 4.0),
-                                  child: Text(
-                                    box.publishDateTime.toTimeDifferenceString(context),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14,
-                                    ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Icon(
+                                    MaterialCommunityIcons.cube_send,
+                                    size: 24.0,
+                                    color: Theme.of(context).accentColor,
                                   ),
-                                )
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4.0),
+                                    child: Text(
+                                      box.publishDateTime.toTimeDifferenceString(context),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -152,8 +158,8 @@ class MiniBoxListItem extends StatelessWidget {
                       : SizedBox.shrink()),
                   Expanded(
                     child: FlatButton(
-                      onPressed: () => Navigator.pushNamed(context, Screens.boxDetails,
-                          arguments: box.id),
+                      onPressed: () =>
+                          Navigator.pushNamed(context, Screens.boxDetails, arguments: box.id),
                       child: Text(
                         S.of(context).profileBoxDetailsBtn,
                         style: TextStyle(

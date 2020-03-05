@@ -177,6 +177,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileMyBoxesTabLabel" : MessageLookupByLibrary.simpleMessage("MY BOXES"),
     "profileNewBoxFAB" : MessageLookupByLibrary.simpleMessage("NEW BOX"),
     "profileNewBoxTitle" : MessageLookupByLibrary.simpleMessage("New box"),
+    "profileNoBoxes" : MessageLookupByLibrary.simpleMessage("No boxes.."),
     "profileOtherTabLabel" : MessageLookupByLibrary.simpleMessage("ABOUT"),
     "profilePreferencesTabLabel" : MessageLookupByLibrary.simpleMessage("PREFERENCES"),
     "profileRatingCardSubTitle" : MessageLookupByLibrary.simpleMessage("The rating is based on the feedback left by other users after a trade or interaction."),

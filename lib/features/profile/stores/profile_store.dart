@@ -49,6 +49,9 @@ abstract class _ProfileStore with Store {
         .then((_) => _.fold((error) => _profileLoadError = error, (profile) => _profile = profile));
   }
 
+  @computed
+  String get userId => _userId;
+
   @action
   void setUserId(String uid) => _userId = uid;
 

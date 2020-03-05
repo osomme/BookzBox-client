@@ -823,6 +823,15 @@ class S {
     );
   }
 
+  String get profileNoBoxes {
+    return Intl.message(
+      'No boxes..',
+      name: 'profileNoBoxes',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get boxStatusPublicDesc {
     return Intl.message(
       'Everyone can see this box.',

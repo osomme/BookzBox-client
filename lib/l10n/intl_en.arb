@@ -87,6 +87,7 @@
     "profileActivityStatusActive": "Active now",
     "profileActivityStatusAway": "Away",
     "profileActivityStatusOffline": "Offline",
+    "profileNoBoxes": "No boxes..",
     "boxStatusPublicDesc": "Everyone can see this box.",
     "boxStatusPrivateDesc": "Only you can see this box.",
     "boxPublishedMinAgo": "{numMin} min ago",
