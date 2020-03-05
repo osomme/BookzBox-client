@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     _pageController.dispose();
     _userAuthListener();
+    widget.activityFeedStore.dispose();
     super.dispose();
   }
 

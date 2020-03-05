@@ -11,7 +11,6 @@ class FirebaseActivtiyService implements IActivtiyService {
         .collection('activity')
         .snapshots()
         .map((ai) => ai.documents
-            .map((doc) => ActivityItem.fromFirestore(doc.data, doc.documentID)))
-        .asBroadcastStream();
+            .map((doc) => ActivityItem.fromFirestore(doc.data, doc.documentID)));
   }
 }

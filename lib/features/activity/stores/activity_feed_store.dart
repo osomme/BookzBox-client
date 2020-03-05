@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bookzbox/features/activity/activity.dart';
 import 'package:bookzbox/features/likes/likes.dart';
 import 'package:mobx/mobx.dart';
@@ -8,6 +10,8 @@ class ActivityFeedStore = _ActivityFeedStore with _$ActivityFeedStore;
 
 abstract class _ActivityFeedStore with Store {
   final IActivtiyRepository _repository;
+
+  StreamSubscription<Iterable<ActivityItem>> _streamSubscription;
 
   @observable
   List<ActivityItem> _feedItems = List();
@@ -35,7 +39,7 @@ abstract class _ActivityFeedStore with Store {
 
   void loadFeed(String userId) async {
     final stream = await _repository.activityFeed(userId);
-    stream.listen(
+    _streamSubscription = stream.listen(
       (data) {
         if (hasError) {
           _hasError = false;
@@ -47,5 +51,9 @@ abstract class _ActivityFeedStore with Store {
         print('Error while listening to activity feed stream: $error');
       },
     );
+  }
+
+  void dispose() {
+    _streamSubscription.cancel();
   }
 }
