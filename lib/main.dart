@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ...authProviders,
+        ...feedProviders,
         ...mainProviders,
         ...bookProviders,
         ...feedProviders,

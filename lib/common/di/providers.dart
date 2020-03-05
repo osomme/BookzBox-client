@@ -1,3 +1,4 @@
+import 'package:bookzbox/features/activity/activity.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/authentication/errors/auth_error_handling.dart';
 import 'package:bookzbox/features/box/services/box_loader_service.dart';
@@ -48,6 +49,18 @@ final authProviders = [
   ),
 ];
 
+final activityFeedProviders = [
+  Provider<IActivtiyService>(
+    create: (_) => FirebaseActivtiyService(),
+  ),
+  ProxyProvider<IActivtiyService, IActivtiyRepository>(
+    update: (_, service, __) => ActivityRepositoryImpl(service),
+  ),
+  ProxyProvider<IActivtiyRepository, ActivityFeedStore>(
+    update: (_, repo, __) => ActivityFeedStore(repo),
+  ),
+];
+
 final loginProviders = [
   Provider<LoginCredentialsStore>(create: (_) => LoginCredentialsStore()),
   Provider<NewAccountStore>(create: (_) => NewAccountStore()),
@@ -87,8 +100,9 @@ final bookProviders = [
 ];
 
 final mainProviders = [
-  Provider<HomeScreen>(
-    create: (_) => HomeScreen(),
+  ...activityFeedProviders,
+  ProxyProvider<ActivityFeedStore, HomeScreen>(
+    update: (_, store, __) => HomeScreen(activityFeedStore: store),
   ),
 ];
 

@@ -42,15 +42,16 @@ class ActivityItem {
 
   factory ActivityItem.fromFirestore(Map<dynamic, dynamic> data, String id) {
     if (data['typename'] == 'like') {
+      final likeData = data['data'];
       return ActivityItem(
         id: id,
         read: data['read'],
         timestamp: (data['timestamp'] as Timestamp).toDate(),
         type: LikeActivity(
-          likedByUserId: data['data.likedByuserId'],
-          likedByUsername: data['data.likedByusername'],
-          boxTitle: data['data.boxTitle'],
-          boxId: data['data.boxId'],
+          likedByUserId: likeData['likedByUserId'],
+          likedByUsername: likeData['likedByUsername'],
+          boxTitle: likeData['boxTitle'],
+          boxId: likeData['boxId'],
         ),
       );
     } else {

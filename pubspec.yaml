@@ -64,9 +64,6 @@ dependencies:
 
   # Cached network image
   cached_network_image: ^2.0.0
-  
-  # Unique id generation
-  uuid: 2.0.4
 
   # Google Maps for Flutter
   google_maps_flutter: ^0.5.23+1
@@ -82,6 +79,9 @@ dependencies:
 
   # Automatically resizing text widget 
   auto_size_text: ^2.1.0
+
+  # Icon badges
+  badges: ^1.1.1
 
 dev_dependencies:
   flutter_test:
