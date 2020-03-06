@@ -472,7 +472,7 @@ class S {
 
   String get newBoxShowIsbnInfoText {
     return Intl.message(
-      'Show ISBN info',
+      'Show ISBN example',
       name: 'newBoxShowIsbnInfoText',
       desc: '',
       args: [],
@@ -481,7 +481,7 @@ class S {
 
   String get newBoxHideIsbnInfoText {
     return Intl.message(
-      'Hide ISBN info',
+      'Hide ISBN example',
       name: 'newBoxHideIsbnInfoText',
       desc: '',
       args: [],
