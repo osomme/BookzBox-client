@@ -11,6 +11,7 @@ class ChatFeedTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: Add a message when the user does not have any messages. See the two other tabs for exmaples.
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: ListView.builder(

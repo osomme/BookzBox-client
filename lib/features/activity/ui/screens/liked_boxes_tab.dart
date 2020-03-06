@@ -1,7 +1,9 @@
+import 'package:bookzbox/common/widgets/widgets.dart';
 import 'package:bookzbox/features/activity/stores/my_liked_boxes_store.dart';
 import 'package:bookzbox/features/profile/ui/widgets/my_box_list_item.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -24,15 +26,25 @@ class LikedBoxesTab extends StatelessWidget {
         builder: (_) {
           if (likedBoxesStore.isLoading) {
             return Center(
-              child: SpinKitThreeBounce(
-                color: Theme.of(context).primaryColor,
+              child: SpinKitThreeBounce(color: Theme.of(context).primaryColor),
+            );
+          } else if (likedBoxesStore.hasError) {
+            return ErrorTextWithIcon(
+              text: S.of(context).activityFailedBoxLoad,
+              icon: Icon(
+                Icons.error,
+                color: Colors.grey,
+                size: 64.0,
               ),
             );
-          }
-
-          if (likedBoxesStore.hasError) {
-            return Center(
-              child: Text(S.of(context).activityFailedBoxLoad),
+          } else if (likedBoxesStore.boxes.isEmpty) {
+            return ErrorTextWithIcon(
+              text: S.of(context).activityNoLikedBoxes,
+              icon: Icon(
+                Entypo.box,
+                color: Colors.grey,
+                size: 64.0,
+              ),
             );
           }
 

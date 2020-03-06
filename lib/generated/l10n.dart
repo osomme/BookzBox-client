@@ -1341,7 +1341,7 @@ class S {
 
   String get activityNoFeedItems {
     return Intl.message(
-      'You have no notifications',
+      'Your notification feed is empty',
       name: 'activityNoFeedItems',
       desc: '',
       args: [],
@@ -1361,6 +1361,15 @@ class S {
     return Intl.message(
       'Failed to load liked boxes',
       name: 'activityFailedBoxLoad',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityNoLikedBoxes {
+    return Intl.message(
+      'You have not liked any boxes...',
+      name: 'activityNoLikedBoxes',
       desc: '',
       args: [],
     );
