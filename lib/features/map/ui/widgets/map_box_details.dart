@@ -1,6 +1,6 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/common/widgets/circular_button.dart';
-import 'package:bookzbox/features/feed/stores/box_like_store.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -10,7 +10,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 
-class ModalBoxDetails extends StatelessWidget {
+class ModalBoxDetails extends StatefulWidget {
   final BoxMapItem box;
 
   final BoxLikeStore likeStore;
@@ -20,6 +20,17 @@ class ModalBoxDetails extends StatelessWidget {
     @required this.box,
     @required this.likeStore,
   }) : super(key: key);
+
+  @override
+  _ModalBoxDetailsState createState() => _ModalBoxDetailsState();
+}
+
+class _ModalBoxDetailsState extends State<ModalBoxDetails> {
+  @override
+  void dispose() {
+    widget.likeStore.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +55,7 @@ class ModalBoxDetails extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: 12.0),
         child: Text(
-          box.title,
+          widget.box.title,
           style: Theme.of(context).primaryTextTheme.title,
         ),
       ),
@@ -52,7 +63,9 @@ class ModalBoxDetails extends StatelessWidget {
   }
 
   Widget _images(BuildContext context) =>
-      box.books.any((b) => b.thumbnailUrl != null) ? _imageList(context) : _noImagesText(context);
+      widget.box.books.any((b) => b.thumbnailUrl != null)
+          ? _imageList(context)
+          : _noImagesText(context);
 
   Padding _imageList(BuildContext context) {
     return Padding(
@@ -63,7 +76,7 @@ class ModalBoxDetails extends StatelessWidget {
         child: Center(
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: box.books.length,
+            itemCount: widget.box.books.length,
             itemBuilder: (ctx, i) {
               return Row(
                 children: <Widget>[
@@ -75,7 +88,9 @@ class ModalBoxDetails extends StatelessWidget {
                       _imageText(i, context),
                     ],
                   ),
-                  (i + 1) < box.books.length ? SizedBox(width: 5.0) : SizedBox.shrink(),
+                  (i + 1) < widget.box.books.length
+                      ? SizedBox(width: 5.0)
+                      : SizedBox.shrink(),
                 ],
               );
             },
@@ -96,7 +111,7 @@ class ModalBoxDetails extends StatelessWidget {
 
   Text _imageText(int index, BuildContext context) {
     return Text(
-      box.books[index].categories.first ?? '',
+      widget.box.books[index].categories.first ?? '',
       style: Theme.of(context).primaryTextTheme.caption,
     );
   }
@@ -115,7 +130,7 @@ class ModalBoxDetails extends StatelessWidget {
             ),
           ),
         ),
-        imageUrl: box.books[index].thumbnailUrl ?? '',
+        imageUrl: widget.box.books[index].thumbnailUrl ?? '',
         placeholder: (ctx, url) => SpinKitPulse(
           size: 20.0,
           color: Theme.of(ctx).primaryIconTheme.color,
@@ -132,13 +147,14 @@ class ModalBoxDetails extends StatelessWidget {
       children: <Widget>[
         Text(
           S.of(context).mapDescription,
-          style: Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
+          style:
+              Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
         ),
         SizedBox(height: 5.0),
         Text(
-          (box.description == null || box.description.isEmpty)
+          (widget.box.description == null || widget.box.description.isEmpty)
               ? S.of(context).mapNoDescription
-              : box.description,
+              : widget.box.description,
           style: Theme.of(context).primaryTextTheme.body2,
           maxLines: 7,
           overflow: TextOverflow.ellipsis,
@@ -153,11 +169,12 @@ class ModalBoxDetails extends StatelessWidget {
       children: <Widget>[
         Text(
           S.of(context).mapPublishedOn,
-          style: Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
+          style:
+              Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
         ),
         SizedBox(height: 5.0),
         Text(
-          DateFormat.yMMMd().add_jm().format(box.publishedOn),
+          DateFormat.yMMMd().add_jm().format(widget.box.publishedOn),
           style: Theme.of(context).primaryTextTheme.body2,
         ),
       ],
@@ -178,24 +195,26 @@ class ModalBoxDetails extends StatelessWidget {
   Widget _likeButton(BuildContext context) {
     return CircularButton(
         child: Observer(builder: (_) {
-          if (likeStore.isLoading) {
+          if (widget.likeStore.isLoading) {
             return SpinKitPulse(
               size: 25.0,
               color: Theme.of(context).accentIconTheme.color,
             );
           }
           return Icon(
-            likeStore.isLiked ? MaterialCommunityIcons.heart : MaterialCommunityIcons.heart_outline,
+            widget.likeStore.isLiked
+                ? MaterialCommunityIcons.heart
+                : MaterialCommunityIcons.heart_outline,
             color: Theme.of(context).accentIconTheme.color,
             size: 25.0,
           );
         }),
         label: S.of(context).mapLikeLabel,
         onClick: () {
-          if (likeStore.isLoading) {
+          if (widget.likeStore.isLoading) {
             return;
           }
-          likeStore.toggleLikeStatus();
+          widget.likeStore.toggleLikeStatus();
         });
   }
 
@@ -203,14 +222,16 @@ class ModalBoxDetails extends StatelessWidget {
     return CircularButton(
         child: Icon(Icons.zoom_in),
         label: S.of(context).mapDetailsLabel,
-        onClick: () => Navigator.pushNamed(context, Screens.boxDetails, arguments: box.boxId));
+        onClick: () => Navigator.pushNamed(context, Screens.boxDetails,
+            arguments: widget.box.boxId));
   }
 
   Widget _profileButton(BuildContext context) {
     return CircularButton(
         child: Icon(Icons.person),
         label: S.of(context).mapProfileLabel,
-        onClick: () => Navigator.pushNamed(context, Screens.profile, arguments: box.publishedById));
+        onClick: () => Navigator.pushNamed(context, Screens.profile,
+            arguments: widget.box.publishedById));
   }
 
   _mainTextContent(BuildContext context) {

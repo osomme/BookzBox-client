@@ -142,5 +142,8 @@
     "activityBoxFeedRemoveLike": "REMOVE LIKE",
     "activityTabLabelActivity": "Activity",
     "activityTabLabelMessages": "Messages",
-    "activityTabLabelLikes": "Likes"
+    "activityTabLabelLikes": "Likes",
+    "activityNoFeedItems": "You have no notifications",
+    "activityFeedErrorMessage": "Failed to load notifications",
+    "activityFailedBoxLoad": "Failed to load liked boxes"
 }

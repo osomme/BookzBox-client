@@ -1,4 +1,6 @@
+import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/activity/activity.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -47,7 +49,8 @@ ActivityListItem _likeToListItem(
       ActivityItemTextParam(content: activity.boxTitle, bold: true),
     ],
     date: timestamp,
-    onClick: () => print('Clicked on like activity'),
+    onClick: () =>
+        Navigator.pushNamed(ctx, Screens.profile, arguments: activity.likedByUserId),
     read: read,
     //trailing: IconButton(icon: Icon(Icons.person), onPressed: () => print('')),
   );

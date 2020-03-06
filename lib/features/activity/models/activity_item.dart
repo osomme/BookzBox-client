@@ -1,4 +1,6 @@
 import 'package:bookzbox/features/activity/models/models.dart';
+import 'package:bookzbox/features/likes/likes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ActivityItem {
@@ -15,6 +17,47 @@ class ActivityItem {
     @required this.timestamp,
     @required this.read,
   });
+
+  /// Maps a Like ActivityItem to a Firestore compatible map. [this] must have
+  ///  a type property which is an instance of Like.
+  Map<String, dynamic> toFirestore() {
+    return {
+      'typename': 'like',
+      'data': _typeToMap(this.type),
+      'timestamp': Timestamp.fromDate(this.timestamp),
+      'read': false,
+    };
+  }
+
+  Map<String, dynamic> _typeToMap(ActivityType type) {
+    if (type is LikeActivity) {
+      return {
+        'likedByUserId': type.likedByUserId,
+        'boxId': type.boxId,
+      };
+    } else {
+      throw 'Not implemented yet';
+    }
+  }
+
+  factory ActivityItem.fromFirestore(Map<dynamic, dynamic> data, String id) {
+    if (data['typename'] == 'like') {
+      final likeData = data['data'];
+      return ActivityItem(
+        id: id,
+        read: data['read'],
+        timestamp: (data['timestamp'] as Timestamp).toDate(),
+        type: LikeActivity(
+          likedByUserId: likeData['likedByUserId'],
+          likedByUsername: likeData['likedByUsername'],
+          boxTitle: likeData['boxTitle'],
+          boxId: likeData['boxId'],
+        ),
+      );
+    } else {
+      throw 'Unknown activity type';
+    }
+  }
 }
 
 // User for testing purposes. //TODO: Remove after back-end logic is implemented.
@@ -25,6 +68,7 @@ final testActivityFeedItems = [
       likedByUserId: '',
       likedByUsername: 'Hans Hansen',
       boxTitle: 'Old school books',
+      boxId: '',
     ),
     timestamp: DateTime.now().subtract(Duration(seconds: 13)),
     read: false,

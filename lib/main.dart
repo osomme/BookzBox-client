@@ -3,11 +3,8 @@ import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/screens/box_details_screen.dart';
-import 'package:bookzbox/features/feed/feed.dart';
-import 'package:bookzbox/features/feed/stores/box_like_store.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/location/location.dart';
-import 'package:bookzbox/features/profile/models/profile.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository.dart';
 import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
@@ -20,6 +17,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:bookzbox/common/extensions/color_extensions.dart';
+
+import 'features/likes/likes.dart';
 
 void main() {
   initializeDateFormatting();
@@ -40,6 +39,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ...authProviders,
+        ...feedProviders,
         ...mainProviders,
         ...bookProviders,
         ...feedProviders,

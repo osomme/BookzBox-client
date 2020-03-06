@@ -1,7 +1,6 @@
 import 'package:bookzbox/common/di/providers.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
-import 'package:bookzbox/features/feed/feed.dart';
-import 'package:bookzbox/features/feed/stores/box_like_store.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:dartz/dartz.dart' as Dartz;
 import 'package:bookzbox/features/location/models/lat_lng.dart' as LatLngModel;

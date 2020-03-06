@@ -1,6 +1,9 @@
+import 'dart:async';
+import 'dart:collection';
+
 import 'package:bookzbox/common/errors/error_types.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
-import 'package:bookzbox/features/feed/feed.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:mobx/mobx.dart';
 
 part 'box_like_store.g.dart';
@@ -12,6 +15,8 @@ abstract class _BoxLikeStore with Store {
   final IAuthService _authService;
   final String _boxId;
 
+  StreamSubscription<HashSet<String>> _streamSubscription;
+
   @observable
   bool _isLoading = false;
 
@@ -21,8 +26,11 @@ abstract class _BoxLikeStore with Store {
   @observable
   NetworkError _error;
 
-  _BoxLikeStore(this._repo, this._authService, this._boxId) {
-    _checkIfLiked();
+  _BoxLikeStore(this._repo, this._authService, this._boxId,
+      {bool shouldImmediatlyCheckStatus = true}) {
+    if (shouldImmediatlyCheckStatus) {
+      _checkIfLiked();
+    }
   }
 
   /// True if the store is currently loading the like status, false otherwise.
@@ -41,6 +49,7 @@ abstract class _BoxLikeStore with Store {
   @action
   Future<void> toggleLikeStatus() async {
     _isLoading = true;
+    _error = null;
     if (isLiked) {
       await _removeLike();
     } else {
@@ -60,7 +69,7 @@ abstract class _BoxLikeStore with Store {
 
   @action
   Future<void> _addLike() async {
-    final result = await _repo.likeBox(_boxId, (await _authService.user).uid);
+    final result = await _repo.addLike(_boxId, (await _authService.user).uid);
     result.fold(
       (error) => _error = error,
       (success) => _isLiked = true,
@@ -70,11 +79,17 @@ abstract class _BoxLikeStore with Store {
   @action
   Future<void> _checkIfLiked() async {
     _isLoading = true;
-    final result = await _repo.isBoxLiked(_boxId, (await _authService.user).uid);
-    result.fold(
-      (error) => _error = error,
-      (likeStatus) => _isLiked = likeStatus,
+    final uid = (await _authService.user).uid;
+    final stream = await _repo.likesStreamFor(uid);
+    _streamSubscription = stream.listen(
+      (data) {
+        final liked = data.contains(_boxId);
+        _isLiked = liked;
+      },
+      onError: (error) => print('Error while listening to likes stream: $error'),
     );
     _isLoading = false;
   }
+
+  void dispose() => _streamSubscription?.cancel();
 }

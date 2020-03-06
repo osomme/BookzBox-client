@@ -1,5 +1,8 @@
+import 'package:bookzbox/features/activity/activity.dart';
+import 'package:bookzbox/features/activity/stores/my_liked_boxes_store.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/authentication/errors/auth_error_handling.dart';
+import 'package:bookzbox/features/box/box.dart';
 import 'package:bookzbox/features/box/services/box_loader_service.dart';
 import 'package:bookzbox/features/box/services/box_loader_service_impl.dart';
 import 'package:bookzbox/features/box/services/box_updater_service.dart';
@@ -7,9 +10,8 @@ import 'package:bookzbox/features/box/services/box_updater_service_impl.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/screens/box_details_screen.dart';
 import 'package:bookzbox/features/feed/feed.dart';
-import 'package:bookzbox/features/feed/service/box_like_service.dart';
-import 'package:bookzbox/features/feed/service/box_like_service_impl.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/features/location/services/location_service.dart';
 import 'package:bookzbox/features/map/box_map.dart';
@@ -51,6 +53,18 @@ final authProviders = [
   ),
 ];
 
+final activityFeedProviders = [
+  Provider<IActivtiyService>(
+    create: (_) => FirebaseActivtiyService(),
+  ),
+  ProxyProvider<IActivtiyService, IActivtiyRepository>(
+    update: (_, service, __) => ActivityRepositoryImpl(service),
+  ),
+  ProxyProvider<IActivtiyRepository, ActivityFeedStore>(
+    update: (_, repo, __) => ActivityFeedStore(repo),
+  ),
+];
+
 final loginProviders = [
   Provider<LoginCredentialsStore>(create: (_) => LoginCredentialsStore()),
   Provider<NewAccountStore>(create: (_) => NewAccountStore()),
@@ -86,7 +100,8 @@ final bookProviders = [
     create: (_) => LocationService(),
   ),
   ProxyProvider3<IBookRepository, IBoxRepository, ILocationService, NewBoxStore>(
-    update: (_, bookRepo, boxRepo, locService, __) => NewBoxStore(bookRepo, boxRepo, locService),
+    update: (_, bookRepo, boxRepo, locService, __) =>
+        NewBoxStore(bookRepo, boxRepo, locService),
   ),
   ProxyProvider<NewBoxStore, NewBoxScreen>(
     update: (_, store, __) => NewBoxScreen(store),
@@ -94,14 +109,18 @@ final bookProviders = [
 ];
 
 final mainProviders = [
-  Provider<HomeScreen>(
-    create: (_) => HomeScreen(),
+  ...activityFeedProviders,
+  ProxyProvider2<AuthStore, ActivityFeedStore, HomeScreen>(
+    update: (_, authStore, feedStore, __) => HomeScreen(
+      activityFeedStore: feedStore,
+      authStore: authStore,
+    ),
   ),
 ];
 
 final boxLikeProviders = [
   Provider<IBoxLikeService>(
-    create: (_) => FirebaseBoxLikeService(),
+    create: (_) => FirebaseBoxLikeService.instance,
   ),
   ProxyProvider<IBoxLikeService, IBoxLikeRepository>(
     update: (_, service, __) => BoxLikeRepository(service),
@@ -184,5 +203,20 @@ final boxDetailsProviders = [
   ),
   ProxyProvider<IBoxDetailsRepository, BoxDetailsStore>(
     update: (_, repo, __) => BoxDetailsStore(repo),
+  ),
+];
+
+final boxLoaderProviders = [
+  Provider<IBoxLoaderService>(
+    create: (_) => BoxLoaderService(),
+  ),
+  ProxyProvider<IBoxLoaderService, IBoxLoaderRepository>(
+    update: (_, service, __) => BoxLoaderRepository(service),
+  ),
+];
+
+final likedBoxesStore = [
+  ProxyProvider<IBoxLoaderRepository, MyLikedBoxesStore>(
+    update: (_, repository, __) => MyLikedBoxesStore(repository),
   ),
 ];
