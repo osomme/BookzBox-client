@@ -14,8 +14,6 @@ class FirebaseBoxLikeService implements IBoxLikeService {
 
   static final instance = FirebaseBoxLikeService._privateConstructor();
 
-  bool _hasLoadedFromNetwork = false;
-
   Future<Stream<HashSet<String>>> likesStreamFor(String userId) async {
     return _firestore
         .collection('likes')

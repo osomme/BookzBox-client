@@ -63,7 +63,7 @@ abstract class _BoxLikeStore with Store {
     final result = await _repo.removeLike(_boxId, (await _authService.user).uid);
     result.fold(
       (error) => _error = error,
-      (success) => print('Removed like from box: $_boxId'),
+      (success) => _isLiked = false,
     );
   }
 
@@ -72,7 +72,7 @@ abstract class _BoxLikeStore with Store {
     final result = await _repo.addLike(_boxId, (await _authService.user).uid);
     result.fold(
       (error) => _error = error,
-      (success) => print('Liked box: $_boxId'),
+      (success) => _isLiked = true,
     );
   }
 
@@ -84,9 +84,7 @@ abstract class _BoxLikeStore with Store {
     _streamSubscription = stream.listen(
       (data) {
         final liked = data.contains(_boxId);
-        if (liked != _isLiked) {
-          _isLiked = liked;
-        }
+        _isLiked = liked;
       },
       onError: (error) => print('Error while listening to likes stream: $error'),
     );
