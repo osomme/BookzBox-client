@@ -71,4 +71,24 @@ mixin _$ActivityFeedStore on _ActivityFeedStore, Store {
       _$_hasErrorAtom.reportChanged();
     }, _$_hasErrorAtom, name: '${_$_hasErrorAtom.name}_set');
   }
+
+  final _$loadFeedAsyncAction = AsyncAction('loadFeed');
+
+  @override
+  Future<void> loadFeed(String userId) {
+    return _$loadFeedAsyncAction.run(() => super.loadFeed(userId));
+  }
+
+  final _$_ActivityFeedStoreActionController =
+      ActionController(name: '_ActivityFeedStore');
+
+  @override
+  void markAsRead(String userId, String activityId) {
+    final _$actionInfo = _$_ActivityFeedStoreActionController.startAction();
+    try {
+      return super.markAsRead(userId, activityId);
+    } finally {
+      _$_ActivityFeedStoreActionController.endAction(_$actionInfo);
+    }
+  }
 }

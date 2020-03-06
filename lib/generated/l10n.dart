@@ -1341,7 +1341,7 @@ class S {
 
   String get activityNoFeedItems {
     return Intl.message(
-      'Your notification feed is empty',
+      'Your activity feed is empty',
       name: 'activityNoFeedItems',
       desc: '',
       args: [],

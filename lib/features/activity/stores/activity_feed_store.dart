@@ -37,7 +37,8 @@ abstract class _ActivityFeedStore with Store {
 
   _ActivityFeedStore(this._repository);
 
-  void loadFeed(String userId) async {
+  @action
+  Future<void> loadFeed(String userId) async {
     final stream = await _repository.activityFeed(userId);
     _streamSubscription = stream.listen(
       (data) {
@@ -53,7 +54,11 @@ abstract class _ActivityFeedStore with Store {
     );
   }
 
+  @action
+  void markAsRead(String userId, String activityId) =>
+      _repository.markAsRead(userId, activityId);
+
   void dispose() {
-    _streamSubscription.cancel();
+    _streamSubscription?.cancel();
   }
 }

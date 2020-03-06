@@ -75,7 +75,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
         ),
         body: TabBarView(
           children: [
-            ActivityFeedTab(activityFeedStore: widget.activityFeedStore),
+            ActivityFeedTab(
+              activityFeedStore: widget.activityFeedStore,
+              userId: widget.userId,
+            ),
             ChatFeedTab(),
             LikedBoxesTab(likedBoxesStore: widget.boxLikeStore, userId: widget.userId),
           ],
