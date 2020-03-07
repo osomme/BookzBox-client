@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
               showBadge: widget.activityFeedStore.hasUnread,
               badgeColor: Theme.of(context).primaryColor,
               badgeContent: Text(
-                '${widget.activityFeedStore.numUnread}',
+                '${widget.activityFeedStore.numTotalUnread}',
                 style: Theme.of(context).primaryTextTheme.body1.copyWith(fontSize: 11.0),
               ),
               padding: EdgeInsets.all(6.0),

@@ -9,6 +9,7 @@ class FirebaseActivtiyService implements IActivtiyService {
         .collection('users')
         .document(userId)
         .collection('activity')
+        .orderBy('timestamp', descending: true)
         .snapshots()
         .map((ai) => ai.documents
             .map((doc) => ActivityItem.fromFirestore(doc.data, doc.documentID)));

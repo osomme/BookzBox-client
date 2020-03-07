@@ -49,7 +49,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     showBadge: widget.activityFeedStore.hasUnread,
                     badgeColor: Theme.of(context).accentColor,
                     badgeContent: Text(
-                      '${widget.activityFeedStore.numUnread}',
+                      '${widget.activityFeedStore.numUnreadMatchAndLikes}',
                       style: Theme.of(context)
                           .accentTextTheme
                           .body1
@@ -64,7 +64,23 @@ class _ActivityScreenState extends State<ActivityScreen> {
               ),
               Tab(
                 text: S.of(context).activityTabLabelMessages,
-                icon: Icon(Icons.chat),
+                icon: Observer(
+                  builder: (_) => Badge(
+                    showBadge: widget.activityFeedStore.hasUnreadChatMessages,
+                    badgeColor: Theme.of(context).accentColor,
+                    badgeContent: Text(
+                      '${widget.activityFeedStore.numUnreadChatMessages}',
+                      style: Theme.of(context)
+                          .accentTextTheme
+                          .body1
+                          .copyWith(fontSize: 11.0),
+                    ),
+                    padding: EdgeInsets.all(6.0),
+                    child: Icon(
+                      Icons.chat,
+                    ),
+                  ),
+                ),
               ),
               Tab(
                 text: S.of(context).activityTabLabelLikes,
@@ -79,7 +95,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
               activityFeedStore: widget.activityFeedStore,
               userId: widget.userId,
             ),
-            ChatFeedTab(),
+            ChatFeedTab(feedStore: widget.activityFeedStore),
             LikedBoxesTab(likedBoxesStore: widget.boxLikeStore, userId: widget.userId),
           ],
         ),
