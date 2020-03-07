@@ -60,10 +60,17 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
+                      minLines: 1,
+                      maxLines: 6,
                       decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 14.0, vertical: 16.0),
                         fillColor: Colors.grey[200],
                         filled: true,
                         hintText: 'Write a message...',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32.0),
+                        ),
                       ),
                     ),
                   ),
