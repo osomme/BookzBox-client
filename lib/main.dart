@@ -3,6 +3,7 @@ import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/screens/box_details_screen.dart';
+import 'package:bookzbox/features/chat/chat.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository.dart';
@@ -107,6 +108,12 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
               );
+            });
+          } else if (settings.name == Screens.chat) {
+            final String chatId = settings.arguments;
+            return MaterialPageRoute(builder: (ctx) {
+              final String userId = Provider.of<AuthStore>(ctx)?.user?.uid ?? 'asdasd';
+              return ChatScreen(chatId: chatId, userId: userId);
             });
           }
         },

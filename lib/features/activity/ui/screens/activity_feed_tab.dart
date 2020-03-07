@@ -110,7 +110,7 @@ class ActivityFeedTab extends StatelessWidget {
         ActivityItemTextParam(content: S.of(ctx).activityItemMatchPost),
       ],
       date: activityItem.timestamp,
-      onClick: () => print('Clicked on match item'),
+      onClick: () => Navigator.pushNamed(ctx, Screens.chat, arguments: activityItem.id),
       read: activityItem.read,
     );
   }

@@ -50,7 +50,7 @@ abstract class _FeedStore with Store {
   _FeedStore(this._repo);
 
   Future<void> init() async {
-    await _initialFetch();
+    //await _initialFetch(); //TODO: Remove comment after finishing testing the chat UI.
     // Creates a reaction that checks if the current index is less than 5. If it is,
     // it will load a new batch of boxes.
     _listener = autorun((_) {

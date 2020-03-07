@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/activity/activity.dart';
 import 'package:bookzbox/features/profile/ui/widgets/profile_avatar.dart';
 import 'package:bookzbox/common/extensions/extensions.dart';
@@ -75,7 +76,8 @@ class ChatFeedTab extends StatelessWidget {
                     ],
                   ),
                   isThreeLine: false,
-                  onTap: () => print('Clicked chat message'),
+                  onTap: () => Navigator.pushNamed(context, Screens.chat,
+                      arguments: chatData.chatId),
                 ),
               );
             },
