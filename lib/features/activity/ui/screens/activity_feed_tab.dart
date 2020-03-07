@@ -69,9 +69,9 @@ class ActivityFeedTab extends StatelessWidget {
     return ActivityListItem(
       leading: Icon(Icons.chat),
       subtitleTexts: [
-        ActivityItemTextParam(content: activity.username, bold: true),
+        ActivityItemTextParam(content: activity.otherUserName, bold: true),
         ActivityItemTextParam(
-            content: S.of(ctx).activityItemMessagePost + activity.newMessageSnippet),
+            content: S.of(ctx).activityItemMessagePost + activity.lastMessage),
       ],
       date: activityItem.timestamp,
       onClick: () => print('Clicked on message activity'),
@@ -103,7 +103,7 @@ class ActivityFeedTab extends StatelessWidget {
     return ActivityListItem(
       leading: Icon(Icons.people),
       subtitleTexts: [
-        ActivityItemTextParam(content: matchActivity.matchUserName, bold: true),
+        ActivityItemTextParam(content: matchActivity.matchUsername, bold: true),
         ActivityItemTextParam(content: S.of(ctx).activityItemMatchPost),
       ],
       date: activityItem.timestamp,
