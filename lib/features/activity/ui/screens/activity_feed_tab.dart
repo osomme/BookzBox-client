@@ -44,8 +44,9 @@ class ActivityFeedTab extends StatelessWidget {
             );
           }
           return ListView.builder(
-            itemCount: activityFeedStore.feedItems.length,
-            itemBuilder: (ctx, i) => _toListItem(context, activityFeedStore.feedItems[i]),
+            itemCount: activityFeedStore.activityNotifications.length,
+            itemBuilder: (ctx, i) =>
+                _toListItem(context, activityFeedStore.activityNotifications[i]),
           );
         },
       ),
@@ -71,7 +72,9 @@ class ActivityFeedTab extends StatelessWidget {
       subtitleTexts: [
         ActivityItemTextParam(content: activity.otherUserName, bold: true),
         ActivityItemTextParam(
-            content: S.of(ctx).activityItemMessagePost + activity.lastMessage),
+            content: S.of(ctx).activityItemMessagePost + activity.lastMessage == null
+                ? 'No messages yet'
+                : activity.lastMessage),
       ],
       date: activityItem.timestamp,
       onClick: () => print('Clicked on message activity'),

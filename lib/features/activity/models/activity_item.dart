@@ -69,7 +69,7 @@ ActivityItem _mapToChatItem(Map<dynamic, dynamic> data, String id) {
       lastMessage: chatData['lastMessage'],
       chatId: id,
     ),
-    timestamp: data['timestamp'],
+    timestamp: (data['timestamp'] as Timestamp).toDate(),
     read: data['read'],
   );
 }

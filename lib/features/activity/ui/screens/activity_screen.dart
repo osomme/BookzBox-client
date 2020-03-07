@@ -49,7 +49,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     showBadge: widget.activityFeedStore.hasUnread,
                     badgeColor: Theme.of(context).accentColor,
                     badgeContent: Text(
-                      '${widget.activityFeedStore.numUnread}',
+                      '${widget.activityFeedStore.numUnreadMatchAndLikes}',
                       style: Theme.of(context)
                           .accentTextTheme
                           .body1
