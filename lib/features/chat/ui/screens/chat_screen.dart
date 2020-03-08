@@ -1,4 +1,6 @@
 import 'package:bookzbox/features/chat/chat.dart';
+import 'package:bookzbox/features/profile/ui/widgets/profile_avatar.dart';
+import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -28,9 +30,7 @@ class ChatScreen extends StatefulWidget {
     @required this.otherUsername,
     @required this.chatStore,
   }) : super(key: key) {
-    print('[CHAT userID: $clientUserId');
-    print('[CHAT chatID: $chatId');
-    chatStore.loadChatStream(chatId);
+    chatStore.loadChatStream(chatId, clientUserId);
   }
 
   @override
@@ -38,8 +38,11 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final TextEditingController controller = TextEditingController();
+
   @override
   void dispose() {
+    controller.dispose();
     widget.chatStore.dispose();
     super.dispose();
   }
@@ -49,7 +52,16 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        title: Text('Chat with ${widget.otherUsername}'),
+        title: Row(
+          children: <Widget>[
+            ProfileAvatar(
+              profileImgUrl: null,
+              displayName: widget.otherUsername,
+            ),
+            SizedBox(width: 10.0),
+            Text(widget.otherUsername),
+          ],
+        ),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -83,6 +95,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
+                      controller: controller,
                       onChanged: (input) => widget.chatStore.setChatInput(input),
                       minLines: 1,
                       maxLines: 6,
@@ -91,7 +104,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             EdgeInsets.symmetric(horizontal: 14.0, vertical: 16.0),
                         fillColor: Colors.grey[200],
                         filled: true,
-                        hintText: 'Write a message...',
+                        hintText: S.of(context).chatInputHint,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0),
                         ),
@@ -105,10 +118,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       Icons.send,
                       color: Theme.of(context).accentColor,
                     ),
-                    onPressed: widget.chatStore.isInputValid
-                        ? () => widget.chatStore
-                            .postMessage(widget.clientUserId, widget.chatId)
-                        : null,
+                    onPressed: widget.chatStore.isInputValid ? submitMessage : null,
                   ),
                 ),
               ],
@@ -117,5 +127,11 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       ),
     );
+  }
+
+  void submitMessage() {
+    controller.clear();
+    widget.chatStore.postMessage(widget.clientUserId, widget.chatId);
+    FocusScope.of(context).unfocus();
   }
 }

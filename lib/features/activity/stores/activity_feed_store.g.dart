@@ -21,11 +21,12 @@ mixin _$ActivityFeedStore on _ActivityFeedStore, Store {
   int get numUnreadMatchAndLikes => (_$numUnreadMatchAndLikesComputed ??=
           Computed<int>(() => super.numUnreadMatchAndLikes))
       .value;
-  Computed<bool> _$hasUnreadComputed;
+  Computed<bool> _$hasUnreadMatchAndLikesComputed;
 
   @override
-  bool get hasUnread =>
-      (_$hasUnreadComputed ??= Computed<bool>(() => super.hasUnread)).value;
+  bool get hasUnreadMatchAndLikes => (_$hasUnreadMatchAndLikesComputed ??=
+          Computed<bool>(() => super.hasUnreadMatchAndLikes))
+      .value;
   Computed<List<ActivityItem>> _$activityNotificationsComputed;
 
   @override
@@ -51,6 +52,11 @@ mixin _$ActivityFeedStore on _ActivityFeedStore, Store {
   bool get hasUnreadChatMessages => (_$hasUnreadChatMessagesComputed ??=
           Computed<bool>(() => super.hasUnreadChatMessages))
       .value;
+  Computed<bool> _$hasUnreadComputed;
+
+  @override
+  bool get hasUnread =>
+      (_$hasUnreadComputed ??= Computed<bool>(() => super.hasUnread)).value;
   Computed<int> _$numTotalUnreadComputed;
 
   @override

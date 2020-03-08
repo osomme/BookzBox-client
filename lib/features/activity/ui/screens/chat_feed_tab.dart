@@ -9,12 +9,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ChatFeedTab extends StatelessWidget {
   final ActivityFeedStore feedStore;
-  final String userId;
 
   const ChatFeedTab({
     Key key,
     @required this.feedStore,
-    @required this.userId,
   }) : super(key: key);
 
   @override
@@ -79,12 +77,8 @@ class ChatFeedTab extends StatelessWidget {
                     ],
                   ),
                   isThreeLine: false,
-                  onTap: () {
-                    feedStore.markAsRead(userId, chatNotification.id);
-                    Navigator.pushNamed(context, Screens.chat,
-                        arguments:
-                            ChatScreenArgs(chatData.chatId, chatData.otherUserName));
-                  },
+                  onTap: () => Navigator.pushNamed(context, Screens.chat,
+                      arguments: ChatScreenArgs(chatData.chatId, chatData.otherUserName)),
                 ),
               );
             },

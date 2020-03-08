@@ -61,7 +61,8 @@ class ChatMessageItem extends StatelessWidget {
                 ? const EdgeInsets.only(right: 0.0)
                 : const EdgeInsets.only(left: 40.0),
             child: Text(
-              DateFormat('E d. MMMM H:m').format(message.timestamp),
+              DateFormat('E d. MMMM ').format(message.timestamp) +
+                  extractTimeString(DateFormat('H:m').format(message.timestamp)),
               textAlign: isClientUser ? TextAlign.end : TextAlign.start,
               style: Theme.of(context)
                   .textTheme
@@ -72,5 +73,12 @@ class ChatMessageItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String extractTimeString(String dateString) {
+    return dateString.split(':').map((s) {
+      final int numValue = int.tryParse(s);
+      return numValue != null && numValue >= 0 && numValue <= 9 ? '0' + s : s;
+    }).join(':');
   }
 }

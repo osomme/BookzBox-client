@@ -227,7 +227,7 @@ final chatProviders = [
   ProxyProvider<IChatService, IChatRepository>(
     update: (_, service, __) => ChatRepositoryImpl(service),
   ),
-  ProxyProvider<IChatRepository, ChatStore>(
-    update: (_, repo, __) => ChatStore(repo),
+  ProxyProvider2<IChatRepository, ActivityFeedStore, ChatStore>(
+    update: (_, repo, feedStore, __) => ChatStore(repo, feedStore),
   ),
 ];

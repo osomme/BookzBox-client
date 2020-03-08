@@ -46,7 +46,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 text: S.of(context).activityTabLabelActivity,
                 icon: Observer(
                   builder: (_) => Badge(
-                    showBadge: widget.activityFeedStore.hasUnread,
+                    showBadge: widget.activityFeedStore.hasUnreadMatchAndLikes,
                     badgeColor: Theme.of(context).accentColor,
                     badgeContent: Text(
                       '${widget.activityFeedStore.numUnreadMatchAndLikes}',
@@ -95,10 +95,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
               activityFeedStore: widget.activityFeedStore,
               userId: widget.userId,
             ),
-            ChatFeedTab(
-              feedStore: widget.activityFeedStore,
-              userId: widget.userId,
-            ),
+            ChatFeedTab(feedStore: widget.activityFeedStore),
             LikedBoxesTab(
               likedBoxesStore: widget.boxLikeStore,
               userId: widget.userId,

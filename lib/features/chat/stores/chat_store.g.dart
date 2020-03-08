@@ -128,8 +128,9 @@ mixin _$ChatStore on _ChatStore, Store {
   final _$loadChatStreamAsyncAction = AsyncAction('loadChatStream');
 
   @override
-  Future<void> loadChatStream(String chatId) {
-    return _$loadChatStreamAsyncAction.run(() => super.loadChatStream(chatId));
+  Future<void> loadChatStream(String chatId, String clientUserId) {
+    return _$loadChatStreamAsyncAction
+        .run(() => super.loadChatStream(chatId, clientUserId));
   }
 
   final _$postMessageAsyncAction = AsyncAction('postMessage');

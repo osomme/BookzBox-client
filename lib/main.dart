@@ -5,6 +5,7 @@ import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/screens/box_details_screen.dart';
 import 'package:bookzbox/features/chat/chat.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
+import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository.dart';
 import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
@@ -18,8 +19,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:bookzbox/common/extensions/color_extensions.dart';
-
-import 'features/likes/likes.dart';
 
 void main() {
   initializeDateFormatting();

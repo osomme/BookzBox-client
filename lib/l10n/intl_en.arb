@@ -146,5 +146,6 @@
     "activityNoFeedItems": "Your activity feed is empty",
     "activityFeedErrorMessage": "Failed to load notifications",
     "activityFailedBoxLoad": "Failed to load liked boxes",
-    "activityNoLikedBoxes": "You have not liked any boxes..."
+    "activityNoLikedBoxes": "You have not liked any boxes...",
+    "chatInputHint": "Write a message..."
 }
