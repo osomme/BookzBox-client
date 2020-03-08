@@ -110,10 +110,21 @@ class MyApp extends StatelessWidget {
               );
             });
           } else if (settings.name == Screens.chat) {
-            final String chatId = settings.arguments;
+            final ChatScreenArgs args = settings.arguments;
             return MaterialPageRoute(builder: (ctx) {
-              final String userId = Provider.of<AuthStore>(ctx)?.user?.uid ?? 'asdasd';
-              return ChatScreen(chatId: chatId, userId: userId);
+              final String userId = Provider.of<AuthStore>(ctx)?.user?.uid ??
+                  'asdasd'; //TODO: Remove after testing
+              return MultiProvider(
+                providers: chatProviders,
+                child: Consumer<ChatStore>(
+                  builder: (ctx, store, _) => ChatScreen(
+                    chatId: args.chatId,
+                    clientUserId: userId,
+                    otherUsername: args.otherUserName,
+                    chatStore: store,
+                  ),
+                ),
+              );
             });
           }
         },

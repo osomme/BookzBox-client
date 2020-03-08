@@ -1,5 +1,6 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/activity/activity.dart';
+import 'package:bookzbox/features/chat/chat.dart';
 import 'package:bookzbox/features/profile/ui/widgets/profile_avatar.dart';
 import 'package:bookzbox/common/extensions/extensions.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -8,10 +9,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ChatFeedTab extends StatelessWidget {
   final ActivityFeedStore feedStore;
+  final String userId;
 
   const ChatFeedTab({
     Key key,
     @required this.feedStore,
+    @required this.userId,
   }) : super(key: key);
 
   @override
@@ -76,8 +79,12 @@ class ChatFeedTab extends StatelessWidget {
                     ],
                   ),
                   isThreeLine: false,
-                  onTap: () => Navigator.pushNamed(context, Screens.chat,
-                      arguments: chatData.chatId),
+                  onTap: () {
+                    feedStore.markAsRead(userId, chatNotification.id);
+                    Navigator.pushNamed(context, Screens.chat,
+                        arguments:
+                            ChatScreenArgs(chatData.chatId, chatData.otherUserName));
+                  },
                 ),
               );
             },

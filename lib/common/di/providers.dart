@@ -9,6 +9,7 @@ import 'package:bookzbox/features/box/services/box_updater_service.dart';
 import 'package:bookzbox/features/box/services/box_updater_service_impl.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/screens/box_details_screen.dart';
+import 'package:bookzbox/features/chat/chat.dart';
 import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/likes/likes.dart';
@@ -91,8 +92,8 @@ final bookProviders = [
   Provider<IBoxUpdaterService>(
     create: (_) => BoxUpdaterService(),
   ),
-  ProxyProvider4<IPublishService, IBoxLoaderService, IBoxDetailsService, IBoxUpdaterService,
-      IBoxRepository>(
+  ProxyProvider4<IPublishService, IBoxLoaderService, IBoxDetailsService,
+      IBoxUpdaterService, IBoxRepository>(
     update: (_, publishService, boxLoaderService, detailsService, updaterService, __) =>
         BoxRepository(publishService, boxLoaderService, detailsService, updaterService),
   ),
@@ -218,5 +219,15 @@ final boxLoaderProviders = [
 final likedBoxesStore = [
   ProxyProvider<IBoxLoaderRepository, MyLikedBoxesStore>(
     update: (_, repository, __) => MyLikedBoxesStore(repository),
+  ),
+];
+
+final chatProviders = [
+  Provider<IChatService>(create: (_) => FirebaseChatService()),
+  ProxyProvider<IChatService, IChatRepository>(
+    update: (_, service, __) => ChatRepositoryImpl(service),
+  ),
+  ProxyProvider<IChatRepository, ChatStore>(
+    update: (_, repo, __) => ChatStore(repo),
   ),
 ];

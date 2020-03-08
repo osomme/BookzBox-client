@@ -95,8 +95,14 @@ class _ActivityScreenState extends State<ActivityScreen> {
               activityFeedStore: widget.activityFeedStore,
               userId: widget.userId,
             ),
-            ChatFeedTab(feedStore: widget.activityFeedStore),
-            LikedBoxesTab(likedBoxesStore: widget.boxLikeStore, userId: widget.userId),
+            ChatFeedTab(
+              feedStore: widget.activityFeedStore,
+              userId: widget.userId,
+            ),
+            LikedBoxesTab(
+              likedBoxesStore: widget.boxLikeStore,
+              userId: widget.userId,
+            ),
           ],
         ),
       ),

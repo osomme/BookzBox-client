@@ -1,6 +1,7 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/common/widgets/widgets.dart';
 import 'package:bookzbox/features/activity/activity.dart';
+import 'package:bookzbox/features/chat/chat.dart';
 import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +111,17 @@ class ActivityFeedTab extends StatelessWidget {
         ActivityItemTextParam(content: S.of(ctx).activityItemMatchPost),
       ],
       date: activityItem.timestamp,
-      onClick: () => Navigator.pushNamed(ctx, Screens.chat, arguments: activityItem.id),
+      onClick: () {
+        activityFeedStore.markAsRead(userId, activityItem.id);
+        Navigator.pushNamed(
+          ctx,
+          Screens.chat,
+          arguments: ChatScreenArgs(
+            matchActivity.chatId,
+            matchActivity.matchUsername,
+          ),
+        );
+      },
       read: activityItem.read,
     );
   }

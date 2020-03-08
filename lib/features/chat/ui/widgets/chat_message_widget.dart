@@ -7,10 +7,14 @@ class ChatMessageItem extends StatelessWidget {
   final bool isClientUser;
   final ChatMessage message;
 
+  /// Optional parameter used for when the message is representing another user (not client user).
+  final String username;
+
   const ChatMessageItem({
     Key key,
     @required this.isClientUser,
     @required this.message,
+    this.username,
   }) : super(key: key);
 
   @override
@@ -29,7 +33,7 @@ class ChatMessageItem extends StatelessWidget {
                   ? SizedBox.shrink()
                   : ProfileAvatar(
                       profileImgUrl: null,
-                      displayName: message.postedByUsername,
+                      displayName: username,
                     ),
               SizedBox(width: 5.0),
               Container(
