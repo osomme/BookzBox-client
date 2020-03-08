@@ -92,7 +92,10 @@ class BoxesTab extends StatelessWidget {
                 style:
                     TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
               ),
-              onPressed: () => changeVisibilityAndCloseDialog(context),
+              onPressed: () {
+                boxStore.setBoxStatus(boxStore.currentBoxStatus, index);
+                changeVisibilityAndCloseDialog(context);
+              },
             ),
           ],
         ),

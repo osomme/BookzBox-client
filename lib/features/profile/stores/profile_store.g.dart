@@ -113,6 +113,16 @@ mixin _$ProfileStore on _ProfileStore, Store {
   }
 
   @override
+  dynamic onProfileLoaded(Profile loaded) {
+    final _$actionInfo = _$_ProfileStoreActionController.startAction();
+    try {
+      return super.onProfileLoaded(loaded);
+    } finally {
+      _$_ProfileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setUserId(String uid) {
     final _$actionInfo = _$_ProfileStoreActionController.startAction();
     try {

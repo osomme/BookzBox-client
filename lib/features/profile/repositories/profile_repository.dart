@@ -6,6 +6,8 @@ abstract class IProfileRepository {
 
   Profile getCachedProfile();
 
+  void setCachedProfile(Profile profile);
+
   /// Fetch the profile for the user with the passed userId.
   Future<Either<String, Profile>> fetch(String userId);
 }
