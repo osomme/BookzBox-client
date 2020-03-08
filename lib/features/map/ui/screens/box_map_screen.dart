@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bookzbox/common/di/providers.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/likes/likes.dart';
@@ -32,6 +34,9 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   GoogleMapController mapController;
 
   LatLng currentCamPos;
+
+  /// The current physical location of the device.
+  LatLng currentUserPos;
 
   int iconSize = 84;
 
@@ -76,9 +81,11 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
 
   Future<void> onUserLocationObtained(
       Dartz.Option<LatLngModel.LatLng> userLocation) async {
-    await mapController.moveCamera(CameraUpdate.newLatLng(userLocation
+    currentUserPos = userLocation
         .map((p) => LatLng(p.latitude, p.longitude))
-        .getOrElse(() => startPos)));
+        .getOrElse(() => startPos);
+    await mapController.moveCamera(CameraUpdate.newLatLng(currentUserPos));
+    reloadMarkers();
   }
 
   Future<void> onBoxesLoaded(List<BoxMapItem> boxes) async {
@@ -107,6 +114,15 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
     print('Creating new markers with icon size: $iconSize');
     setState(() {
       markers = markers.map((m) => m.copyWith(iconParam: markerIcon)).toSet();
+      if (currentUserPos != null) {
+        markers.add(
+          Marker(
+            markerId: MarkerId('userpos'),
+            position: currentUserPos,
+            infoWindow: InfoWindow(title: 'Your location'),
+          ),
+        );
+      }
     });
   }
 
@@ -140,6 +156,8 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
     );
   }
 
+  int calculateIconSize(double zoomLevel) => max(zoomLevel.round() * 7, 60);
+
   void onCameraIdle() => reloadMarkers();
 
   @override
@@ -155,7 +173,7 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
         onCameraIdle: onCameraIdle,
         onCameraMove: (camPos) {
           currentCamPos = camPos.target;
-          iconSize = camPos.zoom.round() * 7;
+          iconSize = calculateIconSize(camPos.zoom);
         },
         myLocationButtonEnabled: false,
       ),

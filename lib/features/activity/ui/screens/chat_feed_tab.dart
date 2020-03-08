@@ -1,4 +1,5 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
+import 'package:bookzbox/common/widgets/widgets.dart';
 import 'package:bookzbox/features/activity/activity.dart';
 import 'package:bookzbox/features/chat/chat.dart';
 import 'package:bookzbox/features/profile/ui/widgets/profile_avatar.dart';
@@ -22,12 +23,23 @@ class ChatFeedTab extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Observer(
         builder: (_) {
+          if (feedStore.chatNotifications.isEmpty) {
+            return ErrorTextWithIcon(
+              text: S.of(context).activityNoChatItems,
+              icon: Icon(
+                Icons.chat,
+                color: Colors.grey,
+                size: 64.0,
+              ),
+            );
+          }
           return ListView.builder(
             itemCount: feedStore.chatNotifications.length,
             itemBuilder: (ctx, i) {
               final chatNotification = feedStore.chatNotifications[i];
               final chatData = chatNotification.type as MessageActivity;
               return Card(
+                color: chatNotification.read ? Colors.white : Colors.grey[200],
                 child: ListTile(
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),

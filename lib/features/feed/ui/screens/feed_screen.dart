@@ -1,9 +1,11 @@
+import 'package:bookzbox/common/widgets/widgets.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -48,8 +50,13 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
           );
         }
         if (widget.feedStore.boxes.isEmpty) {
-          return Center(
-            child: Text(S.of(context).feedNoBoxesFound),
+          return ErrorTextWithIcon(
+            text: S.of(context).feedNoBoxesFound,
+            icon: Icon(
+              Entypo.box,
+              color: Colors.grey,
+              size: 64.0,
+            ),
           );
         } else {
           return Padding(

@@ -135,7 +135,9 @@ class _BookSwiperState extends State<BookSwiper> {
         Row(
           children: <Widget>[
             _bookDetailsTextCol(
-                S.of(context).detailsBookCategories, book.categories?.join(', ') ?? '--'),
+              S.of(context).detailsBookCategories,
+              book.categories.isNotEmpty ? book.categories.join(', ') : '--',
+            ),
             _bookDetailsTextCol(S.of(context).detailsBookPublished,
                 (book.publishYear != -1) ? book.publishYear.toString() : '--'),
           ],

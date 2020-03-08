@@ -25,6 +25,7 @@ class ActivityListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: read ? Colors.white : Colors.grey[200],
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 14.0),
         leading: leading,

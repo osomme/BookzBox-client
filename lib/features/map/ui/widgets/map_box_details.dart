@@ -183,7 +183,7 @@ class _ModalBoxDetailsState extends State<ModalBoxDetails> {
 
   Widget _buttonBar(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         _profileButton(context),
         _detailsButton(context),

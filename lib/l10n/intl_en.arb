@@ -62,7 +62,7 @@
     "feedBooks": "BOOKS",
     "feedLocation": "LOCATION",
     "feedNoLocationData": "No data",
-    "feedNoBoxesFound": "No boxes found... Try changing your preferences!",
+    "feedNoBoxesFound": "No boxes found...",
     "profileLogout": "Log out",
     "profileMeTabLabel": "ME",
     "profileOtherTabLabel": "ABOUT",
@@ -110,7 +110,7 @@
     "detailsLoading": "Loading",
     "detailsErrorAppBar": "Error",
     "detailsFailedToLoadBox": "Failed to load box",
-    "detailsDescription": "Description",
+    "detailsDescription": "Box Description",
     "detailsAboutSeller": "About the seller",
     "detailsLocation": "Location",
     "detailsStatus": "Status",
@@ -133,7 +133,7 @@
     "activityItemLikeMiddle": " liked your box: ",
     "activityItemMatchPost": " has matched with you",
     "activityItemUnknown": "Unknown activity",
-    "activityNewItem": "New",
+    "activityNewItem": "Unread",
     "activityScreenAppBarTitle": "Recent activity",
     "dateSecondsAgo": "{amount, plural, one{1 second ago} other{{amount} seconds ago}}",
     "dateMinutesAgo": "{amount, plural, one{1 minute ago} other{{amount} minutes ago}}",
@@ -147,5 +147,6 @@
     "activityFeedErrorMessage": "Failed to load notifications",
     "activityFailedBoxLoad": "Failed to load liked boxes",
     "activityNoLikedBoxes": "You have not liked any boxes...",
-    "chatInputHint": "Write a message..."
+    "chatInputHint": "Write a message...",
+    "activityNoChatItems": "You have no active conversations"
 }

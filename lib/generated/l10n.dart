@@ -598,7 +598,7 @@ class S {
 
   String get feedNoBoxesFound {
     return Intl.message(
-      'No boxes found... Try changing your preferences!',
+      'No boxes found...',
       name: 'feedNoBoxesFound',
       desc: '',
       args: [],
@@ -1036,7 +1036,7 @@ class S {
 
   String get detailsDescription {
     return Intl.message(
-      'Description',
+      'Box Description',
       name: 'detailsDescription',
       desc: '',
       args: [],
@@ -1243,7 +1243,7 @@ class S {
 
   String get activityNewItem {
     return Intl.message(
-      'New',
+      'Unread',
       name: 'activityNewItem',
       desc: '',
       args: [],
@@ -1379,6 +1379,15 @@ class S {
     return Intl.message(
       'Write a message...',
       name: 'chatInputHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityNoChatItems {
+    return Intl.message(
+      'You have no active conversations',
+      name: 'activityNoChatItems',
       desc: '',
       args: [],
     );
