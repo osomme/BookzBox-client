@@ -74,9 +74,12 @@ class _ChatScreenState extends State<ChatScreen> {
                   reverse: true,
                   itemBuilder: (ctx, i) {
                     final msg = widget.chatStore.messages[i];
+                    final isClientUsersMessage =
+                        msg.postedByUserId == widget.clientUserId;
                     return ChatMessageItem(
-                      isClientUser: msg.postedByUserId == widget.clientUserId,
+                      isClientUser: isClientUsersMessage,
                       message: msg,
+                      username: isClientUsersMessage ? null : widget.otherUsername,
                     );
                   },
                 ),
