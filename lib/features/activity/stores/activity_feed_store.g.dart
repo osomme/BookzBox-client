@@ -15,22 +15,53 @@ mixin _$ActivityFeedStore on _ActivityFeedStore, Store {
   List<ActivityItem> get feedItems => (_$feedItemsComputed ??=
           Computed<List<ActivityItem>>(() => super.feedItems))
       .value;
-  Computed<int> _$numUnreadComputed;
+  Computed<int> _$numUnreadMatchAndLikesComputed;
 
   @override
-  int get numUnread =>
-      (_$numUnreadComputed ??= Computed<int>(() => super.numUnread)).value;
-  Computed<bool> _$hasUnreadComputed;
+  int get numUnreadMatchAndLikes => (_$numUnreadMatchAndLikesComputed ??=
+          Computed<int>(() => super.numUnreadMatchAndLikes))
+      .value;
+  Computed<bool> _$hasUnreadMatchAndLikesComputed;
 
   @override
-  bool get hasUnread =>
-      (_$hasUnreadComputed ??= Computed<bool>(() => super.hasUnread)).value;
+  bool get hasUnreadMatchAndLikes => (_$hasUnreadMatchAndLikesComputed ??=
+          Computed<bool>(() => super.hasUnreadMatchAndLikes))
+      .value;
   Computed<List<ActivityItem>> _$activityNotificationsComputed;
 
   @override
   List<ActivityItem> get activityNotifications =>
       (_$activityNotificationsComputed ??=
               Computed<List<ActivityItem>>(() => super.activityNotifications))
+          .value;
+  Computed<List<ActivityItem>> _$chatNotificationsComputed;
+
+  @override
+  List<ActivityItem> get chatNotifications => (_$chatNotificationsComputed ??=
+          Computed<List<ActivityItem>>(() => super.chatNotifications))
+      .value;
+  Computed<int> _$numUnreadChatMessagesComputed;
+
+  @override
+  int get numUnreadChatMessages => (_$numUnreadChatMessagesComputed ??=
+          Computed<int>(() => super.numUnreadChatMessages))
+      .value;
+  Computed<bool> _$hasUnreadChatMessagesComputed;
+
+  @override
+  bool get hasUnreadChatMessages => (_$hasUnreadChatMessagesComputed ??=
+          Computed<bool>(() => super.hasUnreadChatMessages))
+      .value;
+  Computed<bool> _$hasUnreadComputed;
+
+  @override
+  bool get hasUnread =>
+      (_$hasUnreadComputed ??= Computed<bool>(() => super.hasUnread)).value;
+  Computed<int> _$numTotalUnreadComputed;
+
+  @override
+  int get numTotalUnread =>
+      (_$numTotalUnreadComputed ??= Computed<int>(() => super.numTotalUnread))
           .value;
   Computed<bool> _$hasErrorComputed;
 
@@ -70,5 +101,25 @@ mixin _$ActivityFeedStore on _ActivityFeedStore, Store {
       super._hasError = value;
       _$_hasErrorAtom.reportChanged();
     }, _$_hasErrorAtom, name: '${_$_hasErrorAtom.name}_set');
+  }
+
+  final _$loadFeedAsyncAction = AsyncAction('loadFeed');
+
+  @override
+  Future<void> loadFeed(String userId) {
+    return _$loadFeedAsyncAction.run(() => super.loadFeed(userId));
+  }
+
+  final _$_ActivityFeedStoreActionController =
+      ActionController(name: '_ActivityFeedStore');
+
+  @override
+  void markAsRead(String userId, String activityId) {
+    final _$actionInfo = _$_ActivityFeedStoreActionController.startAction();
+    try {
+      return super.markAsRead(userId, activityId);
+    } finally {
+      _$_ActivityFeedStoreActionController.endAction(_$actionInfo);
+    }
   }
 }

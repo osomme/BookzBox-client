@@ -1341,7 +1341,7 @@ class S {
 
   String get activityNoFeedItems {
     return Intl.message(
-      'You have no notifications',
+      'Your activity feed is empty',
       name: 'activityNoFeedItems',
       desc: '',
       args: [],
@@ -1361,6 +1361,24 @@ class S {
     return Intl.message(
       'Failed to load liked boxes',
       name: 'activityFailedBoxLoad',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityNoLikedBoxes {
+    return Intl.message(
+      'You have not liked any boxes...',
+      name: 'activityNoLikedBoxes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get chatInputHint {
+    return Intl.message(
+      'Write a message...',
+      name: 'chatInputHint',
       desc: '',
       args: [],
     );

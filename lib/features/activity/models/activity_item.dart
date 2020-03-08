@@ -18,81 +18,58 @@ class ActivityItem {
     @required this.read,
   });
 
-  /// Maps a Like ActivityItem to a Firestore compatible map. [this] must have
-  ///  a type property which is an instance of Like.
-  Map<String, dynamic> toFirestore() {
-    return {
-      'typename': 'like',
-      'data': _typeToMap(this.type),
-      'timestamp': Timestamp.fromDate(this.timestamp),
-      'read': false,
-    };
-  }
-
-  Map<String, dynamic> _typeToMap(ActivityType type) {
-    if (type is LikeActivity) {
-      return {
-        'likedByUserId': type.likedByUserId,
-        'boxId': type.boxId,
-      };
-    } else {
-      throw 'Not implemented yet';
-    }
-  }
-
   factory ActivityItem.fromFirestore(Map<dynamic, dynamic> data, String id) {
     if (data['typename'] == 'like') {
-      final likeData = data['data'];
-      return ActivityItem(
-        id: id,
-        read: data['read'],
-        timestamp: (data['timestamp'] as Timestamp).toDate(),
-        type: LikeActivity(
-          likedByUserId: likeData['likedByUserId'],
-          likedByUsername: likeData['likedByUsername'],
-          boxTitle: likeData['boxTitle'],
-          boxId: likeData['boxId'],
-        ),
-      );
+      return _mapToLikeItem(data, id);
+    } else if (data['typename'] == 'match') {
+      return _mapToMatchItem(data, id);
+    } else if (data['typename'] == 'chat') {
+      return _mapToChatItem(data, id);
     } else {
       throw 'Unknown activity type';
     }
   }
 }
 
-// User for testing purposes. //TODO: Remove after back-end logic is implemented.
-final testActivityFeedItems = [
-  ActivityItem(
-    id: '1',
+ActivityItem _mapToLikeItem(Map<dynamic, dynamic> data, String id) {
+  final likeData = data['data'];
+  return ActivityItem(
+    id: id,
+    read: data['read'],
+    timestamp: (data['timestamp'] as Timestamp).toDate(),
     type: LikeActivity(
-      likedByUserId: '',
-      likedByUsername: 'Hans Hansen',
-      boxTitle: 'Old school books',
-      boxId: '',
+      likedByUserId: likeData['likedByUserId'],
+      likedByUsername: likeData['likedByUsername'],
+      boxTitle: likeData['boxTitle'],
+      boxId: likeData['boxId'],
     ),
-    timestamp: DateTime.now().subtract(Duration(seconds: 13)),
-    read: false,
-  ),
-  ActivityItem(
-    id: '2',
+  );
+}
+
+ActivityItem _mapToMatchItem(Map<dynamic, dynamic> data, String id) {
+  final matchData = data['data'];
+  return ActivityItem(
+    id: id,
     type: MatchActivity(
-      matchUserId: '',
-      matchUserName: 'Tina85',
-      boxTitle: 'Some thriller stuff',
-      chatId: '',
+      matchUsername: matchData['matchUserName'],
+      chatId: matchData['chatRef'],
     ),
-    timestamp: DateTime.now().subtract(Duration(hours: 2)),
-    read: true,
-  ),
-  ActivityItem(
-    id: '3',
+    timestamp: (data['timestamp'] as Timestamp).toDate(),
+    read: data['read'],
+  );
+}
+
+ActivityItem _mapToChatItem(Map<dynamic, dynamic> data, String id) {
+  final chatData = data['data'];
+  return ActivityItem(
+    id: id,
     type: MessageActivity(
-      chatId: '',
-      username: 'Martine Olsen',
-      newMessageSnippet:
-          'Hey, I would like to trade with you. This is an extended message to test how it looks when a message is quite long.',
+      otherUserName: chatData['otherUserName'],
+      otherUserThumbnail: chatData['otherUserThumbnail'],
+      lastMessage: chatData['lastMessage'],
+      chatId: id,
     ),
-    timestamp: DateTime.now().subtract(Duration(days: 43)),
-    read: true,
-  ),
-];
+    timestamp: (data['timestamp'] as Timestamp).toDate(),
+    read: data['read'],
+  );
+}

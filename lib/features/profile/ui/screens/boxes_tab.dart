@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/widgets/widgets.dart';
 import 'package:bookzbox/features/box/models/box.dart';
 import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/new_box/ui/screens/new_box_screen.dart';
@@ -88,7 +89,8 @@ class BoxesTab extends StatelessWidget {
             FlatButton(
               child: Text(
                 S.of(context).boxConfirmVisibilityChange,
-                style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
+                style:
+                    TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
               ),
               onPressed: () {
                 boxStore.setBoxStatus(boxStore.currentBoxStatus, index);
@@ -112,56 +114,39 @@ class BoxesTab extends StatelessWidget {
                   ),
                 )
               : (boxStore.myBoxes.length > 0
-                  ? Observer(
-                      builder: (_) => (ListView.builder(
-                          padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 70.0),
-                          itemCount: boxStore.myBoxes.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Observer(
-                                builder: (_) => MiniBoxListItem(
-                                      leftButtonText: S.of(context).profileChangeVisibilityBtn,
-                                      onLeftButtonPressed: () => showDialog<void>(
-                                        context: context,
-                                        barrierDismissible: true,
-                                        builder: (BuildContext context) {
-                                          return genBoxVisibilityDialog(
-                                              context, boxStore.myBoxes[index], index);
-                                        },
-                                      ),
-                                      box: boxStore.myBoxes[index],
-                                      shouldShowLeftButton: profileStore.isMyProfile,
-                                    ));
-                          })),
-                    )
-                  : Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Icon(
-                              Entypo.emoji_sad,
-                              size: 64,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          Text(
-                            S.of(context).profileNoBoxes,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: Colors.grey[600],
-                            ),
-                          )
-                        ],
+                  ? ListView.builder(
+                      padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 70.0),
+                      itemCount: boxStore.myBoxes.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Observer(
+                            builder: (_) => MiniBoxListItem(
+                                  leftButtonText:
+                                      S.of(context).profileChangeVisibilityBtn,
+                                  onLeftButtonPressed: () => showDialog<void>(
+                                    context: context,
+                                    barrierDismissible: true,
+                                    builder: (BuildContext context) {
+                                      return genBoxVisibilityDialog(
+                                          context, boxStore.myBoxes[index], index);
+                                    },
+                                  ),
+                                  box: boxStore.myBoxes[index],
+                                  shouldShowLeftButton: profileStore.isMyProfile,
+                                ));
+                      })
+                  : ErrorTextWithIcon(
+                      icon: Icon(
+                        Entypo.emoji_sad,
+                        size: 64,
+                        color: Colors.grey,
                       ),
+                      text: S.of(context).profileNoBoxes,
                     ))),
         ),
         floatingActionButton: (profileStore.isMyProfile
             ? FloatingActionButton.extended(
-                onPressed: () => Navigator.push(
-                    context, MaterialPageRoute(builder: (ctx) => Provider.of<NewBoxScreen>(ctx))),
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (ctx) => Provider.of<NewBoxScreen>(ctx))),
                 label: Text(
                   S.of(context).profileNewBoxFAB,
                 ),

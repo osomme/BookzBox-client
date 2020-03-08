@@ -23,21 +23,38 @@ abstract class _ActivityFeedStore with Store {
   List<ActivityItem> get feedItems => _feedItems;
 
   @computed
-  int get numUnread => _feedItems.where((i) => !i.read).length;
+  int get numUnreadMatchAndLikes => activityNotifications.where((i) => !i.read).length;
 
   @computed
-  bool get hasUnread => numUnread != 0;
+  bool get hasUnreadMatchAndLikes => numUnreadMatchAndLikes != 0;
 
   @computed
   List<ActivityItem> get activityNotifications =>
       _feedItems.where((i) => i.type is LikeActivity || i.type is MatchActivity).toList();
 
   @computed
+  List<ActivityItem> get chatNotifications =>
+      _feedItems.where((i) => i.type is MessageActivity).toList();
+
+  @computed
+  int get numUnreadChatMessages => chatNotifications.where((c) => !c.read).length;
+
+  @computed
+  bool get hasUnreadChatMessages => numUnreadChatMessages != 0;
+
+  @computed
+  bool get hasUnread => hasUnreadChatMessages || hasUnreadMatchAndLikes;
+
+  @computed
+  int get numTotalUnread => numUnreadChatMessages + numUnreadMatchAndLikes;
+
+  @computed
   bool get hasError => _hasError;
 
   _ActivityFeedStore(this._repository);
 
-  void loadFeed(String userId) async {
+  @action
+  Future<void> loadFeed(String userId) async {
     final stream = await _repository.activityFeed(userId);
     _streamSubscription = stream.listen(
       (data) {
@@ -53,7 +70,11 @@ abstract class _ActivityFeedStore with Store {
     );
   }
 
+  @action
+  void markAsRead(String userId, String activityId) =>
+      _repository.markAsRead(userId, activityId);
+
   void dispose() {
-    _streamSubscription.cancel();
+    _streamSubscription?.cancel();
   }
 }

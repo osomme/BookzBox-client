@@ -46,10 +46,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 text: S.of(context).activityTabLabelActivity,
                 icon: Observer(
                   builder: (_) => Badge(
-                    showBadge: widget.activityFeedStore.hasUnread,
+                    showBadge: widget.activityFeedStore.hasUnreadMatchAndLikes,
                     badgeColor: Theme.of(context).accentColor,
                     badgeContent: Text(
-                      '${widget.activityFeedStore.numUnread}',
+                      '${widget.activityFeedStore.numUnreadMatchAndLikes}',
                       style: Theme.of(context)
                           .accentTextTheme
                           .body1
@@ -64,7 +64,23 @@ class _ActivityScreenState extends State<ActivityScreen> {
               ),
               Tab(
                 text: S.of(context).activityTabLabelMessages,
-                icon: Icon(Icons.chat),
+                icon: Observer(
+                  builder: (_) => Badge(
+                    showBadge: widget.activityFeedStore.hasUnreadChatMessages,
+                    badgeColor: Theme.of(context).accentColor,
+                    badgeContent: Text(
+                      '${widget.activityFeedStore.numUnreadChatMessages}',
+                      style: Theme.of(context)
+                          .accentTextTheme
+                          .body1
+                          .copyWith(fontSize: 11.0),
+                    ),
+                    padding: EdgeInsets.all(6.0),
+                    child: Icon(
+                      Icons.chat,
+                    ),
+                  ),
+                ),
               ),
               Tab(
                 text: S.of(context).activityTabLabelLikes,
@@ -75,9 +91,15 @@ class _ActivityScreenState extends State<ActivityScreen> {
         ),
         body: TabBarView(
           children: [
-            ActivityFeedTab(activityFeedStore: widget.activityFeedStore),
-            ChatFeedTab(),
-            LikedBoxesTab(likedBoxesStore: widget.boxLikeStore, userId: widget.userId),
+            ActivityFeedTab(
+              activityFeedStore: widget.activityFeedStore,
+              userId: widget.userId,
+            ),
+            ChatFeedTab(feedStore: widget.activityFeedStore),
+            LikedBoxesTab(
+              likedBoxesStore: widget.boxLikeStore,
+              userId: widget.userId,
+            ),
           ],
         ),
       ),

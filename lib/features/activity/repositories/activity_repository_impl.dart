@@ -8,4 +8,8 @@ class ActivityRepositoryImpl implements IActivtiyRepository {
   @override
   Future<Stream<Iterable<ActivityItem>>> activityFeed(String userId) =>
       _service.activityFeed(userId);
+
+  @override
+  Future<void> markAsRead(String userId, String activityId) =>
+      _service.markAsRead(userId, activityId);
 }
