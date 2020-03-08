@@ -7,4 +7,5 @@ abstract class Screens {
   static final boxDetails = 'box_details';
   static final profile = 'profile_screen';
   static final myProfile = 'my_profile_screen';
+  static final chat = 'chat';
 }

@@ -86,6 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "boxStatusPublicDesc" : MessageLookupByLibrary.simpleMessage("Everyone can see this box."),
     "boxStatusTraded" : MessageLookupByLibrary.simpleMessage("Traded"),
     "boxVisibilityChangeDialogTitle" : MessageLookupByLibrary.simpleMessage("Change box visibility"),
+    "chatInputHint" : MessageLookupByLibrary.simpleMessage("Write a message..."),
     "dateDaysAgo" : m3,
     "dateHoursAgo" : m4,
     "dateMinutesAgo" : m5,

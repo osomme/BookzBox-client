@@ -1374,6 +1374,15 @@ class S {
       args: [],
     );
   }
+
+  String get chatInputHint {
+    return Intl.message(
+      'Write a message...',
+      name: 'chatInputHint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

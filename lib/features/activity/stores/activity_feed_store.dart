@@ -26,7 +26,7 @@ abstract class _ActivityFeedStore with Store {
   int get numUnreadMatchAndLikes => activityNotifications.where((i) => !i.read).length;
 
   @computed
-  bool get hasUnread => numUnreadMatchAndLikes != 0;
+  bool get hasUnreadMatchAndLikes => numUnreadMatchAndLikes != 0;
 
   @computed
   List<ActivityItem> get activityNotifications =>
@@ -41,6 +41,9 @@ abstract class _ActivityFeedStore with Store {
 
   @computed
   bool get hasUnreadChatMessages => numUnreadChatMessages != 0;
+
+  @computed
+  bool get hasUnread => hasUnreadChatMessages || hasUnreadMatchAndLikes;
 
   @computed
   int get numTotalUnread => numUnreadChatMessages + numUnreadMatchAndLikes;
