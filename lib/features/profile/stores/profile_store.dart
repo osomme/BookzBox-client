@@ -44,9 +44,18 @@ abstract class _ProfileStore with Store {
   /// Run once on load.
   @action
   void init() {
-    _profileRepo
-        .fetch(_userId)
-        .then((_) => _.fold((error) => _profileLoadError = error, (profile) => _profile = profile));
+    _profileRepo.fetch(_userId).then((_) => _.fold(
+          (error) => _profileLoadError = error,
+          (profile) => onProfileLoaded(profile),
+        ));
+  }
+
+  @action
+  onProfileLoaded(Profile loaded) {
+    _profile = loaded;
+    if (isMyProfile) {
+      _profileRepo.setCachedProfile(loaded);
+    }
   }
 
   @computed

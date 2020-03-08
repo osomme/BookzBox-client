@@ -288,4 +288,14 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
       _$_ProfileBoxStoreActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  void setBoxStatus(BoxStatus status, int index) {
+    final _$actionInfo = _$_ProfileBoxStoreActionController.startAction();
+    try {
+      return super.setBoxStatus(status, index);
+    } finally {
+      _$_ProfileBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
 }

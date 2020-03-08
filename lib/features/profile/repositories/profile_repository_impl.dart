@@ -21,6 +21,11 @@ class ProfileRepository extends IProfileRepository {
   }
 
   @override
+  void setCachedProfile(Profile profile) {
+    _myProfileMemCache.setCache(profile);
+  }
+
+  @override
   Future<Either<String, Profile>> fetch(String userId) async {
     return await _profileService.fetch(userId);
   }

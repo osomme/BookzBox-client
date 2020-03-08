@@ -90,7 +90,10 @@ class BoxesTab extends StatelessWidget {
                 S.of(context).boxConfirmVisibilityChange,
                 style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
               ),
-              onPressed: () => changeVisibilityAndCloseDialog(context),
+              onPressed: () {
+                boxStore.setBoxStatus(boxStore.currentBoxStatus, index);
+                changeVisibilityAndCloseDialog(context);
+              },
             ),
           ],
         ),
@@ -109,25 +112,27 @@ class BoxesTab extends StatelessWidget {
                   ),
                 )
               : (boxStore.myBoxes.length > 0
-                  ? ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 70.0),
-                      itemCount: boxStore.myBoxes.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Observer(
-                            builder: (_) => MiniBoxListItem(
-                                  leftButtonText: S.of(context).profileChangeVisibilityBtn,
-                                  onLeftButtonPressed: () => showDialog<void>(
-                                    context: context,
-                                    barrierDismissible: true,
-                                    builder: (BuildContext context) {
-                                      return genBoxVisibilityDialog(
-                                          context, boxStore.myBoxes[index], index);
-                                    },
-                                  ),
-                                  box: boxStore.myBoxes[index],
-                                  shouldShowLeftButton: profileStore.isMyProfile,
-                                ));
-                      })
+                  ? Observer(
+                      builder: (_) => (ListView.builder(
+                          padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 70.0),
+                          itemCount: boxStore.myBoxes.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Observer(
+                                builder: (_) => MiniBoxListItem(
+                                      leftButtonText: S.of(context).profileChangeVisibilityBtn,
+                                      onLeftButtonPressed: () => showDialog<void>(
+                                        context: context,
+                                        barrierDismissible: true,
+                                        builder: (BuildContext context) {
+                                          return genBoxVisibilityDialog(
+                                              context, boxStore.myBoxes[index], index);
+                                        },
+                                      ),
+                                      box: boxStore.myBoxes[index],
+                                      shouldShowLeftButton: profileStore.isMyProfile,
+                                    ));
+                          })),
+                    )
                   : Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

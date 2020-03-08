@@ -135,4 +135,13 @@ abstract class _ProfileBoxStore with Store {
 
   @action
   void setUpdateError(String err) => _updateError = err;
+
+  @action
+  void setBoxStatus(BoxStatus status, int index) {
+    myBoxes[index].status = status;
+    // Hack to force re-draw.
+    var tmpList = myBoxes.toList();
+    myBoxes.clear();
+    myBoxes.addAll(tmpList);
+  }
 }
