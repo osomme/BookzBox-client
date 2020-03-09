@@ -17,7 +17,6 @@ class FeedScreen extends StatefulWidget {
 
   @override
   _FeedScreenState createState() {
-    feedStore.init();
     return _FeedScreenState();
   }
 }
@@ -29,6 +28,12 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0, viewportFraction: 0.8);
+  }
+
+  @override
+  void didChangeDependencies() {
+    widget.feedStore.init(Provider.of<AuthStore>(context).user.uid);
+    super.didChangeDependencies();
   }
 
   @override
@@ -71,19 +76,20 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
   SizedBox _mainContent() {
     return SizedBox.expand(
       child: Container(
-        child: PageView.builder(
-          controller: _pageController,
-          onPageChanged: (index) => widget.feedStore.setIndex(index),
-          itemCount: widget.feedStore.boxes.length,
-          itemBuilder: (context, index) => FeedListItem(
-            pageController: _pageController,
-            index: index,
-            box: widget.feedStore.boxes[index],
-            locationService: Provider.of<ILocationService>(context),
-            store: BoxLikeStore(
-              Provider.of<IBoxLikeRepository>(context),
-              Provider.of<IAuthService>(context),
-              widget.feedStore.boxes[index].id,
+        child: Observer(
+          builder: (_) => PageView.builder(
+            controller: _pageController,
+            itemCount: widget.feedStore.boxes.length,
+            itemBuilder: (context, index) => FeedListItem(
+              pageController: _pageController,
+              index: index,
+              box: widget.feedStore.boxes[index],
+              locationService: Provider.of<ILocationService>(context),
+              store: BoxLikeStore(
+                Provider.of<IBoxLikeRepository>(context),
+                Provider.of<IAuthService>(context),
+                widget.feedStore.boxes[index].id,
+              ),
             ),
           ),
         ),

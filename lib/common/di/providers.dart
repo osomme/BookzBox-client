@@ -8,7 +8,6 @@ import 'package:bookzbox/features/box/services/box_loader_service_impl.dart';
 import 'package:bookzbox/features/box/services/box_updater_service.dart';
 import 'package:bookzbox/features/box/services/box_updater_service_impl.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
-import 'package:bookzbox/features/box_details/ui/screens/box_details_screen.dart';
 import 'package:bookzbox/features/chat/chat.dart';
 import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';

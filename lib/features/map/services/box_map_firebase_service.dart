@@ -8,8 +8,12 @@ class BoxMapFirebaseService implements IMapBoxService {
   @override
   Future<Either<MapError, List<BoxMapItem>>> getAllBoxes() async {
     try {
-      final boxes = await _firestore.collection('boxes').getDocuments().then(
-          (docs) => docs.documents.map((b) => BoxMapItem.fromFirestore(b)).toList());
+      final boxes = await _firestore
+          .collection('boxes')
+          .where('status', isEqualTo: 0)
+          .getDocuments()
+          .then(
+              (docs) => docs.documents.map((b) => BoxMapItem.fromFirestore(b)).toList());
 
       return right(boxes);
     } catch (e) {

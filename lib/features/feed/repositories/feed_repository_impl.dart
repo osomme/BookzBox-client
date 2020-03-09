@@ -13,4 +13,8 @@ class FeedRepository implements IFeedRepository {
   Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxesFrom(
           int number, DateTime fromDate) async =>
       await _service.getBoxesFrom(number, fromDate);
+
+  @override
+  Future<Stream<Iterable<BoxFeedListItem>>> getBoxesStream(String userId) =>
+      _service.getBoxesStream(userId);
 }

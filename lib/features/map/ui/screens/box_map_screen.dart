@@ -35,9 +35,6 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
 
   LatLng currentCamPos;
 
-  /// The current physical location of the device.
-  LatLng currentUserPos;
-
   int iconSize = 84;
 
   int oldIconSize = 0;
@@ -55,6 +52,29 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   void dispose() {
     listeners.forEach((listener) => listener());
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: GoogleMap(
+          markers: markers,
+          onMapCreated: onMapCreated,
+          initialCameraPosition: CameraPosition(
+            target: startPos,
+            zoom: 12.0,
+          ),
+          onCameraIdle: onCameraIdle,
+          onCameraMove: (camPos) {
+            currentCamPos = camPos.target;
+            iconSize = calculateIconSize(camPos.zoom);
+          },
+          myLocationButtonEnabled: true,
+          myLocationEnabled: true,
+        ),
+      ),
+    );
   }
 
   void onMapCreated(GoogleMapController controller) {
@@ -81,7 +101,7 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
 
   Future<void> onUserLocationObtained(
       Dartz.Option<LatLngModel.LatLng> userLocation) async {
-    currentUserPos = userLocation
+    final currentUserPos = userLocation
         .map((p) => LatLng(p.latitude, p.longitude))
         .getOrElse(() => startPos);
     await mapController.moveCamera(CameraUpdate.newLatLng(currentUserPos));
@@ -114,15 +134,6 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
     print('Creating new markers with icon size: $iconSize');
     setState(() {
       markers = markers.map((m) => m.copyWith(iconParam: markerIcon)).toSet();
-      if (currentUserPos != null) {
-        markers.add(
-          Marker(
-            markerId: MarkerId('userpos'),
-            position: currentUserPos,
-            infoWindow: InfoWindow(title: 'Your location'),
-          ),
-        );
-      }
     });
   }
 
@@ -148,6 +159,7 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
                   Provider.of<IAuthService>(context),
                   box.boxId,
                 ),
+                authStore: Provider.of<AuthStore>(context),
               ),
             ),
           ),
@@ -159,24 +171,4 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   int calculateIconSize(double zoomLevel) => max(zoomLevel.round() * 7, 60);
 
   void onCameraIdle() => reloadMarkers();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: GoogleMap(
-        markers: markers,
-        onMapCreated: onMapCreated,
-        initialCameraPosition: CameraPosition(
-          target: startPos,
-          zoom: 12.0,
-        ),
-        onCameraIdle: onCameraIdle,
-        onCameraMove: (camPos) {
-          currentCamPos = camPos.target;
-          iconSize = calculateIconSize(camPos.zoom);
-        },
-        myLocationButtonEnabled: false,
-      ),
-    );
-  }
 }
