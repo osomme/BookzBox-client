@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bookzbox/common/screens/screen_names.dart';
+import 'package:bookzbox/features/box/box.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/widgets/widgets.dart';
 import 'package:bookzbox/features/likes/likes.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class BoxDetailsScreen extends StatefulWidget {
   final String boxId;
+  final String userId;
   final BoxDetailsStore store;
   final BoxLikeStore likeStore;
   final ILocationService locationService;
@@ -22,6 +24,7 @@ class BoxDetailsScreen extends StatefulWidget {
     @required this.store,
     @required this.likeStore,
     @required this.locationService,
+    @required this.userId,
   }) : super(key: key);
 
   @override
@@ -91,22 +94,36 @@ class _BoxDetailsScreenState extends State<BoxDetailsScreen> {
               ),
               actions: <Widget>[
                 Observer(
-                  builder: (_) => IconButton(
-                    icon: Icon(widget.likeStore.isLiked
-                        ? MaterialCommunityIcons.heart
-                        : MaterialCommunityIcons.heart_outline),
-                    onPressed: () => widget.likeStore.isLoading
-                        ? null
-                        : widget.likeStore.toggleLikeStatus(),
-                  ),
+                  builder: (_) {
+                    /// A user is not allowed to like one of their own boxes or a box that is not public.
+                    final idsAreNotNull =
+                        widget.store.box?.publisher?.uid != null && widget.userId != null;
+                    final userAndOwnerAreNotSame =
+                        widget.userId != widget.store.box?.publisher?.uid;
+                    final boxIsPublic = widget.store.box?.status == BoxStatus.public;
+                    return idsAreNotNull && userAndOwnerAreNotSame && boxIsPublic
+                        ? IconButton(
+                            icon: Icon(widget.likeStore.isLiked
+                                ? MaterialCommunityIcons.heart
+                                : MaterialCommunityIcons.heart_outline),
+                            onPressed: () => widget.likeStore.isLoading
+                                ? null
+                                : widget.likeStore.toggleLikeStatus(),
+                          )
+                        : SizedBox.shrink();
+                  },
                 ),
-                IconButton(
-                  icon: Icon(Icons.person),
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    Screens.profile,
-                    arguments: widget.store.box.publisher.uid,
-                  ),
+                Observer(
+                  builder: (_) => widget.store.box?.publisher?.uid != null
+                      ? IconButton(
+                          icon: Icon(Icons.person),
+                          onPressed: () => Navigator.pushNamed(
+                            context,
+                            Screens.profile,
+                            arguments: widget.store.box.publisher.uid,
+                          ),
+                        )
+                      : SizedBox.shrink(),
                 ),
               ],
             ),

@@ -1,5 +1,6 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/common/widgets/circular_button.dart';
+import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -15,10 +16,13 @@ class ModalBoxDetails extends StatefulWidget {
 
   final BoxLikeStore likeStore;
 
+  final AuthStore authStore;
+
   const ModalBoxDetails({
     Key key,
     @required this.box,
     @required this.likeStore,
+    @required this.authStore,
   }) : super(key: key);
 
   @override
@@ -181,13 +185,23 @@ class _ModalBoxDetailsState extends State<ModalBoxDetails> {
     );
   }
 
-  Widget _buttonBar(BuildContext context) {
+  Widget _buttonBarWithLikeBtn(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         _profileButton(context),
         _detailsButton(context),
         _likeButton(context),
+      ],
+    );
+  }
+
+  Widget _buttonBarWithoutLikeBtn(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        _profileButton(context),
+        _detailsButton(context),
       ],
     );
   }
@@ -244,7 +258,14 @@ class _ModalBoxDetailsState extends State<ModalBoxDetails> {
           SizedBox(height: 20.0),
           _publishedOnText(context),
           SizedBox(height: 20.0),
-          _buttonBar(context),
+          Observer(builder: (ctx) {
+            if (widget.authStore.isLoggedIn &&
+                widget.authStore.user.uid == widget.box.publishedById) {
+              return _buttonBarWithoutLikeBtn(context);
+            } else {
+              return _buttonBarWithLikeBtn(context);
+            }
+          }),
           SizedBox(height: 20.0),
         ],
       ),
