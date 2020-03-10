@@ -120,6 +120,7 @@ class MyApp extends StatelessWidget {
                     clientUserId: Provider.of<AuthStore>(ctx).user?.uid ?? '',
                     otherUsername: args.otherUserName,
                     chatStore: store,
+                    otherUserThumbnail: args.otherUserThumbnail,
                   ),
                 ),
               );

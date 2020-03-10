@@ -18,7 +18,6 @@ class ChatFeedTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Add a message when the user does not have any messages. See the two other tabs for exmaples.
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Observer(
@@ -89,8 +88,15 @@ class ChatFeedTab extends StatelessWidget {
                     ],
                   ),
                   isThreeLine: false,
-                  onTap: () => Navigator.pushNamed(context, Screens.chat,
-                      arguments: ChatScreenArgs(chatData.chatId, chatData.otherUserName)),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    Screens.chat,
+                    arguments: ChatScreenArgs(
+                      chatData.chatId,
+                      chatData.otherUserName,
+                      chatData.otherUserThumbnail,
+                    ),
+                  ),
                 ),
               );
             },

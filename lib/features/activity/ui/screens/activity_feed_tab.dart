@@ -111,14 +111,18 @@ class ActivityFeedTab extends StatelessWidget {
         ActivityItemTextParam(content: S.of(ctx).activityItemMatchPost),
       ],
       date: activityItem.timestamp,
-      onClick: () => Navigator.pushNamed(
-        ctx,
-        Screens.chat,
-        arguments: ChatScreenArgs(
-          matchActivity.chatId,
-          matchActivity.matchUsername,
-        ),
-      ),
+      onClick: () {
+        activityFeedStore.markAsRead(userId, activityItem.id);
+        Navigator.pushNamed(
+          ctx,
+          Screens.chat,
+          arguments: ChatScreenArgs(
+            matchActivity.chatId,
+            matchActivity.matchUsername,
+            null,
+          ),
+        );
+      },
       read: activityItem.read,
     );
   }

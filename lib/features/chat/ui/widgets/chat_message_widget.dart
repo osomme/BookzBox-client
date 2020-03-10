@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 class ChatMessageItem extends StatelessWidget {
   final bool isClientUser;
   final ChatMessage message;
+  final String thumbnail;
 
   /// Optional parameter used for when the message is representing another user (not client user).
   final String username;
@@ -15,6 +16,7 @@ class ChatMessageItem extends StatelessWidget {
     @required this.isClientUser,
     @required this.message,
     this.username,
+    this.thumbnail,
   }) : super(key: key);
 
   @override
@@ -32,7 +34,7 @@ class ChatMessageItem extends StatelessWidget {
               isClientUser
                   ? SizedBox.shrink()
                   : ProfileAvatar(
-                      profileImgUrl: null,
+                      profileImgUrl: thumbnail,
                       displayName: username,
                     ),
               SizedBox(width: 5.0),
