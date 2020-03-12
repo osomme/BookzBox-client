@@ -1,3 +1,4 @@
+import 'package:bookzbox/features/box/box.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class BoxMapItem {
   final String publishedById;
   final String boxId;
   final List<MapBookItem> books;
+  final BoxStatus status;
 
   BoxMapItem({
     @required this.latitude,
@@ -21,6 +23,7 @@ class BoxMapItem {
     @required this.publishedById,
     @required this.boxId,
     @required this.books,
+    @required this.status,
   });
 
   factory BoxMapItem.fromFirestore(DocumentSnapshot doc) {
@@ -35,6 +38,7 @@ class BoxMapItem {
       longitude: data['longitude'] as double,
       title: data['title'] as String,
       description: (data['description'] as String) ?? '',
+      status: (data['status'] as int).toBoxStatus(),
     );
   }
 }

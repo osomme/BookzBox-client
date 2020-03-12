@@ -76,16 +76,17 @@ class MyApp extends StatelessWidget {
                   ...boxLikeProviders,
                   ...commonServicesProviders,
                 ],
-                child: Consumer<BoxDetailsStore>(
+                child: Consumer<AuthStore>(
                   builder: (ctx, store, __) => BoxDetailsScreen(
                     boxId: boxId,
-                    store: store,
+                    store: Provider.of<BoxDetailsStore>(ctx),
                     likeStore: BoxLikeStore(
                       Provider.of<IBoxLikeRepository>(ctx),
                       Provider.of<IAuthService>(ctx),
                       boxId,
                     ),
                     locationService: Provider.of<ILocationService>(ctx),
+                    userId: store.user?.uid,
                   ),
                 ),
               );
@@ -111,16 +112,15 @@ class MyApp extends StatelessWidget {
           } else if (settings.name == Screens.chat) {
             final ChatScreenArgs args = settings.arguments;
             return MaterialPageRoute(builder: (ctx) {
-              final String userId = Provider.of<AuthStore>(ctx)?.user?.uid ??
-                  'asdasd'; //TODO: Remove after testing
               return MultiProvider(
                 providers: chatProviders,
                 child: Consumer<ChatStore>(
                   builder: (ctx, store, _) => ChatScreen(
                     chatId: args.chatId,
-                    clientUserId: userId,
+                    clientUserId: Provider.of<AuthStore>(ctx).user?.uid ?? '',
                     otherUsername: args.otherUserName,
                     chatStore: store,
+                    otherUserThumbnail: args.otherUserThumbnail,
                   ),
                 ),
               );

@@ -7,8 +7,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class ChatScreenArgs {
   final String chatId;
   final String otherUserName;
+  final String otherUserThumbnail;
 
-  ChatScreenArgs(this.chatId, this.otherUserName);
+  ChatScreenArgs(this.chatId, this.otherUserName, this.otherUserThumbnail);
 }
 
 class ChatScreen extends StatefulWidget {
@@ -23,12 +24,15 @@ class ChatScreen extends StatefulWidget {
 
   final ChatStore chatStore;
 
+  final String otherUserThumbnail;
+
   ChatScreen({
     Key key,
     @required this.chatId,
     @required this.clientUserId,
     @required this.otherUsername,
     @required this.chatStore,
+    this.otherUserThumbnail,
   }) : super(key: key) {
     chatStore.loadChatStream(chatId, clientUserId);
   }
@@ -55,7 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: Row(
           children: <Widget>[
             ProfileAvatar(
-              profileImgUrl: null,
+              profileImgUrl: widget.otherUserThumbnail,
               displayName: widget.otherUsername,
             ),
             SizedBox(width: 10.0),
@@ -80,6 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       isClientUser: isClientUsersMessage,
                       message: msg,
                       username: isClientUsersMessage ? null : widget.otherUsername,
+                      thumbnail: widget.otherUserThumbnail,
                     );
                   },
                 ),

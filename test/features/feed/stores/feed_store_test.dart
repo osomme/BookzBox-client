@@ -17,31 +17,6 @@ void main() {
     });
 
     group('Computed', () {
-      test(
-          '[error] should be set to the error that is returned from the repository when repo fetch fails',
-          () async {
-        when(mockRepo.getBoxesFrom(any, any))
-            .thenAnswer((_) => Future.value(Left(NetworkError.noInternet)));
-        final store = FeedStore(mockRepo);
-        await store.init();
-        expect(store.error, NetworkError.noInternet);
-      });
-
-      test(
-          '[currentIndex] should be set to the index that is passed in the parameter, if it is positive',
-          () {
-        store.setIndex(3);
-        expect(store.currentIndex, equals(3));
-      });
-
-      test(
-          '[currentIndex] should be set to 0 if a negative number is passed as argument to [setIndex]',
-          () {
-        store.setIndex(5); // To remove false positives
-        store.setIndex(-1);
-        expect(store.currentIndex, equals(0));
-      });
-
       test('[boxes] should contain the boxes retrieved from the repository', () async {
         fail('Not implemented yet');
       });

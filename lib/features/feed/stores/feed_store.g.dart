@@ -14,42 +14,30 @@ mixin _$FeedStore on _FeedStore, Store {
   @override
   NetworkError get error =>
       (_$errorComputed ??= Computed<NetworkError>(() => super.error)).value;
-  Computed<ObservableList<BoxFeedListItem>> _$boxesComputed;
+  Computed<List<BoxFeedListItem>> _$boxesComputed;
 
   @override
-  ObservableList<BoxFeedListItem> get boxes => (_$boxesComputed ??=
-          Computed<ObservableList<BoxFeedListItem>>(() => super.boxes))
-      .value;
+  List<BoxFeedListItem> get boxes =>
+      (_$boxesComputed ??= Computed<List<BoxFeedListItem>>(() => super.boxes))
+          .value;
   Computed<bool> _$initialLoadingOngoingComputed;
 
   @override
   bool get initialLoadingOngoing => (_$initialLoadingOngoingComputed ??=
           Computed<bool>(() => super.initialLoadingOngoing))
       .value;
-  Computed<bool> _$incrementalLoadingComputed;
-
-  @override
-  bool get incrementalLoading => (_$incrementalLoadingComputed ??=
-          Computed<bool>(() => super.incrementalLoading))
-      .value;
-  Computed<int> _$currentIndexComputed;
-
-  @override
-  int get currentIndex =>
-      (_$currentIndexComputed ??= Computed<int>(() => super.currentIndex))
-          .value;
 
   final _$_boxesAtom = Atom(name: '_FeedStore._boxes');
 
   @override
-  ObservableList<BoxFeedListItem> get _boxes {
+  List<BoxFeedListItem> get _boxes {
     _$_boxesAtom.context.enforceReadPolicy(_$_boxesAtom);
     _$_boxesAtom.reportObserved();
     return super._boxes;
   }
 
   @override
-  set _boxes(ObservableList<BoxFeedListItem> value) {
+  set _boxes(List<BoxFeedListItem> value) {
     _$_boxesAtom.context.conditionallyRunInAction(() {
       super._boxes = value;
       _$_boxesAtom.reportChanged();
@@ -93,66 +81,10 @@ mixin _$FeedStore on _FeedStore, Store {
         name: '${_$_initialLoadingOngoingAtom.name}_set');
   }
 
-  final _$_incrementalLoadingAtom =
-      Atom(name: '_FeedStore._incrementalLoading');
+  final _$initAsyncAction = AsyncAction('init');
 
   @override
-  bool get _incrementalLoading {
-    _$_incrementalLoadingAtom.context
-        .enforceReadPolicy(_$_incrementalLoadingAtom);
-    _$_incrementalLoadingAtom.reportObserved();
-    return super._incrementalLoading;
-  }
-
-  @override
-  set _incrementalLoading(bool value) {
-    _$_incrementalLoadingAtom.context.conditionallyRunInAction(() {
-      super._incrementalLoading = value;
-      _$_incrementalLoadingAtom.reportChanged();
-    }, _$_incrementalLoadingAtom,
-        name: '${_$_incrementalLoadingAtom.name}_set');
-  }
-
-  final _$_currentIndexAtom = Atom(name: '_FeedStore._currentIndex');
-
-  @override
-  int get _currentIndex {
-    _$_currentIndexAtom.context.enforceReadPolicy(_$_currentIndexAtom);
-    _$_currentIndexAtom.reportObserved();
-    return super._currentIndex;
-  }
-
-  @override
-  set _currentIndex(int value) {
-    _$_currentIndexAtom.context.conditionallyRunInAction(() {
-      super._currentIndex = value;
-      _$_currentIndexAtom.reportChanged();
-    }, _$_currentIndexAtom, name: '${_$_currentIndexAtom.name}_set');
-  }
-
-  final _$_incrementalLoadAsyncAction = AsyncAction('_incrementalLoad');
-
-  @override
-  Future<void> _incrementalLoad() {
-    return _$_incrementalLoadAsyncAction.run(() => super._incrementalLoad());
-  }
-
-  final _$_initialFetchAsyncAction = AsyncAction('_initialFetch');
-
-  @override
-  Future<void> _initialFetch() {
-    return _$_initialFetchAsyncAction.run(() => super._initialFetch());
-  }
-
-  final _$_FeedStoreActionController = ActionController(name: '_FeedStore');
-
-  @override
-  void setIndex(int index) {
-    final _$actionInfo = _$_FeedStoreActionController.startAction();
-    try {
-      return super.setIndex(index);
-    } finally {
-      _$_FeedStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> init(String userId) {
+    return _$initAsyncAction.run(() => super.init(userId));
   }
 }
