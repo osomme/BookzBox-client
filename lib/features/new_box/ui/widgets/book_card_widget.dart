@@ -15,7 +15,7 @@ class BookCard extends StatelessWidget {
     Offset tapPosition;
     return new GestureDetector(
       onTapDown: (details) => tapPosition = details.globalPosition,
-      onLongPress: () {
+      onTap: () {
         final RenderBox overlay = Overlay.of(context).context.findRenderObject();
         showMenu(
           context: context,
