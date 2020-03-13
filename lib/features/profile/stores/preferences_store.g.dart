@@ -57,16 +57,17 @@ mixin _$PreferencesStore on _PreferencesStore, Store {
   final _$addBookSubjectAsyncAction = AsyncAction('addBookSubject');
 
   @override
-  Future<dynamic> addBookSubject(BookSubject subject) {
-    return _$addBookSubjectAsyncAction.run(() => super.addBookSubject(subject));
+  Future<dynamic> addBookSubject(String userId, BookSubject subject) {
+    return _$addBookSubjectAsyncAction
+        .run(() => super.addBookSubject(userId, subject));
   }
 
   final _$removeBookSubjectAsyncAction = AsyncAction('removeBookSubject');
 
   @override
-  Future<dynamic> removeBookSubject(BookSubject subject) {
+  Future<dynamic> removeBookSubject(String userId, BookSubject subject) {
     return _$removeBookSubjectAsyncAction
-        .run(() => super.removeBookSubject(subject));
+        .run(() => super.removeBookSubject(userId, subject));
   }
 
   final _$_PreferencesStoreActionController =

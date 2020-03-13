@@ -88,6 +88,9 @@ class PreferencesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (preferencesStore.favoriteBookSubjects.isEmpty) {
+      preferencesStore.favoriteBookSubjects.addAll(profileStore.profile.favoriteGenres);
+    }
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -136,8 +139,9 @@ class PreferencesTab extends StatelessWidget {
                         MaterialIcons.close,
                       ),
                       deleteButtonTooltipMessage: S.of(context).preferencesRemoveGenreTip,
-                      onDeleted: () => preferencesStore
-                          .removeBookSubject(preferencesStore.favoriteBookSubjects[index]),
+                      onDeleted: () => preferencesStore.removeBookSubject(
+                          profileStore.profile.userId,
+                          preferencesStore.favoriteBookSubjects[index]),
                     ),
                   );
                 },
@@ -159,7 +163,7 @@ class PreferencesTab extends StatelessWidget {
                 onChanged: (value) {
                   preferencesStore.setSelectedSubject(value);
                   if (value != null) {
-                    preferencesStore.addBookSubject(value);
+                    preferencesStore.addBookSubject(profileStore.profile.userId, value);
                   }
                 },
                 isExpanded: true,

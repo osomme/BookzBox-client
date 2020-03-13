@@ -27,8 +27,12 @@ import 'package:bookzbox/features/new_box/stores/new_box_store.dart';
 import 'package:bookzbox/features/new_box/ui/screens/new_box_screen.dart';
 import 'package:bookzbox/features/profile/models/mem_cache.dart';
 import 'package:bookzbox/features/profile/models/profile_mem_cache.dart';
+import 'package:bookzbox/features/profile/repositories/preferences_repository.dart';
+import 'package:bookzbox/features/profile/repositories/preferences_repository_impl.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository_impl.dart';
+import 'package:bookzbox/features/profile/services/preferences_service.dart';
+import 'package:bookzbox/features/profile/services/preferences_service_impl.dart';
 import 'package:bookzbox/features/profile/services/profile_service.dart';
 import 'package:bookzbox/features/profile/services/profile_service_impl.dart';
 import 'package:bookzbox/features/profile/stores/preferences_store.dart';
@@ -150,8 +154,14 @@ final myProfileProviders = [
   Provider<IProfileService>(
     create: (_) => ProfileService(),
   ),
-  Provider<PreferencesStore>(
-    create: (_) => PreferencesStore(),
+  Provider<IPreferencesService>(
+    create: (_) => PreferencesService(),
+  ),
+  ProxyProvider<IPreferencesService, IPreferencesRepository>(
+    update: (_, service, __) => PreferencesRepository(service),
+  ),
+  ProxyProvider<IPreferencesRepository, PreferencesStore>(
+    update: (_, repo, __) => PreferencesStore(repo),
   ),
   ProxyProvider2<IMemCache, IProfileService, IProfileRepository>(
     update: (_, cache, profileService, __) => ProfileRepository(

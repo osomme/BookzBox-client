@@ -1,3 +1,4 @@
+import 'package:bookzbox/features/profile/models/book_subjects.dart';
 import 'package:bookzbox/features/profile/models/profile.dart';
 import 'package:bookzbox/features/profile/models/profile_mem_cache.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository.dart';
@@ -41,6 +42,7 @@ void main() {
         joinDate: DateTime.now(),
         lastSeen: DateTime.now(),
         photoUrl: '',
+        favoriteGenres: List(),
       );
 
       when(mockProfileService.fetch(any)).thenAnswer((_) => Future.value(Right(myProfile)));

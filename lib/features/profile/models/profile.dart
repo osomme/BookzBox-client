@@ -1,3 +1,4 @@
+import 'package:bookzbox/features/profile/models/book_subjects.dart';
 import 'package:flutter/material.dart';
 
 class Profile {
@@ -13,6 +14,8 @@ class Profile {
   /// The last date stored by Firebase for this user.
   final DateTime lastSeen;
 
+  final List<BookSubject> favoriteGenres;
+
   Profile({
     @required this.userId,
     @required this.displayName,
@@ -21,5 +24,6 @@ class Profile {
     @required this.joinDate,
     @required this.photoUrl,
     @required this.lastSeen,
+    @required this.favoriteGenres,
   });
 }

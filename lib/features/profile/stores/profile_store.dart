@@ -21,6 +21,7 @@ abstract class _ProfileStore with Store {
     joinDate: DateTime.now(),
     lastSeen: DateTime.now(),
     photoUrl: '',
+    favoriteGenres: List(),
   );
 
   @observable

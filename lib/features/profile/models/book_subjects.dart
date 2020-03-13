@@ -1,3 +1,4 @@
+/// IMPORTANT: DON'T CHANGE THE ORDER!
 enum BookSubject {
   Action,
   Adventure,

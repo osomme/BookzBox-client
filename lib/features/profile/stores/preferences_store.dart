@@ -1,4 +1,5 @@
 import 'package:bookzbox/features/profile/models/book_subjects.dart';
+import 'package:bookzbox/features/profile/repositories/preferences_repository.dart';
 import 'package:mobx/mobx.dart';
 
 part 'preferences_store.g.dart';
@@ -6,11 +7,15 @@ part 'preferences_store.g.dart';
 class PreferencesStore = _PreferencesStore with _$PreferencesStore;
 
 abstract class _PreferencesStore with Store {
+  final IPreferencesRepository _preferencesRepo;
+
   @observable
   ObservableList<BookSubject> favoriteBookSubjects = new ObservableList();
 
   @observable
   BookSubject _selectedSubject;
+
+  _PreferencesStore(this._preferencesRepo);
 
   @action
   void setSelectedSubject(BookSubject subject) => _selectedSubject = subject;
@@ -19,20 +24,20 @@ abstract class _PreferencesStore with Store {
   BookSubject get selectedSubject => _selectedSubject;
 
   @action
-  Future addBookSubject(BookSubject subject) async {
+  Future addBookSubject(String userId, BookSubject subject) async {
     if (favoriteBookSubjects.contains(subject)) {
       return;
     }
     favoriteBookSubjects.add(subject);
-    // TODO: add to DB
+    await _preferencesRepo.setFavoriteGenre(userId, favoriteBookSubjects.toList());
   }
 
   @action
-  Future removeBookSubject(BookSubject subject) async {
+  Future removeBookSubject(String userId, BookSubject subject) async {
     if (!favoriteBookSubjects.contains(subject)) {
       return;
     }
     favoriteBookSubjects.remove(subject);
-    // TODO: remove from DB
+    await _preferencesRepo.setFavoriteGenre(userId, favoriteBookSubjects.toList());
   }
 }
