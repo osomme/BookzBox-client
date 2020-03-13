@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/chat/chat.dart';
 import 'package:bookzbox/features/profile/ui/widgets/profile_avatar.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -58,15 +59,22 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        title: Row(
-          children: <Widget>[
-            ProfileAvatar(
-              profileImgUrl: widget.otherUserThumbnail,
-              displayName: widget.otherUsername,
+        title: Observer(
+          builder: (ctx) => GestureDetector(
+            onTap: () => widget.chatStore.otherUserId
+                .map((id) => Navigator.pushNamed(ctx, Screens.profile, arguments: id))
+                .getOrElse(() => null),
+            child: Row(
+              children: <Widget>[
+                ProfileAvatar(
+                  profileImgUrl: widget.otherUserThumbnail,
+                  displayName: widget.otherUsername,
+                ),
+                SizedBox(width: 10.0),
+                Text(widget.otherUsername),
+              ],
             ),
-            SizedBox(width: 10.0),
-            Text(widget.otherUsername),
-          ],
+          ),
         ),
       ),
       body: GestureDetector(
