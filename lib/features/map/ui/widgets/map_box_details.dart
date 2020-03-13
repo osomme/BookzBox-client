@@ -249,26 +249,31 @@ class _ModalBoxDetailsState extends State<ModalBoxDetails> {
   }
 
   _mainTextContent(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _description(context),
-          SizedBox(height: 20.0),
-          _publishedOnText(context),
-          SizedBox(height: 20.0),
-          Observer(builder: (ctx) {
-            if (widget.authStore.isLoggedIn &&
-                widget.authStore.user.uid == widget.box.publishedById) {
-              return _buttonBarWithoutLikeBtn(context);
-            } else {
-              return _buttonBarWithLikeBtn(context);
-            }
-          }),
-          SizedBox(height: 20.0),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _description(context),
+              SizedBox(height: 20.0),
+              _publishedOnText(context),
+              SizedBox(height: 20.0),
+            ],
+          ),
+        ),
+        Observer(builder: (ctx) {
+          if (widget.authStore.isLoggedIn &&
+              widget.authStore.user.uid == widget.box.publishedById) {
+            return _buttonBarWithoutLikeBtn(context);
+          } else {
+            return _buttonBarWithLikeBtn(context);
+          }
+        }),
+        SizedBox(height: 20.0),
+      ],
     );
   }
 }
