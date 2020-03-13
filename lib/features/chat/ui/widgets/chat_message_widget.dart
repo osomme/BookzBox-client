@@ -1,6 +1,9 @@
 import 'package:bookzbox/features/chat/chat.dart';
 import 'package:bookzbox/features/profile/ui/widgets/profile_avatar.dart';
+import 'package:bookzbox/generated/l10n.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 
 class ChatMessageItem extends StatelessWidget {
@@ -47,12 +50,50 @@ class ChatMessageItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(9.0),
                 ),
                 padding: EdgeInsets.all(14.0),
-                child: Text(
-                  message.content,
-                  style: Theme.of(context)
-                      .textTheme
-                      .body1
-                      .copyWith(color: Colors.white, fontSize: 15.0),
+                child: Builder(
+                  builder: (ctx) {
+                    switch (message.contentType) {
+                      case ChatMessageType.Text:
+                        return Text(
+                          message.content,
+                          style: Theme.of(context)
+                              .textTheme
+                              .body1
+                              .copyWith(color: Colors.white, fontSize: 15.0),
+                        );
+                      case ChatMessageType.Image:
+                        return CachedNetworkImage(
+                          imageUrl: message.content,
+                          imageBuilder: (ctx, imageProvider) => GestureDetector(
+                            onTap: () => showDialog(
+                              context: context,
+                              builder: (ctx) =>
+                                  FullSizeImageScreen(imageUrl: message.content),
+                            ),
+                            child: Hero(
+                              tag: message.content,
+                              child: Container(
+                                height: 150.0,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          placeholder: (ctx, url) => SpinKitPulse(
+                            size: 35.0,
+                            color: Theme.of(ctx).primaryIconTheme.color,
+                          ),
+                          errorWidget: (ctx, url, error) =>
+                              Text(S.of(context).chatImageLoadFailed),
+                        );
+                      default:
+                        return Text(S.of(context).chatContentNotRendered);
+                    }
+                  },
                 ),
               ),
             ],
@@ -82,5 +123,42 @@ class ChatMessageItem extends StatelessWidget {
       final int numValue = int.tryParse(s);
       return numValue != null && numValue >= 0 && numValue <= 9 ? '0' + s : s;
     }).join(':');
+  }
+}
+
+class FullSizeImageScreen extends StatelessWidget {
+  final String imageUrl;
+
+  const FullSizeImageScreen({
+    Key key,
+    @required this.imageUrl,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.70,
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          imageBuilder: (ctx, imageProvider) => Hero(
+            tag: imageUrl,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+          placeholder: (ctx, url) => SpinKitPulse(
+            size: 65.0,
+            color: Theme.of(ctx).primaryIconTheme.color,
+          ),
+          errorWidget: (ctx, url, error) => Text(S.of(context).chatImageLoadFailed),
+        ),
+      ),
+    );
   }
 }

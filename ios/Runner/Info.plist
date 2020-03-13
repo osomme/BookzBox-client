@@ -8,6 +8,8 @@
 	<!-- Camera permission -->
 	<key>NSCameraUsageDescription</key>
     <string>Camera permission is required for ISBN scanning.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo gallery permissions are required for you to be able to select images from gallery</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

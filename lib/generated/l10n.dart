@@ -1392,6 +1392,33 @@ class S {
       args: [],
     );
   }
+
+  String get chatImageLoadFailed {
+    return Intl.message(
+      'Failed to load image',
+      name: 'chatImageLoadFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get chatContentNotRendered {
+    return Intl.message(
+      'Failed to render message content',
+      name: 'chatContentNotRendered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get chatImageUploading {
+    return Intl.message(
+      'Uploading image',
+      name: 'chatImageUploading',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

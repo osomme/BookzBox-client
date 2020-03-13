@@ -14,10 +14,7 @@ class FirebaseChatService implements IChatService {
         .collection('messages')
         .orderBy('timestamp', descending: true)
         .snapshots()
-        .map((snap) {
-      print('In service, length: ${snap.documents.length}');
-      return snap.documents.map((doc) => ChatMessage.fromFirebase(doc));
-    });
+        .map((snap) => snap.documents.map((doc) => ChatMessage.fromFirebase(doc)));
   }
 
   @override
@@ -28,6 +25,7 @@ class FirebaseChatService implements IChatService {
         'postedByUserId': message.postedByUserId,
         'content': message.content,
         'timestamp': message.timestamp,
+        'contentType': message.contentType.index,
       });
       return right(true);
     } catch (e) {

@@ -148,5 +148,8 @@
     "activityFailedBoxLoad": "Failed to load liked boxes",
     "activityNoLikedBoxes": "You have not liked any boxes...",
     "chatInputHint": "Write a message...",
-    "activityNoChatItems": "You have no active conversations"
+    "activityNoChatItems": "You have no active conversations",
+    "chatImageLoadFailed": "Failed to load image",
+    "chatContentNotRendered": "Failed to render message content",
+    "chatImageUploading": "Uploading image"
 }
