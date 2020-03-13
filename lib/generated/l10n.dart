@@ -1392,6 +1392,492 @@ class S {
       args: [],
     );
   }
+
+  String get preferencesGenreHint {
+    return Intl.message(
+      'Add a genre',
+      name: 'preferencesGenreHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get preferencesGenreSearchHint {
+    return Intl.message(
+      'Find genre',
+      name: 'preferencesGenreSearchHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get preferencesRemoveGenreTip {
+    return Intl.message(
+      'Remove from favorites',
+      name: 'preferencesRemoveGenreTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get preferencesFavoriteGenreTitle {
+    return Intl.message(
+      'Favorite book genre',
+      name: 'preferencesFavoriteGenreTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get preferencesFavoriteGenreInfo {
+    return Intl.message(
+      'Add your favorite genres. This will help us to recommend the most relevant boxes for you.',
+      name: 'preferencesFavoriteGenreInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectAction {
+    return Intl.message(
+      'Action',
+      name: 'bookSubjectAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectAdventure {
+    return Intl.message(
+      'Adventure',
+      name: 'bookSubjectAdventure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectAnthology {
+    return Intl.message(
+      'Anthology',
+      name: 'bookSubjectAnthology',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectChildren {
+    return Intl.message(
+      'Children\'s books',
+      name: 'bookSubjectChildren',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectComic {
+    return Intl.message(
+      'Comic\'s',
+      name: 'bookSubjectComic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectComingOfAge {
+    return Intl.message(
+      'Coming of age',
+      name: 'bookSubjectComingOfAge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectCrime {
+    return Intl.message(
+      'Crime',
+      name: 'bookSubjectCrime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectDrama {
+    return Intl.message(
+      'Drama',
+      name: 'bookSubjectDrama',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectFairytale {
+    return Intl.message(
+      'Fairytale',
+      name: 'bookSubjectFairytale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectGraphicNovel {
+    return Intl.message(
+      'Graphic novel',
+      name: 'bookSubjectGraphicNovel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectHistFict {
+    return Intl.message(
+      'Historical-fiction',
+      name: 'bookSubjectHistFict',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectHorror {
+    return Intl.message(
+      'Horror',
+      name: 'bookSubjectHorror',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectMystery {
+    return Intl.message(
+      'Mystery',
+      name: 'bookSubjectMystery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectParanormal {
+    return Intl.message(
+      'Paranormal',
+      name: 'bookSubjectParanormal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectPictureBook {
+    return Intl.message(
+      'Picture book',
+      name: 'bookSubjectPictureBook',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectPoetry {
+    return Intl.message(
+      'Poetry',
+      name: 'bookSubjectPoetry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectPoliticalThriller {
+    return Intl.message(
+      'Political thriller',
+      name: 'bookSubjectPoliticalThriller',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectRomance {
+    return Intl.message(
+      'Romance',
+      name: 'bookSubjectRomance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectSatire {
+    return Intl.message(
+      'Satire',
+      name: 'bookSubjectSatire',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectSciFi {
+    return Intl.message(
+      'Science fiction (Sci-Fi)',
+      name: 'bookSubjectSciFi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectShortStory {
+    return Intl.message(
+      'Short story',
+      name: 'bookSubjectShortStory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectSuspense {
+    return Intl.message(
+      'Suspense',
+      name: 'bookSubjectSuspense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectThriller {
+    return Intl.message(
+      'Thriller',
+      name: 'bookSubjectThriller',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectYoungAdult {
+    return Intl.message(
+      'Young-adult',
+      name: 'bookSubjectYoungAdult',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectArt {
+    return Intl.message(
+      'Art',
+      name: 'bookSubjectArt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectAutobiography {
+    return Intl.message(
+      'Autobiography',
+      name: 'bookSubjectAutobiography',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectBiography {
+    return Intl.message(
+      'Biography',
+      name: 'bookSubjectBiography',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectCookbook {
+    return Intl.message(
+      'Cookbook',
+      name: 'bookSubjectCookbook',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectDiary {
+    return Intl.message(
+      'Diary',
+      name: 'bookSubjectDiary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectDictionary {
+    return Intl.message(
+      'Dictionary',
+      name: 'bookSubjectDictionary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectEncyclopedia {
+    return Intl.message(
+      'Encyclopedia',
+      name: 'bookSubjectEncyclopedia',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectEducational {
+    return Intl.message(
+      'Educational',
+      name: 'bookSubjectEducational',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectWomen {
+    return Intl.message(
+      'Women',
+      name: 'bookSubjectWomen',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectGuide {
+    return Intl.message(
+      'Guide',
+      name: 'bookSubjectGuide',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectHealth {
+    return Intl.message(
+      'Health',
+      name: 'bookSubjectHealth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectHistory {
+    return Intl.message(
+      'History',
+      name: 'bookSubjectHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectJournal {
+    return Intl.message(
+      'Journal',
+      name: 'bookSubjectJournal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectMath {
+    return Intl.message(
+      'Math',
+      name: 'bookSubjectMath',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectMemoir {
+    return Intl.message(
+      'Memoir',
+      name: 'bookSubjectMemoir',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectPrayer {
+    return Intl.message(
+      'Prayer',
+      name: 'bookSubjectPrayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectReligion {
+    return Intl.message(
+      'Religion',
+      name: 'bookSubjectReligion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectTextbook {
+    return Intl.message(
+      'Textbook',
+      name: 'bookSubjectTextbook',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectScience {
+    return Intl.message(
+      'Science',
+      name: 'bookSubjectScience',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectSelfhelp {
+    return Intl.message(
+      'Self help',
+      name: 'bookSubjectSelfhelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectTravel {
+    return Intl.message(
+      'Travel',
+      name: 'bookSubjectTravel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectTrueCrime {
+    return Intl.message(
+      'True crime',
+      name: 'bookSubjectTrueCrime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectClassic {
+    return Intl.message(
+      'Classic',
+      name: 'bookSubjectClassic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectHumor {
+    return Intl.message(
+      'Humor',
+      name: 'bookSubjectHumor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookSubjectMythology {
+    return Intl.message(
+      'Mythology',
+      name: 'bookSubjectMythology',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,4 +1,5 @@
 import 'package:bookzbox/features/profile/models/profile.dart';
+import 'package:bookzbox/features/profile/stores/preferences_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
 import 'package:bookzbox/features/profile/ui/screens/boxes_tab.dart';
@@ -22,12 +23,14 @@ class ProfileScreen extends StatefulWidget {
   final ProfileStore profileStore;
   final AuthStore authStore;
   final ProfileBoxStore profileBoxStore;
+  final PreferencesStore preferencesStore;
 
   ProfileScreen({
     Key key,
     @required this.profileStore,
     @required this.authStore,
     @required this.profileBoxStore,
+    @required this.preferencesStore,
   }) : super(key: key) {
     if (profileStore.isMyProfile) {
       profileStore.setUserId(authStore.user?.uid);
@@ -92,7 +95,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (widget.profileStore.isMyProfile) {
       tabScreens.add(
         PreferencesTab(
-          store: widget.profileStore,
+          profileStore: widget.profileStore,
+          preferencesStore: widget.preferencesStore,
         ),
       );
     }

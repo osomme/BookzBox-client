@@ -31,6 +31,7 @@ import 'package:bookzbox/features/profile/repositories/profile_repository.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository_impl.dart';
 import 'package:bookzbox/features/profile/services/profile_service.dart';
 import 'package:bookzbox/features/profile/services/profile_service_impl.dart';
+import 'package:bookzbox/features/profile/stores/preferences_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
 import 'package:bookzbox/features/profile/ui/screens/profile_screen.dart';
@@ -91,8 +92,8 @@ final bookProviders = [
   Provider<IBoxUpdaterService>(
     create: (_) => BoxUpdaterService(),
   ),
-  ProxyProvider4<IPublishService, IBoxLoaderService, IBoxDetailsService,
-      IBoxUpdaterService, IBoxRepository>(
+  ProxyProvider4<IPublishService, IBoxLoaderService, IBoxDetailsService, IBoxUpdaterService,
+      IBoxRepository>(
     update: (_, publishService, boxLoaderService, detailsService, updaterService, __) =>
         BoxRepository(publishService, boxLoaderService, detailsService, updaterService),
   ),
@@ -100,8 +101,7 @@ final bookProviders = [
     create: (_) => LocationService(),
   ),
   ProxyProvider3<IBookRepository, IBoxRepository, ILocationService, NewBoxStore>(
-    update: (_, bookRepo, boxRepo, locService, __) =>
-        NewBoxStore(bookRepo, boxRepo, locService),
+    update: (_, bookRepo, boxRepo, locService, __) => NewBoxStore(bookRepo, boxRepo, locService),
   ),
   ProxyProvider<NewBoxStore, NewBoxScreen>(
     update: (_, store, __) => NewBoxScreen(store),
@@ -150,6 +150,9 @@ final myProfileProviders = [
   Provider<IProfileService>(
     create: (_) => ProfileService(),
   ),
+  Provider<PreferencesStore>(
+    create: (_) => PreferencesStore(),
+  ),
   ProxyProvider2<IMemCache, IProfileService, IProfileRepository>(
     update: (_, cache, profileService, __) => ProfileRepository(
       cache,
@@ -162,11 +165,12 @@ final myProfileProviders = [
   ProxyProvider<IBoxRepository, ProfileBoxStore>(
     update: (_, repo, __) => ProfileBoxStore(repo),
   ),
-  ProxyProvider3<ProfileStore, AuthStore, ProfileBoxStore, ProfileScreen>(
-    update: (_, profileStore, authStore, profileBoxStore, __) => ProfileScreen(
+  ProxyProvider4<ProfileStore, AuthStore, ProfileBoxStore, PreferencesStore, ProfileScreen>(
+    update: (_, profileStore, authStore, profileBoxStore, preferencesStore, __) => ProfileScreen(
       profileStore: profileStore,
       authStore: authStore,
       profileBoxStore: profileBoxStore,
+      preferencesStore: preferencesStore,
     ),
   ),
 ];
