@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bookzbox/features/activity/activity.dart';
 import 'package:bookzbox/features/chat/chat.dart';
+import 'package:dartz/dartz.dart';
 import 'package:mobx/mobx.dart';
 
 part 'chat_store.g.dart';
@@ -19,6 +21,15 @@ abstract class _ChatStore with Store {
 
   final IChatRepository _chatRepository;
 
+  final IStorageService _storageService;
+
+  /// The ID of the other user participating in the chat.
+  @observable
+  Option<String> _otherUserId = none();
+
+  @observable
+  bool _isUploadingImage = false;
+
   @observable
   String _messageInput = '';
 
@@ -34,7 +45,13 @@ abstract class _ChatStore with Store {
   @observable
   List<ChatMessage> _messages = List();
 
-  _ChatStore(this._chatRepository, this._feedStore);
+  _ChatStore(this._chatRepository, this._feedStore, this._storageService);
+
+  @computed
+  Option<String> get otherUserId => _otherUserId;
+
+  @computed
+  bool get isUploadingImage => _isUploadingImage;
 
   @computed
   bool get isInputValid => _messageInput.isNotEmpty;
@@ -68,6 +85,9 @@ abstract class _ChatStore with Store {
         if (_messages.isNotEmpty && _reactionDisposer == null) {
           // Mark the most recently received message as read.
           _setNewestMessageReadListener(clientUserId, chatId);
+        }
+        if (_otherUserId.isNone()) {
+          _retrieveOtherUserId(data, clientUserId);
         }
       },
       onError: (error) {
@@ -112,7 +132,21 @@ abstract class _ChatStore with Store {
   }
 
   @action
-  Future<void> postMessage(String postedByUserId, String chatId) async {
+  Future<void> uploadImage(File image, String userId, String chatId) async {
+    _isUploadingImage = true;
+    final results = await _storageService.uploadFile(image, userId);
+    results.fold(
+      (error) => print('[CHAT STORE] Image upload failed with: $error'),
+      (url) {
+        print('[CHAT STORE Uploaded image to: $url');
+        _postImageMessage(userId, url, chatId);
+      },
+    );
+    _isUploadingImage = false;
+  }
+
+  @action
+  Future<void> postTextMessage(String postedByUserId, String chatId) async {
     if (!isInputValid) {
       return;
     }
@@ -121,10 +155,35 @@ abstract class _ChatStore with Store {
     _isPostingMessage = true;
     final result = await _chatRepository.postMessage(chatId, msg);
     result.fold(
-      (success) => print('Posted message: $_messageInput'),
       (error) => _hasError = true,
+      (success) => print('[CHAT STORE] Posted message: $_messageInput'),
     );
     _isPostingMessage = false;
+  }
+
+  @action
+  Future<void> _postImageMessage(
+      String postedByUserId, String imageUrl, String chatId) async {
+    final msg = _createImageMessage(postedByUserId, imageUrl);
+    _isPostingMessage = true;
+    final result = await _chatRepository.postMessage(chatId, msg);
+    result.fold(
+      (error) => _hasError = true,
+      (success) => print('[CHAT STORE] Posted image message: ${msg.content}'),
+    );
+    _isPostingMessage = false;
+  }
+
+  @action
+  void _retrieveOtherUserId(Iterable<ChatMessage> data, String clientUserId) {
+    try {
+      final otherUserId =
+          data.firstWhere((msg) => msg.postedByUserId != clientUserId).postedByUserId;
+      _otherUserId = some(otherUserId);
+    } catch (e) {
+      print('[CHAT STORE] Failed to retrieve user ID of other chat participant.'
+          ' This is normal if other user has not typed any messages');
+    }
   }
 
   ChatMessage _createMessage(String postedByUserId, String message) {
@@ -132,6 +191,16 @@ abstract class _ChatStore with Store {
       postedByUserId: postedByUserId,
       content: message,
       timestamp: DateTime.now(),
+      contentType: ChatMessageType.Text,
+    );
+  }
+
+  ChatMessage _createImageMessage(String postedByUserId, String imageUrl) {
+    return ChatMessage(
+      postedByUserId: postedByUserId,
+      content: imageUrl,
+      timestamp: DateTime.now(),
+      contentType: ChatMessageType.Image,
     );
   }
 

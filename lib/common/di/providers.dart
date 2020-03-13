@@ -237,10 +237,12 @@ final likedBoxesStore = [
 
 final chatProviders = [
   Provider<IChatService>(create: (_) => FirebaseChatService()),
+  Provider<IStorageService>(create: (_) => FirebaseStorageService()),
   ProxyProvider<IChatService, IChatRepository>(
     update: (_, service, __) => ChatRepositoryImpl(service),
   ),
-  ProxyProvider2<IChatRepository, ActivityFeedStore, ChatStore>(
-    update: (_, repo, feedStore, __) => ChatStore(repo, feedStore),
+  ProxyProvider3<IChatRepository, ActivityFeedStore, IStorageService, ChatStore>(
+    update: (_, repo, feedStore, storageService, __) =>
+        ChatStore(repo, feedStore, storageService),
   ),
 ];

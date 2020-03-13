@@ -9,6 +9,18 @@ part of 'chat_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ChatStore on _ChatStore, Store {
+  Computed<Option<String>> _$otherUserIdComputed;
+
+  @override
+  Option<String> get otherUserId => (_$otherUserIdComputed ??=
+          Computed<Option<String>>(() => super.otherUserId))
+      .value;
+  Computed<bool> _$isUploadingImageComputed;
+
+  @override
+  bool get isUploadingImage => (_$isUploadingImageComputed ??=
+          Computed<bool>(() => super.isUploadingImage))
+      .value;
   Computed<bool> _$isInputValidComputed;
 
   @override
@@ -38,6 +50,40 @@ mixin _$ChatStore on _ChatStore, Store {
   List<ChatMessage> get messages =>
       (_$messagesComputed ??= Computed<List<ChatMessage>>(() => super.messages))
           .value;
+
+  final _$_otherUserIdAtom = Atom(name: '_ChatStore._otherUserId');
+
+  @override
+  Option<String> get _otherUserId {
+    _$_otherUserIdAtom.context.enforceReadPolicy(_$_otherUserIdAtom);
+    _$_otherUserIdAtom.reportObserved();
+    return super._otherUserId;
+  }
+
+  @override
+  set _otherUserId(Option<String> value) {
+    _$_otherUserIdAtom.context.conditionallyRunInAction(() {
+      super._otherUserId = value;
+      _$_otherUserIdAtom.reportChanged();
+    }, _$_otherUserIdAtom, name: '${_$_otherUserIdAtom.name}_set');
+  }
+
+  final _$_isUploadingImageAtom = Atom(name: '_ChatStore._isUploadingImage');
+
+  @override
+  bool get _isUploadingImage {
+    _$_isUploadingImageAtom.context.enforceReadPolicy(_$_isUploadingImageAtom);
+    _$_isUploadingImageAtom.reportObserved();
+    return super._isUploadingImage;
+  }
+
+  @override
+  set _isUploadingImage(bool value) {
+    _$_isUploadingImageAtom.context.conditionallyRunInAction(() {
+      super._isUploadingImage = value;
+      _$_isUploadingImageAtom.reportChanged();
+    }, _$_isUploadingImageAtom, name: '${_$_isUploadingImageAtom.name}_set');
+  }
 
   final _$_messageInputAtom = Atom(name: '_ChatStore._messageInput');
 
@@ -133,12 +179,29 @@ mixin _$ChatStore on _ChatStore, Store {
         .run(() => super.loadChatStream(chatId, clientUserId));
   }
 
-  final _$postMessageAsyncAction = AsyncAction('postMessage');
+  final _$uploadImageAsyncAction = AsyncAction('uploadImage');
 
   @override
-  Future<void> postMessage(String postedByUserId, String chatId) {
-    return _$postMessageAsyncAction
-        .run(() => super.postMessage(postedByUserId, chatId));
+  Future<void> uploadImage(File image, String userId, String chatId) {
+    return _$uploadImageAsyncAction
+        .run(() => super.uploadImage(image, userId, chatId));
+  }
+
+  final _$postTextMessageAsyncAction = AsyncAction('postTextMessage');
+
+  @override
+  Future<void> postTextMessage(String postedByUserId, String chatId) {
+    return _$postTextMessageAsyncAction
+        .run(() => super.postTextMessage(postedByUserId, chatId));
+  }
+
+  final _$_postImageMessageAsyncAction = AsyncAction('_postImageMessage');
+
+  @override
+  Future<void> _postImageMessage(
+      String postedByUserId, String imageUrl, String chatId) {
+    return _$_postImageMessageAsyncAction
+        .run(() => super._postImageMessage(postedByUserId, imageUrl, chatId));
   }
 
   final _$_ChatStoreActionController = ActionController(name: '_ChatStore');
@@ -148,6 +211,16 @@ mixin _$ChatStore on _ChatStore, Store {
     final _$actionInfo = _$_ChatStoreActionController.startAction();
     try {
       return super.setChatInput(input);
+    } finally {
+      _$_ChatStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void _retrieveOtherUserId(Iterable<ChatMessage> data, String clientUserId) {
+    final _$actionInfo = _$_ChatStoreActionController.startAction();
+    try {
+      return super._retrieveOtherUserId(data, clientUserId);
     } finally {
       _$_ChatStoreActionController.endAction(_$actionInfo);
     }
