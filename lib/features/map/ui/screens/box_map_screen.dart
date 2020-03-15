@@ -75,8 +75,6 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
     return Scaffold(
       body: SafeArea(
         child: GoogleMap(
-          minMaxZoomPreference: MinMaxZoomPreference(5.0, 15.0),
-          mapToolbarEnabled: false,
           markers: markers,
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
@@ -87,6 +85,8 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
           onCameraMove: _onCameraMoved,
           myLocationButtonEnabled: true,
           myLocationEnabled: true,
+          minMaxZoomPreference: MinMaxZoomPreference(5.0, 15.0),
+          mapToolbarEnabled: false,
         ),
       ),
     );
@@ -167,8 +167,26 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
           markerId: MarkerId(cluster.getId()),
           position: cluster.location,
           onTap: () {
-            print('Clicked on cluster with size: ${cluster.items.length}');
-            cluster.items.forEach((b) => print('${b.boxId}'));
+            // Show the map box details dialog if there is only one box in the cluster.
+            if (cluster.items.length == 1) {
+              buildDetailsWidget(cluster.items.first);
+            } else {
+              // Sort the boxes in the cluster. Most recently published box first.
+              final sorted = cluster.items.toList()
+                ..sort((b1, b2) => b2.publishedOn.compareTo(b1.publishedOn));
+              // Show bottom sheet list if there are more than one box in the cluster.
+              showModalBottomSheet(
+                context: context,
+                builder: (ctx) => Container(
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.75,
+                  ),
+                  color: Theme.of(context).primaryColor,
+                  child: MapBoxList(boxes: sorted),
+                ),
+                isScrollControlled: true,
+              );
+            }
           },
           icon: await _getMarkerBitmap(cluster.isMultiple ? 125 : 75,
               text: cluster.isMultiple ? cluster.count.toString() : null),
