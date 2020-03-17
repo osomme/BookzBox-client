@@ -50,15 +50,21 @@ class _HomeScreenState extends State<HomeScreen> {
         widget.activityFeedStore.loadFeed(widget.authStore.user.uid);
       }
     });
-    runPeriodicActivityStatusUpdate();
+    runPeriodicActivityStatusUpdate(true);
   }
 
   /// Updates the current users activity status, "last seen", periodicaly.
-  void runPeriodicActivityStatusUpdate() {
-    Timer.periodic(Duration(minutes: 5), (Timer t) {
+  /// [initial] Whether or not the activity status should be updated initially.
+  ///           If false, then the first update is after the set amount of time.
+  void runPeriodicActivityStatusUpdate(bool initial) {
+    Timer.periodic(Duration(minutes: 5), (Timer t) async {
       print("Updating activity status for user with id: " + widget.authStore.user?.uid);
-      return widget.activityStatusStore.updateStatus(widget.authStore.user?.uid);
+      return await widget.activityStatusStore.updateStatus(widget.authStore.user?.uid);
     });
+    if (initial) {
+      print("Initial activity status update for user: " + widget.authStore.user?.uid);
+      widget.activityStatusStore.updateStatus(widget.authStore.user?.uid);
+    }
   }
 
   @override
