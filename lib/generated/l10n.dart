@@ -1905,6 +1905,87 @@ class S {
       args: [],
     );
   }
+
+  String get mapFilterTitle {
+    return Intl.message(
+      'Filter',
+      name: 'mapFilterTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapFilterReset {
+    return Intl.message(
+      'Reset',
+      name: 'mapFilterReset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapFilterApply {
+    return Intl.message(
+      'Apply',
+      name: 'mapFilterApply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapFilterTitleOrDescription {
+    return Intl.message(
+      'Box title/description',
+      name: 'mapFilterTitleOrDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapFilterDateLimitHint {
+    return Intl.message(
+      'Boxes no older than:',
+      name: 'mapFilterDateLimitHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapFilterNoDateLimit {
+    return Intl.message(
+      'No Limit',
+      name: 'mapFilterNoDateLimit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapFilterDate24Hours {
+    return Intl.message(
+      '24 Hours',
+      name: 'mapFilterDate24Hours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapFilterDate7Days {
+    return Intl.message(
+      '7 Days',
+      name: 'mapFilterDate7Days',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapFilterDate1Month {
+    return Intl.message(
+      '1 Month',
+      name: 'mapFilterDate1Month',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

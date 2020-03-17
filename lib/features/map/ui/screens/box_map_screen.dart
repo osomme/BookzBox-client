@@ -74,19 +74,32 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: GoogleMap(
-          markers: markers,
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: startPos,
-            zoom: _startingZoom,
-          ),
-          onCameraIdle: manager.updateMap,
-          onCameraMove: _onCameraMoved,
-          myLocationButtonEnabled: true,
-          myLocationEnabled: true,
-          minMaxZoomPreference: MinMaxZoomPreference(5.0, 15.0),
-          mapToolbarEnabled: false,
+        child: Stack(
+          children: [
+            GoogleMap(
+              markers: markers,
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: CameraPosition(
+                target: startPos,
+                zoom: _startingZoom,
+              ),
+              onCameraIdle: manager.updateMap,
+              onCameraMove: _onCameraMoved,
+              myLocationButtonEnabled: true,
+              myLocationEnabled: true,
+              minMaxZoomPreference: MinMaxZoomPreference(5.0, 15.0),
+              mapToolbarEnabled: false,
+            ),
+            Positioned.directional(
+              textDirection: TextDirection.ltr,
+              top: 15,
+              start: 15,
+              child: IconButton(
+                icon: Icon(Icons.filter_list),
+                onPressed: _openFilterDialog,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -166,28 +179,7 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
         return Marker(
           markerId: MarkerId(cluster.getId()),
           position: cluster.location,
-          onTap: () {
-            // Show the map box details dialog if there is only one box in the cluster.
-            if (cluster.items.length == 1) {
-              buildDetailsWidget(cluster.items.first);
-            } else {
-              // Sort the boxes in the cluster. Most recently published box first.
-              final sorted = cluster.items.toList()
-                ..sort((b1, b2) => b2.publishedOn.compareTo(b1.publishedOn));
-              // Show bottom sheet list if there are more than one box in the cluster.
-              showModalBottomSheet(
-                context: context,
-                builder: (ctx) => Container(
-                  constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height * 0.75,
-                  ),
-                  color: Theme.of(context).primaryColor,
-                  child: MapBoxList(boxes: sorted),
-                ),
-                isScrollControlled: true,
-              );
-            }
-          },
+          onTap: () => _onClusterClicked(cluster),
           icon: await _getMarkerBitmap(cluster.isMultiple ? 125 : 75,
               text: cluster.isMultiple ? cluster.count.toString() : null),
         );
@@ -226,5 +218,62 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
     final data = await img.toByteData(format: ImageByteFormat.png);
 
     return BitmapDescriptor.fromBytes(data.buffer.asUint8List());
+  }
+
+  void _onClusterClicked(Cluster<BoxMapItem> cluster) {
+    // Show the map box details dialog if there is only one box in the cluster.
+    if (cluster.items.length == 1) {
+      buildDetailsWidget(cluster.items.first);
+    } else {
+      // Sort the boxes in the cluster. Most recently published box first.
+      final sorted = cluster.items.toList()
+        ..sort((b1, b2) => b2.publishedOn.compareTo(b1.publishedOn));
+      // Show bottom sheet list if there are more than one box in the cluster.
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (ctx) => Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.only(
+              topLeft: const Radius.circular(25.0),
+              topRight: const Radius.circular(25.0),
+            ),
+          ),
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.75,
+          ),
+          child: MapBoxList(boxes: sorted),
+        ),
+      );
+    }
+  }
+
+  void _openFilterDialog() async {
+    final filters = await showModalBottomSheet<List<bool Function(BoxMapItem)>>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.75,
+          ),
+          decoration: BoxDecoration(
+            color: Theme.of(context).accentColor,
+            borderRadius: BorderRadius.only(
+              topLeft: const Radius.circular(25.0),
+              topRight: const Radius.circular(25.0),
+            ),
+          ),
+          child: BoxFilter(),
+        ),
+      ),
+    );
+    if (filters != null) {
+      widget.mapStore.setBoxFilter(filters);
+    }
   }
 }

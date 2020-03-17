@@ -126,6 +126,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           onChanged: (input) => widget.chatStore.setChatInput(input),
                           minLines: 1,
                           maxLines: 6,
+                          textCapitalization: TextCapitalization.sentences,
                           decoration: InputDecoration(
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 14.0, vertical: 16.0),

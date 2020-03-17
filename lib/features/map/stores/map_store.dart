@@ -13,6 +13,9 @@ abstract class _MapStore with Store {
   final IBoxMapRepository _repository;
 
   @observable
+  List<bool Function(BoxMapItem)> _filters = List();
+
+  @observable
   List<BoxMapItem> _boxes = List();
 
   @observable
@@ -30,7 +33,12 @@ abstract class _MapStore with Store {
   }
 
   @computed
-  List<BoxMapItem> get boxes => _boxes;
+  List<BoxMapItem> get boxes {
+    if (_filters.isEmpty) {
+      return _boxes;
+    }
+    return _boxes.where((b) => _filters.every((f) => f(b))).toList();
+  }
 
   @computed
   Option<LatLng> get userPosition => _userPosition;
@@ -40,6 +48,9 @@ abstract class _MapStore with Store {
 
   @computed
   bool get isLoadingBoxes => _isLoadingBoxes;
+
+  @action
+  void setBoxFilter(List<bool Function(BoxMapItem)> filters) => _filters = filters;
 
   @action
   Future<void> _fetchUserLocation() async {

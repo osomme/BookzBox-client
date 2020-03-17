@@ -19,9 +19,10 @@ class MapBoxList extends StatelessWidget {
       itemBuilder: (ctx, i) {
         final box = boxes[i];
         if (i == 0) {
+          // Header and first list item
           return Column(
             children: <Widget>[
-              _headerAndFirstBox(context),
+              _Header(boxes: boxes, context: context),
               _ListItem(
                 box: box,
                 listLength: boxes.length,
@@ -38,11 +39,29 @@ class MapBoxList extends StatelessWidget {
       },
     );
   }
+}
 
-  Widget _headerAndFirstBox(BuildContext context) {
+class _Header extends StatelessWidget {
+  const _Header({
+    Key key,
+    @required this.boxes,
+    @required this.context,
+  }) : super(key: key);
+
+  final List<BoxMapItem> boxes;
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: 50.0,
-      color: Theme.of(context).accentColor,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(25.0),
+          topRight: const Radius.circular(25.0),
+        ),
+        color: Theme.of(context).accentColor,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

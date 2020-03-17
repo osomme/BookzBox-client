@@ -37,7 +37,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentTab = 0;
+  int _currentTab = 1;
   PageController _pageController;
   ReactionDisposer _userAuthListener;
 
