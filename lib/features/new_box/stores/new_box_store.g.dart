@@ -442,4 +442,14 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
       _$_NewBoxStoreActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  void clear() {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.clear();
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
 }

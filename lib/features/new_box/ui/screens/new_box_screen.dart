@@ -758,60 +758,66 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
   @override
   Widget build(BuildContext context) {
     final authStore = Provider.of<AuthStore>(context);
-    return Scaffold(
-      backgroundColor: Theme.of(context).accentColor,
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus(); // Hides soft keyboard
-        },
-        child: Stack(
-          children: <Widget>[
-            SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  customTopBar(context, authStore),
-                  infoText(context),
-                  gradientBackgroundWidget(context),
-                  booksWidget(context),
-                  boxTitleWidget(context),
-                  boxDescriptionWidget(context)
-                ],
+    return WillPopScope(
+      onWillPop: () async {
+        widget.newBoxStore.clear();
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).accentColor,
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus(); // Hides soft keyboard
+          },
+          child: Stack(
+            children: <Widget>[
+              SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    customTopBar(context, authStore),
+                    infoText(context),
+                    gradientBackgroundWidget(context),
+                    booksWidget(context),
+                    boxTitleWidget(context),
+                    boxDescriptionWidget(context)
+                  ],
+                ),
               ),
-            ),
-            Observer(
-              builder: (_) => Visibility(
-                visible: widget.newBoxStore.isPublishing,
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 128),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                      color: Colors.black26,
-                    ),
-                    padding: const EdgeInsets.all(48),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                          S.of(context).newBoxIsPublishing,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 24,
+              Observer(
+                builder: (_) => Visibility(
+                  visible: widget.newBoxStore.isPublishing,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 128),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                        color: Colors.black26,
+                      ),
+                      padding: const EdgeInsets.all(48),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(
+                            S.of(context).newBoxIsPublishing,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 24,
+                            ),
                           ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 24),
-                          child: CircularProgressIndicator(),
-                        ),
-                      ],
+                          Container(
+                            margin: const EdgeInsets.only(top: 24),
+                            child: CircularProgressIndicator(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

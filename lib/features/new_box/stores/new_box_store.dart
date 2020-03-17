@@ -241,4 +241,14 @@ abstract class _NewBoxStore with Store {
 
   @action
   void setIsbnScanError(ScanError err) => _isbnScanError = err;
+
+  /// Clears fields to the default/ start values for this store.
+  @action
+  void clear() {
+    books.clear();
+    _lookupError = LookupError.None;
+    _titleError = BoxError.None;
+    _bookCountError = BoxError.None;
+    _isbnScanError = ScanError.None;
+  }
 }
