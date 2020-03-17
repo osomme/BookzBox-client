@@ -1,4 +1,5 @@
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/models/book.dart';
 import 'package:bookzbox/features/new_box/models/box_error.dart';
@@ -64,9 +65,14 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
   Future<void> publishAndClosePage(BuildContext ctx, final User publisher) async {
     final result = await widget.newBoxStore.publishBox(publisher);
     result.fold(
-      (error) => print("Publish error"), //TODO: Handle error
-      (box) => Navigator.of(ctx).pop(),
-    ); // TODO navigate to details page?
+      (error) => print("Publish error"),
+      (box) {
+        // Pop new box page so when user clicks bar they dont end up on the new box page.
+        Navigator.pop(context);
+        // Navigate to the details page for the newly published box.
+        Navigator.pushNamed(context, Screens.boxDetails, arguments: box.id);
+      },
+    );
   }
 
   Container publishButton(BuildContext context, final User user) {

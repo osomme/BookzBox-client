@@ -15,12 +15,14 @@ class PublishService extends IPublishService {
   @override
   Future<Either<PublishError, Box>> publish(Box box) async {
     bool published = false;
-    await Firestore.instance
-        .collection('boxes')
-        .document()
+    DocumentReference docRef = Firestore.instance.collection('boxes').document();
+
+    await docRef
         .setData(BoxMapper.map(box))
         .then((_) => published = true)
         .catchError((_, st) => print(st.toString()));
+
+    box.id = docRef.documentID;
 
     return (published ? right(box) : left(PublishError.TimeOut));
   }
