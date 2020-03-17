@@ -27,14 +27,19 @@ import 'package:bookzbox/features/new_box/stores/new_box_store.dart';
 import 'package:bookzbox/features/new_box/ui/screens/new_box_screen.dart';
 import 'package:bookzbox/features/profile/models/mem_cache.dart';
 import 'package:bookzbox/features/profile/models/profile_mem_cache.dart';
+import 'package:bookzbox/features/profile/repositories/activity_status_repository.dart';
+import 'package:bookzbox/features/profile/repositories/activity_status_repository_impl.dart';
 import 'package:bookzbox/features/profile/repositories/preferences_repository.dart';
 import 'package:bookzbox/features/profile/repositories/preferences_repository_impl.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository_impl.dart';
+import 'package:bookzbox/features/profile/services/activit_status_service_impl.dart';
+import 'package:bookzbox/features/profile/services/activity_status_service.dart';
 import 'package:bookzbox/features/profile/services/preferences_service.dart';
 import 'package:bookzbox/features/profile/services/preferences_service_impl.dart';
 import 'package:bookzbox/features/profile/services/profile_service.dart';
 import 'package:bookzbox/features/profile/services/profile_service_impl.dart';
+import 'package:bookzbox/features/profile/stores/activity_status_store.dart';
 import 'package:bookzbox/features/profile/stores/preferences_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
@@ -112,12 +117,26 @@ final bookProviders = [
   )
 ];
 
+final activityStatusProviders = [
+  Provider<IActivityStatusService>(
+    create: (_) => ActivityStatusService(),
+  ),
+  ProxyProvider<IActivityStatusService, IActivityStatusRepository>(
+    update: (_, service, __) => ActivityStatusRepository(service),
+  ),
+  ProxyProvider<IActivityStatusRepository, ActivityStatusStore>(
+    update: (_, repo, __) => ActivityStatusStore(repo),
+  ),
+];
+
 final mainProviders = [
   ...activityFeedProviders,
-  ProxyProvider2<AuthStore, ActivityFeedStore, HomeScreen>(
-    update: (_, authStore, feedStore, __) => HomeScreen(
+  ...activityStatusProviders,
+  ProxyProvider3<AuthStore, ActivityFeedStore, ActivityStatusStore, HomeScreen>(
+    update: (_, authStore, feedStore, activityStatusStore, __) => HomeScreen(
       activityFeedStore: feedStore,
       authStore: authStore,
+      activityStatusStore: activityStatusStore,
     ),
   ),
 ];
@@ -242,7 +261,6 @@ final chatProviders = [
     update: (_, service, __) => ChatRepositoryImpl(service),
   ),
   ProxyProvider3<IChatRepository, ActivityFeedStore, IStorageService, ChatStore>(
-    update: (_, repo, feedStore, storageService, __) =>
-        ChatStore(repo, feedStore, storageService),
+    update: (_, repo, feedStore, storageService, __) => ChatStore(repo, feedStore, storageService),
   ),
 ];

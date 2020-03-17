@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:badges/badges.dart';
 import 'package:bookzbox/common/di/providers.dart';
 import 'package:bookzbox/features/activity/activity.dart';
@@ -7,6 +9,7 @@ import 'package:bookzbox/features/authentication/stores/auth_store.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/feed/ui/screens/feed_screen.dart';
 import 'package:bookzbox/features/map/box_map.dart';
+import 'package:bookzbox/features/profile/stores/activity_status_store.dart';
 import 'package:bookzbox/features/profile/stores/preferences_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
@@ -20,11 +23,13 @@ import 'package:provider/provider.dart';
 class HomeScreen extends StatefulWidget {
   final ActivityFeedStore activityFeedStore;
   final AuthStore authStore;
+  final ActivityStatusStore activityStatusStore;
 
   const HomeScreen({
     Key key,
     @required this.activityFeedStore,
     @required this.authStore,
+    @required this.activityStatusStore,
   }) : super(key: key);
 
   @override
@@ -44,6 +49,15 @@ class _HomeScreenState extends State<HomeScreen> {
       if (widget.authStore.user != null) {
         widget.activityFeedStore.loadFeed(widget.authStore.user.uid);
       }
+    });
+    runPeriodicActivityStatusUpdate();
+  }
+
+  /// Updates the current users activity status, "last seen", periodicaly.
+  void runPeriodicActivityStatusUpdate() {
+    Timer.periodic(Duration(minutes: 5), (Timer t) {
+      print("Updating activity status for user with id: " + widget.authStore.user?.uid);
+      return widget.activityStatusStore.updateStatus(widget.authStore.user?.uid);
     });
   }
 

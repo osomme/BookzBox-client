@@ -31,9 +31,20 @@ class BookSubjectMapper {
   }
 
   static List<BookSubject> fromFirestore(Map<String, dynamic> data) {
-    String indicesJson = data['favoriteGenres'].toString().trim();
-    List<String> indices = indicesJson.substring(1, indicesJson.length - 2).split(',');
-    return fromIndex(indices);
+    List<BookSubject> result;
+    var dataString = (data['favoriteGenres'] as String);
+    if (dataString == null || dataString.isEmpty) {
+      return List();
+    }
+    String indicesJson = dataString.trim();
+    List<String> indices =
+        indicesJson.substring(1, indicesJson.length - 1).split(','); //Remove brackets and split
+    try {
+      result = fromIndex(indices);
+    } on FormatException {
+      print('Format error with indices: ' + indices.toString());
+    }
+    return result;
   }
 
   static List<BookSubject> fromMap(Map<String, int> subjectMap) {
