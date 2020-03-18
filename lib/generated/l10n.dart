@@ -1986,6 +1986,15 @@ class S {
       args: [],
     );
   }
+
+  String get mapFilterButtonLabel {
+    return Intl.message(
+      'Filter',
+      name: 'mapFilterButtonLabel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

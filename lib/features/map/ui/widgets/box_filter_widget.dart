@@ -1,6 +1,7 @@
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class BoxFilter extends StatefulWidget {
   @override
@@ -8,9 +9,13 @@ class BoxFilter extends StatefulWidget {
 }
 
 class _BoxFilterState extends State<BoxFilter> {
-  static const _listItemGap = 30.0;
+  static const _listItemGap = 15.0;
 
   TextEditingController titleDescriptionController = TextEditingController();
+
+  TextEditingController authorController = TextEditingController();
+
+  TextEditingController bookTitleController = TextEditingController();
 
   DateTime pickedDate;
 
@@ -43,103 +48,133 @@ class _BoxFilterState extends State<BoxFilter> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: const Radius.circular(25.0),
-                topRight: const Radius.circular(25.0),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(25.0),
+                  topRight: const Radius.circular(25.0),
+                ),
+                color: Theme.of(context).primaryColor,
               ),
-              color: Theme.of(context).primaryColor,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: 15.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          S.of(context).mapFilterTitle,
+                          style: Theme.of(context).primaryTextTheme.headline,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            FlatButton(
+                              onPressed: () => _submitFilter(reset: true),
+                              child: Text(
+                                S.of(context).mapFilterReset,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .button
+                                    .copyWith(color: Colors.purple[200]),
+                              ),
+                            ),
+                            FlatButton(
+                              onPressed: _submitFilter,
+                              child: Text(
+                                S.of(context).mapFilterApply,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .button
+                                    .copyWith(color: Colors.purple[200]),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 15.0),
+                ],
+              ),
             ),
-            child: Column(
-              children: <Widget>[
-                SizedBox(height: 15.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Padding(
+              padding:
+                  const EdgeInsets.only(bottom: 40.0, left: 20.0, right: 20.0, top: 10.0),
+              child: Column(
+                children: <Widget>[
+                  Row(
                     children: <Widget>[
-                      Text(
-                        S.of(context).mapFilterTitle,
-                        style: Theme.of(context).primaryTextTheme.headline,
+                      Icon(
+                        Icons.title,
+                        color: Theme.of(context).accentIconTheme.color,
                       ),
-                      Row(
-                        children: <Widget>[
-                          FlatButton(
-                            onPressed: () => _submitFilter(reset: true),
-                            child: Text(
-                              S.of(context).mapFilterReset,
-                              style: Theme.of(context)
-                                  .primaryTextTheme
-                                  .button
-                                  .copyWith(color: Colors.purple[200]),
-                            ),
-                          ),
-                          FlatButton(
-                            onPressed: _submitFilter,
-                            child: Text(
-                              S.of(context).mapFilterApply,
-                              style: Theme.of(context)
-                                  .primaryTextTheme
-                                  .button
-                                  .copyWith(color: Colors.purple[200]),
-                            ),
-                          ),
-                        ],
+                      SizedBox(width: 5.0),
+                      _inputField(
+                        labelText: S.of(context).mapFilterTitleOrDescription,
+                        controller: titleDescriptionController,
                       ),
                     ],
                   ),
-                ),
-                SizedBox(height: 15.0),
-              ],
+                  SizedBox(height: _listItemGap),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.person_outline,
+                        color: Theme.of(context).accentIconTheme.color,
+                      ),
+                      SizedBox(width: 5.0),
+                      _inputField(
+                        labelText: 'Author',
+                        controller: authorController,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: _listItemGap),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Entypo.book,
+                        color: Theme.of(context).accentIconTheme.color,
+                      ),
+                      SizedBox(width: 5.0),
+                      _inputField(
+                        labelText: 'Book Title',
+                        controller: bookTitleController,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: _listItemGap),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.date_range,
+                        color: Theme.of(context).accentIconTheme.color,
+                      ),
+                      SizedBox(width: 5.0),
+                      Text(
+                        S.of(context).mapFilterDateLimitHint,
+                        style: Theme.of(context).accentTextTheme.body1,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5.0),
+                  Wrap(
+                    children: List.generate(
+                        dateOptions.length,
+                        (i) => _dateChip(
+                            dateOptions[i]['label'], dateOptions[i]['value'], i)),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.only(bottom: 60.0, left: 20.0, right: 20.0, top: 10.0),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.title,
-                      color: Theme.of(context).accentIconTheme.color,
-                    ),
-                    SizedBox(width: 5.0),
-                    _inputField(
-                      labelText: S.of(context).mapFilterTitleOrDescription,
-                      controller: titleDescriptionController,
-                    ),
-                  ],
-                ),
-                SizedBox(height: _listItemGap),
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.date_range,
-                      color: Theme.of(context).accentIconTheme.color,
-                    ),
-                    SizedBox(width: 5.0),
-                    Text(
-                      S.of(context).mapFilterDateLimitHint,
-                      style: Theme.of(context).accentTextTheme.body1,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5.0),
-                Wrap(
-                  children: List.generate(
-                      dateOptions.length,
-                      (i) =>
-                          _dateChip(dateOptions[i]['label'], dateOptions[i]['value'], i)),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -147,12 +182,13 @@ class _BoxFilterState extends State<BoxFilter> {
   @override
   void dispose() {
     titleDescriptionController?.dispose();
+    authorController?.dispose();
+    bookTitleController?.dispose();
     super.dispose();
   }
 
   Widget _inputField({String labelText, TextEditingController controller}) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.8,
+    return Expanded(
       child: TextField(
         style: TextStyle(color: Theme.of(context).accentTextTheme.body1.color),
         controller: controller,
@@ -198,15 +234,22 @@ class _BoxFilterState extends State<BoxFilter> {
 
     if (titleDescriptionController.text != null &&
         titleDescriptionController.text.isNotEmpty) {
-      filters.add(
-          BoxQueryMapper.titleDescriptionFunc(titleDescriptionController.text.trim()));
+      filters.add(BoxQueryMapper.titleDescriptionFunc(titleDescriptionController.text));
+    }
+
+    if (authorController.text != null && authorController.text.isNotEmpty) {
+      filters.add(BoxQueryMapper.authorName(authorController.text));
+    }
+
+    if (bookTitleController.text != null && bookTitleController.text.isNotEmpty) {
+      filters.add(BoxQueryMapper.bookTitle(bookTitleController.text));
     }
 
     if (pickedDate != null) {
       filters.add(BoxQueryMapper.publishedDateFunc(pickedDate));
     }
 
-    //TODO: Add filters for book author, book title and book genres
+    //TODO: Add filters for book genres
 
     Navigator.pop(context, filters);
   }

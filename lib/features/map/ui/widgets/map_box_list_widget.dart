@@ -1,7 +1,7 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
+import 'package:bookzbox/common/extensions/extensions.dart';
 import 'package:bookzbox/features/map/box_map.dart';
 import 'package:bookzbox/features/map/models/box_map_item.dart';
-import 'package:bookzbox/common/extensions/extensions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -15,6 +15,7 @@ class MapBoxList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: boxes.length,
       itemBuilder: (ctx, i) {
         final box = boxes[i];
@@ -122,6 +123,16 @@ class _ListItem extends StatelessWidget {
                           ),
                           SizedBox(height: 5.0),
                           Text(
+                            box.books.toCategoryString(),
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .caption
+                                .copyWith(fontSize: 11.0, fontStyle: FontStyle.italic),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(height: 5.0),
+                          Text(
                             box.description,
                             style: Theme.of(context)
                                 .primaryTextTheme
@@ -146,7 +157,10 @@ class _ListItem extends StatelessWidget {
                               SizedBox(width: 4.0),
                               Text(
                                 box.publishedOn.toTimeDifferenceString(context),
-                                style: Theme.of(context).primaryTextTheme.body1,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .body1
+                                    .copyWith(fontSize: 12.0),
                               ),
                             ],
                           ),
@@ -160,7 +174,10 @@ class _ListItem extends StatelessWidget {
                               SizedBox(width: 4.0),
                               Text(
                                 '${box.books.length}',
-                                style: Theme.of(context).primaryTextTheme.body1,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .body1
+                                    .copyWith(fontSize: 12.0),
                               ),
                             ],
                           ),
@@ -170,7 +187,7 @@ class _ListItem extends StatelessWidget {
                                 arguments: box.boxId),
                             child: Text(
                               'Details',
-                              style: TextStyle(color: Colors.purple[200]),
+                              style: TextStyle(color: Colors.purple[200], fontSize: 12.0),
                             ),
                           ),
                         ],

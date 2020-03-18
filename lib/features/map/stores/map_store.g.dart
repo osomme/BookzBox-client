@@ -31,6 +31,12 @@ mixin _$MapStore on _MapStore, Store {
   bool get isLoadingBoxes =>
       (_$isLoadingBoxesComputed ??= Computed<bool>(() => super.isLoadingBoxes))
           .value;
+  Computed<bool> _$hasActiveFilterComputed;
+
+  @override
+  bool get hasActiveFilter => (_$hasActiveFilterComputed ??=
+          Computed<bool>(() => super.hasActiveFilter))
+      .value;
 
   final _$_filtersAtom = Atom(name: '_MapStore._filters');
 

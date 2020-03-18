@@ -49,6 +49,9 @@ abstract class _MapStore with Store {
   @computed
   bool get isLoadingBoxes => _isLoadingBoxes;
 
+  @computed
+  bool get hasActiveFilter => _filters.isNotEmpty;
+
   @action
   void setBoxFilter(List<bool Function(BoxMapItem)> filters) => _filters = filters;
 
