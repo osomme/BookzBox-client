@@ -179,6 +179,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "mapErrorBoxesError" : MessageLookupByLibrary.simpleMessage("Failed to retrieve boxes"),
     "mapErrorNoLocationPermission" : MessageLookupByLibrary.simpleMessage("Location permissions must be enabled"),
     "mapFilterApply" : MessageLookupByLibrary.simpleMessage("Apply"),
+    "mapFilterButtonLabel" : MessageLookupByLibrary.simpleMessage("Filter"),
     "mapFilterDate1Month" : MessageLookupByLibrary.simpleMessage("1 Month"),
     "mapFilterDate24Hours" : MessageLookupByLibrary.simpleMessage("24 Hours"),
     "mapFilterDate7Days" : MessageLookupByLibrary.simpleMessage("7 Days"),

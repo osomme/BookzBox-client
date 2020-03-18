@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:bookzbox/common/di/providers.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/map/box_map.dart';
+import 'package:bookzbox/generated/l10n.dart';
 import 'package:dartz/dartz.dart' as Dartz;
 import 'package:bookzbox/features/location/models/lat_lng.dart' as LatLngModel;
 import 'package:flutter/material.dart';
@@ -92,11 +92,30 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
             ),
             Positioned.directional(
               textDirection: TextDirection.ltr,
-              top: 15,
+              bottom: 15,
               start: 15,
-              child: IconButton(
-                icon: Icon(Icons.filter_list),
-                onPressed: _openFilterDialog,
+              child: Row(
+                children: <Widget>[
+                  FloatingActionButton.extended(
+                    onPressed: _openFilterDialog,
+                    label: Text(
+                      S.of(context).mapFilterButtonLabel,
+                      style: Theme.of(context)
+                          .accentTextTheme
+                          .button
+                          .copyWith(fontSize: 13.0),
+                    ),
+                    icon: widget.mapStore.hasActiveFilter
+                        ? Icon(
+                            Icons.check_circle,
+                            size: 18.0,
+                          )
+                        : Icon(
+                            Icons.filter_list,
+                            size: 18.0,
+                          ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -259,16 +278,16 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
         child: Container(
           padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
           constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.75,
+            maxHeight: MediaQuery.of(context).size.height * 0.90,
           ),
-          decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
-            borderRadius: BorderRadius.only(
-              topLeft: const Radius.circular(25.0),
-              topRight: const Radius.circular(25.0),
+          child: Container(
+            margin: EdgeInsets.all(14.0),
+            decoration: BoxDecoration(
+              color: Theme.of(context).accentColor,
+              borderRadius: BorderRadius.all(const Radius.circular(25.0)),
             ),
+            child: BoxFilter(),
           ),
-          child: BoxFilter(),
         ),
       ),
     );

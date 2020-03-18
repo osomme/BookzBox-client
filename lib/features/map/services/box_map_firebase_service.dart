@@ -9,7 +9,7 @@ class BoxMapFirebaseService implements IMapBoxService {
   Future<Either<MapError, List<BoxMapItem>>> getAllBoxes() async {
     try {
       final boxes = await _firestore
-          .collection('boxes')
+          .collection('map_boxes')
           .where('status', isEqualTo: 0)
           .getDocuments()
           .then(

@@ -214,5 +214,6 @@
     "mapFilterNoDateLimit": "No Limit",
     "mapFilterDate24Hours": "24 Hours",
     "mapFilterDate7Days": "7 Days",
-    "mapFilterDate1Month": "1 Month"
+    "mapFilterDate1Month": "1 Month",
+    "mapFilterButtonLabel": "Filter"
 }
