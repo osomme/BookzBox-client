@@ -205,5 +205,15 @@
     "bookSubjectMythology": "Mythology",
     "chatImageLoadFailed": "Failed to load image",
     "chatContentNotRendered": "Failed to render message content",
-    "chatImageUploading": "Uploading image"
+    "chatImageUploading": "Uploading image",
+    "mapFilterTitle": "Filter",
+    "mapFilterReset": "Reset",
+    "mapFilterApply": "Apply",
+    "mapFilterTitleOrDescription": "Box title/description",
+    "mapFilterDateLimitHint": "Boxes no older than:",
+    "mapFilterNoDateLimit": "No Limit",
+    "mapFilterDate24Hours": "24 Hours",
+    "mapFilterDate7Days": "7 Days",
+    "mapFilterDate1Month": "1 Month",
+    "mapFilterButtonLabel": "Filter"
 }

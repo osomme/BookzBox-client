@@ -31,6 +31,29 @@ mixin _$MapStore on _MapStore, Store {
   bool get isLoadingBoxes =>
       (_$isLoadingBoxesComputed ??= Computed<bool>(() => super.isLoadingBoxes))
           .value;
+  Computed<bool> _$hasActiveFilterComputed;
+
+  @override
+  bool get hasActiveFilter => (_$hasActiveFilterComputed ??=
+          Computed<bool>(() => super.hasActiveFilter))
+      .value;
+
+  final _$_filtersAtom = Atom(name: '_MapStore._filters');
+
+  @override
+  List<bool Function(BoxMapItem)> get _filters {
+    _$_filtersAtom.context.enforceReadPolicy(_$_filtersAtom);
+    _$_filtersAtom.reportObserved();
+    return super._filters;
+  }
+
+  @override
+  set _filters(List<bool Function(BoxMapItem)> value) {
+    _$_filtersAtom.context.conditionallyRunInAction(() {
+      super._filters = value;
+      _$_filtersAtom.reportChanged();
+    }, _$_filtersAtom, name: '${_$_filtersAtom.name}_set');
+  }
 
   final _$_boxesAtom = Atom(name: '_MapStore._boxes');
 
@@ -113,5 +136,17 @@ mixin _$MapStore on _MapStore, Store {
   @override
   Future<void> _fetchBoxes() {
     return _$_fetchBoxesAsyncAction.run(() => super._fetchBoxes());
+  }
+
+  final _$_MapStoreActionController = ActionController(name: '_MapStore');
+
+  @override
+  void setBoxFilter(List<bool Function(BoxMapItem)> filters) {
+    final _$actionInfo = _$_MapStoreActionController.startAction();
+    try {
+      return super.setBoxFilter(filters);
+    } finally {
+      _$_MapStoreActionController.endAction(_$actionInfo);
+    }
   }
 }

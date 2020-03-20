@@ -1,5 +1,6 @@
 import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/feed/feed.dart';
+import 'package:bookzbox/features/map/box_map.dart';
 
 extension FeedBooksExtensions on List<BoxFeedBook> {
   /// Maps a list of books to a string consisting of the category
@@ -11,6 +12,13 @@ extension FeedBooksExtensions on List<BoxFeedBook> {
 }
 
 extension BooksExtensions on List<Book> {
+  String toCategoryString() {
+    final flattened = this.map((b) => b.categories).reduce((acc, x) => acc..addAll(x));
+    return _mapToCategoryString(flattened);
+  }
+}
+
+extension MapBooksExtension on List<MapBookItem> {
   String toCategoryString() {
     final flattened = this.map((b) => b.categories).reduce((acc, x) => acc..addAll(x));
     return _mapToCategoryString(flattened);
