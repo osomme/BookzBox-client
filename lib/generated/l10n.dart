@@ -1375,6 +1375,24 @@ class S {
     );
   }
 
+  String get activityStartChatting {
+    return Intl.message(
+      'Click to start chatting',
+      name: 'activityStartChatting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityChatMedia {
+    return Intl.message(
+      '[Media]',
+      name: 'activityChatMedia',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get chatInputHint {
     return Intl.message(
       'Write a message...',
@@ -1935,7 +1953,7 @@ class S {
 
   String get mapFilterTitleOrDescription {
     return Intl.message(
-      'Box title/description',
+      'Box Title or Description',
       name: 'mapFilterTitleOrDescription',
       desc: '',
       args: [],
@@ -1991,6 +2009,24 @@ class S {
     return Intl.message(
       'Filter',
       name: 'mapFilterButtonLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapFilterAuthorLabel {
+    return Intl.message(
+      'Author',
+      name: 'mapFilterAuthorLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get mapFilterBookTitleLabel {
+    return Intl.message(
+      'Book Title',
+      name: 'mapFilterBookTitleLabel',
       desc: '',
       args: [],
     );

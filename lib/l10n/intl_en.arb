@@ -147,6 +147,8 @@
     "activityFeedErrorMessage": "Failed to load notifications",
     "activityFailedBoxLoad": "Failed to load liked boxes",
     "activityNoLikedBoxes": "You have not liked any boxes...",
+    "activityStartChatting": "Click to start chatting",
+    "activityChatMedia": "[Media]",
     "chatInputHint": "Write a message...",
     "activityNoChatItems": "You have no active conversations",
     "preferencesGenreHint": "Add a genre",
@@ -209,11 +211,13 @@
     "mapFilterTitle": "Filter",
     "mapFilterReset": "Reset",
     "mapFilterApply": "Apply",
-    "mapFilterTitleOrDescription": "Box title/description",
+    "mapFilterTitleOrDescription": "Box Title or Description",
     "mapFilterDateLimitHint": "Boxes no older than:",
     "mapFilterNoDateLimit": "No Limit",
     "mapFilterDate24Hours": "24 Hours",
     "mapFilterDate7Days": "7 Days",
     "mapFilterDate1Month": "1 Month",
-    "mapFilterButtonLabel": "Filter"
+    "mapFilterButtonLabel": "Filter",
+    "mapFilterAuthorLabel": "Author",
+    "mapFilterBookTitleLabel": "Book Title"
 }

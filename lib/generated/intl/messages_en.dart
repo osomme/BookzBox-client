@@ -40,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "activityBoxFeedRemoveLike" : MessageLookupByLibrary.simpleMessage("REMOVE LIKE"),
+    "activityChatMedia" : MessageLookupByLibrary.simpleMessage("[Media]"),
     "activityFailedBoxLoad" : MessageLookupByLibrary.simpleMessage("Failed to load liked boxes"),
     "activityFeedErrorMessage" : MessageLookupByLibrary.simpleMessage("Failed to load notifications"),
     "activityItemLikeMiddle" : MessageLookupByLibrary.simpleMessage(" liked your box: "),
@@ -51,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "activityNoFeedItems" : MessageLookupByLibrary.simpleMessage("Your activity feed is empty"),
     "activityNoLikedBoxes" : MessageLookupByLibrary.simpleMessage("You have not liked any boxes..."),
     "activityScreenAppBarTitle" : MessageLookupByLibrary.simpleMessage("Recent activity"),
+    "activityStartChatting" : MessageLookupByLibrary.simpleMessage("Click to start chatting"),
     "activityTabLabelActivity" : MessageLookupByLibrary.simpleMessage("Activity"),
     "activityTabLabelLikes" : MessageLookupByLibrary.simpleMessage("Likes"),
     "activityTabLabelMessages" : MessageLookupByLibrary.simpleMessage("Messages"),
@@ -179,6 +181,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "mapErrorBoxesError" : MessageLookupByLibrary.simpleMessage("Failed to retrieve boxes"),
     "mapErrorNoLocationPermission" : MessageLookupByLibrary.simpleMessage("Location permissions must be enabled"),
     "mapFilterApply" : MessageLookupByLibrary.simpleMessage("Apply"),
+    "mapFilterAuthorLabel" : MessageLookupByLibrary.simpleMessage("Author"),
+    "mapFilterBookTitleLabel" : MessageLookupByLibrary.simpleMessage("Book Title"),
     "mapFilterButtonLabel" : MessageLookupByLibrary.simpleMessage("Filter"),
     "mapFilterDate1Month" : MessageLookupByLibrary.simpleMessage("1 Month"),
     "mapFilterDate24Hours" : MessageLookupByLibrary.simpleMessage("24 Hours"),
@@ -187,7 +191,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "mapFilterNoDateLimit" : MessageLookupByLibrary.simpleMessage("No Limit"),
     "mapFilterReset" : MessageLookupByLibrary.simpleMessage("Reset"),
     "mapFilterTitle" : MessageLookupByLibrary.simpleMessage("Filter"),
-    "mapFilterTitleOrDescription" : MessageLookupByLibrary.simpleMessage("Box title/description"),
+    "mapFilterTitleOrDescription" : MessageLookupByLibrary.simpleMessage("Box Title or Description"),
     "mapLikeLabel" : MessageLookupByLibrary.simpleMessage("Like"),
     "mapNoDescription" : MessageLookupByLibrary.simpleMessage("No description"),
     "mapNoImages" : MessageLookupByLibrary.simpleMessage("No Images"),

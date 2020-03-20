@@ -13,7 +13,7 @@ abstract class _MapStore with Store {
   final IBoxMapRepository _repository;
 
   @observable
-  List<bool Function(BoxMapItem)> _filters = List();
+  BoxFilterValues _filters = BoxFilterValues.noFilters();
 
   @observable
   List<BoxMapItem> _boxes = List();
@@ -34,10 +34,10 @@ abstract class _MapStore with Store {
 
   @computed
   List<BoxMapItem> get boxes {
-    if (_filters.isEmpty) {
+    if (!_filters.hasAnyFilter) {
       return _boxes;
     }
-    return _boxes.where((b) => _filters.every((f) => f(b))).toList();
+    return _boxes.where((b) => _filters.filters.every((f) => f(b))).toList();
   }
 
   @computed
@@ -50,10 +50,13 @@ abstract class _MapStore with Store {
   bool get isLoadingBoxes => _isLoadingBoxes;
 
   @computed
-  bool get hasActiveFilter => _filters.isNotEmpty;
+  bool get hasActiveFilter => _filters.hasAnyFilter;
+
+  @computed
+  BoxFilterValues get filters => _filters;
 
   @action
-  void setBoxFilter(List<bool Function(BoxMapItem)> filters) => _filters = filters;
+  void setBoxFilter(BoxFilterValues filters) => _filters = filters;
 
   @action
   Future<void> _fetchUserLocation() async {

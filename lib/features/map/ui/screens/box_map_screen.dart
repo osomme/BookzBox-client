@@ -270,7 +270,7 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   }
 
   void _openFilterDialog() async {
-    final filters = await showModalBottomSheet<List<bool Function(BoxMapItem)>>(
+    final filters = await showModalBottomSheet<BoxFilterValues>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -286,7 +286,9 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
               color: Theme.of(context).accentColor,
               borderRadius: BorderRadius.all(const Radius.circular(25.0)),
             ),
-            child: BoxFilter(),
+            child: BoxFilter(
+              currentFilter: widget.mapStore.filters,
+            ),
           ),
         ),
       ),

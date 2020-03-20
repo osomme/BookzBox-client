@@ -37,18 +37,24 @@ mixin _$MapStore on _MapStore, Store {
   bool get hasActiveFilter => (_$hasActiveFilterComputed ??=
           Computed<bool>(() => super.hasActiveFilter))
       .value;
+  Computed<BoxFilterValues> _$filtersComputed;
+
+  @override
+  BoxFilterValues get filters =>
+      (_$filtersComputed ??= Computed<BoxFilterValues>(() => super.filters))
+          .value;
 
   final _$_filtersAtom = Atom(name: '_MapStore._filters');
 
   @override
-  List<bool Function(BoxMapItem)> get _filters {
+  BoxFilterValues get _filters {
     _$_filtersAtom.context.enforceReadPolicy(_$_filtersAtom);
     _$_filtersAtom.reportObserved();
     return super._filters;
   }
 
   @override
-  set _filters(List<bool Function(BoxMapItem)> value) {
+  set _filters(BoxFilterValues value) {
     _$_filtersAtom.context.conditionallyRunInAction(() {
       super._filters = value;
       _$_filtersAtom.reportChanged();
@@ -141,7 +147,7 @@ mixin _$MapStore on _MapStore, Store {
   final _$_MapStoreActionController = ActionController(name: '_MapStore');
 
   @override
-  void setBoxFilter(List<bool Function(BoxMapItem)> filters) {
+  void setBoxFilter(BoxFilterValues filters) {
     final _$actionInfo = _$_MapStoreActionController.startAction();
     try {
       return super.setBoxFilter(filters);

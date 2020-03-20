@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class BoxFilter extends StatefulWidget {
+  final BoxFilterValues currentFilter;
+
+  const BoxFilter({Key key, this.currentFilter}) : super(key: key);
+
   @override
   _BoxFilterState createState() => _BoxFilterState();
 }
@@ -11,34 +15,52 @@ class BoxFilter extends StatefulWidget {
 class _BoxFilterState extends State<BoxFilter> {
   static const _listItemGap = 15.0;
 
-  TextEditingController titleDescriptionController = TextEditingController();
+  TextEditingController titleDescriptionController;
 
-  TextEditingController authorController = TextEditingController();
+  TextEditingController authorController;
 
-  TextEditingController bookTitleController = TextEditingController();
+  TextEditingController bookTitleController;
 
-  DateTime pickedDate;
+  DateLimit dateLimit;
 
   int selectedChipIndex = 0;
 
   List<Map<String, dynamic>> dateOptions = [];
 
   @override
+  void initState() {
+    titleDescriptionController = TextEditingController(
+      text: widget.currentFilter?.boxTitleOrDescriptionText,
+    );
+    authorController = TextEditingController(
+      text: widget.currentFilter?.authorName,
+    );
+    bookTitleController = TextEditingController(
+      text: widget.currentFilter?.bookTitle,
+    );
+    dateLimit = widget.currentFilter?.dateLimitation;
+    _setSelectedChipIndex(dateLimit);
+    super.initState();
+  }
+
+  @override
   void didChangeDependencies() {
-    //TOOD: Add localized strings
     dateOptions = [
-      {'label': S.of(context).mapFilterNoDateLimit},
+      {
+        'label': S.of(context).mapFilterNoDateLimit,
+        'value': DateLimit.NoLimit,
+      },
       {
         'label': S.of(context).mapFilterDate24Hours,
-        'value': DateTime.now().subtract(Duration(hours: 24))
+        'value': DateLimit.OneDay,
       },
       {
         'label': S.of(context).mapFilterDate7Days,
-        'value': DateTime.now().subtract(Duration(days: 7))
+        'value': DateLimit.SevenDays,
       },
       {
         'label': S.of(context).mapFilterDate1Month,
-        'value': DateTime.now().subtract(Duration(days: 30))
+        'value': DateLimit.ThirtyDays,
       },
     ];
     super.didChangeDependencies();
@@ -130,7 +152,7 @@ class _BoxFilterState extends State<BoxFilter> {
                       ),
                       SizedBox(width: 5.0),
                       _inputField(
-                        labelText: 'Author',
+                        labelText: S.of(context).mapFilterAuthorLabel,
                         controller: authorController,
                       ),
                     ],
@@ -144,7 +166,7 @@ class _BoxFilterState extends State<BoxFilter> {
                       ),
                       SizedBox(width: 5.0),
                       _inputField(
-                        labelText: 'Book Title',
+                        labelText: S.of(context).mapFilterBookTitleLabel,
                         controller: bookTitleController,
                       ),
                     ],
@@ -201,7 +223,7 @@ class _BoxFilterState extends State<BoxFilter> {
     );
   }
 
-  Widget _dateChip(String label, DateTime value, int index) {
+  Widget _dateChip(String label, DateLimit value, int index) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5.0),
       child: ChoiceChip(
@@ -215,7 +237,7 @@ class _BoxFilterState extends State<BoxFilter> {
         selectedColor: Theme.of(context).primaryColor,
         onSelected: (selected) {
           if (selected) {
-            pickedDate = value;
+            dateLimit = value;
             setState(() => selectedChipIndex = index);
           }
         },
@@ -223,34 +245,41 @@ class _BoxFilterState extends State<BoxFilter> {
     );
   }
 
+  void _setSelectedChipIndex(DateLimit dateLimit) {
+    switch (dateLimit) {
+      case DateLimit.NoLimit:
+        selectedChipIndex = 0;
+        break;
+      case DateLimit.OneDay:
+        selectedChipIndex = 1;
+        break;
+      case DateLimit.SevenDays:
+        selectedChipIndex = 2;
+        break;
+      case DateLimit.ThirtyDays:
+        selectedChipIndex = 3;
+        break;
+      default:
+        selectedChipIndex = 0;
+    }
+  }
+
   void _submitFilter({bool reset = false}) {
     if (reset) {
       // No need to parse input and create functions.
-      Navigator.pop(context, List<bool Function(BoxMapItem)>());
+      Navigator.pop(context, BoxFilterValues.noFilters());
       return;
     }
 
-    final filters = List<bool Function(BoxMapItem)>();
-
-    if (titleDescriptionController.text != null &&
-        titleDescriptionController.text.isNotEmpty) {
-      filters.add(BoxQueryMapper.titleDescriptionFunc(titleDescriptionController.text));
-    }
-
-    if (authorController.text != null && authorController.text.isNotEmpty) {
-      filters.add(BoxQueryMapper.authorName(authorController.text));
-    }
-
-    if (bookTitleController.text != null && bookTitleController.text.isNotEmpty) {
-      filters.add(BoxQueryMapper.bookTitle(bookTitleController.text));
-    }
-
-    if (pickedDate != null) {
-      filters.add(BoxQueryMapper.publishedDateFunc(pickedDate));
-    }
+    final filterModel = BoxFilterValues(
+      boxTitleOrDescriptionText: titleDescriptionController.text,
+      authorName: authorController.text,
+      bookTitle: bookTitleController.text,
+      dateLimitation: dateLimit,
+    );
 
     //TODO: Add filters for book genres
 
-    Navigator.pop(context, filters);
+    Navigator.pop(context, filterModel);
   }
 }
