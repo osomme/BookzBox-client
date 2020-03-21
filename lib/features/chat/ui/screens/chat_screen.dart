@@ -1,5 +1,6 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/chat/chat.dart';
+import 'package:bookzbox/features/match/match.dart';
 import 'package:bookzbox/features/profile/ui/widgets/profile_avatar.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,17 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (ctx) => TradeScreen(),
+              ),
+            ),
+            child: Text('Complete Trade'), //TODO: Localize
+          ),
+        ],
         title: Observer(
           builder: (ctx) => GestureDetector(
             onTap: () => widget.chatStore.otherUserId
