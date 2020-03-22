@@ -96,6 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "bookSubjectEducational" : MessageLookupByLibrary.simpleMessage("Educational"),
     "bookSubjectEncyclopedia" : MessageLookupByLibrary.simpleMessage("Encyclopedia"),
     "bookSubjectFairytale" : MessageLookupByLibrary.simpleMessage("Fairytale"),
+    "bookSubjectFiction" : MessageLookupByLibrary.simpleMessage("Fiction"),
     "bookSubjectGraphicNovel" : MessageLookupByLibrary.simpleMessage("Graphic novel"),
     "bookSubjectGuide" : MessageLookupByLibrary.simpleMessage("Guide"),
     "bookSubjectHealth" : MessageLookupByLibrary.simpleMessage("Health"),

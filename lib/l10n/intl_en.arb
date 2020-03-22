@@ -205,6 +205,7 @@
     "bookSubjectClassic": "Classic",
     "bookSubjectHumor": "Humor",
     "bookSubjectMythology": "Mythology",
+    "bookSubjectFiction": "Fiction",
     "chatImageLoadFailed": "Failed to load image",
     "chatContentNotRendered": "Failed to render message content",
     "chatImageUploading": "Uploading image",

@@ -49,4 +49,5 @@ enum BookSubject {
   Classic,
   Humor,
   Mythology,
+  Fiction
 }

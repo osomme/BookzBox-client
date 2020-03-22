@@ -1897,6 +1897,15 @@ class S {
     );
   }
 
+  String get bookSubjectFiction {
+    return Intl.message(
+      'Fiction',
+      name: 'bookSubjectFiction',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get chatImageLoadFailed {
     return Intl.message(
       'Failed to load image',

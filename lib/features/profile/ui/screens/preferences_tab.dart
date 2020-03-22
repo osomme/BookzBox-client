@@ -70,6 +70,7 @@ class PreferencesTab extends StatelessWidget {
       BookSubject.Classic: S.of(context).bookSubjectClassic,
       BookSubject.Humor: S.of(context).bookSubjectHumor,
       BookSubject.Mythology: S.of(context).bookSubjectMythology,
+      BookSubject.Fiction: S.of(context).bookSubjectFiction,
     };
   }
 

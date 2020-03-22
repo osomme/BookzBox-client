@@ -211,6 +211,9 @@ class BookSubjectMapper {
 
       case BookSubject.Mythology:
         return Tuple2('Mythology', subject.index);
+
+      case BookSubject.Fiction:
+        return Tuple2('Fiction', subject.index);
     }
   }
 }
