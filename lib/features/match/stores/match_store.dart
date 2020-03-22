@@ -20,12 +20,16 @@ abstract class _MatchStore with Store {
   String _clientUserId;
 
   @observable
-  bool _matchIsActive = false;
-
-  @observable
   List<TradeOffer> _offers = List();
 
+  @observable
+  Match _match;
+
   _MatchStore(this._repository);
+
+  @computed
+  String get _otherUserId =>
+      _match?.participants?.firstWhere((id) => id != _clientUserId, orElse: () => null);
 
   @computed
   Option<TradeOffer> get lastOffer => _offers.isNotEmpty ? some(_offers.last) : none();
@@ -43,19 +47,20 @@ abstract class _MatchStore with Store {
 
   /// [true] if nobody has made any offers yet, [false] otherwise.
   @computed
-  bool get anyOffersExist => _offers.isNotEmpty && matchIsActive;
+  bool get anyOffersExist => lastOffer.isSome() && matchIsActive;
 
   /// [true] if the match is currently active, [false] otherwise.
   @computed
-  bool get matchIsActive => _matchIsActive;
+  bool get matchIsActive => _match != null && _match.active;
 
   @action
   void init(String matchId, String clientUserId) {
     _matchId = matchId;
     _clientUserId = clientUserId;
     // Match stream
-    _repository.getMatchStream(matchId).then((stream) =>
-        _matchSubscription = stream.listen((match) => _matchIsActive = match.active));
+    _repository
+        .getMatchStream(matchId)
+        .then((stream) => _matchSubscription = stream.listen((match) => _match = match));
     // Trade offers stream
     _repository.getTradeOfferStream(matchId).then(
         (stream) => _tradeSubscription = stream.listen((offers) => _offers = offers));

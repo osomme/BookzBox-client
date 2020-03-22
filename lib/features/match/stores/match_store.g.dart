@@ -9,6 +9,12 @@ part of 'match_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$MatchStore on _MatchStore, Store {
+  Computed<String> _$_otherUserIdComputed;
+
+  @override
+  String get _otherUserId =>
+      (_$_otherUserIdComputed ??= Computed<String>(() => super._otherUserId))
+          .value;
   Computed<Option<TradeOffer>> _$lastOfferComputed;
 
   @override
@@ -40,23 +46,6 @@ mixin _$MatchStore on _MatchStore, Store {
       (_$matchIsActiveComputed ??= Computed<bool>(() => super.matchIsActive))
           .value;
 
-  final _$_matchIsActiveAtom = Atom(name: '_MatchStore._matchIsActive');
-
-  @override
-  bool get _matchIsActive {
-    _$_matchIsActiveAtom.context.enforceReadPolicy(_$_matchIsActiveAtom);
-    _$_matchIsActiveAtom.reportObserved();
-    return super._matchIsActive;
-  }
-
-  @override
-  set _matchIsActive(bool value) {
-    _$_matchIsActiveAtom.context.conditionallyRunInAction(() {
-      super._matchIsActive = value;
-      _$_matchIsActiveAtom.reportChanged();
-    }, _$_matchIsActiveAtom, name: '${_$_matchIsActiveAtom.name}_set');
-  }
-
   final _$_offersAtom = Atom(name: '_MatchStore._offers');
 
   @override
@@ -72,6 +61,23 @@ mixin _$MatchStore on _MatchStore, Store {
       super._offers = value;
       _$_offersAtom.reportChanged();
     }, _$_offersAtom, name: '${_$_offersAtom.name}_set');
+  }
+
+  final _$_matchAtom = Atom(name: '_MatchStore._match');
+
+  @override
+  Match get _match {
+    _$_matchAtom.context.enforceReadPolicy(_$_matchAtom);
+    _$_matchAtom.reportObserved();
+    return super._match;
+  }
+
+  @override
+  set _match(Match value) {
+    _$_matchAtom.context.conditionallyRunInAction(() {
+      super._match = value;
+      _$_matchAtom.reportChanged();
+    }, _$_matchAtom, name: '${_$_matchAtom.name}_set');
   }
 
   final _$_MatchStoreActionController = ActionController(name: '_MatchStore');

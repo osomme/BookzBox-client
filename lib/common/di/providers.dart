@@ -268,6 +268,9 @@ final matchProviders = [
   ProxyProvider<IMatchRepository, MatchStore>(
     update: (_, repo, __) => MatchStore(repo),
   ),
+  ProxyProvider<IBoxRepository, BoxSelectionStore>(
+    update: (_, repo, __) => BoxSelectionStore(repo),
+  ),
 ];
 
 final chatProviders = [

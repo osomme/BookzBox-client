@@ -118,13 +118,15 @@ class MyApp extends StatelessWidget {
               return MultiProvider(
                 providers: [...chatProviders, ...matchProviders],
                 child: Consumer<ChatStore>(
-                  builder: (ctx, store, _) => ChatScreen(
-                    matchId: args.chatId,
-                    clientUserId: Provider.of<AuthStore>(ctx).user?.uid ?? '',
-                    otherUsername: args.otherUserName,
-                    chatStore: store,
-                    matchStore: Provider.of<MatchStore>(context),
-                    otherUserThumbnail: args.otherUserThumbnail,
+                  builder: (ctx, chatStore, _) => Consumer<MatchStore>(
+                    builder: (ctx, matchStore, _) => ChatScreen(
+                      matchId: args.chatId,
+                      clientUserId: Provider.of<AuthStore>(ctx).user?.uid ?? '',
+                      otherUsername: args.otherUserName,
+                      chatStore: chatStore,
+                      matchStore: matchStore,
+                      otherUserThumbnail: args.otherUserThumbnail,
+                    ),
                   ),
                 ),
               );

@@ -71,16 +71,23 @@ class _ChatScreenState extends State<ChatScreen> {
               context,
               MaterialPageRoute(
                 builder: (ctx) => TradeScreen(
-                  matchId: widget.matchId,
-                  clientUserId: widget.clientUserId,
+                  store: widget.matchStore,
+                  userId: widget.clientUserId,
                 ),
               ),
             ),
             child: Observer(builder: (ctx) {
+              final style = Theme.of(context).primaryTextTheme.body2;
               if (!widget.matchStore.matchIsActive) {
-                return Text('Trade Complete!');
+                return Text(
+                  'Trade Complete!',
+                  style: style,
+                );
               }
-              return Text('Manage Trade Requests');
+              return Text(
+                'Manage Trade',
+                style: style,
+              );
             }),
           ),
         ],
