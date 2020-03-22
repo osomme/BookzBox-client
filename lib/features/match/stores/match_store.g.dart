@@ -9,54 +9,52 @@ part of 'match_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$MatchStore on _MatchStore, Store {
-  Computed<bool> _$isPostingTradeOfferComputed;
+  Computed<Option<TradeOffer>> _$lastOfferComputed;
 
   @override
-  bool get isPostingTradeOffer => (_$isPostingTradeOfferComputed ??=
-          Computed<bool>(() => super.isPostingTradeOffer))
+  Option<TradeOffer> get lastOffer => (_$lastOfferComputed ??=
+          Computed<Option<TradeOffer>>(() => super.lastOffer))
       .value;
-  Computed<bool> _$isMatchActiveComputed;
+  Computed<bool> _$clientUserHasPendingOfferComputed;
 
   @override
-  bool get isMatchActive =>
-      (_$isMatchActiveComputed ??= Computed<bool>(() => super.isMatchActive))
+  bool get clientUserHasPendingOffer => (_$clientUserHasPendingOfferComputed ??=
+          Computed<bool>(() => super.clientUserHasPendingOffer))
+      .value;
+  Computed<bool> _$doesOtherUserHaveOfferComputed;
+
+  @override
+  bool get doesOtherUserHaveOffer => (_$doesOtherUserHaveOfferComputed ??=
+          Computed<bool>(() => super.doesOtherUserHaveOffer))
+      .value;
+  Computed<bool> _$anyOffersExistComputed;
+
+  @override
+  bool get anyOffersExist =>
+      (_$anyOffersExistComputed ??= Computed<bool>(() => super.anyOffersExist))
+          .value;
+  Computed<bool> _$matchIsActiveComputed;
+
+  @override
+  bool get matchIsActive =>
+      (_$matchIsActiveComputed ??= Computed<bool>(() => super.matchIsActive))
           .value;
 
-  final _$_isPostingTradeOfferAtom =
-      Atom(name: '_MatchStore._isPostingTradeOffer');
+  final _$_matchIsActiveAtom = Atom(name: '_MatchStore._matchIsActive');
 
   @override
-  bool get _isPostingTradeOffer {
-    _$_isPostingTradeOfferAtom.context
-        .enforceReadPolicy(_$_isPostingTradeOfferAtom);
-    _$_isPostingTradeOfferAtom.reportObserved();
-    return super._isPostingTradeOffer;
+  bool get _matchIsActive {
+    _$_matchIsActiveAtom.context.enforceReadPolicy(_$_matchIsActiveAtom);
+    _$_matchIsActiveAtom.reportObserved();
+    return super._matchIsActive;
   }
 
   @override
-  set _isPostingTradeOffer(bool value) {
-    _$_isPostingTradeOfferAtom.context.conditionallyRunInAction(() {
-      super._isPostingTradeOffer = value;
-      _$_isPostingTradeOfferAtom.reportChanged();
-    }, _$_isPostingTradeOfferAtom,
-        name: '${_$_isPostingTradeOfferAtom.name}_set');
-  }
-
-  final _$_isMatchActiveAtom = Atom(name: '_MatchStore._isMatchActive');
-
-  @override
-  bool get _isMatchActive {
-    _$_isMatchActiveAtom.context.enforceReadPolicy(_$_isMatchActiveAtom);
-    _$_isMatchActiveAtom.reportObserved();
-    return super._isMatchActive;
-  }
-
-  @override
-  set _isMatchActive(bool value) {
-    _$_isMatchActiveAtom.context.conditionallyRunInAction(() {
-      super._isMatchActive = value;
-      _$_isMatchActiveAtom.reportChanged();
-    }, _$_isMatchActiveAtom, name: '${_$_isMatchActiveAtom.name}_set');
+  set _matchIsActive(bool value) {
+    _$_matchIsActiveAtom.context.conditionallyRunInAction(() {
+      super._matchIsActive = value;
+      _$_matchIsActiveAtom.reportChanged();
+    }, _$_matchIsActiveAtom, name: '${_$_matchIsActiveAtom.name}_set');
   }
 
   final _$_offersAtom = Atom(name: '_MatchStore._offers');
@@ -79,10 +77,10 @@ mixin _$MatchStore on _MatchStore, Store {
   final _$_MatchStoreActionController = ActionController(name: '_MatchStore');
 
   @override
-  void init(String matchId) {
+  void init(String matchId, String clientUserId) {
     final _$actionInfo = _$_MatchStoreActionController.startAction();
     try {
-      return super.init(matchId);
+      return super.init(matchId, clientUserId);
     } finally {
       _$_MatchStoreActionController.endAction(_$actionInfo);
     }

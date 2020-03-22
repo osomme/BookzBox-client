@@ -15,6 +15,7 @@ import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/features/location/services/location_service.dart';
 import 'package:bookzbox/features/map/box_map.dart';
+import 'package:bookzbox/features/match/match.dart';
 import 'package:bookzbox/features/new_box/repositories/book_repository.dart';
 import 'package:bookzbox/features/new_box/repositories/book_repository_impl.dart';
 import 'package:bookzbox/features/new_box/repositories/box_repository.dart';
@@ -101,8 +102,8 @@ final bookProviders = [
   Provider<IBoxUpdaterService>(
     create: (_) => BoxUpdaterService(),
   ),
-  ProxyProvider4<IPublishService, IBoxLoaderService, IBoxDetailsService, IBoxUpdaterService,
-      IBoxRepository>(
+  ProxyProvider4<IPublishService, IBoxLoaderService, IBoxDetailsService,
+      IBoxUpdaterService, IBoxRepository>(
     update: (_, publishService, boxLoaderService, detailsService, updaterService, __) =>
         BoxRepository(publishService, boxLoaderService, detailsService, updaterService),
   ),
@@ -110,7 +111,8 @@ final bookProviders = [
     create: (_) => LocationService(),
   ),
   ProxyProvider3<IBookRepository, IBoxRepository, ILocationService, NewBoxStore>(
-    update: (_, bookRepo, boxRepo, locService, __) => NewBoxStore(bookRepo, boxRepo, locService),
+    update: (_, bookRepo, boxRepo, locService, __) =>
+        NewBoxStore(bookRepo, boxRepo, locService),
   ),
   ProxyProvider<NewBoxStore, NewBoxScreen>(
     update: (_, store, __) => NewBoxScreen(store),
@@ -194,8 +196,10 @@ final myProfileProviders = [
   ProxyProvider<IBoxRepository, ProfileBoxStore>(
     update: (_, repo, __) => ProfileBoxStore(repo),
   ),
-  ProxyProvider4<ProfileStore, AuthStore, ProfileBoxStore, PreferencesStore, ProfileScreen>(
-    update: (_, profileStore, authStore, profileBoxStore, preferencesStore, __) => ProfileScreen(
+  ProxyProvider4<ProfileStore, AuthStore, ProfileBoxStore, PreferencesStore,
+      ProfileScreen>(
+    update: (_, profileStore, authStore, profileBoxStore, preferencesStore, __) =>
+        ProfileScreen(
       profileStore: profileStore,
       authStore: authStore,
       profileBoxStore: profileBoxStore,
@@ -254,6 +258,18 @@ final likedBoxesStore = [
   ),
 ];
 
+final matchProviders = [
+  Provider<IMatchService>(
+    create: (_) => FirebaseMatchServiceImpl(),
+  ),
+  ProxyProvider<IMatchService, IMatchRepository>(
+    update: (_, service, __) => MatchRepositoryImpl(service),
+  ),
+  ProxyProvider<IMatchRepository, MatchStore>(
+    update: (_, repo, __) => MatchStore(repo),
+  ),
+];
+
 final chatProviders = [
   Provider<IChatService>(create: (_) => FirebaseChatService()),
   Provider<IStorageService>(create: (_) => FirebaseStorageService()),
@@ -261,6 +277,7 @@ final chatProviders = [
     update: (_, service, __) => ChatRepositoryImpl(service),
   ),
   ProxyProvider3<IChatRepository, ActivityFeedStore, IStorageService, ChatStore>(
-    update: (_, repo, feedStore, storageService, __) => ChatStore(repo, feedStore, storageService),
+    update: (_, repo, feedStore, storageService, __) =>
+        ChatStore(repo, feedStore, storageService),
   ),
 ];
