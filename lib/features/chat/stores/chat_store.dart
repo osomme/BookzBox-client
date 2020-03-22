@@ -117,6 +117,7 @@ abstract class _ChatStore with Store {
         }
         return false;
       });
+      print('Marking ${chatActivityItem?.id} as read');
 
       _feedStore.markAsRead(clientUserId, chatActivityItem.id);
     } on StateError {

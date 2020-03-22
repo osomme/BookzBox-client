@@ -107,7 +107,7 @@ class ChatFeedTab extends StatelessWidget {
   }
 
   String _extractMessageSnippet(BuildContext context, String lastMessage) {
-    if (lastMessage.startsWith("https://firebasestorage")) {
+    if (lastMessage != null && lastMessage.startsWith("https://firebasestorage")) {
       // If the message is a link pointing to firebase storage, then it is a media type message.
       return S.of(context).activityChatMedia;
     }

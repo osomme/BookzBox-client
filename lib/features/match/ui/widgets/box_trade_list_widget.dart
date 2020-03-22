@@ -17,22 +17,37 @@ class BoxTradeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (store.isLoading) {
-      return Center(
-        child: SpinKitThreeBounce(),
-      );
-    } else if (store.hasError) {
-      return Center(
-        child: Text('Failed to load boxes'), //TODO: Localize
-      );
-    }
+    return Observer(builder: (_) {
+      if (store.isLoading) {
+        return Center(
+          child: SpinKitThreeBounce(
+            color: Theme.of(context).primaryColor,
+          ),
+        );
+      } else if (store.hasError) {
+        return Center(
+          child: Text('Failed to load boxes'), //TODO: Localize
+        );
+      }
 
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: Column(
+      return Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              'Select a box', //TODO: Localize
+              style:
+                  Theme.of(context).textTheme.title.copyWith(fontWeight: FontWeight.w700),
+            ),
+            SizedBox(height: 6.0),
+            Text(
+              'Choose the box that you wish to trade', //TODO: Localize
+              style: Theme.of(context).textTheme.caption,
+            ),
+            SizedBox(height: 20.0),
+            Column(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 ...store.boxes
                     .map((b) => RadioListTile<MiniBox>(
@@ -48,10 +63,8 @@ class BoxTradeList extends StatelessWidget {
                     .toList(),
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Row(
+            SizedBox(height: 10.0),
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 FlatButton(
@@ -64,7 +77,7 @@ class BoxTradeList extends StatelessWidget {
                 Observer(
                   builder: (_) => FlatButton(
                     onPressed: store.currentlySelected != null
-                        ? () => Navigator.pop(context, [store.currentlySelected])
+                        ? () => Navigator.pop(context, store.currentlySelected)
                         : null,
                     child: Text(
                       'OK',
@@ -75,9 +88,9 @@ class BoxTradeList extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }

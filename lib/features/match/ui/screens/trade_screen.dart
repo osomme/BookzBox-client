@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/di/providers.dart';
 import 'package:bookzbox/common/widgets/widgets.dart';
 import 'package:bookzbox/features/box/box.dart';
 import 'package:bookzbox/features/match/match.dart';
@@ -95,13 +96,26 @@ class _NoOffers extends StatelessWidget {
   void _openBoxSelectionDialog(BuildContext context) async {
     final selectedBox = await showDialog<MiniBox>(
       context: context,
-      builder: (ctx) => BoxTradeList(
-        userId: userId,
-        store: Provider.of<BoxSelectionStore>(context),
+      builder: (ctx) => Dialog(
+        child: MultiProvider(
+          providers: matchProviders,
+          child: Consumer<BoxSelectionStore>(
+            builder: (_, store, __) => Container(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.50,
+              ),
+              child: BoxTradeList(
+                userId: userId,
+                store: store,
+              ),
+            ),
+          ),
+        ),
       ),
     );
     if (selectedBox != null) {
       print('Selected ${selectedBox.title}');
+      //TODO: Post the offer
     }
   }
 }
