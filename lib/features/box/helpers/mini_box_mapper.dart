@@ -11,7 +11,7 @@ class MiniBoxMapper {
     return MiniBox(
       id: ds.documentID,
       status: (data['status'] as int).toBoxStatus(),
-      publishDateTime: (data['publishDateTime'] as Timestamp).toDate(),
+      publishDateTime: DateTime.fromMillisecondsSinceEpoch((data['publishDateTime'] as int)),
       title: data['title'],
       bookThumbnailUrl: data['bookThumbnailUrl'],
     );

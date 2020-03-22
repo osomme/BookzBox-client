@@ -15,12 +15,12 @@ class FirebaseFeedService implements IFeedService {
     final boxes = await _firestore
         .collection('boxes')
         .where('status', isEqualTo: 0)
-        .where('publishDateTime', isGreaterThan: Timestamp.fromDate(fromDate))
+        .where('publishDateTime',
+            isGreaterThan: Timestamp.fromDate(fromDate).millisecondsSinceEpoch)
         .orderBy('publishDateTime', descending: true)
         .limit(number)
         .getDocuments()
-        .then((docs) =>
-            docs.documents.map((b) => BoxFeedListItem.fromFirestore(b)).toList())
+        .then((docs) => docs.documents.map((b) => BoxFeedListItem.fromFirestore(b)).toList())
         .catchError((error) => print(error));
 
     return boxes != null

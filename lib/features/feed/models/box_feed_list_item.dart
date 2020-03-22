@@ -34,7 +34,7 @@ class BoxFeedListItem {
       id: doc.documentID,
       publisherId: data['publisher'] as String,
       books: BoxFeedBook.fromFirebaseList(data['books']),
-      publishedOn: (data['publishDateTime'] as Timestamp).toDate(),
+      publishedOn: DateTime.fromMillisecondsSinceEpoch((data['publishDateTime'] as int)),
       lat: data['latitude'] as double,
       lng: data['longitude'] as double,
       title: data['title'] as String,
