@@ -1,12 +1,17 @@
+import 'dart:convert';
+
 import 'package:bookzbox/common/errors/error_types.dart';
 import 'package:bookzbox/features/box/box.dart';
 import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/feed/models/box_feed_list_item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dartz/dartz_unsafe.dart';
+import 'package:http/http.dart' as http;
 
 class FirebaseFeedService implements IFeedService {
   final _firestore = Firestore.instance; //TODO: Inject through parameter
+  final String _recommenderApiUrl = 'http://13.48.105.244:80/api/';
 
   @override
   Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxesFrom(
@@ -42,5 +47,24 @@ class FirebaseFeedService implements IFeedService {
         .map((snap) => snap.documents
             .map((b) => BoxFeedListItem.fromFirestore(b))
             .where((b) => b.publisherId != userId && b.status == BoxStatus.public));
+  }
+
+  @override
+  Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxRecommendations(
+      String userId, int limit) async {
+    var res = await http.get(
+        _recommenderApiUrl + "recommendations?userId=" + userId + "&limit=" + limit.toString());
+
+    if (res.statusCode != 200) {
+      return left(NetworkError.noInternet);
+    }
+
+    var json = jsonDecode(res.body);
+    List<BoxFeedListItem> boxes = new List();
+    for (var jsonItem in json) {
+      boxes.add(BoxFeedListItem.fromJson(jsonItem));
+    }
+
+    return right(boxes);
   }
 }

@@ -36,18 +36,26 @@ abstract class _FeedStore with Store {
   @action
   Future<void> init(String userId) async {
     _initialLoadingOngoing = true;
-    final stream = await _repo.getBoxesStream(userId);
-    _streamSubscription = stream.listen(
-      (data) {
-        print('Data loaded from stream with length: ${data.length}');
+    final res = await _repo.getBoxRecommendations(userId, 50);
+    res.fold(
+      (err) => _error = err,
+      (boxes) {
         _initialLoadingOngoing = false;
-        _boxes = data.toList();
-      },
-      onError: (error) {
-        print('Error while attempting to listen to box feed stream: $error');
-        _error = NetworkError.noInternet;
+        _boxes = boxes;
       },
     );
+    // final stream = await _repo.getBoxesStream(userId);
+    // _streamSubscription = stream.listen(
+    //   (data) {
+    //     print('Data loaded from stream with length: ${data.length}');
+    //     _initialLoadingOngoing = false;
+    //     _boxes = data.toList();
+    //   },
+    //   onError: (error) {
+    //     print('Error while attempting to listen to box feed stream: $error');
+    //     _error = NetworkError.noInternet;
+    //   },
+    // );
   }
 
   /// Disposes the resources that the store is using.
