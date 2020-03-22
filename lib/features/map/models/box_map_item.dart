@@ -33,7 +33,7 @@ class BoxMapItem {
       boxId: doc.documentID,
       publishedById: data['publisher'] as String,
       books: MapBookItem.fromFirebaseList(data['books']),
-      publishedOn: (data['publishDateTime'] as Timestamp).toDate(),
+      publishedOn: DateTime.fromMillisecondsSinceEpoch((data['publishDateTime'] as int)),
       latitude: data['latitude'] as double,
       longitude: data['longitude'] as double,
       title: data['title'] as String,
