@@ -18,4 +18,8 @@ class Match {
       participants: List.from(data['participants']),
     );
   }
+
+  @override
+  String toString() =>
+      '[MATCH] id: $matchId, active: $active, participants: ${participants.join(', ')}';
 }

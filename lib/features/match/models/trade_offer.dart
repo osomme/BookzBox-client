@@ -1,3 +1,4 @@
+import 'package:bookzbox/features/box/box.dart';
 import 'package:bookzbox/features/match/match.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,19 @@ class TradeOffer {
     @required this.status,
     @required this.offerRecipientId,
   });
+
+  factory TradeOffer.fromMiniBox(
+      MiniBox box, String offerByUserId, String offerRecipientId) {
+    return TradeOffer(
+      timestamp: DateTime.now(),
+      boxId: box.id,
+      boxTitle: box.title,
+      boxThumbnailUrl: box.bookThumbnailUrl,
+      offerByUserId: offerByUserId,
+      status: TradeOfferStatus.Waiting,
+      offerRecipientId: offerRecipientId,
+    );
+  }
 
   factory TradeOffer.fromFirebase(Map<dynamic, dynamic> data) {
     return TradeOffer(

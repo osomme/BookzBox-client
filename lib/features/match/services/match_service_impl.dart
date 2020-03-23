@@ -40,12 +40,12 @@ class FirebaseMatchServiceImpl implements IMatchService {
         'boxThumbnailUrl': offer.boxThumbnailUrl,
         'offerByUserId': offer.offerByUserId,
         'offerRecipientId': offer.offerRecipientId,
-        'status': offer.status,
+        'status': offer.status.index,
         'timestamp': offer.timestamp,
       });
       return right(true);
     } catch (e) {
-      print('Error while attempting to post a trade offer with'
+      print('Error while attempting to post a trade offer with '
           'match id: $matchId and data: $offer');
       return left(e.toString());
     }

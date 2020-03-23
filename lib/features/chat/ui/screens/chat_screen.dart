@@ -57,6 +57,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void dispose() {
     controller.dispose();
     widget.chatStore.dispose();
+    widget.matchStore.dispose();
     super.dispose();
   }
 
@@ -66,29 +67,34 @@ class _ChatScreenState extends State<ChatScreen> {
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         actions: <Widget>[
-          FlatButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (ctx) => TradeScreen(
-                  store: widget.matchStore,
-                  userId: widget.clientUserId,
-                ),
-              ),
-            ),
-            child: Observer(builder: (ctx) {
-              final style = Theme.of(context).primaryTextTheme.body2;
-              if (!widget.matchStore.matchIsActive) {
-                return Text(
-                  'Trade Complete!',
-                  style: style,
-                );
-              }
-              return Text(
-                'Manage Trade',
-                style: style,
-              );
-            }),
+          Observer(
+            builder: (_) => widget.matchStore.otherUserId != null
+                ? FlatButton(
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (ctx) => TradeScreen(
+                          store: widget.matchStore,
+                          userId: widget.clientUserId,
+                          recipientId: widget.matchStore.otherUserId,
+                        ),
+                      ),
+                    ),
+                    child: Builder(builder: (ctx) {
+                      final style = Theme.of(context).primaryTextTheme.body2;
+                      if (!widget.matchStore.matchIsActive) {
+                        return Text(
+                          'Trade Complete!', //TODO: Localize
+                          style: style,
+                        );
+                      }
+                      return Text(
+                        'Manage Trade', //TODO: Localize
+                        style: style,
+                      );
+                    }),
+                  )
+                : Text(''),
           ),
         ],
         title: Observer(

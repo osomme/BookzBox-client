@@ -9,11 +9,11 @@ part of 'match_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$MatchStore on _MatchStore, Store {
-  Computed<String> _$_otherUserIdComputed;
+  Computed<String> _$otherUserIdComputed;
 
   @override
-  String get _otherUserId =>
-      (_$_otherUserIdComputed ??= Computed<String>(() => super._otherUserId))
+  String get otherUserId =>
+      (_$otherUserIdComputed ??= Computed<String>(() => super.otherUserId))
           .value;
   Computed<Option<TradeOffer>> _$lastOfferComputed;
 
@@ -21,6 +21,12 @@ mixin _$MatchStore on _MatchStore, Store {
   Option<TradeOffer> get lastOffer => (_$lastOfferComputed ??=
           Computed<Option<TradeOffer>>(() => super.lastOffer))
       .value;
+  Computed<List<TradeOffer>> _$offersComputed;
+
+  @override
+  List<TradeOffer> get offers =>
+      (_$offersComputed ??= Computed<List<TradeOffer>>(() => super.offers))
+          .value;
   Computed<bool> _$clientUserHasPendingOfferComputed;
 
   @override
@@ -44,6 +50,12 @@ mixin _$MatchStore on _MatchStore, Store {
   @override
   bool get matchIsActive =>
       (_$matchIsActiveComputed ??= Computed<bool>(() => super.matchIsActive))
+          .value;
+  Computed<bool> _$isPostingOfferComputed;
+
+  @override
+  bool get isPostingOffer =>
+      (_$isPostingOfferComputed ??= Computed<bool>(() => super.isPostingOffer))
           .value;
 
   final _$_offersAtom = Atom(name: '_MatchStore._offers');
@@ -78,6 +90,30 @@ mixin _$MatchStore on _MatchStore, Store {
       super._match = value;
       _$_matchAtom.reportChanged();
     }, _$_matchAtom, name: '${_$_matchAtom.name}_set');
+  }
+
+  final _$_isPostingOfferAtom = Atom(name: '_MatchStore._isPostingOffer');
+
+  @override
+  bool get _isPostingOffer {
+    _$_isPostingOfferAtom.context.enforceReadPolicy(_$_isPostingOfferAtom);
+    _$_isPostingOfferAtom.reportObserved();
+    return super._isPostingOffer;
+  }
+
+  @override
+  set _isPostingOffer(bool value) {
+    _$_isPostingOfferAtom.context.conditionallyRunInAction(() {
+      super._isPostingOffer = value;
+      _$_isPostingOfferAtom.reportChanged();
+    }, _$_isPostingOfferAtom, name: '${_$_isPostingOfferAtom.name}_set');
+  }
+
+  final _$postOfferAsyncAction = AsyncAction('postOffer');
+
+  @override
+  Future<void> postOffer(TradeOffer offer) {
+    return _$postOfferAsyncAction.run(() => super.postOffer(offer));
   }
 
   final _$_MatchStoreActionController = ActionController(name: '_MatchStore');
