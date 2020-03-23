@@ -15,11 +15,17 @@ mixin _$MatchStore on _MatchStore, Store {
   String get otherUserId =>
       (_$otherUserIdComputed ??= Computed<String>(() => super.otherUserId))
           .value;
-  Computed<Option<TradeOffer>> _$lastOfferComputed;
+  Computed<TradeOffer> _$otherUserOfferComputed;
 
   @override
-  Option<TradeOffer> get lastOffer => (_$lastOfferComputed ??=
-          Computed<Option<TradeOffer>>(() => super.lastOffer))
+  TradeOffer get otherUserOffer => (_$otherUserOfferComputed ??=
+          Computed<TradeOffer>(() => super.otherUserOffer))
+      .value;
+  Computed<TradeOffer> _$clientUserOfferComputed;
+
+  @override
+  TradeOffer get clientUserOffer => (_$clientUserOfferComputed ??=
+          Computed<TradeOffer>(() => super.clientUserOffer))
       .value;
   Computed<List<TradeOffer>> _$offersComputed;
 
@@ -27,18 +33,6 @@ mixin _$MatchStore on _MatchStore, Store {
   List<TradeOffer> get offers =>
       (_$offersComputed ??= Computed<List<TradeOffer>>(() => super.offers))
           .value;
-  Computed<bool> _$clientUserHasPendingOfferComputed;
-
-  @override
-  bool get clientUserHasPendingOffer => (_$clientUserHasPendingOfferComputed ??=
-          Computed<bool>(() => super.clientUserHasPendingOffer))
-      .value;
-  Computed<bool> _$doesOtherUserHaveOfferComputed;
-
-  @override
-  bool get doesOtherUserHaveOffer => (_$doesOtherUserHaveOfferComputed ??=
-          Computed<bool>(() => super.doesOtherUserHaveOffer))
-      .value;
   Computed<bool> _$anyOffersExistComputed;
 
   @override

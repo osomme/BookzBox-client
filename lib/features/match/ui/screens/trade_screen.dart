@@ -5,6 +5,7 @@ import 'package:bookzbox/features/box/box.dart';
 import 'package:bookzbox/features/match/match.dart';
 import 'package:bookzbox/common/extensions/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
@@ -35,42 +36,261 @@ class _TradeScreenState extends State<TradeScreen> {
         title: Text('Manage Trade Offers'),
       ),
       body: Observer(
-        builder: (ctx) {
-          if (widget.store.anyOffersExist) {
-            return _Offers(
-              offers: widget.store.offers,
-              clientUserId: widget.userId,
-            );
-          } else {
-            return Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).accentColor,
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.80,
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 8.0),
-                  child: _NoOffers(
-                    userId: widget.userId,
-                    onBoxSelected: (box) => widget.store.postOffer(
-                      TradeOffer.fromMiniBox(
-                        box,
-                        widget.userId,
-                        widget.recipientId,
-                      ),
-                    ),
-                  ),
-                ),
+        builder: (ctx) => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 14.0),
+          child: _Content(
+            clientUserOffer: widget.store.clientUserOffer,
+            clientUserId: widget.userId,
+            otherUserOffer: widget.store.otherUserOffer,
+            onBoxSelected: (box) => widget.store.postOffer(
+              TradeOffer.fromMiniBox(
+                box,
+                widget.userId,
+                widget.recipientId,
               ),
-            );
-          }
-        },
+            ),
+          ),
+        ),
       ),
     );
+  }
+}
+
+class _Content extends StatelessWidget {
+  final String clientUserId;
+  final TradeOffer clientUserOffer;
+  final TradeOffer otherUserOffer;
+  final Function(MiniBox) onBoxSelected;
+
+  const _Content({
+    Key key,
+    @required this.clientUserId,
+    @required this.clientUserOffer,
+    @required this.otherUserOffer,
+    @required this.onBoxSelected,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        // Client user column
+        Expanded(
+          child: _match(
+            ifOnlyOtherUser: () => Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  FontAwesome5Solid.box_open,
+                  size: 30.0,
+                  color: Theme.of(context).primaryIconTheme.color,
+                ),
+                SizedBox(height: 20.0),
+                Text(
+                  'No trade offer yet',
+                  style:
+                      Theme.of(context).primaryTextTheme.body2.copyWith(fontSize: 12.0),
+                ),
+              ],
+            ),
+            ifOnlyClientUser: () => _HasOfferColumn(
+              offer: clientUserOffer,
+              topText: 'Trade offer:',
+              bottomText: 'Waiting for <username> to respond...',
+            ),
+            ifBoth: () => _HasOfferColumn(
+              offer: clientUserOffer,
+              topText: 'You offered:',
+              bottomText: '<username> has accepted your trade offer!',
+            ),
+            ifNeither: () => _NoOffers(
+              userId: clientUserId,
+              onBoxSelected: (box) => onBoxSelected(box),
+            ),
+          ),
+        ),
+        // Middle arrows
+        Center(
+          child: Icon(
+            Icons.compare_arrows,
+            size: 55.0,
+            color: Theme.of(context).primaryIconTheme.color,
+          ),
+        ),
+        // Other user column
+        Expanded(
+          child: _match(
+            ifOnlyOtherUser: () => Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _HasOfferColumn(
+                  offer: otherUserOffer,
+                  topText: '<username> wants to trade:',
+                  bottomText: null,
+                ),
+                FlatButton(
+                  onPressed: () => _openBoxSelectionDialog(context),
+                  child: Text(
+                    'Accept offer',
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .button
+                        .copyWith(color: Theme.of(context).accentColor),
+                  ),
+                ),
+              ],
+            ),
+            ifOnlyClientUser: () => Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(FontAwesome5Solid.question, size: 30.0),
+                Text('Waiting for <username> to respond...'),
+              ],
+            ),
+            ifBoth: () => _HasOfferColumn(
+              offer: otherUserOffer,
+              topText: '<username> offered:',
+              bottomText: 'You have accepted <username>\'s trade offer!',
+            ),
+            ifNeither: () => Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(FontAwesome5Solid.question, size: 30.0),
+                Text('<username> has not made an offer yet'),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _match({
+    Widget Function() ifOnlyOtherUser,
+    Widget Function() ifOnlyClientUser,
+    Widget Function() ifBoth,
+    Widget Function() ifNeither,
+  }) {
+    if (clientUserOffer == null && otherUserOffer != null) {
+      // Client user has not posted an offer yet, but the other user has.
+      return ifOnlyOtherUser();
+    } else if (clientUserOffer != null && otherUserOffer == null) {
+      // Client user has posted an offer, but the other user has not.
+      return ifOnlyClientUser();
+    } else if (clientUserOffer != null && otherUserOffer != null) {
+      // Both users have posted an offer
+      return ifBoth();
+    } else {
+      // Neither users have posted any offers.
+      return ifNeither();
+    }
+  }
+
+  void _openBoxSelectionDialog(BuildContext context) async {
+    final selectedBox = await showDialog<MiniBox>(
+      context: context,
+      builder: (ctx) => Dialog(
+        child: MultiProvider(
+          providers: matchProviders,
+          child: Consumer<BoxSelectionStore>(
+            builder: (_, store, __) => Container(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.50,
+              ),
+              child: BoxTradeList(
+                userId: clientUserId,
+                store: store,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    if (selectedBox != null) {
+      print('Selected ${selectedBox.title}');
+      onBoxSelected(selectedBox);
+    }
+  }
+}
+
+class _HasOfferColumn extends StatelessWidget {
+  final String topText;
+  final String bottomText;
+  final TradeOffer offer;
+
+  const _HasOfferColumn({
+    Key key,
+    @required this.offer,
+    @required this.topText,
+    @required this.bottomText,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          topText,
+          style: Theme.of(context).primaryTextTheme.body2.copyWith(fontSize: 12.0),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          offer.boxTitle,
+          style: Theme.of(context)
+              .primaryTextTheme
+              .body2
+              .copyWith(fontSize: 12.0, fontWeight: FontWeight.w700),
+        ),
+        SizedBox(height: 20.0),
+        Container(
+          height: 180.0,
+          child: Image.network(offer.boxThumbnailUrl, fit: BoxFit.contain),
+        ),
+        SizedBox(height: 20.0),
+        bottomText != null
+            ? Text(
+                bottomText,
+                style: Theme.of(context).primaryTextTheme.body2.copyWith(fontSize: 12.0),
+              )
+            : SizedBox.shrink(),
+        /*
+        Row(
+          children: <Widget>[
+            _iconFromStatus(offer.status),
+            SizedBox(width: 5.0),
+            Text(bottomText),
+          ],
+        ),*/
+      ],
+    );
+  }
+
+  Widget _iconFromStatus(TradeOfferStatus status) {
+    const size = 20.0;
+    switch (status) {
+      case TradeOfferStatus.Accepted:
+        return Icon(
+          Icons.check_circle,
+          color: Colors.green,
+          size: size,
+        );
+      case TradeOfferStatus.Rejected:
+        return Icon(
+          Icons.block,
+          color: Colors.red,
+          size: size,
+        );
+      case TradeOfferStatus.Waiting:
+        return Icon(
+          Icons.warning,
+          color: Colors.yellow[800],
+          size: size,
+        );
+      default:
+        throw 'Unknown TradeOfferStatus value. Was $status';
+    }
   }
 }
 

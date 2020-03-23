@@ -35,25 +35,19 @@ abstract class _MatchStore with Store {
       _match?.participants?.firstWhere((id) => id != _clientUserId, orElse: () => null);
 
   @computed
-  Option<TradeOffer> get lastOffer => _offers.isNotEmpty ? some(_offers.last) : none();
+  TradeOffer get otherUserOffer =>
+      _offers.lastWhere((o) => o.offerByUserId != _clientUserId, orElse: () => null);
+
+  @computed
+  TradeOffer get clientUserOffer =>
+      _offers.lastWhere((o) => o.offerByUserId == _clientUserId, orElse: () => null);
 
   @computed
   List<TradeOffer> get offers => _offers;
 
-  /// [true] if the client user has an pending offer that the other user has not responded to yet, [false] otherwise.
-  @computed
-  bool get clientUserHasPendingOffer => lastOffer
-      .map(
-          (o) => o.status == TradeOfferStatus.Waiting && o.offerByUserId == _clientUserId)
-      .getOrElse(() => false);
-
-  /// [true] if the other user has a offer that the client user has not responded to yet, [false] otherwise.
-  @computed
-  bool get doesOtherUserHaveOffer => lastOffer.isSome() && !clientUserHasPendingOffer;
-
   /// [true] if nobody has made any offers yet, [false] otherwise.
   @computed
-  bool get anyOffersExist => lastOffer.isSome() && matchIsActive;
+  bool get anyOffersExist => _offers.isNotEmpty && matchIsActive;
 
   /// [true] if the match is currently active, [false] otherwise.
   @computed
