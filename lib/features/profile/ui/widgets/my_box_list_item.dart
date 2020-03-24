@@ -6,6 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:bookzbox/features/box/helpers/status_extensions.dart';
 import 'package:bookzbox/common/extensions/extensions.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+enum MiniBoxOverflowAction {
+  Delete,
+}
 
 /// Creates a box list item.
 /// [shouldShowLeftButton] must never be null.
@@ -14,14 +19,22 @@ import 'package:bookzbox/common/extensions/extensions.dart';
 class MiniBoxListItem extends StatelessWidget {
   final MiniBox box;
   final VoidCallback onLeftButtonPressed;
+  final VoidCallback onDeletePressed;
   final String leftButtonText;
   final bool shouldShowLeftButton;
+  final bool shouldShowExtraOptions;
+
+  /// Are we currently deleting the box?
+  final bool deleting;
 
   MiniBoxListItem({
     @required this.box,
     this.leftButtonText,
     this.onLeftButtonPressed,
+    this.onDeletePressed,
     this.shouldShowLeftButton = true,
+    this.shouldShowExtraOptions = true,
+    this.deleting = false,
   });
 
   @override
@@ -71,21 +84,67 @@ class MiniBoxListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(box.title,
-                                style: Theme.of(context).primaryTextTheme.subhead.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 18,
-                                  letterSpacing: 1.05,
-                                  shadows: <Shadow>[
-                                    Shadow(
-                                      color: Colors.black54,
-                                      blurRadius: 2.0,
-                                      offset: Offset(1, 1),
-                                    ),
-                                  ],
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 5,
+                                  child: Text(box.title,
+                                      style: Theme.of(context).primaryTextTheme.subhead.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 18,
+                                        letterSpacing: 1.05,
+                                        shadows: <Shadow>[
+                                          Shadow(
+                                            color: Colors.black54,
+                                            blurRadius: 2.0,
+                                            offset: Offset(1, 1),
+                                          ),
+                                        ],
+                                      ),
+                                      overflow: TextOverflow.ellipsis),
                                 ),
-                                overflow: TextOverflow.ellipsis),
+                                Expanded(
+                                  flex: 1,
+                                  child: Visibility(
+                                    visible: shouldShowExtraOptions,
+                                    child: PopupMenuButton<MiniBoxOverflowAction>(
+                                      child: (deleting
+                                          ? SpinKitFadingCircle()
+                                          : Icon(
+                                              MaterialCommunityIcons.dots_vertical,
+                                              color: Colors.white,
+                                            )),
+                                      onSelected: (MiniBoxOverflowAction result) {
+                                        if (result == MiniBoxOverflowAction.Delete) {
+                                          onDeletePressed();
+                                        }
+                                      },
+                                      itemBuilder: (BuildContext context) =>
+                                          <PopupMenuEntry<MiniBoxOverflowAction>>[
+                                        PopupMenuItem(
+                                          height: 48.0,
+                                          value: MiniBoxOverflowAction.Delete,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Icon(
+                                                Icons.delete,
+                                                size: 20,
+                                                color: Colors.black,
+                                              ),
+                                              Text(
+                                                S.of(context).myBoxDelete,
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                             Padding(
                               padding: const EdgeInsets.only(top: 6.0),
                               child: Row(

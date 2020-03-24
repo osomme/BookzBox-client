@@ -13,4 +13,6 @@ abstract class IBoxRepository {
   Future<Either<BoxDetailsError, Box>> getBox(String boxId);
 
   Future<Either<String, Box>> updateStatus(Box updatedBox);
+
+  Future<bool> deleteBox(String boxId);
 }

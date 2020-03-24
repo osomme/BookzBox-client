@@ -198,6 +198,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "mapNoImages" : MessageLookupByLibrary.simpleMessage("No Images"),
     "mapProfileLabel" : MessageLookupByLibrary.simpleMessage("Profile"),
     "mapPublishedOn" : MessageLookupByLibrary.simpleMessage("Published"),
+    "myBoxDelete" : MessageLookupByLibrary.simpleMessage("Delete"),
     "newBoxAddBookButton" : MessageLookupByLibrary.simpleMessage("ADD BOOK"),
     "newBoxAddBookHelpText" : MessageLookupByLibrary.simpleMessage("Add books by clicking the button below"),
     "newBoxBookAuthor" : MessageLookupByLibrary.simpleMessage("Author"),

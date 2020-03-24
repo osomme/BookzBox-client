@@ -2040,6 +2040,15 @@ class S {
       args: [],
     );
   }
+
+  String get myBoxDelete {
+    return Intl.message(
+      'Delete',
+      name: 'myBoxDelete',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
