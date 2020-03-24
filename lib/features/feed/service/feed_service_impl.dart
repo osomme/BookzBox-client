@@ -51,9 +51,17 @@ class FirebaseFeedService implements IFeedService {
 
   @override
   Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxRecommendations(
-      String userId, int limit) async {
-    var res = await http.get(
-        _recommenderApiUrl + "recommendations?userId=" + userId + "&limit=" + limit.toString());
+      String userId, int limit,
+      {double latitude = -1.0, double longitude = -1.0}) async {
+    var res = await http.get(_recommenderApiUrl +
+        "recommendations?userId=" +
+        userId +
+        "&limit=" +
+        limit.toString() +
+        "&latitude=" +
+        latitude.toString() +
+        "&longitude=" +
+        longitude.toString());
 
     if (res.statusCode != 200) {
       return left(NetworkError.noInternet);

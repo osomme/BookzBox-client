@@ -5,7 +5,8 @@ import 'package:dartz/dartz.dart';
 abstract class IFeedService {
   /// Get recommendations for a specific user, limiting the amount of recommendations by [limit].
   Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxRecommendations(
-      String userId, int limit);
+      String userId, int limit,
+      {double latitude = -1.0, double longitude = -1.0});
 
   /// Returns an optional type containing either a list of boxes, or a feed error.
   Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxesFrom(int number, DateTime fromDate);

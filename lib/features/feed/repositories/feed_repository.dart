@@ -10,5 +10,6 @@ abstract class IFeedRepository {
   Future<Stream<Iterable<BoxFeedListItem>>> getBoxesStream(String userId);
 
   Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxRecommendations(
-      String userId, int limit);
+      String userId, int limit,
+      {double latitude = -1.0, double longitude = -1.0});
 }

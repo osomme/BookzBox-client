@@ -151,14 +151,17 @@ final boxLikeProviders = [
 ];
 
 final feedProviders = [
+  Provider<ILocationService>(
+    create: (_) => LocationService(),
+  ),
   Provider<IFeedService>(
     create: (_) => FirebaseFeedService(),
   ),
   ProxyProvider<IFeedService, IFeedRepository>(
     update: (_, service, __) => FeedRepository(service),
   ),
-  ProxyProvider<IFeedRepository, FeedStore>(
-    update: (_, repo, __) => FeedStore(repo),
+  ProxyProvider2<IFeedRepository, ILocationService, FeedStore>(
+    update: (_, repo, locService, __) => FeedStore(repo, locService),
   ),
   ...boxLikeProviders,
   ProxyProvider<FeedStore, FeedScreen>(

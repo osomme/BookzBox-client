@@ -20,7 +20,9 @@ class FeedRepository implements IFeedRepository {
 
   @override
   Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxRecommendations(
-      String userId, int limit) async {
-    return await _service.getBoxRecommendations(userId, limit);
+      String userId, int limit,
+      {double latitude = -1.0, double longitude = -1.0}) async {
+    return await _service.getBoxRecommendations(userId, limit,
+        latitude: latitude, longitude: longitude);
   }
 }
