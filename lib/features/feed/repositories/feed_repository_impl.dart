@@ -17,4 +17,12 @@ class FeedRepository implements IFeedRepository {
   @override
   Future<Stream<Iterable<BoxFeedListItem>>> getBoxesStream(String userId) =>
       _service.getBoxesStream(userId);
+
+  @override
+  Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxRecommendations(
+      String userId, int limit,
+      {double latitude = -1.0, double longitude = -1.0}) async {
+    return await _service.getBoxRecommendations(userId, limit,
+        latitude: latitude, longitude: longitude);
+  }
 }

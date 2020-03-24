@@ -42,4 +42,18 @@ class BoxFeedListItem {
       status: (data['status'] as int).toBoxStatus(),
     );
   }
+
+  factory BoxFeedListItem.fromJson(Map<String, dynamic> json) {
+    return BoxFeedListItem(
+      id: json['id'],
+      publisherId: json['publisher'],
+      publishedOn: DateTime.fromMillisecondsSinceEpoch((json['publishDateTime'] as int)),
+      title: json['title'] as String,
+      description: (json['description'] as String) ?? '',
+      lat: json['latitude'] as double,
+      lng: json['longitude'] as double,
+      books: BoxFeedBook.fromFirebaseList(json['books']),
+      status: (json['status'] as int).toBoxStatus(),
+    );
+  }
 }

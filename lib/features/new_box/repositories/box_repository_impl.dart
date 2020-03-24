@@ -1,5 +1,6 @@
 import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/box/services/box_loader_service.dart';
+import 'package:bookzbox/features/box/services/box_removal_service.dart';
 import 'package:bookzbox/features/box/services/box_updater_service.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/errors/box_details_error.dart';
@@ -14,9 +15,10 @@ class BoxRepository extends IBoxRepository {
   final IBoxLoaderService _boxLoaderService;
   final IBoxDetailsService _detailsService;
   final IBoxUpdaterService _updaterService;
+  final IBoxRemovalService _removalService;
 
-  BoxRepository(
-      this._publishService, this._boxLoaderService, this._detailsService, this._updaterService);
+  BoxRepository(this._publishService, this._boxLoaderService, this._detailsService,
+      this._updaterService, this._removalService);
 
   @override
   Future<Either<PublishError, Box>> publish(Box box) async => await _publishService.publish(box);
@@ -33,6 +35,9 @@ class BoxRepository extends IBoxRepository {
   Future<Either<BoxDetailsError, Box>> getBox(String boxId) => _detailsService.getBox(boxId);
 
   @override
-  Future<Either<String, Box>> updateStatus(Box updatedBox) =>
-      _updaterService.updateStatus(updatedBox);
+  Future<Either<String, Box>> updateStatus(Box updatedBox) async =>
+      await _updaterService.updateStatus(updatedBox);
+
+  @override
+  Future<bool> deleteBox(String boxId) async => await _removalService.remove(boxId);
 }

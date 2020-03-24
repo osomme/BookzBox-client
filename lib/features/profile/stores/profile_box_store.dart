@@ -34,6 +34,10 @@ abstract class _ProfileBoxStore with Store {
   @observable
   String _updateError = '';
 
+  /// Are we currently working on removing a box?
+  @observable
+  bool _isRemovingBox = false;
+
   _ProfileBoxStore(this._boxRepository);
 
   @action
@@ -100,6 +104,17 @@ abstract class _ProfileBoxStore with Store {
     );
   }
 
+  @action
+  Future deleteBox(int index) async {
+    _isRemovingBox = true;
+    final boxToDelete = myBoxes[index];
+    bool success = await _boxRepository.deleteBox(boxToDelete.id);
+    if (success) {
+      myBoxes.removeAt(index);
+    }
+    _isRemovingBox = false;
+  }
+
   @computed
   BoxStatus get currentBoxStatus => _currentBoxStatus;
 
@@ -144,4 +159,7 @@ abstract class _ProfileBoxStore with Store {
     myBoxes.clear();
     myBoxes.addAll(tmpList);
   }
+
+  @computed
+  bool get isRemovingBox => _isRemovingBox;
 }

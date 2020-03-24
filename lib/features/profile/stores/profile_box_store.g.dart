@@ -44,6 +44,12 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
   String get updateError =>
       (_$updateErrorComputed ??= Computed<String>(() => super.updateError))
           .value;
+  Computed<bool> _$isRemovingBoxComputed;
+
+  @override
+  bool get isRemovingBox =>
+      (_$isRemovingBoxComputed ??= Computed<bool>(() => super.isRemovingBox))
+          .value;
 
   final _$myBoxesAtom = Atom(name: '_ProfileBoxStore.myBoxes');
 
@@ -168,12 +174,36 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
     }, _$_updateErrorAtom, name: '${_$_updateErrorAtom.name}_set');
   }
 
+  final _$_isRemovingBoxAtom = Atom(name: '_ProfileBoxStore._isRemovingBox');
+
+  @override
+  bool get _isRemovingBox {
+    _$_isRemovingBoxAtom.context.enforceReadPolicy(_$_isRemovingBoxAtom);
+    _$_isRemovingBoxAtom.reportObserved();
+    return super._isRemovingBox;
+  }
+
+  @override
+  set _isRemovingBox(bool value) {
+    _$_isRemovingBoxAtom.context.conditionallyRunInAction(() {
+      super._isRemovingBox = value;
+      _$_isRemovingBoxAtom.reportChanged();
+    }, _$_isRemovingBoxAtom, name: '${_$_isRemovingBoxAtom.name}_set');
+  }
+
   final _$updateBoxVisibilityAsyncAction = AsyncAction('updateBoxVisibility');
 
   @override
   Future<dynamic> updateBoxVisibility() {
     return _$updateBoxVisibilityAsyncAction
         .run(() => super.updateBoxVisibility());
+  }
+
+  final _$deleteBoxAsyncAction = AsyncAction('deleteBox');
+
+  @override
+  Future<dynamic> deleteBox(int index) {
+    return _$deleteBoxAsyncAction.run(() => super.deleteBox(index));
   }
 
   final _$_ProfileBoxStoreActionController =

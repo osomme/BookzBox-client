@@ -89,8 +89,7 @@ class BoxesTab extends StatelessWidget {
             FlatButton(
               child: Text(
                 S.of(context).boxConfirmVisibilityChange,
-                style:
-                    TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
+                style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
               ),
               onPressed: () {
                 boxStore.setBoxStatus(boxStore.currentBoxStatus, index);
@@ -120,8 +119,7 @@ class BoxesTab extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         return Observer(
                             builder: (_) => MiniBoxListItem(
-                                  leftButtonText:
-                                      S.of(context).profileChangeVisibilityBtn,
+                                  leftButtonText: S.of(context).profileChangeVisibilityBtn,
                                   onLeftButtonPressed: () => showDialog<void>(
                                     context: context,
                                     barrierDismissible: true,
@@ -132,6 +130,9 @@ class BoxesTab extends StatelessWidget {
                                   ),
                                   box: boxStore.myBoxes[index],
                                   shouldShowLeftButton: profileStore.isMyProfile,
+                                  onDeletePressed: () async => boxStore.deleteBox(index),
+                                  deleting: boxStore.isRemovingBox,
+                                  shouldShowExtraOptions: profileStore.isMyProfile,
                                 ));
                       })
                   : ErrorTextWithIcon(
@@ -145,8 +146,8 @@ class BoxesTab extends StatelessWidget {
         ),
         floatingActionButton: (profileStore.isMyProfile
             ? FloatingActionButton.extended(
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (ctx) => Provider.of<NewBoxScreen>(ctx))),
+                onPressed: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (ctx) => Provider.of<NewBoxScreen>(ctx))),
                 label: Text(
                   S.of(context).profileNewBoxFAB,
                 ),

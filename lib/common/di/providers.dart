@@ -5,6 +5,8 @@ import 'package:bookzbox/features/authentication/errors/auth_error_handling.dart
 import 'package:bookzbox/features/box/box.dart';
 import 'package:bookzbox/features/box/services/box_loader_service.dart';
 import 'package:bookzbox/features/box/services/box_loader_service_impl.dart';
+import 'package:bookzbox/features/box/services/box_removal_service.dart';
+import 'package:bookzbox/features/box/services/box_removal_service_impl.dart';
 import 'package:bookzbox/features/box/services/box_updater_service.dart';
 import 'package:bookzbox/features/box/services/box_updater_service_impl.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
@@ -102,10 +104,15 @@ final bookProviders = [
   Provider<IBoxUpdaterService>(
     create: (_) => BoxUpdaterService(),
   ),
-  ProxyProvider4<IPublishService, IBoxLoaderService, IBoxDetailsService,
-      IBoxUpdaterService, IBoxRepository>(
-    update: (_, publishService, boxLoaderService, detailsService, updaterService, __) =>
-        BoxRepository(publishService, boxLoaderService, detailsService, updaterService),
+  Provider<IBoxRemovalService>(
+    create: (_) => BoxRemovalService(),
+  ),
+  ProxyProvider5<IPublishService, IBoxLoaderService, IBoxDetailsService,
+      IBoxUpdaterService, IBoxRemovalService, IBoxRepository>(
+    update: (_, publishService, boxLoaderService, detailsService, updaterService,
+            boxRemovalService, __) =>
+        BoxRepository(publishService, boxLoaderService, detailsService, updaterService,
+            boxRemovalService),
   ),
   Provider<ILocationService>(
     create: (_) => LocationService(),
@@ -153,14 +160,17 @@ final boxLikeProviders = [
 ];
 
 final feedProviders = [
+  Provider<ILocationService>(
+    create: (_) => LocationService(),
+  ),
   Provider<IFeedService>(
     create: (_) => FirebaseFeedService(),
   ),
   ProxyProvider<IFeedService, IFeedRepository>(
     update: (_, service, __) => FeedRepository(service),
   ),
-  ProxyProvider<IFeedRepository, FeedStore>(
-    update: (_, repo, __) => FeedStore(repo),
+  ProxyProvider2<IFeedRepository, ILocationService, FeedStore>(
+    update: (_, repo, locService, __) => FeedStore(repo, locService),
   ),
   ...boxLikeProviders,
   ProxyProvider<FeedStore, FeedScreen>(

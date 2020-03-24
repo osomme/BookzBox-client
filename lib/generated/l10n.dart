@@ -1897,6 +1897,15 @@ class S {
     );
   }
 
+  String get bookSubjectFiction {
+    return Intl.message(
+      'Fiction',
+      name: 'bookSubjectFiction',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get chatImageLoadFailed {
     return Intl.message(
       'Failed to load image',
@@ -2027,6 +2036,15 @@ class S {
     return Intl.message(
       'Book Title',
       name: 'mapFilterBookTitleLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get myBoxDelete {
+    return Intl.message(
+      'Delete',
+      name: 'myBoxDelete',
       desc: '',
       args: [],
     );
