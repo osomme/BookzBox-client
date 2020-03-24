@@ -51,6 +51,12 @@ mixin _$MatchStore on _MatchStore, Store {
   bool get isPostingOffer =>
       (_$isPostingOfferComputed ??= Computed<bool>(() => super.isPostingOffer))
           .value;
+  Computed<bool> _$isReplyingToOfferComputed;
+
+  @override
+  bool get isReplyingToOffer => (_$isReplyingToOfferComputed ??=
+          Computed<bool>(() => super.isReplyingToOffer))
+      .value;
 
   final _$_offersAtom = Atom(name: '_MatchStore._offers');
 
@@ -103,11 +109,43 @@ mixin _$MatchStore on _MatchStore, Store {
     }, _$_isPostingOfferAtom, name: '${_$_isPostingOfferAtom.name}_set');
   }
 
+  final _$_isReplyingToOfferAtom = Atom(name: '_MatchStore._isReplyingToOffer');
+
+  @override
+  bool get _isReplyingToOffer {
+    _$_isReplyingToOfferAtom.context
+        .enforceReadPolicy(_$_isReplyingToOfferAtom);
+    _$_isReplyingToOfferAtom.reportObserved();
+    return super._isReplyingToOffer;
+  }
+
+  @override
+  set _isReplyingToOffer(bool value) {
+    _$_isReplyingToOfferAtom.context.conditionallyRunInAction(() {
+      super._isReplyingToOffer = value;
+      _$_isReplyingToOfferAtom.reportChanged();
+    }, _$_isReplyingToOfferAtom, name: '${_$_isReplyingToOfferAtom.name}_set');
+  }
+
   final _$postOfferAsyncAction = AsyncAction('postOffer');
 
   @override
   Future<void> postOffer(TradeOffer offer) {
     return _$postOfferAsyncAction.run(() => super.postOffer(offer));
+  }
+
+  final _$acceptOfferAsyncAction = AsyncAction('acceptOffer');
+
+  @override
+  Future<void> acceptOffer(TradeOffer offer) {
+    return _$acceptOfferAsyncAction.run(() => super.acceptOffer(offer));
+  }
+
+  final _$rejectOfferAsyncAction = AsyncAction('rejectOffer');
+
+  @override
+  Future<void> rejectOffer(TradeOffer offer) {
+    return _$rejectOfferAsyncAction.run(() => super.rejectOffer(offer));
   }
 
   final _$_MatchStoreActionController = ActionController(name: '_MatchStore');

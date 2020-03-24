@@ -17,4 +17,12 @@ class MatchRepositoryImpl implements IMatchRepository {
   @override
   Future<Either<String, bool>> postTradeOffer(String matchId, TradeOffer offer) =>
       _service.postTradeOffer(matchId, offer);
+
+  @override
+  Future<Either<String, bool>> acceptTradeOffer(String matchId, TradeOffer offer) =>
+      _service.acceptTradeOffer(matchId, offer);
+
+  @override
+  Future<Either<String, bool>> rejectTradeOffer(String matchId, TradeOffer offer) =>
+      _service.rejectTradeOffer(matchId, offer);
 }

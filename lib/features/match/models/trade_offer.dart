@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class TradeOffer {
+  final String offerId;
   final DateTime timestamp;
   final String boxId;
   final String boxTitle;
@@ -13,6 +14,7 @@ class TradeOffer {
   final TradeOfferStatus status;
 
   TradeOffer({
+    this.offerId,
     @required this.timestamp,
     @required this.boxId,
     @required this.boxTitle,
@@ -35,8 +37,9 @@ class TradeOffer {
     );
   }
 
-  factory TradeOffer.fromFirebase(Map<dynamic, dynamic> data) {
+  factory TradeOffer.fromFirebase(Map<dynamic, dynamic> data, String offerId) {
     return TradeOffer(
+      offerId: offerId,
       timestamp: (data['timestamp'] as Timestamp).toDate(),
       boxId: data['boxId'],
       boxTitle: data['boxTitle'],

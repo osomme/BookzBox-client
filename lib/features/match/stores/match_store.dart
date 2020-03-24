@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bookzbox/features/match/match.dart';
-import 'package:dartz/dartz.dart';
 import 'package:mobx/mobx.dart';
 
 part 'match_store.g.dart';
@@ -27,6 +26,9 @@ abstract class _MatchStore with Store {
 
   @observable
   bool _isPostingOffer = false;
+
+  @observable
+  bool _isReplyingToOffer = false;
 
   _MatchStore(this._repository);
 
@@ -57,6 +59,10 @@ abstract class _MatchStore with Store {
   @computed
   bool get isPostingOffer => _isPostingOffer;
 
+  /// [true] if an offer is currently being replied to, [false] otherwise.
+  @computed
+  bool get isReplyingToOffer => _isReplyingToOffer;
+
   @action
   void init(String matchId, String clientUserId) {
     _matchId = matchId;
@@ -82,10 +88,34 @@ abstract class _MatchStore with Store {
     _isPostingOffer = true;
     final result = await _repository.postTradeOffer(_matchId, offer);
     result.fold(
-      (error) => print('Error while posting trade offer: $error'),
-      (success) => print('Posted trade offer'),
+      (error) => print('[MATCH STORE] Error while posting trade offer: $error'),
+      (success) => print('[MATCH STORE] Posted trade offer'),
     );
     _isPostingOffer = false;
+  }
+
+  @action
+  Future<void> acceptOffer(TradeOffer offer) async {
+    _isReplyingToOffer = true;
+    final result = await _repository.acceptTradeOffer(_matchId, offer);
+    result.fold(
+      (error) =>
+          print('[MATCH STORE] Error while attempting to accept trade offer: $offer'),
+      (success) => print('[MATCH STORE] Successfully accepted trade offer: $offer'),
+    );
+    _isReplyingToOffer = false;
+  }
+
+  @action
+  Future<void> rejectOffer(TradeOffer offer) async {
+    _isReplyingToOffer = true;
+    final result = await _repository.rejectTradeOffer(_matchId, offer);
+    result.fold(
+      (error) =>
+          print('[MATCH STORE] Error while attempting to reject trade offer: $offer'),
+      (success) => print('[MATCH STORE] Successfully rejeced trade offer: $offer'),
+    );
+    _isReplyingToOffer = false;
   }
 
   void dispose() {

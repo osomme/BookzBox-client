@@ -23,8 +23,9 @@ class FirebaseMatchServiceImpl implements IMatchService {
         .collection('trade_offers')
         .orderBy('timestamp', descending: true)
         .snapshots()
-        .map((snap) =>
-            snap.documents.map((doc) => TradeOffer.fromFirebase(doc.data)).toList());
+        .map((snap) => snap.documents
+            .map((doc) => TradeOffer.fromFirebase(doc.data, doc.documentID))
+            .toList());
   }
 
   @override
@@ -47,6 +48,34 @@ class FirebaseMatchServiceImpl implements IMatchService {
     } catch (e) {
       print('Error while attempting to post a trade offer with '
           'match id: $matchId and data: $offer');
+      return left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, bool>> acceptTradeOffer(String matchId, TradeOffer offer) =>
+      _setOfferStatus(matchId, offer.offerId, TradeOfferStatus.Accepted);
+
+  @override
+  Future<Either<String, bool>> rejectTradeOffer(String matchId, TradeOffer offer) =>
+      _setOfferStatus(matchId, offer.offerId, TradeOfferStatus.Rejected);
+
+  Future<Either<String, bool>> _setOfferStatus(
+    String matchId,
+    String offerId,
+    TradeOfferStatus status,
+  ) async {
+    try {
+      await _firestore
+          .collection('matches')
+          .document(matchId)
+          .collection('trade_offers')
+          .document(offerId)
+          .setData({'status': status.index}, merge: true);
+      return right(true);
+    } catch (e) {
+      print('Failed to update offer status with match '
+          'ID: $matchId and offer ID: $offerId with status: $status');
       return left(e.toString());
     }
   }
