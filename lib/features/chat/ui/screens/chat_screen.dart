@@ -88,7 +88,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: Row(
                       children: <Widget>[
                         Text(
-                          'Trade',
+                          S.of(context).chatTradeNavigation,
                           style: Theme.of(context).primaryTextTheme.body2,
                         ),
                         SizedBox(width: 7.5),

@@ -4,6 +4,7 @@ import 'package:bookzbox/common/widgets/error_text_with_icon.dart';
 import 'package:bookzbox/features/box/box.dart';
 import 'package:bookzbox/features/match/match.dart';
 import 'package:bookzbox/common/extensions/extensions.dart';
+import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -36,7 +37,7 @@ class _TradeScreenState extends State<TradeScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        title: Text('Trade Offers'),
+        title: Text(S.of(context).tradeTitle),
       ),
       body: Observer(
         builder: (ctx) => Padding(
@@ -49,6 +50,7 @@ class _TradeScreenState extends State<TradeScreen> {
             onOfferAccepted: _onOfferAccepted,
             onOfferRejected: _onOfferRejected,
             onOfferResponse: _onOfferResponse,
+            otherUserName: widget.otherUserName,
           ),
         ),
       ),
@@ -81,6 +83,7 @@ class _TradeScreenState extends State<TradeScreen> {
 
 class _Content extends StatelessWidget {
   final String clientUserId;
+  final String otherUserName;
   final TradeOffer clientUserOffer;
   final TradeOffer otherUserOffer;
   final Function(MiniBox) onBoxSelected;
@@ -97,12 +100,14 @@ class _Content extends StatelessWidget {
     @required this.onOfferRejected,
     @required this.onOfferAccepted,
     @required this.onOfferResponse,
+    @required this.otherUserName,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return _match(
       ifOnlyClientUser: () => _OnlyClientUserHasOffer(
+        otherUserName: otherUserName,
         offer: clientUserOffer,
         newOfferCallback: () => _openBoxSelectionDialog(context),
       ),
@@ -110,8 +115,10 @@ class _Content extends StatelessWidget {
         offer: otherUserOffer,
         acceptOfferCallback: () => _openBoxSelectionDialog(context, isResponse: true),
         rejectionCallback: onOfferRejected,
+        otherUserName: otherUserName,
       ),
       ifBoth: () => _BothUsersHaveOffers(
+        otherUserName: otherUserName,
         clientUserOffer: clientUserOffer,
         otherUserOffer: otherUserOffer,
         onOfferAccepted: onOfferAccepted,
@@ -190,7 +197,7 @@ class _NoUserHasPostedOffer extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         ErrorTextWithIcon(
-          text: 'No trade offers yet',
+          text: S.of(context).tradeNoOffersYet,
           icon: Icon(
             Entypo.new_message,
             size: 50.0,
@@ -203,7 +210,7 @@ class _NoUserHasPostedOffer extends StatelessWidget {
           color: Theme.of(context).accentColor,
           onPressed: newOfferCallback,
           child: Text(
-            'Make new trade offer',
+            S.of(context).tradeMakeNewOffer,
             style: Theme.of(context).accentTextTheme.button,
           ),
         ),
@@ -213,6 +220,7 @@ class _NoUserHasPostedOffer extends StatelessWidget {
 }
 
 class _BothUsersHaveOffers extends StatelessWidget {
+  final String otherUserName;
   final TradeOffer clientUserOffer;
   final TradeOffer otherUserOffer;
   final Function newOfferCallback;
@@ -226,6 +234,7 @@ class _BothUsersHaveOffers extends StatelessWidget {
     @required this.newOfferCallback,
     @required this.onOfferRejected,
     @required this.onOfferAccepted,
+    @required this.otherUserName,
   }) : super(key: key);
 
   @override
@@ -241,15 +250,15 @@ class _BothUsersHaveOffers extends StatelessWidget {
               children: <Widget>[
                 _OfferColumn(
                   offer: clientUserOffer,
-                  topText: 'You offered:',
-                  bottomText: 'Offer was rejected.',
+                  topText: S.of(context).tradeYouOffered,
+                  bottomText: S.of(context).tradeOfferWasRejected,
                 ),
                 SizedBox(height: 5.0),
                 RaisedButton(
                   onPressed: newOfferCallback,
                   color: Theme.of(context).accentColor,
                   child: Text(
-                    'Make a new offer',
+                    S.of(context).tradeMakeANewOffer,
                     style: Theme.of(context).accentTextTheme.button,
                   ),
                 ),
@@ -257,13 +266,16 @@ class _BothUsersHaveOffers extends StatelessWidget {
             ),
             accepted: () => _OfferColumn(
               offer: clientUserOffer,
-              topText: 'Your offer was accepted',
-              bottomText: '<username> accepted your offer!',
+              topText: S.of(context).tradeYourOfferWasAccepted,
+              bottomText: S.of(context).tradeUsernameAcceptedOffer(otherUserName),
             ),
             waiting: () => _OfferColumn(
               offer: clientUserOffer,
-              topText: 'Your offer:',
-              bottomText: 'Waiting for <username> to respond to your offer',
+              topText: S.of(context).tradeYourOffer,
+              bottomText: S.of(context).tradeWaitingForUsernameResponse(otherUserName),
+            ),
+            unknown: () => Center(
+              child: Text(S.of(context).tradeUnknownOfferStatus),
             ),
           ),
         ),
@@ -273,7 +285,7 @@ class _BothUsersHaveOffers extends StatelessWidget {
             clientUserOffer.status == TradeOfferStatus.Accepted &&
                     otherUserOffer.status == TradeOfferStatus.Accepted
                 ? Text(
-                    'Trade Complete',
+                    S.of(context).tradeTradeComplete,
                     style: Theme.of(context).primaryTextTheme.caption,
                   )
                 : SizedBox.shrink(),
@@ -289,22 +301,21 @@ class _BothUsersHaveOffers extends StatelessWidget {
             otherUserOffer,
             rejected: () => _OfferColumn(
               offer: otherUserOffer,
-              topText: '<username>\'s offer:',
-              bottomText:
-                  'You rejected this offer. Waiting for <username> to make a new offer.',
+              topText: S.of(context).tradeUsernamesOffer(otherUserName),
+              bottomText: S.of(context).tradeYouRejectedWaitinForUsername(otherUserName),
             ),
             accepted: () => _OfferColumn(
               offer: otherUserOffer,
-              topText: '<username> offered:',
-              bottomText: 'You accepted the offer',
+              topText: S.of(context).tradeUsernameOffered(otherUserName),
+              bottomText: S.of(context).tradeYouAcceptedOffer,
             ),
             waiting: () => Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 _OfferColumn(
                   offer: otherUserOffer,
-                  topText: '<username> is offering:',
-                  bottomText: 'Respond to offer:',
+                  topText: S.of(context).tradeUsernameIsOffering(otherUserName),
+                  bottomText: S.of(context).tradeRespondToOffer,
                 ),
                 SizedBox(height: 15.0),
                 Column(
@@ -321,7 +332,7 @@ class _BothUsersHaveOffers extends StatelessWidget {
                           ),
                           SizedBox(width: 5.0),
                           Text(
-                            'Accept',
+                            S.of(context).tradeAcceptButton,
                             style: Theme.of(context).primaryTextTheme.button,
                           ),
                         ],
@@ -338,7 +349,7 @@ class _BothUsersHaveOffers extends StatelessWidget {
                           ),
                           SizedBox(width: 5.0),
                           Text(
-                            'Reject',
+                            S.of(context).tradeRejectButton,
                             style: Theme.of(context).primaryTextTheme.button,
                           ),
                         ],
@@ -347,6 +358,9 @@ class _BothUsersHaveOffers extends StatelessWidget {
                   ],
                 ),
               ],
+            ),
+            unknown: () => Center(
+              child: Text(S.of(context).tradeUnknownOfferStatus),
             ),
           ),
         ),
@@ -359,6 +373,7 @@ class _BothUsersHaveOffers extends StatelessWidget {
     Widget Function() rejected,
     Widget Function() accepted,
     Widget Function() waiting,
+    Widget Function() unknown,
   }) {
     if (offer.status == TradeOfferStatus.Rejected) {
       // The client's offer was rejected
@@ -369,10 +384,9 @@ class _BothUsersHaveOffers extends StatelessWidget {
     } else if (offer.status == TradeOfferStatus.Waiting) {
       // The client's offer has not been responded to yet
       return waiting();
+    } else {
+      return unknown();
     }
-    return Center(
-      child: Text('Unknown trade offer status'),
-    );
   }
 }
 
@@ -429,7 +443,7 @@ class _OnlyOneUserHasOffer extends StatelessWidget {
                         ),
                         SizedBox(height: 10.0),
                         Text(
-                          'Offer was made ' +
+                          S.of(context).tradeOfferWasMade +
                               offer.timestamp.toTimeDifferenceString(context),
                           style: Theme.of(context).primaryTextTheme.caption,
                         ),
@@ -448,6 +462,7 @@ class _OnlyOneUserHasOffer extends StatelessWidget {
 }
 
 class _OnlyClientUserHasOffer extends StatelessWidget {
+  final String otherUserName;
   final TradeOffer offer;
   final Function newOfferCallback;
 
@@ -455,6 +470,7 @@ class _OnlyClientUserHasOffer extends StatelessWidget {
     Key key,
     @required this.offer,
     @required this.newOfferCallback,
+    @required this.otherUserName,
   }) : super(key: key);
 
   @override
@@ -463,7 +479,7 @@ class _OnlyClientUserHasOffer extends StatelessWidget {
     return _OnlyOneUserHasOffer(
       offer: offer,
       topSection: Text(
-        'You made a trade offer:',
+        S.of(context).tradeYouMadeATradeOffer,
         style: Theme.of(context).primaryTextTheme.headline,
       ),
       bottomSection: Expanded(
@@ -480,8 +496,8 @@ class _OnlyClientUserHasOffer extends StatelessWidget {
             ),
             Text(
               offerIsWaiting
-                  ? 'Waiting for response from <username>...'
-                  : '<username> rejected this trade offer',
+                  ? S.of(context).tradeWaitingForResponseFrom(otherUserName)
+                  : S.of(context).tradeUserRejectedThisOffer(otherUserName),
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.white.withAlpha(200),
@@ -494,7 +510,7 @@ class _OnlyClientUserHasOffer extends StatelessWidget {
                     color: Theme.of(context).accentColor,
                     onPressed: newOfferCallback,
                     child: Text(
-                      'Make a new trade offer',
+                      S.of(context).tradeMakeANewTradeOffer,
                       style: Theme.of(context).accentTextTheme.button,
                     ),
                   ),
@@ -507,6 +523,7 @@ class _OnlyClientUserHasOffer extends StatelessWidget {
 
 /// Widget to show when only the other user (not client user) has posted a trade offer.
 class _OnlyOtherUserHasOffer extends StatelessWidget {
+  final String otherUserName;
   final TradeOffer offer;
   final Function acceptOfferCallback;
   final Function(TradeOffer) rejectionCallback;
@@ -516,6 +533,7 @@ class _OnlyOtherUserHasOffer extends StatelessWidget {
     @required this.offer,
     @required this.acceptOfferCallback,
     @required this.rejectionCallback,
+    @required this.otherUserName,
   }) : super(key: key);
 
   @override
@@ -526,8 +544,8 @@ class _OnlyOtherUserHasOffer extends StatelessWidget {
       topSection: Center(
         child: Text(
           offerIsWaiting
-              ? '<username> has sent you a trade offer for:'
-              : 'You rejected <username>\'s trade offer of:',
+              ? S.of(context).tradeUserHasSentOffer(otherUserName)
+              : S.of(context).tradeYouRejectedOffer(otherUserName),
           style: Theme.of(context).primaryTextTheme.body2.copyWith(fontSize: 16.0),
         ),
       ),
@@ -539,7 +557,7 @@ class _OnlyOtherUserHasOffer extends StatelessWidget {
                 ? Padding(
                     padding: const EdgeInsets.all(16),
                     child: Text(
-                      'What would you like to do?',
+                      S.of(context).tradeWhatWouldYouLikeToDo,
                       style: Theme.of(context).primaryTextTheme.subtitle,
                     ),
                   )
@@ -553,7 +571,7 @@ class _OnlyOtherUserHasOffer extends StatelessWidget {
                         color: Colors.green,
                         onPressed: acceptOfferCallback,
                         child: Text(
-                          'Accept',
+                          S.of(context).tradeAcceptButton,
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -562,7 +580,7 @@ class _OnlyOtherUserHasOffer extends StatelessWidget {
                         color: Colors.red,
                         onPressed: () => rejectionCallback(offer),
                         child: Text(
-                          'Reject',
+                          S.of(context).tradeRejectButton,
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -575,7 +593,7 @@ class _OnlyOtherUserHasOffer extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'You have rejected the offer, wait for <username> to make another offer, or make one yourself.',
+                          S.of(context).tradeYouHaveRejected(otherUserName),
                           style: Theme.of(context).primaryTextTheme.body1,
                         ),
                         SizedBox(height: 10.0),
@@ -583,7 +601,7 @@ class _OnlyOtherUserHasOffer extends StatelessWidget {
                           color: Theme.of(context).accentColor,
                           onPressed: acceptOfferCallback,
                           child: Text(
-                            'Make offer',
+                            S.of(context).tradeMakeOffer,
                             style: Theme.of(context).accentTextTheme.button,
                           ),
                         ),

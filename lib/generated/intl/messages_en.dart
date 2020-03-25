@@ -37,6 +37,28 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m8(amount) => "${Intl.plural(amount, one: '1 day ago', other: '${amount} days ago')}";
 
+  static m9(username) => "${username} has sent you a trade offer for:";
+
+  static m10(username) => "${username} rejected this trade offer";
+
+  static m11(username) => "${username} accepted your offer!";
+
+  static m12(username) => "${username} is offering:";
+
+  static m13(username) => "${username} offered:";
+
+  static m14(username) => "${username}\'s offer:";
+
+  static m15(username) => "Waiting for response from ${username}...";
+
+  static m16(username) => "Waiting for ${username} to respond to your offer";
+
+  static m17(username) => "You have rejected the offer, wait for ${username} to make another offer, or make one yourself.";
+
+  static m18(username) => "You rejected ${username}\'s trade offer of:";
+
+  static m19(username) => "You rejected this offer. Waiting for ${username} to make a new offer.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "activityBoxFeedRemoveLike" : MessageLookupByLibrary.simpleMessage("REMOVE LIKE"),
@@ -147,6 +169,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "chatImageLoadFailed" : MessageLookupByLibrary.simpleMessage("Failed to load image"),
     "chatImageUploading" : MessageLookupByLibrary.simpleMessage("Uploading image"),
     "chatInputHint" : MessageLookupByLibrary.simpleMessage("Write a message..."),
+    "chatTradeNavigation" : MessageLookupByLibrary.simpleMessage("Trade"),
     "dateDaysAgo" : m3,
     "dateHoursAgo" : m4,
     "dateMinutesAgo" : m5,
@@ -265,6 +288,36 @@ class MessageLookup extends MessageLookupByLibrary {
     "profilePreferencesTabLabel" : MessageLookupByLibrary.simpleMessage("PREFERENCES"),
     "profileRatingCardSubTitle" : MessageLookupByLibrary.simpleMessage("The rating is based on the feedback left by other users after a trade or interaction."),
     "profileRatingCardTitle" : MessageLookupByLibrary.simpleMessage("Rating"),
-    "profileTradesTitle" : MessageLookupByLibrary.simpleMessage("Trades")
+    "profileTradesTitle" : MessageLookupByLibrary.simpleMessage("Trades"),
+    "tradeAcceptButton" : MessageLookupByLibrary.simpleMessage("Accept"),
+    "tradeMakeANewOffer" : MessageLookupByLibrary.simpleMessage("Make a new offer"),
+    "tradeMakeANewTradeOffer" : MessageLookupByLibrary.simpleMessage("Make a new trade offer"),
+    "tradeMakeNewOffer" : MessageLookupByLibrary.simpleMessage("Make new trade offer"),
+    "tradeMakeOffer" : MessageLookupByLibrary.simpleMessage("Make offer"),
+    "tradeNoOffersYet" : MessageLookupByLibrary.simpleMessage("No trade offers yet"),
+    "tradeOfferWasMade" : MessageLookupByLibrary.simpleMessage("Offer was made "),
+    "tradeOfferWasRejected" : MessageLookupByLibrary.simpleMessage("Offer was rejected."),
+    "tradeRejectButton" : MessageLookupByLibrary.simpleMessage("Reject"),
+    "tradeRespondToOffer" : MessageLookupByLibrary.simpleMessage("Respond to offer:"),
+    "tradeTitle" : MessageLookupByLibrary.simpleMessage("Trade Offers"),
+    "tradeTradeComplete" : MessageLookupByLibrary.simpleMessage("Trade Complete"),
+    "tradeUnknownOfferStatus" : MessageLookupByLibrary.simpleMessage("Unknown trade offer status"),
+    "tradeUserHasSentOffer" : m9,
+    "tradeUserRejectedThisOffer" : m10,
+    "tradeUsernameAcceptedOffer" : m11,
+    "tradeUsernameIsOffering" : m12,
+    "tradeUsernameOffered" : m13,
+    "tradeUsernamesOffer" : m14,
+    "tradeWaitingForResponseFrom" : m15,
+    "tradeWaitingForUsernameResponse" : m16,
+    "tradeWhatWouldYouLikeToDo" : MessageLookupByLibrary.simpleMessage("What would you like to do?"),
+    "tradeYouAcceptedOffer" : MessageLookupByLibrary.simpleMessage("You accepted the offer"),
+    "tradeYouHaveRejected" : m17,
+    "tradeYouMadeATradeOffer" : MessageLookupByLibrary.simpleMessage("You made a trade offer:"),
+    "tradeYouOffered" : MessageLookupByLibrary.simpleMessage("You offered:"),
+    "tradeYouRejectedOffer" : m18,
+    "tradeYouRejectedWaitinForUsername" : m19,
+    "tradeYourOffer" : MessageLookupByLibrary.simpleMessage("Your offer:"),
+    "tradeYourOfferWasAccepted" : MessageLookupByLibrary.simpleMessage("Your offer was accepted")
   };
 }

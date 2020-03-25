@@ -2085,6 +2085,285 @@ class S {
       args: [],
     );
   }
+
+  String get chatTradeNavigation {
+    return Intl.message(
+      'Trade',
+      name: 'chatTradeNavigation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeTitle {
+    return Intl.message(
+      'Trade Offers',
+      name: 'tradeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeNoOffersYet {
+    return Intl.message(
+      'No trade offers yet',
+      name: 'tradeNoOffersYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeMakeNewOffer {
+    return Intl.message(
+      'Make new trade offer',
+      name: 'tradeMakeNewOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeYouOffered {
+    return Intl.message(
+      'You offered:',
+      name: 'tradeYouOffered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeOfferWasRejected {
+    return Intl.message(
+      'Offer was rejected.',
+      name: 'tradeOfferWasRejected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeMakeANewOffer {
+    return Intl.message(
+      'Make a new offer',
+      name: 'tradeMakeANewOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeYourOfferWasAccepted {
+    return Intl.message(
+      'Your offer was accepted',
+      name: 'tradeYourOfferWasAccepted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeYourOffer {
+    return Intl.message(
+      'Your offer:',
+      name: 'tradeYourOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeTradeComplete {
+    return Intl.message(
+      'Trade Complete',
+      name: 'tradeTradeComplete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeYouAcceptedOffer {
+    return Intl.message(
+      'You accepted the offer',
+      name: 'tradeYouAcceptedOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeRespondToOffer {
+    return Intl.message(
+      'Respond to offer:',
+      name: 'tradeRespondToOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeAcceptButton {
+    return Intl.message(
+      'Accept',
+      name: 'tradeAcceptButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeRejectButton {
+    return Intl.message(
+      'Reject',
+      name: 'tradeRejectButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeUnknownOfferStatus {
+    return Intl.message(
+      'Unknown trade offer status',
+      name: 'tradeUnknownOfferStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeOfferWasMade {
+    return Intl.message(
+      'Offer was made ',
+      name: 'tradeOfferWasMade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeYouMadeATradeOffer {
+    return Intl.message(
+      'You made a trade offer:',
+      name: 'tradeYouMadeATradeOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeMakeANewTradeOffer {
+    return Intl.message(
+      'Make a new trade offer',
+      name: 'tradeMakeANewTradeOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeWhatWouldYouLikeToDo {
+    return Intl.message(
+      'What would you like to do?',
+      name: 'tradeWhatWouldYouLikeToDo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeMakeOffer {
+    return Intl.message(
+      'Make offer',
+      name: 'tradeMakeOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String tradeYouHaveRejected(dynamic username) {
+    return Intl.message(
+      'You have rejected the offer, wait for $username to make another offer, or make one yourself.',
+      name: 'tradeYouHaveRejected',
+      desc: '',
+      args: [username],
+    );
+  }
+
+  String tradeUserHasSentOffer(dynamic username) {
+    return Intl.message(
+      '$username has sent you a trade offer for:',
+      name: 'tradeUserHasSentOffer',
+      desc: '',
+      args: [username],
+    );
+  }
+
+  String tradeYouRejectedOffer(dynamic username) {
+    return Intl.message(
+      'You rejected $username\'s trade offer of:',
+      name: 'tradeYouRejectedOffer',
+      desc: '',
+      args: [username],
+    );
+  }
+
+  String tradeWaitingForResponseFrom(dynamic username) {
+    return Intl.message(
+      'Waiting for response from $username...',
+      name: 'tradeWaitingForResponseFrom',
+      desc: '',
+      args: [username],
+    );
+  }
+
+  String tradeUserRejectedThisOffer(dynamic username) {
+    return Intl.message(
+      '$username rejected this trade offer',
+      name: 'tradeUserRejectedThisOffer',
+      desc: '',
+      args: [username],
+    );
+  }
+
+  String tradeUsernameIsOffering(dynamic username) {
+    return Intl.message(
+      '$username is offering:',
+      name: 'tradeUsernameIsOffering',
+      desc: '',
+      args: [username],
+    );
+  }
+
+  String tradeUsernameOffered(dynamic username) {
+    return Intl.message(
+      '$username offered:',
+      name: 'tradeUsernameOffered',
+      desc: '',
+      args: [username],
+    );
+  }
+
+  String tradeYouRejectedWaitinForUsername(dynamic username) {
+    return Intl.message(
+      'You rejected this offer. Waiting for $username to make a new offer.',
+      name: 'tradeYouRejectedWaitinForUsername',
+      desc: '',
+      args: [username],
+    );
+  }
+
+  String tradeUsernamesOffer(dynamic username) {
+    return Intl.message(
+      '$username\'s offer:',
+      name: 'tradeUsernamesOffer',
+      desc: '',
+      args: [username],
+    );
+  }
+
+  String tradeWaitingForUsernameResponse(dynamic username) {
+    return Intl.message(
+      'Waiting for $username to respond to your offer',
+      name: 'tradeWaitingForUsernameResponse',
+      desc: '',
+      args: [username],
+    );
+  }
+
+  String tradeUsernameAcceptedOffer(dynamic username) {
+    return Intl.message(
+      '$username accepted your offer!',
+      name: 'tradeUsernameAcceptedOffer',
+      desc: '',
+      args: [username],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
