@@ -37,27 +37,29 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m8(amount) => "${Intl.plural(amount, one: '1 day ago', other: '${amount} days ago')}";
 
-  static m9(username) => "${username} has sent you a trade offer for:";
+  static m9(username) => "You have both agreed to a trade. Start messaging ${username} to exchange addresses or arrange an in-person meetup to trade your boxes.";
 
-  static m10(username) => "${username} rejected this trade offer";
+  static m10(username) => "${username} has sent you a trade offer for:";
 
-  static m11(username) => "${username} accepted your offer!";
+  static m11(username) => "${username} rejected this trade offer";
 
-  static m12(username) => "${username} is offering:";
+  static m12(username) => "${username} has accepted your offer";
 
-  static m13(username) => "${username} offered:";
+  static m13(username) => "${username} is offering:";
 
-  static m14(username) => "${username}\'s offer:";
+  static m14(username) => "${username} offered:";
 
-  static m15(username) => "Waiting for response from ${username}...";
+  static m15(username) => "${username}\'s offer:";
 
-  static m16(username) => "Waiting for ${username} to respond to your offer";
+  static m16(username) => "Waiting for response from ${username}...";
 
-  static m17(username) => "You have rejected the offer, wait for ${username} to make another offer, or make one yourself.";
+  static m17(username) => "Waiting for ${username} to respond to your offer";
 
-  static m18(username) => "You rejected ${username}\'s trade offer of:";
+  static m18(username) => "You have rejected the offer, wait for ${username} to make another offer, or make one yourself.";
 
-  static m19(username) => "You rejected this offer. Waiting for ${username} to make a new offer.";
+  static m19(username) => "You rejected ${username}\'s trade offer of:";
+
+  static m20(username) => "You rejected this offer. Waiting for ${username} to make a new offer.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -290,34 +292,37 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileRatingCardTitle" : MessageLookupByLibrary.simpleMessage("Rating"),
     "profileTradesTitle" : MessageLookupByLibrary.simpleMessage("Trades"),
     "tradeAcceptButton" : MessageLookupByLibrary.simpleMessage("Accept"),
+    "tradeAddressLabelLink" : MessageLookupByLibrary.simpleMessage("Get an address label from Posten.no"),
     "tradeMakeANewOffer" : MessageLookupByLibrary.simpleMessage("Make a new offer"),
     "tradeMakeANewTradeOffer" : MessageLookupByLibrary.simpleMessage("Make a new trade offer"),
     "tradeMakeNewOffer" : MessageLookupByLibrary.simpleMessage("Make new trade offer"),
     "tradeMakeOffer" : MessageLookupByLibrary.simpleMessage("Make offer"),
     "tradeNoOffersYet" : MessageLookupByLibrary.simpleMessage("No trade offers yet"),
+    "tradeOfferMade" : MessageLookupByLibrary.simpleMessage("Offer made "),
     "tradeOfferWasMade" : MessageLookupByLibrary.simpleMessage("Offer was made "),
     "tradeOfferWasRejected" : MessageLookupByLibrary.simpleMessage("Offer was rejected."),
     "tradeRejectButton" : MessageLookupByLibrary.simpleMessage("Reject"),
     "tradeRespondToOffer" : MessageLookupByLibrary.simpleMessage("Respond to offer:"),
     "tradeTitle" : MessageLookupByLibrary.simpleMessage("Trade Offers"),
     "tradeTradeComplete" : MessageLookupByLibrary.simpleMessage("Trade Complete"),
+    "tradeTradeCompletePrompt" : m9,
     "tradeUnknownOfferStatus" : MessageLookupByLibrary.simpleMessage("Unknown trade offer status"),
-    "tradeUserHasSentOffer" : m9,
-    "tradeUserRejectedThisOffer" : m10,
-    "tradeUsernameAcceptedOffer" : m11,
-    "tradeUsernameIsOffering" : m12,
-    "tradeUsernameOffered" : m13,
-    "tradeUsernamesOffer" : m14,
-    "tradeWaitingForResponseFrom" : m15,
-    "tradeWaitingForUsernameResponse" : m16,
+    "tradeUserHasSentOffer" : m10,
+    "tradeUserRejectedThisOffer" : m11,
+    "tradeUsernameAcceptedOffer" : m12,
+    "tradeUsernameIsOffering" : m13,
+    "tradeUsernameOffered" : m14,
+    "tradeUsernamesOffer" : m15,
+    "tradeWaitingForResponseFrom" : m16,
+    "tradeWaitingForUsernameResponse" : m17,
+    "tradeWebBrowserFailed" : MessageLookupByLibrary.simpleMessage("Failed to launch web browser"),
     "tradeWhatWouldYouLikeToDo" : MessageLookupByLibrary.simpleMessage("What would you like to do?"),
     "tradeYouAcceptedOffer" : MessageLookupByLibrary.simpleMessage("You accepted the offer"),
-    "tradeYouHaveRejected" : m17,
+    "tradeYouHaveRejected" : m18,
     "tradeYouMadeATradeOffer" : MessageLookupByLibrary.simpleMessage("You made a trade offer:"),
     "tradeYouOffered" : MessageLookupByLibrary.simpleMessage("You offered:"),
-    "tradeYouRejectedOffer" : m18,
-    "tradeYouRejectedWaitinForUsername" : m19,
-    "tradeYourOffer" : MessageLookupByLibrary.simpleMessage("Your offer:"),
-    "tradeYourOfferWasAccepted" : MessageLookupByLibrary.simpleMessage("Your offer was accepted")
+    "tradeYouRejectedOffer" : m19,
+    "tradeYouRejectedWaitinForUsername" : m20,
+    "tradeYourOffer" : MessageLookupByLibrary.simpleMessage("Your offer:")
   };
 }

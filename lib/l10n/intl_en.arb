@@ -233,7 +233,6 @@
     "tradeYouOffered": "You offered:",
     "tradeOfferWasRejected": "Offer was rejected.",
     "tradeMakeANewOffer": "Make a new offer",
-    "tradeYourOfferWasAccepted": "Your offer was accepted",
     "tradeYourOffer": "Your offer:",
     "tradeTradeComplete": "Trade Complete",
     "tradeYouAcceptedOffer": "You accepted the offer",
@@ -256,5 +255,9 @@
     "tradeYouRejectedWaitinForUsername": "You rejected this offer. Waiting for {username} to make a new offer.",
     "tradeUsernamesOffer": "{username}'s offer:",
     "tradeWaitingForUsernameResponse": "Waiting for {username} to respond to your offer",
-    "tradeUsernameAcceptedOffer": "{username} accepted your offer!"
+    "tradeUsernameAcceptedOffer": "{username} has accepted your offer",
+    "tradeOfferMade": "Offer made ",
+    "tradeTradeCompletePrompt": "You have both agreed to a trade. Start messaging {username} to exchange addresses or arrange an in-person meetup to trade your boxes.",
+    "tradeAddressLabelLink": "Get an address label from Posten.no",
+    "tradeWebBrowserFailed": "Failed to launch web browser"
 }

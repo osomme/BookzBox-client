@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TradeScreen extends StatefulWidget {
   final MatchStore store;
@@ -239,132 +240,187 @@ class _BothUsersHaveOffers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Expanded(
-          child: _matchOffer(
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          clientUserOffer.status == TradeOfferStatus.Accepted &&
+                  otherUserOffer.status == TradeOfferStatus.Accepted
+              ? Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                      child: Text(
+                        S.of(context).tradeTradeCompletePrompt(otherUserName),
+                        style: Theme.of(context).primaryTextTheme.body1,
+                      ),
+                    ),
+                    SizedBox(height: 2.5),
+                    FlatButton(
+                      onPressed: () async {
+                        const url = 'https://sending.posten.no/sende/dims';
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        } else {
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(S.of(context).tradeWebBrowserFailed),
+                            ),
+                          );
+                        }
+                      },
+                      child: Text(
+                        S.of(context).tradeAddressLabelLink,
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .button
+                            .copyWith(fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                    SizedBox(height: 5.0),
+                    Divider(
+                      color: Theme.of(context).accentColor,
+                      height: 0.0,
+                      thickness: 1.0,
+                    ),
+                    SizedBox(height: 5.0),
+                  ],
+                )
+              : SizedBox.shrink(),
+          _matchOffer(
             clientUserOffer,
-            rejected: () => Column(
+            rejected: () => _OfferRow(
+              offer: clientUserOffer,
+              titleText: S.of(context).tradeYouOffered,
+              mainContent: Column(
+                children: <Widget>[
+                  Text(
+                    S.of(context).tradeOfferWasRejected,
+                    style: Theme.of(context).primaryTextTheme.body2,
+                  ),
+                  RaisedButton(
+                    onPressed: newOfferCallback,
+                    color: Theme.of(context).accentColor,
+                    child: Text(
+                      S.of(context).tradeMakeANewOffer,
+                      style: Theme.of(context).accentTextTheme.button,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            accepted: () => _OfferRow(
+              titleText: S.of(context).tradeYouOffered,
+              offer: clientUserOffer,
+              mainContent: Text(
+                S.of(context).tradeUsernameAcceptedOffer(otherUserName),
+                style: Theme.of(context).primaryTextTheme.body2,
+              ),
+            ),
+            waiting: () => _OfferRow(
+              titleText: S.of(context).tradeYourOffer,
+              offer: clientUserOffer,
+              mainContent: Text(
+                S.of(context).tradeWaitingForUsernameResponse(otherUserName),
+                style: Theme.of(context).primaryTextTheme.body2,
+              ),
+            ),
+            unknown: () => Center(
+              child: Text(S.of(context).tradeUnknownOfferStatus),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                _OfferColumn(
-                  offer: clientUserOffer,
-                  topText: S.of(context).tradeYouOffered,
-                  bottomText: S.of(context).tradeOfferWasRejected,
-                ),
-                SizedBox(height: 5.0),
-                RaisedButton(
-                  onPressed: newOfferCallback,
-                  color: Theme.of(context).accentColor,
-                  child: Text(
-                    S.of(context).tradeMakeANewOffer,
-                    style: Theme.of(context).accentTextTheme.button,
+                Transform.rotate(
+                  angle: 1.5707964, // 90 degrees in radians
+                  child: Icon(
+                    Icons.compare_arrows,
+                    color: Theme.of(context).accentColor,
+                    size: 45.0,
                   ),
                 ),
+                SizedBox(width: 7.5),
+                clientUserOffer.status == TradeOfferStatus.Accepted &&
+                        otherUserOffer.status == TradeOfferStatus.Accepted
+                    ? Text(
+                        S.of(context).tradeTradeComplete,
+                        style: Theme.of(context).primaryTextTheme.caption,
+                      )
+                    : SizedBox.shrink(),
               ],
             ),
-            accepted: () => _OfferColumn(
-              offer: clientUserOffer,
-              topText: S.of(context).tradeYourOfferWasAccepted,
-              bottomText: S.of(context).tradeUsernameAcceptedOffer(otherUserName),
-            ),
-            waiting: () => _OfferColumn(
-              offer: clientUserOffer,
-              topText: S.of(context).tradeYourOffer,
-              bottomText: S.of(context).tradeWaitingForUsernameResponse(otherUserName),
-            ),
-            unknown: () => Center(
-              child: Text(S.of(context).tradeUnknownOfferStatus),
-            ),
           ),
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            clientUserOffer.status == TradeOfferStatus.Accepted &&
-                    otherUserOffer.status == TradeOfferStatus.Accepted
-                ? Text(
-                    S.of(context).tradeTradeComplete,
-                    style: Theme.of(context).primaryTextTheme.caption,
-                  )
-                : SizedBox.shrink(),
-            Icon(
-              Icons.compare_arrows,
-              color: Theme.of(context).accentColor,
-              size: 45.0,
-            ),
-          ],
-        ),
-        Expanded(
-          child: _matchOffer(
+          _matchOffer(
             otherUserOffer,
-            rejected: () => _OfferColumn(
+            rejected: () => _OfferRow(
+              titleText: S.of(context).tradeUsernamesOffer(otherUserName),
               offer: otherUserOffer,
-              topText: S.of(context).tradeUsernamesOffer(otherUserName),
-              bottomText: S.of(context).tradeYouRejectedWaitinForUsername(otherUserName),
+              mainContent: Text(
+                S.of(context).tradeYouRejectedWaitinForUsername(otherUserName),
+                style: Theme.of(context).primaryTextTheme.body2,
+              ),
             ),
-            accepted: () => _OfferColumn(
+            accepted: () => _OfferRow(
+              titleText: S.of(context).tradeUsernameOffered(otherUserName),
               offer: otherUserOffer,
-              topText: S.of(context).tradeUsernameOffered(otherUserName),
-              bottomText: S.of(context).tradeYouAcceptedOffer,
+              mainContent: Text(
+                S.of(context).tradeYouAcceptedOffer,
+                style: Theme.of(context).primaryTextTheme.body2,
+              ),
             ),
-            waiting: () => Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _OfferColumn(
-                  offer: otherUserOffer,
-                  topText: S.of(context).tradeUsernameIsOffering(otherUserName),
-                  bottomText: S.of(context).tradeRespondToOffer,
-                ),
-                SizedBox(height: 15.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    FlatButton(
-                      onPressed: () => onOfferAccepted(otherUserOffer),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.check,
-                            color: Theme.of(context).accentColor,
-                          ),
-                          SizedBox(width: 5.0),
-                          Text(
-                            S.of(context).tradeAcceptButton,
-                            style: Theme.of(context).primaryTextTheme.button,
-                          ),
-                        ],
-                      ),
+            waiting: () => _OfferRow(
+              titleText: S.of(context).tradeUsernameIsOffering(otherUserName),
+              offer: otherUserOffer,
+              mainContent: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: () => onOfferAccepted(otherUserOffer),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.check,
+                          color: Theme.of(context).accentColor,
+                        ),
+                        SizedBox(width: 5.0),
+                        Text(
+                          S.of(context).tradeAcceptButton,
+                          style: Theme.of(context).primaryTextTheme.button,
+                        ),
+                      ],
                     ),
-                    FlatButton(
-                      onPressed: () => onOfferRejected(otherUserOffer),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.clear,
-                            color: Theme.of(context).accentColor,
-                          ),
-                          SizedBox(width: 5.0),
-                          Text(
-                            S.of(context).tradeRejectButton,
-                            style: Theme.of(context).primaryTextTheme.button,
-                          ),
-                        ],
-                      ),
+                  ),
+                  FlatButton(
+                    onPressed: () => onOfferRejected(otherUserOffer),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.clear,
+                          color: Theme.of(context).accentColor,
+                        ),
+                        SizedBox(width: 5.0),
+                        Text(
+                          S.of(context).tradeRejectButton,
+                          style: Theme.of(context).primaryTextTheme.button,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
             unknown: () => Center(
               child: Text(S.of(context).tradeUnknownOfferStatus),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -615,59 +671,66 @@ class _OnlyOtherUserHasOffer extends StatelessWidget {
   }
 }
 
-class _OfferColumn extends StatelessWidget {
-  final String topText;
-  final String bottomText;
+class _OfferRow extends StatelessWidget {
+  final String titleText;
   final TradeOffer offer;
+  final Widget mainContent;
 
-  const _OfferColumn({
+  const _OfferRow({
     Key key,
+    @required this.titleText,
     @required this.offer,
-    @required this.topText,
-    this.bottomText,
+    @required this.mainContent,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            topText,
-            style: Theme.of(context).primaryTextTheme.body2.copyWith(fontSize: 12.0),
+            titleText,
+            style: Theme.of(context).primaryTextTheme.title.copyWith(fontSize: 14.0),
           ),
-          SizedBox(height: 20.0),
-          Text(
-            offer.boxTitle,
-            style: Theme.of(context)
-                .primaryTextTheme
-                .body2
-                .copyWith(fontSize: 12.0, fontWeight: FontWeight.w700),
+          SizedBox(height: 5.0),
+          Row(
+            children: <Widget>[
+              GestureDetector(
+                onTap: () => Navigator.pushNamed(context, Screens.boxDetails,
+                    arguments: offer.boxId),
+                child: Container(
+                  height: 180.0,
+                  child: Image.network(offer.boxThumbnailUrl, fit: BoxFit.contain),
+                ),
+              ),
+              SizedBox(width: 15.0),
+              Flexible(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      offer.boxTitle,
+                      style: Theme.of(context).primaryTextTheme.subhead,
+                    ),
+                    SizedBox(height: 5.0),
+                    Text(
+                      S.of(context).tradeOfferMade +
+                          offer.timestamp.toTimeDifferenceString(context),
+                      style: Theme.of(context).primaryTextTheme.caption,
+                    ),
+                    SizedBox(height: 7.5),
+                    Flexible(
+                      child: mainContent,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 4.0),
-          Text(
-            offer.timestamp.toTimeDifferenceString(context),
-            style: Theme.of(context).primaryTextTheme.caption,
-          ),
-          SizedBox(height: 20.0),
-          GestureDetector(
-            onTap: () =>
-                Navigator.pushNamed(context, Screens.boxDetails, arguments: offer.boxId),
-            child: Container(
-              height: 180.0,
-              child: Image.network(offer.boxThumbnailUrl, fit: BoxFit.contain),
-            ),
-          ),
-          SizedBox(height: 20.0),
-          bottomText != null
-              ? Text(
-                  bottomText,
-                  style:
-                      Theme.of(context).primaryTextTheme.body1.copyWith(fontSize: 13.0),
-                )
-              : SizedBox.shrink(),
         ],
       ),
     );

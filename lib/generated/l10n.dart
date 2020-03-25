@@ -2149,15 +2149,6 @@ class S {
     );
   }
 
-  String get tradeYourOfferWasAccepted {
-    return Intl.message(
-      'Your offer was accepted',
-      name: 'tradeYourOfferWasAccepted',
-      desc: '',
-      args: [],
-    );
-  }
-
   String get tradeYourOffer {
     return Intl.message(
       'Your offer:',
@@ -2358,10 +2349,46 @@ class S {
 
   String tradeUsernameAcceptedOffer(dynamic username) {
     return Intl.message(
-      '$username accepted your offer!',
+      '$username has accepted your offer',
       name: 'tradeUsernameAcceptedOffer',
       desc: '',
       args: [username],
+    );
+  }
+
+  String get tradeOfferMade {
+    return Intl.message(
+      'Offer made ',
+      name: 'tradeOfferMade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String tradeTradeCompletePrompt(dynamic username) {
+    return Intl.message(
+      'You have both agreed to a trade. Start messaging $username to exchange addresses or arrange an in-person meetup to trade your boxes.',
+      name: 'tradeTradeCompletePrompt',
+      desc: '',
+      args: [username],
+    );
+  }
+
+  String get tradeAddressLabelLink {
+    return Intl.message(
+      'Get an address label from Posten.no',
+      name: 'tradeAddressLabelLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get tradeWebBrowserFailed {
+    return Intl.message(
+      'Failed to launch web browser',
+      name: 'tradeWebBrowserFailed',
+      desc: '',
+      args: [],
     );
   }
 }
