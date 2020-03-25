@@ -31,12 +31,12 @@ class MatchActivity extends ActivityType {
 }
 
 /// Class which represents an event related to a box trade within a match.
-class TradeActivtiy extends ActivityType {
+class TradeActivity extends ActivityType {
   final String username;
   final TradeEvent event;
   final String matchId;
 
-  TradeActivtiy({
+  TradeActivity({
     @required this.username,
     @required this.event,
     @required this.matchId,

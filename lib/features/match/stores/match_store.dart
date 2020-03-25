@@ -17,6 +17,9 @@ abstract class _MatchStore with Store {
 
   StreamSubscription<List<TradeOffer>> _tradeSubscription;
 
+  ReactionDisposer _unreadNotificationsDisposer;
+
+  @observable
   String _matchId;
 
   String _clientUserId;
@@ -33,6 +36,9 @@ abstract class _MatchStore with Store {
   @observable
   bool _isReplyingToOffer = false;
 
+  @observable
+  int _numUnreadTradeRequests = 0;
+
   _MatchStore(this._repository, this._feedStore);
 
   @computed
@@ -41,11 +47,11 @@ abstract class _MatchStore with Store {
 
   @computed
   TradeOffer get otherUserOffer =>
-      _offers.lastWhere((o) => o.offerByUserId != _clientUserId, orElse: () => null);
+      _offers.firstWhere((o) => o.offerByUserId != _clientUserId, orElse: () => null);
 
   @computed
   TradeOffer get clientUserOffer =>
-      _offers.lastWhere((o) => o.offerByUserId == _clientUserId, orElse: () => null);
+      _offers.firstWhere((o) => o.offerByUserId == _clientUserId, orElse: () => null);
 
   @computed
   List<TradeOffer> get offers => _offers;
@@ -67,18 +73,18 @@ abstract class _MatchStore with Store {
   bool get isReplyingToOffer => _isReplyingToOffer;
 
   @computed
-  int get numUnreadTradeRequests => _feedStore.activityNotifications
-      .where((a) =>
-          a is TradeActivtiy && !a.read && (a.type as TradeActivtiy).matchId == _matchId)
-      .length;
+  int get numUnreadTradeRequests => _numUnreadTradeRequests;
 
   @computed
-  bool get hasUnreadTradeRequests => numUnreadTradeRequests != 0;
+  bool get hasUnreadTradeRequests => _numUnreadTradeRequests != 0;
 
   @action
   void init(String matchId, String clientUserId) {
     _matchId = matchId;
     _clientUserId = clientUserId;
+
+    _setUnreadNotificationsListener(matchId);
+
     // Match stream
     _repository
         .getMatchStream(matchId)
@@ -130,8 +136,29 @@ abstract class _MatchStore with Store {
     _isReplyingToOffer = false;
   }
 
+  void markTradeNotificationsAsRead(String matchId) {
+    _feedStore.activityNotifications
+        .where((a) =>
+            a.type is TradeActivity &&
+            !a.read &&
+            (a.type as TradeActivity).matchId == _matchId)
+        .forEach((a) => _feedStore.markAsRead(_clientUserId, a.id));
+  }
+
   void dispose() {
+    _unreadNotificationsDisposer?.call();
     _matchSubscription?.cancel();
     _tradeSubscription?.cancel();
+  }
+
+  void _setUnreadNotificationsListener(String matchId) {
+    _unreadNotificationsDisposer = autorun((_) {
+      _numUnreadTradeRequests = _feedStore.activityNotifications
+          .where((a) =>
+              a.type is TradeActivity &&
+              !a.read &&
+              (a.type as TradeActivity).matchId == _matchId)
+          .length;
+    });
   }
 }

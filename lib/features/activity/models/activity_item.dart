@@ -81,7 +81,7 @@ ActivityItem _mapToTradeItem(Map<dynamic, dynamic> data, String id) {
   final tradeData = data['data'];
   return ActivityItem(
     id: id,
-    type: TradeActivtiy(
+    type: TradeActivity(
       username: tradeData['username'],
       event: (tradeData['event'] as String).toTradeEvent(),
       matchId: tradeData['matchId'],

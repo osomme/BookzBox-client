@@ -16,11 +16,14 @@ class TradeScreen extends StatefulWidget {
 
   final String recipientId;
 
+  final String otherUserName;
+
   const TradeScreen({
     Key key,
     @required this.store,
     @required this.userId,
     @required this.recipientId,
+    @required this.otherUserName,
   }) : super(key: key);
 
   @override

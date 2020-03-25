@@ -71,28 +71,44 @@ class _ChatScreenState extends State<ChatScreen> {
           Observer(
             builder: (_) => widget.matchStore.otherUserId != null
                 ? FlatButton(
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (ctx) => TradeScreen(
-                          store: widget.matchStore,
-                          userId: widget.clientUserId,
-                          recipientId: widget.matchStore.otherUserId,
+                    onPressed: () {
+                      widget.matchStore.markTradeNotificationsAsRead(widget.matchId);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (ctx) => TradeScreen(
+                            store: widget.matchStore,
+                            userId: widget.clientUserId,
+                            otherUserName: widget.otherUsername,
+                            recipientId: widget.matchStore.otherUserId,
+                          ),
                         ),
-                      ),
-                    ),
-                    child: Badge(
-                      showBadge: widget.matchStore.hasUnreadTradeRequests,
-                      badgeColor: Theme.of(context).accentColor,
-                      badgeContent: Text(
-                        '${widget.matchStore.numUnreadTradeRequests}',
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .body1
-                            .copyWith(fontSize: 11.0),
-                      ),
-                      padding: EdgeInsets.all(6.0),
-                      child: Text('Trade'),
+                      );
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          'Trade',
+                          style: Theme.of(context).primaryTextTheme.body2,
+                        ),
+                        SizedBox(width: 7.5),
+                        Badge(
+                          showBadge: widget.matchStore.hasUnreadTradeRequests,
+                          badgeColor: Theme.of(context).accentColor,
+                          badgeContent: Text(
+                            '${widget.matchStore.numUnreadTradeRequests}',
+                            style: Theme.of(context)
+                                .accentTextTheme
+                                .body1
+                                .copyWith(fontSize: 11.0),
+                          ),
+                          padding: const EdgeInsets.all(6.0),
+                          child: Icon(
+                            Icons.compare_arrows,
+                            color: Theme.of(context).primaryIconTheme.color,
+                          ),
+                        ),
+                      ],
                     ),
                   )
                 : Text(''),

@@ -56,33 +56,14 @@ class ActivityFeedTab extends StatelessWidget {
 
   /// Maps a ActivityItem to a ActivityListItem to be displayed in a list view.
   ActivityListItem _toListItem(BuildContext context, ActivityItem item) {
-    if (item.type is MessageActivity) {
-      return _messageToListItem(item.type as MessageActivity, item, context);
-    } else if (item.type is LikeActivity) {
+    if (item.type is LikeActivity) {
       return _likeToListItem(item.type as LikeActivity, item, context);
     } else if (item.type is MatchActivity) {
       return _matchToListItem(item.type as MatchActivity, item, context);
-    } else if (item.type is TradeActivtiy) {
-      return _tradeToListItem(item.type as TradeActivtiy, item, context);
+    } else if (item.type is TradeActivity) {
+      return _tradeToListItem(item.type as TradeActivity, item, context);
     }
     return _unknownActivityItem(context);
-  }
-
-  ActivityListItem _messageToListItem(
-      MessageActivity activity, ActivityItem activityItem, BuildContext ctx) {
-    return ActivityListItem(
-      leading: Icon(Icons.chat),
-      subtitleTexts: [
-        ActivityItemTextParam(content: activity.otherUserName, bold: true),
-        ActivityItemTextParam(
-            content: S.of(ctx).activityItemMessagePost + activity.lastMessage == null
-                ? 'No messages yet'
-                : activity.lastMessage),
-      ],
-      date: activityItem.timestamp,
-      onClick: () => print('Clicked on message activity'),
-      read: activityItem.read,
-    );
   }
 
   ActivityListItem _likeToListItem(
@@ -129,7 +110,7 @@ class ActivityFeedTab extends StatelessWidget {
   }
 
   ActivityListItem _tradeToListItem(
-      TradeActivtiy activity, ActivityItem activityItem, BuildContext ctx) {
+      TradeActivity activity, ActivityItem activityItem, BuildContext ctx) {
     return ActivityListItem(
       leading: Icon(Icons.compare_arrows),
       subtitleTexts: activity.event != TradeEvent.Unknown

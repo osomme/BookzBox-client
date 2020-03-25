@@ -70,6 +70,23 @@ mixin _$MatchStore on _MatchStore, Store {
           Computed<bool>(() => super.hasUnreadTradeRequests))
       .value;
 
+  final _$_matchIdAtom = Atom(name: '_MatchStore._matchId');
+
+  @override
+  String get _matchId {
+    _$_matchIdAtom.context.enforceReadPolicy(_$_matchIdAtom);
+    _$_matchIdAtom.reportObserved();
+    return super._matchId;
+  }
+
+  @override
+  set _matchId(String value) {
+    _$_matchIdAtom.context.conditionallyRunInAction(() {
+      super._matchId = value;
+      _$_matchIdAtom.reportChanged();
+    }, _$_matchIdAtom, name: '${_$_matchIdAtom.name}_set');
+  }
+
   final _$_offersAtom = Atom(name: '_MatchStore._offers');
 
   @override
@@ -137,6 +154,26 @@ mixin _$MatchStore on _MatchStore, Store {
       super._isReplyingToOffer = value;
       _$_isReplyingToOfferAtom.reportChanged();
     }, _$_isReplyingToOfferAtom, name: '${_$_isReplyingToOfferAtom.name}_set');
+  }
+
+  final _$_numUnreadTradeRequestsAtom =
+      Atom(name: '_MatchStore._numUnreadTradeRequests');
+
+  @override
+  int get _numUnreadTradeRequests {
+    _$_numUnreadTradeRequestsAtom.context
+        .enforceReadPolicy(_$_numUnreadTradeRequestsAtom);
+    _$_numUnreadTradeRequestsAtom.reportObserved();
+    return super._numUnreadTradeRequests;
+  }
+
+  @override
+  set _numUnreadTradeRequests(int value) {
+    _$_numUnreadTradeRequestsAtom.context.conditionallyRunInAction(() {
+      super._numUnreadTradeRequests = value;
+      _$_numUnreadTradeRequestsAtom.reportChanged();
+    }, _$_numUnreadTradeRequestsAtom,
+        name: '${_$_numUnreadTradeRequestsAtom.name}_set');
   }
 
   final _$postOfferAsyncAction = AsyncAction('postOffer');
