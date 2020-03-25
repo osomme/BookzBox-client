@@ -45,6 +45,7 @@ class _TradeScreenState extends State<TradeScreen> {
             onBoxSelected: _onBoxSelected,
             onOfferAccepted: _onOfferAccepted,
             onOfferRejected: _onOfferRejected,
+            onOfferResponse: _onOfferResponse,
           ),
         ),
       ),
@@ -64,6 +65,15 @@ class _TradeScreenState extends State<TradeScreen> {
   void _onOfferRejected(TradeOffer offer) => widget.store.rejectOffer(offer);
 
   void _onOfferAccepted(TradeOffer offer) => widget.store.acceptOffer(offer);
+
+  Future<void> _onOfferResponse(TradeOffer offer, MiniBox responseBox) async {
+    await widget.store.acceptOffer(offer);
+    await widget.store.postOffer(TradeOffer.fromMiniBox(
+      responseBox,
+      widget.userId,
+      widget.recipientId,
+    ));
+  }
 }
 
 class _Content extends StatelessWidget {
@@ -73,6 +83,7 @@ class _Content extends StatelessWidget {
   final Function(MiniBox) onBoxSelected;
   final Function(TradeOffer) onOfferRejected;
   final Function(TradeOffer) onOfferAccepted;
+  final Function(TradeOffer, MiniBox) onOfferResponse;
 
   const _Content({
     Key key,
@@ -82,6 +93,7 @@ class _Content extends StatelessWidget {
     @required this.onBoxSelected,
     @required this.onOfferRejected,
     @required this.onOfferAccepted,
+    @required this.onOfferResponse,
   }) : super(key: key);
 
   @override
@@ -93,7 +105,7 @@ class _Content extends StatelessWidget {
       ),
       ifOnlyOtherUser: () => _OnlyOtherUserHasOffer(
         offer: otherUserOffer,
-        acceptOfferCallback: () => _openBoxSelectionDialog(context),
+        acceptOfferCallback: () => _openBoxSelectionDialog(context, isResponse: true),
         rejectionCallback: onOfferRejected,
       ),
       ifBoth: () => _BothUsersHaveOffers(
@@ -130,7 +142,7 @@ class _Content extends StatelessWidget {
     }
   }
 
-  void _openBoxSelectionDialog(BuildContext context) async {
+  void _openBoxSelectionDialog(BuildContext context, {bool isResponse = false}) async {
     final selectedBox = await showDialog<MiniBox>(
       context: context,
       builder: (ctx) => Dialog(
@@ -152,7 +164,11 @@ class _Content extends StatelessWidget {
     );
     if (selectedBox != null) {
       print('[TRADE SCREEN] Selected ${selectedBox.title}');
-      onBoxSelected(selectedBox);
+      if (isResponse) {
+        onOfferResponse(otherUserOffer, selectedBox);
+      } else {
+        onBoxSelected(selectedBox);
+      }
     }
   }
 }
