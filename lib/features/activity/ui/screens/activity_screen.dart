@@ -46,10 +46,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 text: S.of(context).activityTabLabelActivity,
                 icon: Observer(
                   builder: (_) => Badge(
-                    showBadge: widget.activityFeedStore.hasUnreadMatchAndLikes,
+                    showBadge: widget.activityFeedStore.hasUnreadActivityNotifications,
                     badgeColor: Theme.of(context).accentColor,
                     badgeContent: Text(
-                      '${widget.activityFeedStore.numUnreadMatchAndLikes}',
+                      '${widget.activityFeedStore.numUnreadActivityNotifications}',
                       style: Theme.of(context)
                           .accentTextTheme
                           .body1

@@ -174,34 +174,34 @@ mixin _$ChatStore on _ChatStore, Store {
   final _$loadChatStreamAsyncAction = AsyncAction('loadChatStream');
 
   @override
-  Future<void> loadChatStream(String chatId, String clientUserId) {
+  Future<void> loadChatStream(String matchId, String clientUserId) {
     return _$loadChatStreamAsyncAction
-        .run(() => super.loadChatStream(chatId, clientUserId));
+        .run(() => super.loadChatStream(matchId, clientUserId));
   }
 
   final _$uploadImageAsyncAction = AsyncAction('uploadImage');
 
   @override
-  Future<void> uploadImage(File image, String userId, String chatId) {
+  Future<void> uploadImage(File image, String userId, String matchId) {
     return _$uploadImageAsyncAction
-        .run(() => super.uploadImage(image, userId, chatId));
+        .run(() => super.uploadImage(image, userId, matchId));
   }
 
   final _$postTextMessageAsyncAction = AsyncAction('postTextMessage');
 
   @override
-  Future<void> postTextMessage(String postedByUserId, String chatId) {
+  Future<void> postTextMessage(String postedByUserId, String matchId) {
     return _$postTextMessageAsyncAction
-        .run(() => super.postTextMessage(postedByUserId, chatId));
+        .run(() => super.postTextMessage(postedByUserId, matchId));
   }
 
   final _$_postImageMessageAsyncAction = AsyncAction('_postImageMessage');
 
   @override
   Future<void> _postImageMessage(
-      String postedByUserId, String imageUrl, String chatId) {
+      String postedByUserId, String imageUrl, String matchId) {
     return _$_postImageMessageAsyncAction
-        .run(() => super._postImageMessage(postedByUserId, imageUrl, chatId));
+        .run(() => super._postImageMessage(postedByUserId, imageUrl, matchId));
   }
 
   final _$_ChatStoreActionController = ActionController(name: '_ChatStore');

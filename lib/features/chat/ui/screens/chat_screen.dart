@@ -1,5 +1,8 @@
+import 'package:badges/badges.dart';
 import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/chat/chat.dart';
+import 'package:bookzbox/features/match/match.dart';
+import 'package:bookzbox/features/match/stores/match_store.dart';
 import 'package:bookzbox/features/profile/ui/widgets/profile_avatar.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +20,7 @@ class ChatScreenArgs {
 
 class ChatScreen extends StatefulWidget {
   /// The ID of the chat that is being displayed.
-  final String chatId;
+  final String matchId;
 
   /// The ID of the local client user that is logged in to the app.
   final String clientUserId;
@@ -27,17 +30,21 @@ class ChatScreen extends StatefulWidget {
 
   final ChatStore chatStore;
 
+  final MatchStore matchStore;
+
   final String otherUserThumbnail;
 
   ChatScreen({
     Key key,
-    @required this.chatId,
+    @required this.matchId,
     @required this.clientUserId,
     @required this.otherUsername,
     @required this.chatStore,
+    @required this.matchStore,
     this.otherUserThumbnail,
   }) : super(key: key) {
-    chatStore.loadChatStream(chatId, clientUserId);
+    chatStore.loadChatStream(matchId, clientUserId);
+    matchStore.init(matchId, clientUserId);
   }
 
   @override
@@ -51,6 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void dispose() {
     controller.dispose();
     widget.chatStore.dispose();
+    widget.matchStore.dispose();
     super.dispose();
   }
 
@@ -59,6 +67,53 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
+        actions: <Widget>[
+          Observer(
+            builder: (_) => widget.matchStore.otherUserId != null
+                ? FlatButton(
+                    onPressed: () {
+                      widget.matchStore.markTradeNotificationsAsRead(widget.matchId);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (ctx) => TradeScreen(
+                            store: widget.matchStore,
+                            userId: widget.clientUserId,
+                            otherUserName: widget.otherUsername,
+                            recipientId: widget.matchStore.otherUserId,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          S.of(context).chatTradeNavigation,
+                          style: Theme.of(context).primaryTextTheme.body2,
+                        ),
+                        SizedBox(width: 7.5),
+                        Badge(
+                          showBadge: widget.matchStore.hasUnreadTradeRequests,
+                          badgeColor: Theme.of(context).accentColor,
+                          badgeContent: Text(
+                            '${widget.matchStore.numUnreadTradeRequests}',
+                            style: Theme.of(context)
+                                .accentTextTheme
+                                .body1
+                                .copyWith(fontSize: 11.0),
+                          ),
+                          padding: const EdgeInsets.all(6.0),
+                          child: Icon(
+                            Icons.compare_arrows,
+                            color: Theme.of(context).primaryIconTheme.color,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Text(''),
+          ),
+        ],
         title: Observer(
           builder: (ctx) => GestureDetector(
             onTap: () => widget.chatStore.otherUserId
@@ -68,10 +123,10 @@ class _ChatScreenState extends State<ChatScreen> {
               children: <Widget>[
                 ProfileAvatar(
                   profileImgUrl: widget.otherUserThumbnail,
-                  displayName: widget.otherUsername,
+                  displayName: widget.otherUsername ?? 'U',
                 ),
                 SizedBox(width: 10.0),
-                Text(widget.otherUsername),
+                Text(widget.otherUsername ?? ''),
               ],
             ),
           ),
@@ -198,13 +253,13 @@ class _ChatScreenState extends State<ChatScreen> {
     final image = await ImagePicker.pickImage(source: source, imageQuality: 50);
     if (image != null) {
       print('Image retrieved with path ${image.path}');
-      widget.chatStore.uploadImage(image, widget.clientUserId, widget.chatId);
+      widget.chatStore.uploadImage(image, widget.clientUserId, widget.matchId);
     }
   }
 
   void submitMessage() {
     controller.clear();
-    widget.chatStore.postTextMessage(widget.clientUserId, widget.chatId);
+    widget.chatStore.postTextMessage(widget.clientUserId, widget.matchId);
     FocusScope.of(context).unfocus();
   }
 }

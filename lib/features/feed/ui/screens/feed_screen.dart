@@ -32,7 +32,7 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
 
   @override
   void didChangeDependencies() {
-    widget.feedStore.init(Provider.of<AuthStore>(context).user.uid);
+    widget.feedStore.init(Provider.of<AuthStore>(context)?.user?.uid ?? '');
     super.didChangeDependencies();
   }
 

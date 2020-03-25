@@ -37,16 +37,43 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m8(amount) => "${Intl.plural(amount, one: '1 day ago', other: '${amount} days ago')}";
 
+  static m9(username) => "You have both agreed to a trade. Start messaging ${username} to exchange addresses or arrange an in-person meetup to trade your boxes.";
+
+  static m10(username) => "${username} has sent you a trade offer for:";
+
+  static m11(username) => "${username} rejected this trade offer";
+
+  static m12(username) => "${username} has accepted your offer";
+
+  static m13(username) => "${username} is offering:";
+
+  static m14(username) => "${username} offered:";
+
+  static m15(username) => "${username}\'s offer:";
+
+  static m16(username) => "Waiting for response from ${username}...";
+
+  static m17(username) => "Waiting for ${username} to respond to your offer";
+
+  static m18(username) => "You have rejected the offer, wait for ${username} to make another offer, or make one yourself.";
+
+  static m19(username) => "You rejected ${username}\'s trade offer of:";
+
+  static m20(username) => "You rejected this offer. Waiting for ${username} to make a new offer.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "activityBoxFeedRemoveLike" : MessageLookupByLibrary.simpleMessage("REMOVE LIKE"),
     "activityChatMedia" : MessageLookupByLibrary.simpleMessage("[Media]"),
     "activityFailedBoxLoad" : MessageLookupByLibrary.simpleMessage("Failed to load liked boxes"),
     "activityFeedErrorMessage" : MessageLookupByLibrary.simpleMessage("Failed to load notifications"),
+    "activityItemAcceptedTrade" : MessageLookupByLibrary.simpleMessage("accepted your trade offer"),
     "activityItemLikeMiddle" : MessageLookupByLibrary.simpleMessage(" liked your box: "),
     "activityItemMatchPost" : MessageLookupByLibrary.simpleMessage(" has matched with you"),
     "activityItemMessagePost" : MessageLookupByLibrary.simpleMessage(" wrote: "),
+    "activityItemRejectedTrade" : MessageLookupByLibrary.simpleMessage("rejected your trade offer"),
     "activityItemUnknown" : MessageLookupByLibrary.simpleMessage("Unknown activity"),
+    "activityItemUnknownTradeType" : MessageLookupByLibrary.simpleMessage("Unknown trade offer data"),
     "activityNewItem" : MessageLookupByLibrary.simpleMessage("Unread"),
     "activityNoChatItems" : MessageLookupByLibrary.simpleMessage("You have no active conversations"),
     "activityNoFeedItems" : MessageLookupByLibrary.simpleMessage("Your activity feed is empty"),
@@ -56,6 +83,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "activityTabLabelActivity" : MessageLookupByLibrary.simpleMessage("Activity"),
     "activityTabLabelLikes" : MessageLookupByLibrary.simpleMessage("Likes"),
     "activityTabLabelMessages" : MessageLookupByLibrary.simpleMessage("Messages"),
+    "activityitemNewTradeOffer" : MessageLookupByLibrary.simpleMessage("has sent you a new trade offer"),
     "appName" : MessageLookupByLibrary.simpleMessage("BookzBox"),
     "authEmail" : MessageLookupByLibrary.simpleMessage("E-mail"),
     "authErrorCredsAlreadyExists" : MessageLookupByLibrary.simpleMessage("There already exists a user with that email address"),
@@ -143,6 +171,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "chatImageLoadFailed" : MessageLookupByLibrary.simpleMessage("Failed to load image"),
     "chatImageUploading" : MessageLookupByLibrary.simpleMessage("Uploading image"),
     "chatInputHint" : MessageLookupByLibrary.simpleMessage("Write a message..."),
+    "chatTradeNavigation" : MessageLookupByLibrary.simpleMessage("Trade"),
     "dateDaysAgo" : m3,
     "dateHoursAgo" : m4,
     "dateMinutesAgo" : m5,
@@ -261,6 +290,39 @@ class MessageLookup extends MessageLookupByLibrary {
     "profilePreferencesTabLabel" : MessageLookupByLibrary.simpleMessage("PREFERENCES"),
     "profileRatingCardSubTitle" : MessageLookupByLibrary.simpleMessage("The rating is based on the feedback left by other users after a trade or interaction."),
     "profileRatingCardTitle" : MessageLookupByLibrary.simpleMessage("Rating"),
-    "profileTradesTitle" : MessageLookupByLibrary.simpleMessage("Trades")
+    "profileTradesTitle" : MessageLookupByLibrary.simpleMessage("Trades"),
+    "tradeAcceptButton" : MessageLookupByLibrary.simpleMessage("Accept"),
+    "tradeAddressLabelLink" : MessageLookupByLibrary.simpleMessage("Get an address label from Posten.no"),
+    "tradeMakeANewOffer" : MessageLookupByLibrary.simpleMessage("Make a new offer"),
+    "tradeMakeANewTradeOffer" : MessageLookupByLibrary.simpleMessage("Make a new trade offer"),
+    "tradeMakeNewOffer" : MessageLookupByLibrary.simpleMessage("Make new trade offer"),
+    "tradeMakeOffer" : MessageLookupByLibrary.simpleMessage("Make offer"),
+    "tradeNoOffersYet" : MessageLookupByLibrary.simpleMessage("No trade offers yet"),
+    "tradeOfferMade" : MessageLookupByLibrary.simpleMessage("Offer made "),
+    "tradeOfferWasMade" : MessageLookupByLibrary.simpleMessage("Offer was made "),
+    "tradeOfferWasRejected" : MessageLookupByLibrary.simpleMessage("Offer was rejected."),
+    "tradeRejectButton" : MessageLookupByLibrary.simpleMessage("Reject"),
+    "tradeRespondToOffer" : MessageLookupByLibrary.simpleMessage("Respond to offer:"),
+    "tradeTitle" : MessageLookupByLibrary.simpleMessage("Trade Offers"),
+    "tradeTradeComplete" : MessageLookupByLibrary.simpleMessage("Trade Complete"),
+    "tradeTradeCompletePrompt" : m9,
+    "tradeUnknownOfferStatus" : MessageLookupByLibrary.simpleMessage("Unknown trade offer status"),
+    "tradeUserHasSentOffer" : m10,
+    "tradeUserRejectedThisOffer" : m11,
+    "tradeUsernameAcceptedOffer" : m12,
+    "tradeUsernameIsOffering" : m13,
+    "tradeUsernameOffered" : m14,
+    "tradeUsernamesOffer" : m15,
+    "tradeWaitingForResponseFrom" : m16,
+    "tradeWaitingForUsernameResponse" : m17,
+    "tradeWebBrowserFailed" : MessageLookupByLibrary.simpleMessage("Failed to launch web browser"),
+    "tradeWhatWouldYouLikeToDo" : MessageLookupByLibrary.simpleMessage("What would you like to do?"),
+    "tradeYouAcceptedOffer" : MessageLookupByLibrary.simpleMessage("You accepted the offer"),
+    "tradeYouHaveRejected" : m18,
+    "tradeYouMadeATradeOffer" : MessageLookupByLibrary.simpleMessage("You made a trade offer:"),
+    "tradeYouOffered" : MessageLookupByLibrary.simpleMessage("You offered:"),
+    "tradeYouRejectedOffer" : m19,
+    "tradeYouRejectedWaitinForUsername" : m20,
+    "tradeYourOffer" : MessageLookupByLibrary.simpleMessage("Your offer:")
   };
 }

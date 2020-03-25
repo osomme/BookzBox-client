@@ -1,5 +1,6 @@
 import 'package:bookzbox/features/activity/models/models.dart';
 import 'package:bookzbox/features/likes/likes.dart';
+import 'package:bookzbox/features/activity/activity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,8 @@ class ActivityItem {
       return _mapToMatchItem(data, id);
     } else if (data['typename'] == 'chat') {
       return _mapToChatItem(data, id);
+    } else if (data['typename'] == 'trade') {
+      return _mapToTradeItem(data, id);
     } else {
       throw 'Unknown activity type';
     }
@@ -68,6 +71,20 @@ ActivityItem _mapToChatItem(Map<dynamic, dynamic> data, String id) {
       otherUserThumbnail: chatData['otherUserThumbnail'],
       lastMessage: chatData['lastMessage'],
       chatId: id,
+    ),
+    timestamp: (data['timestamp'] as Timestamp).toDate(),
+    read: data['read'],
+  );
+}
+
+ActivityItem _mapToTradeItem(Map<dynamic, dynamic> data, String id) {
+  final tradeData = data['data'];
+  return ActivityItem(
+    id: id,
+    type: TradeActivity(
+      username: tradeData['username'],
+      event: (tradeData['event'] as String).toTradeEvent(),
+      matchId: tradeData['matchId'],
     ),
     timestamp: (data['timestamp'] as Timestamp).toDate(),
     read: data['read'],

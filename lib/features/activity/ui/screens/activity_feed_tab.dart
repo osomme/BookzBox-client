@@ -56,31 +56,14 @@ class ActivityFeedTab extends StatelessWidget {
 
   /// Maps a ActivityItem to a ActivityListItem to be displayed in a list view.
   ActivityListItem _toListItem(BuildContext context, ActivityItem item) {
-    if (item.type is MessageActivity) {
-      return _messageToListItem(item.type as MessageActivity, item, context);
-    } else if (item.type is LikeActivity) {
+    if (item.type is LikeActivity) {
       return _likeToListItem(item.type as LikeActivity, item, context);
     } else if (item.type is MatchActivity) {
       return _matchToListItem(item.type as MatchActivity, item, context);
+    } else if (item.type is TradeActivity) {
+      return _tradeToListItem(item.type as TradeActivity, item, context);
     }
     return _unknownActivityItem(context);
-  }
-
-  ActivityListItem _messageToListItem(
-      MessageActivity activity, ActivityItem activityItem, BuildContext ctx) {
-    return ActivityListItem(
-      leading: Icon(Icons.chat),
-      subtitleTexts: [
-        ActivityItemTextParam(content: activity.otherUserName, bold: true),
-        ActivityItemTextParam(
-            content: S.of(ctx).activityItemMessagePost + activity.lastMessage == null
-                ? 'No messages yet'
-                : activity.lastMessage),
-      ],
-      date: activityItem.timestamp,
-      onClick: () => print('Clicked on message activity'),
-      read: activityItem.read,
-    );
   }
 
   ActivityListItem _likeToListItem(
@@ -98,7 +81,6 @@ class ActivityFeedTab extends StatelessWidget {
         Navigator.pushNamed(ctx, Screens.profile, arguments: activity.likedByUserId);
       },
       read: activityItem.read,
-      //trailing: IconButton(icon: Icon(Icons.person), onPressed: () => print('')),
     );
   }
 
@@ -119,6 +101,36 @@ class ActivityFeedTab extends StatelessWidget {
           arguments: ChatScreenArgs(
             matchActivity.chatId,
             matchActivity.matchUsername,
+            null,
+          ),
+        );
+      },
+      read: activityItem.read,
+    );
+  }
+
+  ActivityListItem _tradeToListItem(
+      TradeActivity activity, ActivityItem activityItem, BuildContext ctx) {
+    return ActivityListItem(
+      leading: Icon(Icons.compare_arrows),
+      subtitleTexts: activity.event != TradeEvent.Unknown
+          ? [
+              ActivityItemTextParam(content: activity.username + ' ', bold: true),
+              ActivityItemTextParam(
+                  content: activity.event.toLocalizedActivityString(ctx)),
+            ]
+          : [
+              ActivityItemTextParam(
+                  content: activity.event.toLocalizedActivityString(ctx))
+            ],
+      date: activityItem.timestamp,
+      onClick: () {
+        Navigator.pushNamed(
+          ctx,
+          Screens.chat,
+          arguments: ChatScreenArgs(
+            activity.matchId,
+            activity.username,
             null,
           ),
         );

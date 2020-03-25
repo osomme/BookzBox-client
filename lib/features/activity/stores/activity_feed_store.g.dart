@@ -15,18 +15,20 @@ mixin _$ActivityFeedStore on _ActivityFeedStore, Store {
   List<ActivityItem> get feedItems => (_$feedItemsComputed ??=
           Computed<List<ActivityItem>>(() => super.feedItems))
       .value;
-  Computed<int> _$numUnreadMatchAndLikesComputed;
+  Computed<int> _$numUnreadActivityNotificationsComputed;
 
   @override
-  int get numUnreadMatchAndLikes => (_$numUnreadMatchAndLikesComputed ??=
-          Computed<int>(() => super.numUnreadMatchAndLikes))
-      .value;
-  Computed<bool> _$hasUnreadMatchAndLikesComputed;
+  int get numUnreadActivityNotifications =>
+      (_$numUnreadActivityNotificationsComputed ??=
+              Computed<int>(() => super.numUnreadActivityNotifications))
+          .value;
+  Computed<bool> _$hasUnreadActivityNotificationsComputed;
 
   @override
-  bool get hasUnreadMatchAndLikes => (_$hasUnreadMatchAndLikesComputed ??=
-          Computed<bool>(() => super.hasUnreadMatchAndLikes))
-      .value;
+  bool get hasUnreadActivityNotifications =>
+      (_$hasUnreadActivityNotificationsComputed ??=
+              Computed<bool>(() => super.hasUnreadActivityNotifications))
+          .value;
   Computed<List<ActivityItem>> _$activityNotificationsComputed;
 
   @override

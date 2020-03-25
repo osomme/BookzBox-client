@@ -7,6 +7,7 @@ import 'package:bookzbox/features/chat/chat.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/location/location.dart';
+import 'package:bookzbox/features/match/match.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository.dart';
 import 'package:bookzbox/features/profile/stores/preferences_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
@@ -115,14 +116,17 @@ class MyApp extends StatelessWidget {
             final ChatScreenArgs args = settings.arguments;
             return MaterialPageRoute(builder: (ctx) {
               return MultiProvider(
-                providers: chatProviders,
+                providers: [...chatProviders, ...matchProviders],
                 child: Consumer<ChatStore>(
-                  builder: (ctx, store, _) => ChatScreen(
-                    chatId: args.chatId,
-                    clientUserId: Provider.of<AuthStore>(ctx).user?.uid ?? '',
-                    otherUsername: args.otherUserName,
-                    chatStore: store,
-                    otherUserThumbnail: args.otherUserThumbnail,
+                  builder: (ctx, chatStore, _) => Consumer<MatchStore>(
+                    builder: (ctx, matchStore, _) => ChatScreen(
+                      matchId: args.chatId,
+                      clientUserId: Provider.of<AuthStore>(ctx).user?.uid ?? '',
+                      otherUsername: args.otherUserName,
+                      chatStore: chatStore,
+                      matchStore: matchStore,
+                      otherUserThumbnail: args.otherUserThumbnail,
+                    ),
                   ),
                 ),
               );
