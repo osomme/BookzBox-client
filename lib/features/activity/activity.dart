@@ -4,3 +4,4 @@ export './ui/widgets/widgets.dart';
 export './services/services.dart';
 export './repositories/repositories.dart';
 export './stores/stores.dart';
+export './helpers/trade_event_extensions.dart';

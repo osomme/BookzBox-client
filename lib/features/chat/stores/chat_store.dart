@@ -72,10 +72,10 @@ abstract class _ChatStore with Store {
   void setChatInput(String input) => _messageInput = input.trim();
 
   @action
-  Future<void> loadChatStream(String chatId, String clientUserId) async {
+  Future<void> loadChatStream(String matchId, String clientUserId) async {
     _isLoadingMessages = true;
     _hasError = false;
-    final stream = await _chatRepository.getMessageStream(chatId);
+    final stream = await _chatRepository.getMessageStream(matchId);
     _streamSubscription = stream.listen(
       (data) {
         if (hasError) {
@@ -84,7 +84,7 @@ abstract class _ChatStore with Store {
         _messages = data.toList();
         if (_messages.isNotEmpty && _reactionDisposer == null) {
           // Mark the most recently received message as read.
-          _setNewestMessageReadListener(clientUserId, chatId);
+          _setNewestMessageReadListener(clientUserId, matchId);
         }
         if (_otherUserId.isNone()) {
           _retrieveOtherUserId(data, clientUserId);
@@ -98,22 +98,22 @@ abstract class _ChatStore with Store {
     _isLoadingMessages = false;
   }
 
-  void _setNewestMessageReadListener(String clientUserId, String chatId) {
+  void _setNewestMessageReadListener(String clientUserId, String matchId) {
     _reactionDisposer = autorun((reaction) {
       if (_feedStore.chatNotifications.isNotEmpty) {
-        _setNewestMessageAsRead(chatId, clientUserId);
+        _setNewestMessageAsRead(matchId, clientUserId);
       }
       _reactionDisposalCheck(reaction);
     }, delay: 5000);
   }
 
-  void _setNewestMessageAsRead(String chatId, String clientUserId) {
+  void _setNewestMessageAsRead(String matchId, String clientUserId) {
     // Get the first unread message activity item belonging to the current chat.
     try {
       final chatActivityItem = _feedStore.chatNotifications.firstWhere((activity) {
         if (!activity.read && activity.type is MessageActivity) {
           final messageActivtiy = activity.type as MessageActivity;
-          return messageActivtiy.chatId == chatId;
+          return messageActivtiy.chatId == matchId;
         }
         return false;
       });
@@ -122,7 +122,7 @@ abstract class _ChatStore with Store {
       _feedStore.markAsRead(clientUserId, chatActivityItem.id);
     } on StateError {
       print('[CHAT STORE] Error while attempting to retrieve the first unread message'
-          'activity item belonging to current chat with chat id: $chatId');
+          'activity item belonging to current chat with chat id: $matchId');
     }
   }
 
@@ -133,28 +133,28 @@ abstract class _ChatStore with Store {
   }
 
   @action
-  Future<void> uploadImage(File image, String userId, String chatId) async {
+  Future<void> uploadImage(File image, String userId, String matchId) async {
     _isUploadingImage = true;
     final results = await _storageService.uploadFile(image, userId);
     results.fold(
       (error) => print('[CHAT STORE] Image upload failed with: $error'),
       (url) {
         print('[CHAT STORE Uploaded image to: $url');
-        _postImageMessage(userId, url, chatId);
+        _postImageMessage(userId, url, matchId);
       },
     );
     _isUploadingImage = false;
   }
 
   @action
-  Future<void> postTextMessage(String postedByUserId, String chatId) async {
+  Future<void> postTextMessage(String postedByUserId, String matchId) async {
     if (!isInputValid) {
       return;
     }
     final msg = _createMessage(postedByUserId, _messageInput);
     _messageInput = '';
     _isPostingMessage = true;
-    final result = await _chatRepository.postMessage(chatId, msg);
+    final result = await _chatRepository.postMessage(matchId, msg);
     result.fold(
       (error) => _hasError = true,
       (success) => print('[CHAT STORE] Posted message: $_messageInput'),
@@ -164,10 +164,10 @@ abstract class _ChatStore with Store {
 
   @action
   Future<void> _postImageMessage(
-      String postedByUserId, String imageUrl, String chatId) async {
+      String postedByUserId, String imageUrl, String matchId) async {
     final msg = _createImageMessage(postedByUserId, imageUrl);
     _isPostingMessage = true;
-    final result = await _chatRepository.postMessage(chatId, msg);
+    final result = await _chatRepository.postMessage(matchId, msg);
     result.fold(
       (error) => _hasError = true,
       (success) => print('[CHAT STORE] Posted image message: ${msg.content}'),

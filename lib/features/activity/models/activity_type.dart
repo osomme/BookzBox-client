@@ -29,3 +29,19 @@ class MatchActivity extends ActivityType {
     @required this.chatId,
   });
 }
+
+/// Class which represents an event related to a box trade within a match.
+class TradeActivtiy extends ActivityType {
+  final String username;
+  final TradeEvent event;
+  final String matchId;
+
+  TradeActivtiy({
+    @required this.username,
+    @required this.event,
+    @required this.matchId,
+  });
+}
+
+/// Represents an event type for a trade activity item.
+enum TradeEvent { Accepted, Rejected, New, Unknown }

@@ -62,6 +62,8 @@ class ActivityFeedTab extends StatelessWidget {
       return _likeToListItem(item.type as LikeActivity, item, context);
     } else if (item.type is MatchActivity) {
       return _matchToListItem(item.type as MatchActivity, item, context);
+    } else if (item.type is TradeActivtiy) {
+      return _tradeToListItem(item.type as TradeActivtiy, item, context);
     }
     return _unknownActivityItem(context);
   }
@@ -98,7 +100,6 @@ class ActivityFeedTab extends StatelessWidget {
         Navigator.pushNamed(ctx, Screens.profile, arguments: activity.likedByUserId);
       },
       read: activityItem.read,
-      //trailing: IconButton(icon: Icon(Icons.person), onPressed: () => print('')),
     );
   }
 
@@ -119,6 +120,36 @@ class ActivityFeedTab extends StatelessWidget {
           arguments: ChatScreenArgs(
             matchActivity.chatId,
             matchActivity.matchUsername,
+            null,
+          ),
+        );
+      },
+      read: activityItem.read,
+    );
+  }
+
+  ActivityListItem _tradeToListItem(
+      TradeActivtiy activity, ActivityItem activityItem, BuildContext ctx) {
+    return ActivityListItem(
+      leading: Icon(Icons.compare_arrows),
+      subtitleTexts: activity.event != TradeEvent.Unknown
+          ? [
+              ActivityItemTextParam(content: activity.username + ' ', bold: true),
+              ActivityItemTextParam(
+                  content: activity.event.toLocalizedActivityString(ctx)),
+            ]
+          : [
+              ActivityItemTextParam(
+                  content: activity.event.toLocalizedActivityString(ctx))
+            ],
+      date: activityItem.timestamp,
+      onClick: () {
+        Navigator.pushNamed(
+          ctx,
+          Screens.chat,
+          arguments: ChatScreenArgs(
+            activity.matchId,
+            activity.username,
             null,
           ),
         );

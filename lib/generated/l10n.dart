@@ -2049,6 +2049,42 @@ class S {
       args: [],
     );
   }
+
+  String get activityItemRejectedTrade {
+    return Intl.message(
+      'rejected your trade offer',
+      name: 'activityItemRejectedTrade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityItemAcceptedTrade {
+    return Intl.message(
+      'accepted your trade offer',
+      name: 'activityItemAcceptedTrade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityitemNewTradeOffer {
+    return Intl.message(
+      'has sent you a new trade offer',
+      name: 'activityitemNewTradeOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get activityItemUnknownTradeType {
+    return Intl.message(
+      'Unknown trade offer data',
+      name: 'activityItemUnknownTradeType',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

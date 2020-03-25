@@ -275,8 +275,8 @@ final matchProviders = [
   ProxyProvider<IMatchService, IMatchRepository>(
     update: (_, service, __) => MatchRepositoryImpl(service),
   ),
-  ProxyProvider<IMatchRepository, MatchStore>(
-    update: (_, repo, __) => MatchStore(repo),
+  ProxyProvider2<IMatchRepository, ActivityFeedStore, MatchStore>(
+    update: (_, repo, feedStore, __) => MatchStore(repo, feedStore),
   ),
   ProxyProvider<IBoxRepository, BoxSelectionStore>(
     update: (_, repo, __) => BoxSelectionStore(repo),

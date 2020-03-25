@@ -57,6 +57,18 @@ mixin _$MatchStore on _MatchStore, Store {
   bool get isReplyingToOffer => (_$isReplyingToOfferComputed ??=
           Computed<bool>(() => super.isReplyingToOffer))
       .value;
+  Computed<int> _$numUnreadTradeRequestsComputed;
+
+  @override
+  int get numUnreadTradeRequests => (_$numUnreadTradeRequestsComputed ??=
+          Computed<int>(() => super.numUnreadTradeRequests))
+      .value;
+  Computed<bool> _$hasUnreadTradeRequestsComputed;
+
+  @override
+  bool get hasUnreadTradeRequests => (_$hasUnreadTradeRequestsComputed ??=
+          Computed<bool>(() => super.hasUnreadTradeRequests))
+      .value;
 
   final _$_offersAtom = Atom(name: '_MatchStore._offers');
 

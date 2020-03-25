@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/chat/chat.dart';
 import 'package:bookzbox/features/match/match.dart';
@@ -80,19 +81,19 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                       ),
                     ),
-                    child: Builder(builder: (ctx) {
-                      final style = Theme.of(context).primaryTextTheme.body2;
-                      if (!widget.matchStore.matchIsActive) {
-                        return Text(
-                          'Trade Complete!', //TODO: Localize
-                          style: style,
-                        );
-                      }
-                      return Text(
-                        'Manage Trade', //TODO: Localize
-                        style: style,
-                      );
-                    }),
+                    child: Badge(
+                      showBadge: widget.matchStore.hasUnreadTradeRequests,
+                      badgeColor: Theme.of(context).accentColor,
+                      badgeContent: Text(
+                        '${widget.matchStore.numUnreadTradeRequests}',
+                        style: Theme.of(context)
+                            .accentTextTheme
+                            .body1
+                            .copyWith(fontSize: 11.0),
+                      ),
+                      padding: EdgeInsets.all(6.0),
+                      child: Text('Trade'),
+                    ),
                   )
                 : Text(''),
           ),

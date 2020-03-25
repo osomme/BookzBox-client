@@ -221,5 +221,9 @@
     "mapFilterButtonLabel": "Filter",
     "mapFilterAuthorLabel": "Author",
     "mapFilterBookTitleLabel": "Book Title",
-    "myBoxDelete": "Delete"
+    "myBoxDelete": "Delete",
+    "activityItemRejectedTrade": "rejected your trade offer",
+    "activityItemAcceptedTrade": "accepted your trade offer",
+    "activityitemNewTradeOffer": "has sent you a new trade offer",
+    "activityItemUnknownTradeType": "Unknown trade offer data"
 }

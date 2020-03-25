@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bookzbox/features/activity/activity.dart';
 import 'package:bookzbox/features/match/match.dart';
 import 'package:mobx/mobx.dart';
 
@@ -9,6 +10,8 @@ class MatchStore = _MatchStore with _$MatchStore;
 
 abstract class _MatchStore with Store {
   final IMatchRepository _repository;
+
+  final ActivityFeedStore _feedStore;
 
   StreamSubscription<Match> _matchSubscription;
 
@@ -30,7 +33,7 @@ abstract class _MatchStore with Store {
   @observable
   bool _isReplyingToOffer = false;
 
-  _MatchStore(this._repository);
+  _MatchStore(this._repository, this._feedStore);
 
   @computed
   String get otherUserId =>
@@ -62,6 +65,15 @@ abstract class _MatchStore with Store {
   /// [true] if an offer is currently being replied to, [false] otherwise.
   @computed
   bool get isReplyingToOffer => _isReplyingToOffer;
+
+  @computed
+  int get numUnreadTradeRequests => _feedStore.activityNotifications
+      .where((a) =>
+          a is TradeActivtiy && !a.read && (a.type as TradeActivtiy).matchId == _matchId)
+      .length;
+
+  @computed
+  bool get hasUnreadTradeRequests => numUnreadTradeRequests != 0;
 
   @action
   void init(String matchId, String clientUserId) {
