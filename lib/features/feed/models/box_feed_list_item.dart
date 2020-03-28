@@ -3,16 +3,35 @@ import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/box/helpers/status_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
+@HiveType(typeId: 0)
 class BoxFeedListItem {
+  @HiveField(0)
   final String id;
+
+  @HiveField(1)
   final String publisherId;
+
+  @HiveField(2)
   final DateTime publishedOn;
+
+  @HiveField(3)
   final String title;
+
+  @HiveField(4)
   final String description;
+
+  @HiveField(5)
   final double lat;
+
+  @HiveField(6)
   final double lng;
+
+  @HiveField(7)
   final List<BoxFeedBook> books;
+
+  @HiveField(8)
   final BoxStatus status;
 
   BoxFeedListItem({

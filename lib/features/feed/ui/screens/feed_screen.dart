@@ -22,6 +22,7 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateMixin {
+  AuthStore _authStore;
   PageController _pageController;
 
   @override
@@ -32,7 +33,8 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
 
   @override
   void didChangeDependencies() {
-    widget.feedStore.init(Provider.of<AuthStore>(context)?.user?.uid ?? '');
+    _authStore = Provider.of<AuthStore>(context);
+    widget.feedStore.init(_authStore?.user?.uid ?? '');
     super.didChangeDependencies();
   }
 
@@ -80,6 +82,16 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
           builder: (_) => PageView.builder(
             controller: _pageController,
             itemCount: widget.feedStore.boxes.length,
+            onPageChanged: (index) async {
+              if (index == (widget.feedStore.boxes.length - 6)) {
+                await widget.feedStore.fetchBoxes(_authStore?.user?.uid);
+              }
+              if ((index - 1) >= 0) {
+                // Marks the previous box as read/seen.
+                widget.feedStore.markAsRead(index - 1);
+                // TODO: UNCOMMENT BEFORE RELEASE!
+              }
+            },
             itemBuilder: (context, index) => FeedListItem(
               pageController: _pageController,
               index: index,

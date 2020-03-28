@@ -81,10 +81,63 @@ mixin _$FeedStore on _FeedStore, Store {
         name: '${_$_initialLoadingOngoingAtom.name}_set');
   }
 
+  final _$_latitudeAtom = Atom(name: '_FeedStore._latitude');
+
+  @override
+  double get _latitude {
+    _$_latitudeAtom.context.enforceReadPolicy(_$_latitudeAtom);
+    _$_latitudeAtom.reportObserved();
+    return super._latitude;
+  }
+
+  @override
+  set _latitude(double value) {
+    _$_latitudeAtom.context.conditionallyRunInAction(() {
+      super._latitude = value;
+      _$_latitudeAtom.reportChanged();
+    }, _$_latitudeAtom, name: '${_$_latitudeAtom.name}_set');
+  }
+
+  final _$_longitudeAtom = Atom(name: '_FeedStore._longitude');
+
+  @override
+  double get _longitude {
+    _$_longitudeAtom.context.enforceReadPolicy(_$_longitudeAtom);
+    _$_longitudeAtom.reportObserved();
+    return super._longitude;
+  }
+
+  @override
+  set _longitude(double value) {
+    _$_longitudeAtom.context.conditionallyRunInAction(() {
+      super._longitude = value;
+      _$_longitudeAtom.reportChanged();
+    }, _$_longitudeAtom, name: '${_$_longitudeAtom.name}_set');
+  }
+
   final _$initAsyncAction = AsyncAction('init');
 
   @override
   Future<void> init(String userId) {
     return _$initAsyncAction.run(() => super.init(userId));
+  }
+
+  final _$fetchBoxesAsyncAction = AsyncAction('fetchBoxes');
+
+  @override
+  Future<void> fetchBoxes(String userId) {
+    return _$fetchBoxesAsyncAction.run(() => super.fetchBoxes(userId));
+  }
+
+  final _$_FeedStoreActionController = ActionController(name: '_FeedStore');
+
+  @override
+  void markAsRead(int index) {
+    final _$actionInfo = _$_FeedStoreActionController.startAction();
+    try {
+      return super.markAsRead(index);
+    } finally {
+      _$_FeedStoreActionController.endAction(_$actionInfo);
+    }
   }
 }

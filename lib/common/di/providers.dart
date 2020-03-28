@@ -1,3 +1,5 @@
+import 'package:bookzbox/data_access/local_storage.dart';
+import 'package:bookzbox/data_access/recommendation_storage.dart';
 import 'package:bookzbox/features/activity/activity.dart';
 import 'package:bookzbox/features/activity/stores/my_liked_boxes_store.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
@@ -107,19 +109,18 @@ final bookProviders = [
   Provider<IBoxRemovalService>(
     create: (_) => BoxRemovalService(),
   ),
-  ProxyProvider5<IPublishService, IBoxLoaderService, IBoxDetailsService,
-      IBoxUpdaterService, IBoxRemovalService, IBoxRepository>(
-    update: (_, publishService, boxLoaderService, detailsService, updaterService,
-            boxRemovalService, __) =>
-        BoxRepository(publishService, boxLoaderService, detailsService, updaterService,
-            boxRemovalService),
+  ProxyProvider5<IPublishService, IBoxLoaderService, IBoxDetailsService, IBoxUpdaterService,
+      IBoxRemovalService, IBoxRepository>(
+    update: (_, publishService, boxLoaderService, detailsService, updaterService, boxRemovalService,
+            __) =>
+        BoxRepository(
+            publishService, boxLoaderService, detailsService, updaterService, boxRemovalService),
   ),
   Provider<ILocationService>(
     create: (_) => LocationService(),
   ),
   ProxyProvider3<IBookRepository, IBoxRepository, ILocationService, NewBoxStore>(
-    update: (_, bookRepo, boxRepo, locService, __) =>
-        NewBoxStore(bookRepo, boxRepo, locService),
+    update: (_, bookRepo, boxRepo, locService, __) => NewBoxStore(bookRepo, boxRepo, locService),
   ),
   ProxyProvider<NewBoxStore, NewBoxScreen>(
     update: (_, store, __) => NewBoxScreen(store),
@@ -166,8 +167,11 @@ final feedProviders = [
   Provider<IFeedService>(
     create: (_) => FirebaseFeedService(),
   ),
-  ProxyProvider<IFeedService, IFeedRepository>(
-    update: (_, service, __) => FeedRepository(service),
+  Provider<ILocalStorage>(
+    create: (_) => RecommendationStorage(),
+  ),
+  ProxyProvider2<IFeedService, ILocalStorage, IFeedRepository>(
+    update: (_, service, storage, __) => FeedRepository(service, storage),
   ),
   ProxyProvider2<IFeedRepository, ILocationService, FeedStore>(
     update: (_, repo, locService, __) => FeedStore(repo, locService),
@@ -206,10 +210,8 @@ final myProfileProviders = [
   ProxyProvider<IBoxRepository, ProfileBoxStore>(
     update: (_, repo, __) => ProfileBoxStore(repo),
   ),
-  ProxyProvider4<ProfileStore, AuthStore, ProfileBoxStore, PreferencesStore,
-      ProfileScreen>(
-    update: (_, profileStore, authStore, profileBoxStore, preferencesStore, __) =>
-        ProfileScreen(
+  ProxyProvider4<ProfileStore, AuthStore, ProfileBoxStore, PreferencesStore, ProfileScreen>(
+    update: (_, profileStore, authStore, profileBoxStore, preferencesStore, __) => ProfileScreen(
       profileStore: profileStore,
       authStore: authStore,
       profileBoxStore: profileBoxStore,
@@ -290,7 +292,6 @@ final chatProviders = [
     update: (_, service, __) => ChatRepositoryImpl(service),
   ),
   ProxyProvider3<IChatRepository, ActivityFeedStore, IStorageService, ChatStore>(
-    update: (_, repo, feedStore, storageService, __) =>
-        ChatStore(repo, feedStore, storageService),
+    update: (_, repo, feedStore, storageService, __) => ChatStore(repo, feedStore, storageService),
   ),
 ];

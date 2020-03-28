@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
+@HiveType(typeId: 1)
 class BoxFeedBook {
+  @HiveField(0)
   final List<String> categories;
+
+  @HiveField(1)
   final String thumbnailUrl;
 
   BoxFeedBook({

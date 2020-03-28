@@ -12,4 +12,6 @@ abstract class IFeedRepository {
   Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxRecommendations(
       String userId, int limit,
       {double latitude = -1.0, double longitude = -1.0});
+
+  void removeRecommendation(BoxFeedListItem item);
 }

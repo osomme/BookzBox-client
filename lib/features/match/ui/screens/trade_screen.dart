@@ -699,8 +699,8 @@ class _OfferRow extends StatelessWidget {
           Row(
             children: <Widget>[
               GestureDetector(
-                onTap: () => Navigator.pushNamed(context, Screens.boxDetails,
-                    arguments: offer.boxId),
+                onTap: () =>
+                    Navigator.pushNamed(context, Screens.boxDetails, arguments: offer.boxId),
                 child: Container(
                   height: 180.0,
                   child: Image.network(offer.boxThumbnailUrl, fit: BoxFit.contain),
