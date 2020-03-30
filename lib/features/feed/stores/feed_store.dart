@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bookzbox/common/errors/error_types.dart';
 import 'package:bookzbox/features/feed/feed.dart';
@@ -74,19 +75,33 @@ abstract class _FeedStore with Store {
     if (userId == null || userId.isEmpty) {
       return;
     }
-    final res = await _repo.getBoxRecommendations(userId, _recommendationLimit,
-        latitude: _latitude, longitude: _longitude);
-    res.fold(
-      (err) => _error = err,
-      (boxes) {
-        _initialLoadingOngoing = false;
-        _boxes = boxes;
-      },
-    );
+
+    await internalFetchBoxes(userId);
+
+    _initialLoadingOngoing = false;
   }
 
   @action
   void markAsRead(int index) {
     _repo.removeRecommendation(_boxes[index]);
+  }
+
+  Future<void> internalFetchBoxes(String userId) async {
+    final res = await _repo.getBoxRecommendations(userId, _recommendationLimit,
+        latitude: _latitude, longitude: _longitude);
+    res.fold(
+      (err) => _error = err,
+      (boxes) {
+        for (var box in boxes) {
+          internalAddBoxIfNotAdded(box);
+        }
+      },
+    );
+  }
+
+  void internalAddBoxIfNotAdded(BoxFeedListItem box) {
+    if (!_boxes.contains(box)) {
+      _boxes.add(box);
+    }
   }
 }

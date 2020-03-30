@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
+part 'box_feed_list_item.g.dart';
+
 @HiveType(typeId: 0)
 class BoxFeedListItem extends HiveObject {
   @HiveField(0)
@@ -45,6 +47,12 @@ class BoxFeedListItem extends HiveObject {
     @required this.books,
     @required this.status,
   });
+
+  @override
+  bool operator ==(Object other) => other is BoxFeedListItem && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
 
   factory BoxFeedListItem.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data;

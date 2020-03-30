@@ -1,8 +1,21 @@
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/models/book.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
-enum BoxStatus { public, private, traded }
+part 'box.g.dart';
+
+@HiveType(typeId: 3)
+enum BoxStatus {
+  @HiveField(0)
+  public,
+
+  @HiveField(1)
+  private,
+
+  @HiveField(2)
+  traded,
+}
 
 /// Represents a box of books.
 class Box {

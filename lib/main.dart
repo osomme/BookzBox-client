@@ -4,6 +4,7 @@ import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/screens/box_details_screen.dart';
 import 'package:bookzbox/features/chat/chat.dart';
+import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/home_screen/ui/screens/home_screen.dart';
 import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/location/location.dart';
@@ -24,9 +25,14 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:bookzbox/common/extensions/color_extensions.dart';
 
+import 'features/box/models/box.dart';
+
 void main() async {
   initializeDateFormatting();
   await Hive.initFlutter();
+  Hive.registerAdapter(BoxStatusAdapter());
+  Hive.registerAdapter(BoxFeedBookAdapter());
+  Hive.registerAdapter(BoxFeedListItemAdapter());
   runApp(MyApp());
 }
 

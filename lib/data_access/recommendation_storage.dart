@@ -21,7 +21,11 @@ class RecommendationStorage extends ILocalStorage<BoxFeedListItem> {
 
   @override
   void storeAll(List<BoxFeedListItem> items) {
-    _box.addAll(items);
+    Map<String, BoxFeedListItem> itemMap = new Map();
+    for (var item in items) {
+      itemMap.putIfAbsent(item.id, () => item);
+    }
+    _box.putAll(itemMap);
   }
 
   @override
