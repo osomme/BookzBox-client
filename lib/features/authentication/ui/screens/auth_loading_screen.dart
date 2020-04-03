@@ -1,6 +1,7 @@
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_svg/svg.dart';
 
 class AuthLoadingScreen extends StatelessWidget {
   final List<Widget> children;
@@ -19,22 +20,9 @@ class AuthLoadingScreen extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 75.0),
-                child: Column(
-                  children: <Widget>[
-                    Icon(
-                      Entypo.book,
-                      size: 60,
-                      color: Theme.of(context).accentColor,
-                    ),
-                    Text(
-                      S.of(context).appName,
-                      style: TextStyle(
-                        color: Theme.of(context).accentColor,
-                        fontFamily: 'Indie Flower',
-                        fontSize: 46.0,
-                      ),
-                    ),
-                  ],
+                child: SvgPicture.asset(
+                  'assets/images/bb_ikon_og_tekst.svg',
+                  height: 186,
                 ),
               ),
               SizedBox(height: 50),
