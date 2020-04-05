@@ -69,6 +69,6 @@ class FeedRepository implements IFeedRepository {
   }
 
   Future<List<BoxFeedListItem>> getLocalRecommendations() async {
-    return (await _recommendationStorage.getBox()).values.toList();
+    return await _recommendationStorage.getItems();
   }
 }

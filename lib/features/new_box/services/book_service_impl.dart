@@ -24,9 +24,8 @@ class BookService extends IBookService {
         }).toDomain();
         return Right(book);
       } else {
-        //TODO: Replace with an actual error type.
         // No results from API.
-        return Left('book not found');
+        return Left('Book not found');
       }
     } on StateError catch (e) {
       // Thrown if the book is not in the result list from the API.

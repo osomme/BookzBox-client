@@ -259,5 +259,10 @@
     "tradeOfferMade": "Offer made ",
     "tradeTradeCompletePrompt": "You have both agreed to a trade. Start messaging {username} to exchange addresses or arrange an in-person meetup to trade your boxes.",
     "tradeAddressLabelLink": "Get an address label from Posten.no",
-    "tradeWebBrowserFailed": "Failed to launch web browser"
+    "tradeWebBrowserFailed": "Failed to launch web browser",
+    "boxTradeListLoadFailed": "Failed to load boxes",
+    "boxTradeListSelectTitle": "Select a box",
+    "boxTradeListSelectDescription": "Choose the box that you wish to trade",
+    "boxTradeListCancel": "Cancel",
+    "boxTradeListOk": "Ok"
 }

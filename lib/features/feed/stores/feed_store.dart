@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:bookzbox/common/errors/error_types.dart';
 import 'package:bookzbox/features/feed/feed.dart';
@@ -12,8 +11,6 @@ class FeedStore = _FeedStore with _$FeedStore;
 
 abstract class _FeedStore with Store {
   static const int _recommendationLimit = 20;
-
-  StreamSubscription<Iterable<BoxFeedListItem>> _streamSubscription;
 
   final IFeedRepository _repo;
   final ILocationService _locationService;
@@ -60,12 +57,6 @@ abstract class _FeedStore with Store {
     );
 
     await fetchBoxes(userId);
-  }
-
-  /// Disposes the resources that the store is using.
-  void dispose() {
-    print('Disposing box feed stream');
-    _streamSubscription?.cancel();
   }
 
   /// Fetch [limit] amount of boxes for the user with id [userid].

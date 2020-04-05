@@ -7,4 +7,7 @@ abstract class ILocalStorage<T> {
 
   /// Get the Hive Box
   Future<Box<T>> getBox();
+
+  /// Get a list of the stored items.
+  Future<List<T>> getItems();
 }

@@ -1,5 +1,4 @@
 import 'package:bookzbox/features/box/models/models.dart';
-import 'package:bookzbox/features/box_details/errors/box_details_error.dart';
 import 'package:bookzbox/features/new_box/repositories/box_repository.dart';
 import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
 import 'package:dartz/dartz.dart';

@@ -1,5 +1,6 @@
 import 'package:bookzbox/features/box/box.dart';
 import 'package:bookzbox/features/match/match.dart';
+import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -26,7 +27,7 @@ class BoxTradeList extends StatelessWidget {
         );
       } else if (store.hasError) {
         return Center(
-          child: Text('Failed to load boxes'), //TODO: Localize
+          child: Text(S.of(context).boxTradeListLoadFailed),
         );
       }
 
@@ -36,13 +37,12 @@ class BoxTradeList extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              'Select a box', //TODO: Localize
-              style:
-                  Theme.of(context).textTheme.title.copyWith(fontWeight: FontWeight.w700),
+              S.of(context).boxTradeListSelectTitle,
+              style: Theme.of(context).textTheme.title.copyWith(fontWeight: FontWeight.w700),
             ),
             SizedBox(height: 6.0),
             Text(
-              'Choose the box that you wish to trade', //TODO: Localize
+              S.of(context).boxTradeListSelectDescription,
               style: Theme.of(context).textTheme.caption,
             ),
             SizedBox(height: 20.0),
@@ -70,9 +70,9 @@ class BoxTradeList extends StatelessWidget {
                 FlatButton(
                   onPressed: () => Navigator.pop(context),
                   child: Text(
-                    'Cancel',
+                    S.of(context).boxTradeListCancel,
                     style: TextStyle(fontWeight: FontWeight.w700),
-                  ), //TODO: Localize
+                  ),
                 ),
                 Observer(
                   builder: (_) => FlatButton(
@@ -80,10 +80,9 @@ class BoxTradeList extends StatelessWidget {
                         ? () => Navigator.pop(context, store.currentlySelected)
                         : null,
                     child: Text(
-                      'OK',
-                      style: TextStyle(
-                          color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
-                    ), //TODO: Localize
+                      S.of(context).boxTradeListOk,
+                      style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
+                    ),
                   ),
                 ),
               ],

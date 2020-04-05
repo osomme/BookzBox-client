@@ -1,4 +1,3 @@
-import 'package:bookzbox/features/profile/models/book_subjects.dart';
 import 'package:bookzbox/features/profile/models/profile.dart';
 import 'package:bookzbox/features/profile/models/profile_mem_cache.dart';
 import 'package:bookzbox/features/profile/repositories/profile_repository.dart';

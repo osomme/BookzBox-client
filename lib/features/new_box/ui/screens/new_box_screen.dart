@@ -576,7 +576,6 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         print("User did not grant camera access.");
         widget.newBoxStore.setIsbnScanError(ScanError.PermissionDenied);
-        //TODO: re-show permission dialog?
       } else {
         print("Error scanning: $e");
         widget.newBoxStore.setIsbnScanError(ScanError.Unknown);

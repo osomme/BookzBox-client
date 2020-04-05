@@ -8,12 +8,10 @@ class BoxLoaderRepository implements IBoxLoaderRepository {
   BoxLoaderRepository(this._boxLoaderService);
 
   @override
-  Future<Either<String, List<MiniBox>>> loadForUser(String userId) {
-    // TODO: implement loadForUser
-    return null;
-  }
+  Future<Either<String, List<MiniBox>>> loadForUser(String userId) async =>
+      await _boxLoaderService.loadForUser(userId);
 
   @override
-  Future<Stream<Iterable<MiniBox>>> loadUserFavorites(String userId) =>
-      _boxLoaderService.loadUserFavorites(userId);
+  Future<Stream<Iterable<MiniBox>>> loadUserFavorites(String userId) async =>
+      await _boxLoaderService.loadUserFavorites(userId);
 }

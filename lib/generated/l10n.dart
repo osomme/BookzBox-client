@@ -9,7 +9,7 @@ import 'intl/messages_all.dart';
 // **************************************************************************
 
 class S {
-  S(this.localeName);
+  S();
   
   static const AppLocalizationDelegate delegate =
     AppLocalizationDelegate();
@@ -19,15 +19,13 @@ class S {
     final String localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      return S(localeName);
+      return S();
     });
   } 
 
   static S of(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
-
-  final String localeName;
 
   String get appName {
     return Intl.message(
@@ -731,7 +729,7 @@ class S {
     );
   }
 
-  String profileDisplayNameGreeting(dynamic displayName) {
+  String profileDisplayNameGreeting(Object displayName) {
     return Intl.message(
       'Hi, $displayName',
       name: 'profileDisplayNameGreeting',
@@ -776,7 +774,7 @@ class S {
     );
   }
 
-  String profileLastSeenDaysAgo(dynamic amount) {
+  String profileLastSeenDaysAgo(num amount) {
     return Intl.plural(
       amount,
       one: '1 day ago',
@@ -850,7 +848,7 @@ class S {
     );
   }
 
-  String boxPublishedMinAgo(dynamic numMin) {
+  String boxPublishedMinAgo(Object numMin) {
     return Intl.message(
       '$numMin min ago',
       name: 'boxPublishedMinAgo',
@@ -859,7 +857,7 @@ class S {
     );
   }
 
-  String boxPublishedHoursAgo(dynamic amount) {
+  String boxPublishedHoursAgo(num amount) {
     return Intl.plural(
       amount,
       one: '1 hour ago',
@@ -870,7 +868,7 @@ class S {
     );
   }
 
-  String boxPublishedDaysAgo(dynamic amount) {
+  String boxPublishedDaysAgo(num amount) {
     return Intl.plural(
       amount,
       one: '1 day ago',
@@ -1259,7 +1257,7 @@ class S {
     );
   }
 
-  String dateSecondsAgo(dynamic amount) {
+  String dateSecondsAgo(num amount) {
     return Intl.plural(
       amount,
       one: '1 second ago',
@@ -1270,7 +1268,7 @@ class S {
     );
   }
 
-  String dateMinutesAgo(dynamic amount) {
+  String dateMinutesAgo(num amount) {
     return Intl.plural(
       amount,
       one: '1 minute ago',
@@ -1281,7 +1279,7 @@ class S {
     );
   }
 
-  String dateDaysAgo(dynamic amount) {
+  String dateDaysAgo(num amount) {
     return Intl.plural(
       amount,
       one: '1 day ago',
@@ -1292,7 +1290,7 @@ class S {
     );
   }
 
-  String dateHoursAgo(dynamic amount) {
+  String dateHoursAgo(num amount) {
     return Intl.plural(
       amount,
       one: '1 hour ago',
@@ -2257,7 +2255,7 @@ class S {
     );
   }
 
-  String tradeYouHaveRejected(dynamic username) {
+  String tradeYouHaveRejected(Object username) {
     return Intl.message(
       'You have rejected the offer, wait for $username to make another offer, or make one yourself.',
       name: 'tradeYouHaveRejected',
@@ -2266,7 +2264,7 @@ class S {
     );
   }
 
-  String tradeUserHasSentOffer(dynamic username) {
+  String tradeUserHasSentOffer(Object username) {
     return Intl.message(
       '$username has sent you a trade offer for:',
       name: 'tradeUserHasSentOffer',
@@ -2275,7 +2273,7 @@ class S {
     );
   }
 
-  String tradeYouRejectedOffer(dynamic username) {
+  String tradeYouRejectedOffer(Object username) {
     return Intl.message(
       'You rejected $username\'s trade offer of:',
       name: 'tradeYouRejectedOffer',
@@ -2284,7 +2282,7 @@ class S {
     );
   }
 
-  String tradeWaitingForResponseFrom(dynamic username) {
+  String tradeWaitingForResponseFrom(Object username) {
     return Intl.message(
       'Waiting for response from $username...',
       name: 'tradeWaitingForResponseFrom',
@@ -2293,7 +2291,7 @@ class S {
     );
   }
 
-  String tradeUserRejectedThisOffer(dynamic username) {
+  String tradeUserRejectedThisOffer(Object username) {
     return Intl.message(
       '$username rejected this trade offer',
       name: 'tradeUserRejectedThisOffer',
@@ -2302,7 +2300,7 @@ class S {
     );
   }
 
-  String tradeUsernameIsOffering(dynamic username) {
+  String tradeUsernameIsOffering(Object username) {
     return Intl.message(
       '$username is offering:',
       name: 'tradeUsernameIsOffering',
@@ -2311,7 +2309,7 @@ class S {
     );
   }
 
-  String tradeUsernameOffered(dynamic username) {
+  String tradeUsernameOffered(Object username) {
     return Intl.message(
       '$username offered:',
       name: 'tradeUsernameOffered',
@@ -2320,7 +2318,7 @@ class S {
     );
   }
 
-  String tradeYouRejectedWaitinForUsername(dynamic username) {
+  String tradeYouRejectedWaitinForUsername(Object username) {
     return Intl.message(
       'You rejected this offer. Waiting for $username to make a new offer.',
       name: 'tradeYouRejectedWaitinForUsername',
@@ -2329,7 +2327,7 @@ class S {
     );
   }
 
-  String tradeUsernamesOffer(dynamic username) {
+  String tradeUsernamesOffer(Object username) {
     return Intl.message(
       '$username\'s offer:',
       name: 'tradeUsernamesOffer',
@@ -2338,7 +2336,7 @@ class S {
     );
   }
 
-  String tradeWaitingForUsernameResponse(dynamic username) {
+  String tradeWaitingForUsernameResponse(Object username) {
     return Intl.message(
       'Waiting for $username to respond to your offer',
       name: 'tradeWaitingForUsernameResponse',
@@ -2347,7 +2345,7 @@ class S {
     );
   }
 
-  String tradeUsernameAcceptedOffer(dynamic username) {
+  String tradeUsernameAcceptedOffer(Object username) {
     return Intl.message(
       '$username has accepted your offer',
       name: 'tradeUsernameAcceptedOffer',
@@ -2365,7 +2363,7 @@ class S {
     );
   }
 
-  String tradeTradeCompletePrompt(dynamic username) {
+  String tradeTradeCompletePrompt(Object username) {
     return Intl.message(
       'You have both agreed to a trade. Start messaging $username to exchange addresses or arrange an in-person meetup to trade your boxes.',
       name: 'tradeTradeCompletePrompt',
@@ -2387,6 +2385,51 @@ class S {
     return Intl.message(
       'Failed to launch web browser',
       name: 'tradeWebBrowserFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxTradeListLoadFailed {
+    return Intl.message(
+      'Failed to load boxes',
+      name: 'boxTradeListLoadFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxTradeListSelectTitle {
+    return Intl.message(
+      'Select a box',
+      name: 'boxTradeListSelectTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxTradeListSelectDescription {
+    return Intl.message(
+      'Choose the box that you wish to trade',
+      name: 'boxTradeListSelectDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxTradeListCancel {
+    return Intl.message(
+      'Cancel',
+      name: 'boxTradeListCancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get boxTradeListOk {
+    return Intl.message(
+      'Ok',
+      name: 'boxTradeListOk',
       desc: '',
       args: [],
     );

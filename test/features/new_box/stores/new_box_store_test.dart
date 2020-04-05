@@ -43,20 +43,20 @@ void main() {
       expect(store.books.length, 0);
     });
 
-    test('[lookupError] should be set to not found error when lookup fails to find book.',
-        () async {
-      when(mockBookRepo.isbnLookup(any)).thenAnswer((_) => Future.value(Left('error')));
-      store.setIsbn(_validISBN13);
-      await store.findBook();
-      expect(store.lookupError, LookupError.NotFound);
-    });
+    group('Book lookup', () {
+      test('When ISBN lookup fails, then [lookupError] should be set to NotFound-error.', () async {
+        when(mockBookRepo.isbnLookup(any)).thenAnswer((_) => Future.value(Left('error')));
+        store.setIsbn(_validISBN13);
+        await store.findBook();
+        expect(store.lookupError, LookupError.NotFound);
+      });
 
-    test('Attempting to lookup book with invalid ISBN should return false.', () async {
-      store.setIsbn('345345345'); // Invalid length
-      var res = await store.findBook();
-      expect(res, false);
+      test('Attempting to lookup book with invalid ISBN should return false.', () async {
+        store.setIsbn('345345345'); // Invalid length
+        var res = await store.findBook();
+        expect(res, false);
+      });
     });
-
     test('Attempting to publish box with invalid content should return with publish error.',
         () async {
       store.setIsbn('345345345'); // Invalid length

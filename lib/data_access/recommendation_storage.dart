@@ -32,4 +32,9 @@ class RecommendationStorage extends ILocalStorage<BoxFeedListItem> {
   void remove(dynamic key) {
     _box.delete(key);
   }
+
+  @override
+  Future<List<BoxFeedListItem>> getItems() async {
+    return (await getBox()).values.toList();
+  }
 }

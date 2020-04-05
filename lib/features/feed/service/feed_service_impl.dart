@@ -6,11 +6,10 @@ import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/feed/models/box_feed_list_item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:http/http.dart' as http;
 
 class FirebaseFeedService implements IFeedService {
-  final _firestore = Firestore.instance; //TODO: Inject through parameter
+  final _firestore = Firestore.instance;
   final String _recommenderApiUrl = 'http://13.48.105.244:80/api/';
 
   @override
@@ -28,9 +27,7 @@ class FirebaseFeedService implements IFeedService {
         .then((docs) => docs.documents.map((b) => BoxFeedListItem.fromFirestore(b)).toList())
         .catchError((error) => print(error));
 
-    return boxes != null
-        ? Right(boxes)
-        : Left(NetworkError.noInternet); //TODO: Replace with better solution.
+    return boxes != null ? Right(boxes) : Left(NetworkError.noInternet);
   }
 
   /// Returns a stream of BoxFeedListItems.

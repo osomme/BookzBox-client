@@ -1,4 +1,4 @@
-import 'package:bookzbox/common/errors/error_types.dart';
+import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:dartz/dartz.dart';
@@ -21,10 +21,43 @@ void main() {
       store = FeedStore(mockRepo, locService);
     });
 
-    group('Computed', () {
-      test('[boxes] should contain the boxes retrieved from the repository', () async {
-        fail('Not implemented yet');
-      });
+    test('When boxes are fetched, then [boxes] should be updated with the fetched boxes.',
+        () async {
+      var expectedBoxes = List<BoxFeedListItem>.from([_validFeedBox]);
+      when(mockRepo.getBoxRecommendations(any, any))
+          .thenAnswer((_) => Future.value(right(expectedBoxes)));
+
+      await store.fetchBoxes('userABC');
+
+      expect(store.boxes.length, expectedBoxes.length);
+    });
+
+    test('When duplicate boxes are fetched, then the boxes should not be added.', () async {
+      var boxes = List<BoxFeedListItem>.from([_validFeedBox]);
+
+      when(mockRepo.getBoxRecommendations(any, any)).thenAnswer((_) => Future.value(right(boxes)));
+
+      await store.fetchBoxes('userABC'); // Get the boxes once.
+      await store.fetchBoxes('userABC'); // Get the duplicate boxes.
+
+      expect(store.boxes.length, boxes.length);
     });
   });
 }
+
+BoxFeedListItem _validFeedBox = BoxFeedListItem(
+  id: 'agwfqdervdsdasd',
+  title: 'A valid box',
+  description: '',
+  lat: 21.0,
+  lng: -122.1,
+  publisherId: 'user',
+  status: BoxStatus.public,
+  publishedOn: DateTime.now(),
+  books: List.from([_validBook]),
+);
+
+BoxFeedBook _validBook = BoxFeedBook(
+  categories: List(),
+  thumbnailUrl: '',
+);

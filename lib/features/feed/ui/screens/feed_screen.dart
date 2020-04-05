@@ -40,7 +40,6 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
 
   @override
   void dispose() {
-    widget.feedStore.dispose();
     _pageController.dispose();
     super.dispose();
   }

@@ -1,11 +1,9 @@
-import 'package:bookzbox/features/profile/models/profile.dart';
 import 'package:bookzbox/features/profile/stores/preferences_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
 import 'package:bookzbox/features/profile/ui/screens/boxes_tab.dart';
 import 'package:bookzbox/features/profile/ui/screens/me_tab.dart';
 import 'package:bookzbox/features/profile/ui/screens/preferences_tab.dart';
-import 'package:bookzbox/features/profile/ui/widgets/custom_tab_bar.dart';
 import 'package:bookzbox/features/profile/ui/widgets/profile_avatar.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';

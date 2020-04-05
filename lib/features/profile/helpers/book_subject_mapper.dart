@@ -214,6 +214,9 @@ class BookSubjectMapper {
 
       case BookSubject.Fiction:
         return Tuple2('Fiction', subject.index);
+
+      default:
+        throw RangeError('Invalid BookSubject received.');
     }
   }
 }
