@@ -42,6 +42,8 @@ final _themeData = ThemeData(
   primarySwatch: Color.fromRGBO(58, 46, 58, 1.0).toSwatch(),
   accentColor: Color.fromRGBO(239, 177, 130, 1.0),
   accentColorBrightness: Brightness.light,
+  backgroundColor: Colors.grey[300],
+  scaffoldBackgroundColor: Colors.grey[300],
 );
 
 class MyApp extends StatelessWidget {
