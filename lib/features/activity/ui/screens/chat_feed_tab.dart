@@ -38,7 +38,7 @@ class ChatFeedTab extends StatelessWidget {
               final chatNotification = feedStore.chatNotifications[i];
               final chatData = chatNotification.type as MessageActivity;
               return Card(
-                color: chatNotification.read ? Colors.white : Colors.grey[200],
+                color: chatNotification.read ? Colors.white : Colors.grey[100],
                 child: ListTile(
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
