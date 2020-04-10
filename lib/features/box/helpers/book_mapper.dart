@@ -14,7 +14,8 @@ class BookMapper {
       "categories": book.categories,
       "publishYear": book.publishYear,
       "synopsis": book.synopsis,
-      "publisher": book.publisher
+      "publisher": book.publisher,
+      "condition": book.condition.index,
     };
   }
 
@@ -35,6 +36,9 @@ class BookMapper {
       title: book['title'],
       isbn10: book['isbn10'],
       isbn13: book['isbn13'],
+      condition: (book['condition'] == null
+          ? BookCondition.Unknown
+          : BookCondition.values[book['condition']]),
     );
   }
 }

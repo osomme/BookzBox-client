@@ -79,13 +79,13 @@ class BoxDetails extends StatelessWidget {
               S.of(context).detailsDescription,
               [box.description],
             ),
-            _boxInfoPair(
-              S.of(context).detailsAboutSeller,
-              [
-                'Registered 4 months ago',
-                'Very positive feedback',
-              ],
-            ),
+            // _boxInfoPair(
+            //   S.of(context).detailsAboutSeller,
+            //   [
+            //     'Registered 4 months ago',
+            //     'Very positive feedback',
+            //   ],
+            // ),
             _locationColumn(context),
             _boxInfoPair(
               S.of(context).detailsStatus,

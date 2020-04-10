@@ -1,5 +1,6 @@
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/models/book.dart';
+import 'package:bookzbox/features/box/models/book_condition.dart';
 import 'package:bookzbox/features/box/models/box.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/features/new_box/models/box_error.dart';
@@ -27,6 +28,9 @@ abstract class _NewBoxStore with Store {
   /// The book that was looked up most recently.
   @observable
   Book _currentBook;
+
+  @observable
+  BookCondition _currentBookCondition = BookCondition.Unknown;
 
   @observable
   bool _isLoadingBook = false;
@@ -120,11 +124,11 @@ abstract class _NewBoxStore with Store {
   }
 
   @action
-  void addCurrentBook() {
-    if (_currentBook == null) return;
-
+  bool addCurrentBook() {
+    if (_currentBook == null || _currentBook.condition == BookCondition.Unknown) return false;
     books.add(_currentBook);
     validateBooks();
+    return true;
   }
 
   @action
@@ -241,6 +245,20 @@ abstract class _NewBoxStore with Store {
 
   @action
   void setIsbnScanError(ScanError err) => _isbnScanError = err;
+
+  @computed
+  BookCondition get currentBookCondition => _currentBookCondition;
+
+  @action
+  void setCurrentBookCondition(BookCondition condition) {
+    _currentBookCondition = condition;
+    _currentBook.condition = condition;
+  }
+
+  @action
+  void resetBookCondition() {
+    _currentBookCondition = BookCondition.Unknown;
+  }
 
   /// Clears fields to the default/ start values for this store.
   @action

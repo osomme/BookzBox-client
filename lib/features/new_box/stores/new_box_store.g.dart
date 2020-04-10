@@ -79,6 +79,12 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
   ScanError get isbnScanError => (_$isbnScanErrorComputed ??=
           Computed<ScanError>(() => super.isbnScanError))
       .value;
+  Computed<BookCondition> _$currentBookConditionComputed;
+
+  @override
+  BookCondition get currentBookCondition => (_$currentBookConditionComputed ??=
+          Computed<BookCondition>(() => super.currentBookCondition))
+      .value;
 
   final _$_isbnAtom = Atom(name: '_NewBoxStore._isbn');
 
@@ -112,6 +118,26 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
       super._currentBook = value;
       _$_currentBookAtom.reportChanged();
     }, _$_currentBookAtom, name: '${_$_currentBookAtom.name}_set');
+  }
+
+  final _$_currentBookConditionAtom =
+      Atom(name: '_NewBoxStore._currentBookCondition');
+
+  @override
+  BookCondition get _currentBookCondition {
+    _$_currentBookConditionAtom.context
+        .enforceReadPolicy(_$_currentBookConditionAtom);
+    _$_currentBookConditionAtom.reportObserved();
+    return super._currentBookCondition;
+  }
+
+  @override
+  set _currentBookCondition(BookCondition value) {
+    _$_currentBookConditionAtom.context.conditionallyRunInAction(() {
+      super._currentBookCondition = value;
+      _$_currentBookConditionAtom.reportChanged();
+    }, _$_currentBookConditionAtom,
+        name: '${_$_currentBookConditionAtom.name}_set');
   }
 
   final _$_isLoadingBookAtom = Atom(name: '_NewBoxStore._isLoadingBook');
@@ -304,7 +330,7 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
   final _$_NewBoxStoreActionController = ActionController(name: '_NewBoxStore');
 
   @override
-  void addCurrentBook() {
+  bool addCurrentBook() {
     final _$actionInfo = _$_NewBoxStoreActionController.startAction();
     try {
       return super.addCurrentBook();
@@ -438,6 +464,26 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
     final _$actionInfo = _$_NewBoxStoreActionController.startAction();
     try {
       return super.setIsbnScanError(err);
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCurrentBookCondition(BookCondition condition) {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.setCurrentBookCondition(condition);
+    } finally {
+      _$_NewBoxStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void resetBookCondition() {
+    final _$actionInfo = _$_NewBoxStoreActionController.startAction();
+    try {
+      return super.resetBookCondition();
     } finally {
       _$_NewBoxStoreActionController.endAction(_$actionInfo);
     }

@@ -2,6 +2,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:bookzbox/common/screens/screen_names.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/models/book.dart';
+import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/new_box/models/box_error.dart';
 import 'package:bookzbox/features/new_box/models/lookup_error.dart';
 import 'package:bookzbox/features/new_box/models/scan_error.dart';
@@ -34,9 +35,11 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
   }
 
   void addBookAndCloseDialog(BuildContext ctx) {
-    widget.newBoxStore.addCurrentBook();
-
-    Navigator.of(ctx).pop();
+    var bookAdded = widget.newBoxStore.addCurrentBook();
+    if (bookAdded) {
+      widget.newBoxStore.resetBookCondition();
+      Navigator.of(ctx).pop();
+    }
   }
 
   Container closeButton(BuildContext context) {
@@ -608,121 +611,255 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                 ),
               ),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Expanded(
-                  flex: 3,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Column(
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Center(
-                            child: Text(
-                              (widget.newBoxStore.currentBook == null
-                                  ? ""
-                                  : (widget.newBoxStore.currentBook.title == null
-                                      ? S.of(context).newBoxFieldPlaceholder
-                                      : widget.newBoxStore.currentBook.title)),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
+                          Column(
+                            children: <Widget>[
+                              Center(
+                                child: Text(
+                                  (widget.newBoxStore.currentBook == null
+                                      ? ""
+                                      : (widget.newBoxStore.currentBook.title == null
+                                          ? S.of(context).newBoxFieldPlaceholder
+                                          : widget.newBoxStore.currentBook.title)),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          Center(
-                            child: Text(
-                              (widget.newBoxStore.currentBook == null
-                                  ? ''
-                                  : (widget.newBoxStore.currentBook.subtitle == null
+                              Center(
+                                child: Text(
+                                  (widget.newBoxStore.currentBook == null
                                       ? ''
-                                      : widget.newBoxStore.currentBook.subtitle)),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
+                                      : (widget.newBoxStore.currentBook.subtitle == null
+                                          ? ''
+                                          : widget.newBoxStore.currentBook.subtitle)),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                               ),
+                            ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 0.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                                      child: Text(
+                                        S.of(context).newBoxBookAuthor + ":",
+                                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Text(
+                                      (widget.newBoxStore.currentBook == null
+                                          ? ""
+                                          : (widget.newBoxStore.currentBook.authors[0] == null
+                                              ? S.of(context).newBoxFieldPlaceholder
+                                              : widget.newBoxStore.currentBook.authors[0])),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                                      child: Text(
+                                        S.of(context).newBoxBookPublished + ":",
+                                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Text(
+                                      (widget.newBoxStore.currentBook == null
+                                          ? ""
+                                          : ((widget.newBoxStore.currentBook.publishYear < 1
+                                              ? S.of(context).newBoxFieldPlaceholder
+                                              : widget.newBoxStore.currentBook.publishYear
+                                                  .toString()))),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: (widget.newBoxStore.currentBook == null ||
+                              widget.newBoxStore.currentBook.thumbnailUrl == null
+                          ? Image.asset(
+                              'assets/images/book_cover_placeholder.jpeg',
+                              fit: BoxFit.fill,
+                              width: 70,
+                              height: 100,
+                            )
+                          : Image.network(
+                              widget.newBoxStore.currentBook.thumbnailUrl,
+                              fit: BoxFit.fill,
+                              width: 70,
+                              height: 100,
+                            )),
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 12),
+                  padding: const EdgeInsets.only(top: 12),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        color: Colors.grey[400],
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        S.of(context).bookConditionTitle,
+                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                      ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 0.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                        height: 200,
+                        child: Scrollbar(
+                          child: SingleChildScrollView(
+                            padding: const EdgeInsets.only(bottom: 6),
+                            child: Column(
                               children: <Widget>[
-                                Container(
-                                  margin: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
-                                  child: Text(
-                                    S.of(context).newBoxBookAuthor + ":",
-                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                Observer(
+                                  builder: (_) => RadioListTile(
+                                    title: Text(S.of(context).bookConditionNew),
+                                    subtitle: Text(
+                                      S.of(context).bookConditionNewDesc,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    value: BookCondition.New,
+                                    groupValue: widget.newBoxStore.currentBookCondition,
+                                    onChanged: (BookCondition value) {
+                                      widget.newBoxStore.setCurrentBookCondition(value);
+                                    },
+                                    activeColor: Colors.deepPurple[900],
                                   ),
                                 ),
-                                Text(
-                                  (widget.newBoxStore.currentBook == null
-                                      ? ""
-                                      : (widget.newBoxStore.currentBook.authors[0] == null
-                                          ? S.of(context).newBoxFieldPlaceholder
-                                          : widget.newBoxStore.currentBook.authors[0])),
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Container(
-                                  margin: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
-                                  child: Text(
-                                    S.of(context).newBoxBookPublished + ":",
-                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                Observer(
+                                  builder: (_) => RadioListTile(
+                                    title: Text(S.of(context).bookConditionLikeNew),
+                                    subtitle: Text(
+                                      S.of(context).bookConditionLikeNewDesc,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    value: BookCondition.UsedLikeNew,
+                                    groupValue: widget.newBoxStore.currentBookCondition,
+                                    onChanged: (BookCondition value) {
+                                      widget.newBoxStore.setCurrentBookCondition(value);
+                                    },
+                                    activeColor: Colors.deepPurple[900],
                                   ),
                                 ),
-                                Text(
-                                  (widget.newBoxStore.currentBook == null
-                                      ? ""
-                                      : ((widget.newBoxStore.currentBook.publishYear < 1
-                                          ? S.of(context).newBoxFieldPlaceholder
-                                          : widget.newBoxStore.currentBook.publishYear
-                                              .toString()))),
-                                  style: TextStyle(
-                                    fontSize: 14,
+                                Observer(
+                                  builder: (_) => RadioListTile(
+                                    title: Text(S.of(context).bookConditionGood),
+                                    subtitle: Text(
+                                      S.of(context).bookConditionGoodDesc,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    value: BookCondition.UsedGood,
+                                    groupValue: widget.newBoxStore.currentBookCondition,
+                                    onChanged: (BookCondition value) {
+                                      widget.newBoxStore.setCurrentBookCondition(value);
+                                    },
+                                    activeColor: Colors.deepPurple[900],
                                   ),
-                                )
+                                ),
+                                Observer(
+                                  builder: (_) => RadioListTile(
+                                    title: Text(S.of(context).bookConditionAcceptable),
+                                    subtitle: Text(
+                                      S.of(context).bookConditionAcceptableDesc,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    value: BookCondition.UsedAcceptable,
+                                    groupValue: widget.newBoxStore.currentBookCondition,
+                                    onChanged: (BookCondition value) {
+                                      widget.newBoxStore.setCurrentBookCondition(value);
+                                    },
+                                    activeColor: Colors.deepPurple[900],
+                                  ),
+                                ),
+                                Observer(
+                                  builder: (_) => RadioListTile(
+                                    title: Text(S.of(context).bookConditionDamaged),
+                                    subtitle: Text(
+                                      S.of(context).bookConditionDamagedDesc,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    value: BookCondition.UsedDamaged,
+                                    groupValue: widget.newBoxStore.currentBookCondition,
+                                    onChanged: (BookCondition value) {
+                                      widget.newBoxStore.setCurrentBookCondition(value);
+                                    },
+                                    activeColor: Colors.deepPurple[900],
+                                  ),
+                                ),
                               ],
                             ),
-                          ],
+                          ),
+                        ),
+                      ),
+                      Observer(
+                        builder: (_) => Text(
+                          (widget.newBoxStore.currentBookCondition == BookCondition.Unknown
+                              ? S.of(context).bookConditionRequiredError
+                              : ''),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.red[800],
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: (widget.newBoxStore.currentBook == null ||
-                          widget.newBoxStore.currentBook.thumbnailUrl == null
-                      ? Image.asset(
-                          'assets/images/book_cover_placeholder.jpeg',
-                          fit: BoxFit.fill,
-                          width: 70,
-                          height: 100,
-                        )
-                      : Image.network(
-                          widget.newBoxStore.currentBook.thumbnailUrl,
-                          fit: BoxFit.fill,
-                          width: 70,
-                          height: 100,
-                        )),
                 ),
               ],
             ),

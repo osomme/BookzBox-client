@@ -41,6 +41,25 @@ class _BookSwiperState extends State<BookSwiper> {
 
   void _onIndexChanged(int index) => setState(() => book = widget.books[index]);
 
+  String stringifyBookCondition(BuildContext context, BookCondition condition) {
+    switch (condition) {
+      case BookCondition.Unknown:
+        return S.of(context).bookConditionUnknown;
+      case BookCondition.New:
+        return S.of(context).bookConditionNew;
+      case BookCondition.UsedLikeNew:
+        return S.of(context).bookConditionLikeNew;
+      case BookCondition.UsedGood:
+        return S.of(context).bookConditionGood;
+      case BookCondition.UsedAcceptable:
+        return S.of(context).bookConditionAcceptable;
+      case BookCondition.UsedDamaged:
+        return S.of(context).bookConditionDamaged;
+      default:
+        throw IndexError;
+    }
+  }
+
   Container _swiper() {
     return Container(
       color: widget.backgroundColor ?? Theme.of(context).primaryColor,
@@ -67,9 +86,8 @@ class _BookSwiperState extends State<BookSwiper> {
                     ),
                   ),
                 ),
-                imageUrl: widget.books[index].fullSizeImageUrl ??
-                    widget.books[index].thumbnailUrl ??
-                    '',
+                imageUrl:
+                    widget.books[index].fullSizeImageUrl ?? widget.books[index].thumbnailUrl ?? '',
                 placeholder: (ctx, url) => SpinKitPulse(
                   size: 20.0,
                   color: Theme.of(ctx).primaryIconTheme.color,
@@ -107,8 +125,7 @@ class _BookSwiperState extends State<BookSwiper> {
                   ? S.of(context).detailsBookNoSynopsis
                   : book.synopsis,
               maxLines: 100,
-              textStyle:
-                  Theme.of(context).primaryTextTheme.subhead.copyWith(fontSize: 13.0),
+              textStyle: Theme.of(context).primaryTextTheme.subhead.copyWith(fontSize: 13.0),
             ),
           ],
         ),
@@ -116,19 +133,16 @@ class _BookSwiperState extends State<BookSwiper> {
         Row(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            //TODO: Add logic for book condition.
-            _bookDetailsTextCol(S.of(context).detailsBookCondition, '--'),
-            _bookDetailsTextCol(
-                S.of(context).detailsBookPages, book.pageCount?.toString() ?? '--'),
+            _bookDetailsTextCol(S.of(context).detailsBookCondition,
+                stringifyBookCondition(context, book.condition)),
+            _bookDetailsTextCol(S.of(context).detailsBookPages, book.pageCount?.toString() ?? '--'),
           ],
         ),
         SizedBox(height: rowGap),
         Row(
           children: <Widget>[
-            _bookDetailsTextCol(
-                S.of(context).detailsBookAuthor, book.authors?.join(', ') ?? '--'),
-            _bookDetailsTextCol(
-                S.of(context).detailsBookPublisher, book.publisher ?? '--'),
+            _bookDetailsTextCol(S.of(context).detailsBookAuthor, book.authors?.join(', ') ?? '--'),
+            _bookDetailsTextCol(S.of(context).detailsBookPublisher, book.publisher ?? '--'),
           ],
         ),
         SizedBox(height: rowGap),
@@ -158,10 +172,7 @@ class _BookSwiperState extends State<BookSwiper> {
           children: <Widget>[
             Text(
               header,
-              style: Theme.of(context)
-                  .primaryTextTheme
-                  .subtitle
-                  .copyWith(color: Colors.white70),
+              style: Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),

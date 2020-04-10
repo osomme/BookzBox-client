@@ -2434,6 +2434,123 @@ class S {
       args: [],
     );
   }
+
+  String get bookConditionTitle {
+    return Intl.message(
+      'Book Condition',
+      name: 'bookConditionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookConditionUnknown {
+    return Intl.message(
+      'Unknown',
+      name: 'bookConditionUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookConditionNew {
+    return Intl.message(
+      'New',
+      name: 'bookConditionNew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookConditionNewDesc {
+    return Intl.message(
+      'The book is brand-new and has not been used.',
+      name: 'bookConditionNewDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookConditionLikeNew {
+    return Intl.message(
+      'Like new',
+      name: 'bookConditionLikeNew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookConditionLikeNewDesc {
+    return Intl.message(
+      'The book has been used, but is in perfect working condition.',
+      name: 'bookConditionLikeNewDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookConditionGood {
+    return Intl.message(
+      'Good',
+      name: 'bookConditionGood',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookConditionGoodDesc {
+    return Intl.message(
+      'The book may show some cosmetic damage such as scratches, but remains in good condition.',
+      name: 'bookConditionGoodDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookConditionAcceptable {
+    return Intl.message(
+      'Acceptable',
+      name: 'bookConditionAcceptable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookConditionAcceptableDesc {
+    return Intl.message(
+      'The book is fairly worn, but is still complete and can be read without issues.',
+      name: 'bookConditionAcceptableDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookConditionDamaged {
+    return Intl.message(
+      'Damaged',
+      name: 'bookConditionDamaged',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookConditionDamagedDesc {
+    return Intl.message(
+      'The book is damaged. Missing or partial pages may occur.',
+      name: 'bookConditionDamagedDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get bookConditionRequiredError {
+    return Intl.message(
+      'Please set the book condition.',
+      name: 'bookConditionRequiredError',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

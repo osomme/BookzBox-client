@@ -264,5 +264,18 @@
     "boxTradeListSelectTitle": "Select a box",
     "boxTradeListSelectDescription": "Choose the box that you wish to trade",
     "boxTradeListCancel": "Cancel",
-    "boxTradeListOk": "Ok"
+    "boxTradeListOk": "Ok",
+    "bookConditionTitle": "Book Condition",
+    "bookConditionUnknown": "Unknown",
+    "bookConditionNew": "New",
+    "bookConditionNewDesc": "The book is brand-new and has not been used.",
+    "bookConditionLikeNew": "Like new",
+    "bookConditionLikeNewDesc": "The book has been used, but is in perfect working condition.",
+    "bookConditionGood": "Good",
+    "bookConditionGoodDesc": "The book may show some cosmetic damage such as scratches, but remains in good condition.",
+    "bookConditionAcceptable": "Acceptable",
+    "bookConditionAcceptableDesc": "The book is fairly worn, but is still complete and can be read without issues.",
+    "bookConditionDamaged": "Damaged",
+    "bookConditionDamagedDesc": "The book is damaged. Missing or partial pages may occur.",
+    "bookConditionRequiredError": "Please set the book condition."
 }

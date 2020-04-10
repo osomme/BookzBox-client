@@ -1,3 +1,5 @@
+import 'package:bookzbox/features/box/models/book_condition.dart';
+
 class Book {
   final String isbn13;
   final String isbn10;
@@ -11,6 +13,7 @@ class Book {
   final int publishYear;
   final String synopsis;
   final String publisher;
+  BookCondition condition;
 
   Book({
     this.isbn13,
@@ -25,5 +28,6 @@ class Book {
     this.publishYear,
     this.synopsis,
     this.publisher,
+    this.condition,
   });
 }
