@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,7 @@ class AuthInputCard extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(bottom: 14.0),
         child: TextField(
+          key: field.key,
           keyboardType: field.type,
           onChanged: field.onChanged,
           obscureText: field.isPassword ? true : false,
@@ -49,11 +51,13 @@ class AuthInputCard extends StatelessWidget {
                   errorMessage != null
                       ? Text(
                           errorMessage,
+                          key: Key(Keys.authErrorTextKey),
                           style: TextStyle(color: Theme.of(context).errorColor),
                         )
                       : SizedBox.shrink(),
                   SizedBox(height: 14.0),
                   FlatButton(
+                    key: Key(Keys.authLoginRegisterToggleBtnKey),
                     onPressed: onNavigationPressed,
                     child: Text(
                       navigationButtonLabel,

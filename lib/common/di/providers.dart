@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/data_access/local_storage.dart';
 import 'package:bookzbox/data_access/recommendation_storage.dart';
 import 'package:bookzbox/features/activity/activity.dart';
@@ -49,6 +50,7 @@ import 'package:bookzbox/features/profile/stores/preferences_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
 import 'package:bookzbox/features/profile/ui/screens/profile_screen.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 final authProviders = [
@@ -62,6 +64,7 @@ final authProviders = [
   ),
   ProxyProvider2<AuthStore, IAuthErrorParser, AuthSelectionScreen>(
     update: (_, store, errorParser, __) => AuthSelectionScreen(
+      key: Key(Keys.authSelectionScreenKey),
       authStore: store,
       errorParser: errorParser,
     ),
@@ -178,7 +181,7 @@ final feedProviders = [
   ),
   ...boxLikeProviders,
   ProxyProvider<FeedStore, FeedScreen>(
-    update: (_, store, __) => FeedScreen(feedStore: store),
+    update: (_, store, __) => FeedScreen(key: Key(Keys.feedScreenKey), feedStore: store),
   ),
 ];
 

@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/features/profile/stores/preferences_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_box_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
@@ -141,6 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 PopupMenuButton<UserOverflowAction>(
+                  key: Key(Keys.profileMenuBtnKey),
                   child: Observer(
                     builder: (_) => ProfileAvatar(
                       displayName: widget.profileStore.profile.displayName,
@@ -159,6 +161,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 48.0,
                       value: UserOverflowAction.Logout,
                       child: Row(
+                        key: Key(Keys.logoutBtnKey),
                         children: <Widget>[
                           Icon(
                             Icons.exit_to_app,
@@ -194,6 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return DefaultTabController(
       length: (widget.profileStore.isMyProfile ? numTabs : numTabs - 1),
       child: Scaffold(
+        key: Key(Keys.profileScreenKey),
         appBar: getAppBar(context),
         body: TabBarView(
           children: getTabScreens(context),

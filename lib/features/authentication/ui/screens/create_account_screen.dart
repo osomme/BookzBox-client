@@ -1,4 +1,5 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
+import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,8 @@ class CreateAccountScreen extends StatefulWidget {
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
   void _registerUser() async {
     FocusScope.of(context).unfocus(); // Hides soft keyboard
-    await widget.authStore.registerUser(
-        widget.credStore.username, widget.credStore.email, widget.credStore.password);
+    await widget.authStore
+        .registerUser(widget.credStore.username, widget.credStore.email, widget.credStore.password);
     if (widget.authStore.isLoggedIn) {
       widget.credStore.reset();
       Navigator.popUntil(context, (s) => s.isFirst);
@@ -28,25 +29,25 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   List<FormFieldData> _createFormFields() {
     return [
       FormFieldData(
-        labelText: S.of(context).authUsername,
-        prefixIcon: Icon(Icons.person),
-        errorText: widget.credStore.usernameError,
-        onChanged: (value) => widget.credStore.setUsername(value),
-      ),
+          labelText: S.of(context).authUsername,
+          prefixIcon: Icon(Icons.person),
+          errorText: widget.credStore.usernameError,
+          onChanged: (value) => widget.credStore.setUsername(value),
+          key: Key(Keys.usernameInputFieldKey)),
       FormFieldData(
-        labelText: S.of(context).authEmail,
-        prefixIcon: Icon(Icons.email),
-        errorText: widget.credStore.emailError,
-        onChanged: (value) => widget.credStore.setEmail(value),
-        type: TextInputType.emailAddress,
-      ),
+          labelText: S.of(context).authEmail,
+          prefixIcon: Icon(Icons.email),
+          errorText: widget.credStore.emailError,
+          onChanged: (value) => widget.credStore.setEmail(value),
+          type: TextInputType.emailAddress,
+          key: Key(Keys.emailInputFieldKey)),
       FormFieldData(
-        labelText: S.of(context).authPassword,
-        isPassword: true,
-        prefixIcon: Icon(Icons.lock),
-        errorText: widget.credStore.passwordError,
-        onChanged: (value) => widget.credStore.setPassword(value),
-      ),
+          labelText: S.of(context).authPassword,
+          isPassword: true,
+          prefixIcon: Icon(Icons.lock),
+          errorText: widget.credStore.passwordError,
+          onChanged: (value) => widget.credStore.setPassword(value),
+          key: Key(Keys.passwordInputFieldKey)),
     ];
   }
 
@@ -55,6 +56,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     return Observer(
       builder: (_) {
         return AuthScreen(
+          key: Key(Keys.newAccountScreenKey),
           fields: _createFormFields(),
           onNavigationPressed: () {
             widget.authStore.clearError();
@@ -63,6 +65,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           formIsValid: widget.credStore.credentialsAreValid,
           navigationButtonText: S.of(context).authNavToLogIn,
           submitButtonText: S.of(context).authRegisterBtn,
+          submitButtonKey: Key(Keys.registerBtnKey),
           onSubmitPressed: _registerUser,
           isLoading: widget.authStore.isLoading,
           errorMessage: widget.authStore.errorMessage != null

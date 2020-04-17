@@ -1,4 +1,5 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
+import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -18,8 +19,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   void _logIn() async {
     FocusScope.of(context).unfocus(); // Hides soft keyboard
-    await widget.authStore
-        .signInWithEmail(widget.credStore.email, widget.credStore.password);
+    await widget.authStore.signInWithEmail(widget.credStore.email, widget.credStore.password);
     if (widget.authStore.isLoggedIn) {
       widget.credStore.reset();
       Navigator.popUntil(context, (s) => s.isFirst);
@@ -29,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   List<FormFieldData> _createFormFields() {
     return [
       FormFieldData(
+        key: Key(Keys.emailInputFieldKey),
         labelText: S.of(context).authEmail,
         prefixIcon: Icon(Icons.email),
         errorText: widget.credStore.emailError,
@@ -36,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         type: TextInputType.emailAddress,
       ),
       FormFieldData(
+        key: Key(Keys.passwordInputFieldKey),
         labelText: S.of(context).authPassword,
         isPassword: true,
         prefixIcon: Icon(Icons.lock),
@@ -49,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => AuthScreen(
+        key: Key(Keys.loginWithEmailScreenKey),
         fields: _createFormFields(),
         onNavigationPressed: () {
           widget.authStore.clearError();
@@ -57,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
         formIsValid: widget.credStore.credentialsAreValid,
         navigationButtonText: S.of(context).authNavToRegistration,
         submitButtonText: S.of(context).authLogInBtn,
+        submitButtonKey: Key(Keys.loginBtnKey),
         onSubmitPressed: _logIn,
         isLoading: widget.authStore.isLoading,
         errorMessage: widget.authStore.errorMessage != null

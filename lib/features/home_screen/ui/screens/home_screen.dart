@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:badges/badges.dart';
 import 'package:bookzbox/common/di/providers.dart';
+import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/features/activity/activity.dart';
 import 'package:bookzbox/features/activity/stores/my_liked_boxes_store.dart';
 import 'package:bookzbox/features/activity/ui/screens/activity_screen.dart';
@@ -78,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: Key(Keys.homeScreenKey),
       body: PageView.builder(
         physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
@@ -161,6 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Text(S.of(context).homeNavBarProfileLabel),
           icon: Icon(
             Icons.person,
+            key: Key(Keys.profileNavBtnKey),
           ),
         ),
       ],

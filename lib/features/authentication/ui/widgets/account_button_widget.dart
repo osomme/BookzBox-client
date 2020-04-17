@@ -5,13 +5,15 @@ class AuthButton extends StatelessWidget {
   final String labelText;
   final bool isLoading;
   final BorderRadiusGeometry _borderRadius = BorderRadius.circular(30.0);
+  final Key buttonKey;
 
   AuthButton({
-    Key key,
+    Key widgetKey,
     @required this.onClicked,
     @required this.labelText,
     @required this.isLoading,
-  }) : super(key: key);
+    @required this.buttonKey,
+  }) : super(key: widgetKey);
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class AuthButton extends StatelessWidget {
           ],
         ),
         child: RaisedButton(
+          key: buttonKey,
           onPressed: isLoading ? null : onClicked,
           shape: RoundedRectangleBorder(
             borderRadius: _borderRadius,

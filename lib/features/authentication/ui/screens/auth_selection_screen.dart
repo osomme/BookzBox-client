@@ -1,4 +1,5 @@
 import 'package:bookzbox/common/screens/screen_names.dart';
+import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/authentication/ui/screens/auth_loading_screen.dart';
 import 'package:bookzbox/features/authentication/ui/widgets/main_content_card.dart';
@@ -11,8 +12,7 @@ class AuthSelectionScreen extends StatelessWidget {
   final AuthStore authStore;
   final IAuthErrorParser errorParser;
 
-  const AuthSelectionScreen(
-      {Key key, @required this.authStore, @required this.errorParser})
+  const AuthSelectionScreen({Key key, @required this.authStore, @required this.errorParser})
       : super(key: key);
 
   @override
@@ -40,10 +40,10 @@ class AuthSelectionScreen extends StatelessWidget {
                         child: Column(
                           children: <Widget>[
                             RaisedButton(
+                              key: Key(Keys.authSelectEmailBtnKey),
                               onPressed: authStore.isLoading
                                   ? null
-                                  : () =>
-                                      Navigator.pushNamed(context, Screens.emailLogin),
+                                  : () => Navigator.pushNamed(context, Screens.emailLogin),
                               child: Row(
                                 children: <Widget>[
                                   Icon(Icons.email),
@@ -54,8 +54,7 @@ class AuthSelectionScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 5),
                             RaisedButton(
-                              onPressed:
-                                  authStore.isLoading ? null : authStore.signInWithGoogle,
+                              onPressed: authStore.isLoading ? null : authStore.signInWithGoogle,
                               child: Row(
                                 children: <Widget>[
                                   Icon(
@@ -71,8 +70,7 @@ class AuthSelectionScreen extends StatelessWidget {
                             RaisedButton(
                               onPressed: authStore.isLoading
                                   ? null
-                                  : () =>
-                                      print('Clicked facebook -- not implemented yet'),
+                                  : () => print('Clicked facebook -- not implemented yet'),
                               child: Row(
                                 children: <Widget>[
                                   Icon(
@@ -92,16 +90,15 @@ class AuthSelectionScreen extends StatelessWidget {
                                         authStore.errorMessage,
                                         context,
                                       ),
-                                      style:
-                                          TextStyle(color: Theme.of(context).errorColor),
+                                      style: TextStyle(color: Theme.of(context).errorColor),
                                     ),
                                   )
                                 : SizedBox.shrink(),
                             FlatButton(
+                              key: Key(Keys.newAccountNavButtonKey),
                               onPressed: authStore.isLoading
                                   ? null
-                                  : () => Navigator.pushNamed(
-                                      context, Screens.emailNewAccount),
+                                  : () => Navigator.pushNamed(context, Screens.emailNewAccount),
                               child: Row(
                                 children: <Widget>[
                                   Text(

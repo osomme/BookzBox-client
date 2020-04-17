@@ -10,6 +10,7 @@ class FormFieldData {
   final String labelText;
   final bool isPassword;
   final TextInputType type;
+  final Key key;
 
   FormFieldData(
       {@required this.onChanged,
@@ -18,7 +19,8 @@ class FormFieldData {
       @required this.labelText,
       this.isPassword = false,
       this.type = TextInputType.text,
-      this.suffixIcon});
+      this.suffixIcon,
+      this.key});
 }
 
 class AuthScreen extends StatelessWidget {
@@ -30,6 +32,7 @@ class AuthScreen extends StatelessWidget {
   final bool formIsValid;
   final bool isLoading;
   final String errorMessage;
+  final Key submitButtonKey;
 
   const AuthScreen(
       {Key key,
@@ -40,7 +43,8 @@ class AuthScreen extends StatelessWidget {
       @required this.fields,
       @required this.formIsValid,
       @required this.isLoading,
-      this.errorMessage})
+      this.errorMessage,
+      this.submitButtonKey})
       : super(key: key);
 
   @override
@@ -65,6 +69,7 @@ class AuthScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: Center(
                 child: AuthButton(
+                  buttonKey: submitButtonKey,
                   onClicked: formIsValid ? onSubmitPressed : null,
                   labelText: submitButtonText,
                   isLoading: isLoading,
