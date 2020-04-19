@@ -2,15 +2,11 @@ import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-/// Integration tests for 'my profile'.
+/// Integration test checking the link between the feed screen and the recommendation system.
 void main() {
-  group('MY PROFILE', () {
-    final profileNavBtn = find.byValueKey(Keys.profileNavBtnKey);
-    final profileScreen = find.byValueKey(Keys.profileScreenKey);
-    final boxesTabBtn = find.byValueKey(Keys.profileBoxesTabBtnKey);
-    final boxItem = find.byValueKey(Keys.miniBoxItemKey + 0.toString());
-    final bookPreference = find.byValueKey(Keys.bookPreferenceChipKey + 0.toString());
-    final preferencesTabBtn = find.byValueKey(Keys.profilePreferencesTabBtnKey);
+  group('FEED TEST', () {
+    final feedScreen = find.byValueKey(Keys.feedScreenKey);
+    final feedItem = find.byValueKey(Keys.feedItemKey + 0.toString());
 
     FlutterDriver driver;
 
@@ -61,36 +57,10 @@ void main() {
       });
     });
 
-    group('NAVIGATE', () {
-      test(
-          'Clicking the bottom navigation button representing profile should direct user to profile screen.',
-          () async {
-        await driver.waitFor(profileNavBtn);
-        await driver.scrollIntoView(profileNavBtn);
-        await driver.tap(profileNavBtn);
-        await driver.waitFor(profileScreen);
-      });
-    });
-
-    group('BOXES', () {
-      /// Navigating to the "boxes"-tab should trigger a load of
-      /// all boxes for that user. This test checks that at least one box
-      /// is loaded confirming the link the between the modules.
-      test('Navigating to "boxes"-tab should load and display boxes.', () async {
-        await driver.waitFor(boxesTabBtn);
-        await driver.tap(boxesTabBtn);
-        await driver.waitFor(boxItem);
-      });
-    });
-
-    group('PREFERENCES', () {
-      /// Navigating to the "preferences"-tab should trigger a load of
-      /// all book preferences for that user. This test checks that at least one
-      /// preference is loaded confirming the link the between the modules.
-      test('Navigating to "preferences"-tab should load and display book preferences.', () async {
-        await driver.waitFor(preferencesTabBtn);
-        await driver.tap(preferencesTabBtn);
-        await driver.waitFor(bookPreference);
+    group('RECOMMENDATIONS', () {
+      test('When feed screen is open, it should load and display recommendations.', () async {
+        await driver.waitFor(feedScreen);
+        await driver.waitFor(feedItem);
       });
     });
   });

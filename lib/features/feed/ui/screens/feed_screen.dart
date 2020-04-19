@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/common/widgets/widgets.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/feed/feed.dart';
@@ -92,6 +93,7 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
               }
             },
             itemBuilder: (context, index) => FeedListItem(
+              key: Key(Keys.feedItemKey + index.toString()),
               pageController: _pageController,
               index: index,
               box: widget.feedStore.boxes[index],

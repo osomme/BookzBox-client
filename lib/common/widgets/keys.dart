@@ -27,4 +27,5 @@ class Keys {
   static const String miniBoxItemKey = 'MiniBoxItem';
   static const String profileBoxesScreenKey = 'ProfileBoxesScreen';
   static const String bookPreferenceChipKey = 'BookPreferenceChip';
+  static const String feedItemKey = 'FeedItem';
 }
