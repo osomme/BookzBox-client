@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/common/widgets/widgets.dart';
 import 'package:bookzbox/features/box/models/box.dart';
 import 'package:bookzbox/features/box/models/models.dart';
@@ -105,6 +106,7 @@ class BoxesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: Key(Keys.profileBoxesScreenKey),
         body: Observer(
           builder: (_) => (boxStore.isLoading
               ? Center(
@@ -119,6 +121,7 @@ class BoxesTab extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         return Observer(
                             builder: (_) => MiniBoxListItem(
+                                  key: Key(Keys.miniBoxItemKey + index.toString()),
                                   leftButtonText: S.of(context).profileChangeVisibilityBtn,
                                   onLeftButtonPressed: () => showDialog<void>(
                                     context: context,

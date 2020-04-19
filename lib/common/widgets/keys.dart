@@ -22,4 +22,9 @@ class Keys {
   static const String logoutBtnKey = 'LogoutBtn';
   static const String authSelectionScreenKey = 'AuthSelectionScreen';
   static const String authLoginRegisterToggleBtnKey = 'authLoginRegisterToggleBtn';
+  static const String profileBoxesTabBtnKey = 'MyBoxesTabBtn';
+  static const String profilePreferencesTabBtnKey = 'PreferencesTabBtn';
+  static const String miniBoxItemKey = 'MiniBoxItem';
+  static const String profileBoxesScreenKey = 'ProfileBoxesScreen';
+  static const String bookPreferenceChipKey = 'BookPreferenceChip';
 }

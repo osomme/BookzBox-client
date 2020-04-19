@@ -35,7 +35,8 @@ class MiniBoxListItem extends StatelessWidget {
     this.shouldShowLeftButton = true,
     this.shouldShowExtraOptions = true,
     this.deleting = false,
-  });
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

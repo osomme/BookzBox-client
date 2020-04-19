@@ -62,6 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             : S.of(context).profileBoxesTabLabel),
         icon: Icon(
           FontAwesome5Solid.box_open,
+          key: Key(Keys.profileBoxesTabBtnKey),
           size: 20,
         ),
       ),
@@ -72,6 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           text: S.of(context).profilePreferencesTabLabel,
           icon: Icon(
             FontAwesome5Solid.user_cog,
+            key: Key(Keys.profilePreferencesTabBtnKey),
             size: 20,
           ),
         ),

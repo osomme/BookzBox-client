@@ -2,7 +2,7 @@ import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-/// A complete authentication sequence test.
+/// A complete authentication sequence test (LOGIN -> LOGOUT)
 void main() {
   group('AUTH SEQUENCE', () {
     /// The e-mail to use to log in to the test account.

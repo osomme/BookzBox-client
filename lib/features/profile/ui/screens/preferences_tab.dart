@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/features/profile/models/book_subjects.dart';
 import 'package:bookzbox/features/profile/stores/preferences_store.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
@@ -134,6 +135,7 @@ class PreferencesTab extends StatelessWidget {
                       right: 4,
                     ),
                     child: Chip(
+                      key: Key(Keys.bookPreferenceChipKey + index.toString()),
                       label: Text(
                           getBookSubjects(context)[preferencesStore.favoriteBookSubjects[index]]),
                       deleteIcon: Icon(
