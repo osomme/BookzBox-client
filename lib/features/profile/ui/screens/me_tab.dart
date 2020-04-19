@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/new_box/ui/screens/new_box_screen.dart';
 import 'package:bookzbox/features/profile/stores/profile_store.dart';
@@ -21,6 +22,7 @@ class MeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        key: Key(Keys.profileMainScreenScrollViewKey),
         child: Container(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -68,6 +70,7 @@ class MeTab extends StatelessWidget {
                             child: Container(
                               margin: const EdgeInsets.all(2.0),
                               child: MaterialButton(
+                                key: Key(Keys.newBoxMainBtnKey),
                                 color: Theme.of(context).primaryColor,
                                 onPressed: () => Navigator.push(
                                     context,

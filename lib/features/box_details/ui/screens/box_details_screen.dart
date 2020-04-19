@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bookzbox/common/screens/screen_names.dart';
+import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/features/box/box.dart';
 import 'package:bookzbox/features/box_details/box_details.dart';
 import 'package:bookzbox/features/box_details/ui/widgets/widgets.dart';
@@ -42,6 +43,7 @@ class _BoxDetailsScreenState extends State<BoxDetailsScreen> {
   Widget build(BuildContext context) {
     widget.store.fetchBoxDetails(widget.boxId);
     return Scaffold(
+      key: Key(Keys.boxDetailsScreenKey),
       backgroundColor: Colors.white,
       body: NestedScrollView(
         body: Observer(

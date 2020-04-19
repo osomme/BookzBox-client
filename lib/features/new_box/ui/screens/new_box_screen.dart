@@ -1,5 +1,6 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:bookzbox/common/screens/screen_names.dart';
+import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/models/book.dart';
 import 'package:bookzbox/features/box/models/models.dart';
@@ -19,7 +20,7 @@ import 'package:provider/provider.dart';
 class NewBoxScreen extends StatefulWidget {
   final NewBoxStore newBoxStore;
 
-  NewBoxScreen(this.newBoxStore);
+  NewBoxScreen(this.newBoxStore, {Key key}) : super(key: key);
 
   @override
   _NewBoxScreenState createState() => _NewBoxScreenState();
@@ -84,6 +85,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
       child: Align(
         alignment: Alignment.topLeft,
         child: FlatButton(
+          key: Key(Keys.boxPublishBtnKey),
           child: Row(
             children: <Widget>[
               Container(
@@ -121,6 +123,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
     return new Container(
       margin: EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 4.0),
       child: OutlineButton(
+        key: Key(Keys.addBookBtnKey),
         borderSide: BorderSide(
           color: Theme.of(context).primaryColor,
         ),
@@ -301,6 +304,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
             ],
           ),
           TextField(
+            key: Key(Keys.boxTitleInputFieldKey),
             maxLength: 50,
             maxLengthEnforced: true,
             decoration: InputDecoration(
@@ -363,6 +367,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
+          key: Key(Keys.isbnLookupDialogKey),
           title: Text(
             S.of(context).newBoxIsbnDialogTitle,
             style: TextStyle(
@@ -520,6 +525,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                       builder: (_) => widget.newBoxStore.isLoadingBook
                           ? Center(child: CircularProgressIndicator())
                           : TextField(
+                              key: Key(Keys.isbnInputFieldKey),
                               keyboardType: TextInputType.number,
                               onChanged: (value) => widget.newBoxStore.setIsbn(value),
                               decoration: InputDecoration(
@@ -551,6 +557,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                 ),
                 Observer(
                   builder: (_) => FlatButton(
+                    key: Key(Keys.findBookBtnKey),
                     child: Text(
                       S.of(context).newBoxFindBook,
                       style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
@@ -598,6 +605,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
+          key: Key(Keys.bookDialogKey),
           titlePadding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
           contentPadding: EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 0.0),
           backgroundColor: Color.fromRGBO(252, 241, 233, 1.0),
@@ -759,6 +767,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                               children: <Widget>[
                                 Observer(
                                   builder: (_) => RadioListTile(
+                                    key: Key(Keys.bookConditionNewKey),
                                     title: Text(S.of(context).bookConditionNew),
                                     subtitle: Text(
                                       S.of(context).bookConditionNewDesc,
@@ -877,6 +886,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
                   onPressed: () => Navigator.of(context).pop(),
                 ),
                 FlatButton(
+                  key: Key(Keys.addBookDialogBtnKey),
                   child: Text(
                     S.of(context).newBoxAddBookButton,
                     style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),

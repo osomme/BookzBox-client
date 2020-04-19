@@ -126,7 +126,7 @@ final bookProviders = [
     update: (_, bookRepo, boxRepo, locService, __) => NewBoxStore(bookRepo, boxRepo, locService),
   ),
   ProxyProvider<NewBoxStore, NewBoxScreen>(
-    update: (_, store, __) => NewBoxScreen(store),
+    update: (_, store, __) => NewBoxScreen(store, key: Key(Keys.newBoxScreenKey)),
   )
 ];
 

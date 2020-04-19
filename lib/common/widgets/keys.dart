@@ -28,4 +28,17 @@ class Keys {
   static const String profileBoxesScreenKey = 'ProfileBoxesScreen';
   static const String bookPreferenceChipKey = 'BookPreferenceChip';
   static const String feedItemKey = 'FeedItem';
+  static const String newBoxMainBtnKey = 'NewBoxMainBtn';
+  static const String newBoxScreenKey = 'NewBoxScreen';
+  static const String profileMainScreenScrollViewKey = 'ProfileMainScreenScrollView';
+  static const String addBookBtnKey = 'AddBookBtn';
+  static const String isbnLookupDialogKey = 'IsbnLookupDialog';
+  static const String isbnInputFieldKey = 'IsbnInputField';
+  static const String findBookBtnKey = 'FindBookBtn';
+  static const String bookDialogKey = 'BookDialog';
+  static const String bookConditionNewKey = 'BookConditionNew';
+  static const String addBookDialogBtnKey = 'AddBookDialogBtn';
+  static const String boxTitleInputFieldKey = 'BoxTitleInputField';
+  static const String boxPublishBtnKey = 'BoxPublishBtn';
+  static const String boxDetailsScreenKey = 'BoxDetailsScreen';
 }
