@@ -136,6 +136,8 @@ class PreferencesTab extends StatelessWidget {
                     ),
                     child: Chip(
                       key: Key(Keys.bookPreferenceChipKey + index.toString()),
+                      elevation: 8,
+                      backgroundColor: Theme.of(context).accentColor,
                       label: Text(
                           getBookSubjects(context)[preferencesStore.favoriteBookSubjects[index]]),
                       deleteIcon: Icon(
@@ -156,12 +158,39 @@ class PreferencesTab extends StatelessWidget {
         Expanded(
           flex: 5,
           child: Container(
-            margin: const EdgeInsets.only(top: 8, bottom: 8, right: 16.0, left: 16.0),
+            margin: const EdgeInsets.only(
+              top: 8,
+              bottom: 8,
+              right: 16.0,
+              left: 16.0,
+            ),
+            padding: const EdgeInsets.only(
+              top: 4,
+              bottom: 4,
+              left: 8,
+              right: 8,
+            ),
             child: Observer(
               builder: (_) => SearchableDropdown.single(
+                style: TextStyle(color: Colors.black),
+                dialogBox: true,
                 items: getBookSubjectsMenuItems(context),
                 value: preferencesStore.selectedSubject,
-                hint: S.of(context).preferencesGenreHint,
+                hint: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 12,
+                    top: 12,
+                    bottom: 12,
+                  ),
+                  child: Text(
+                    S.of(context).preferencesGenreHint,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
                 searchHint: S.of(context).preferencesGenreSearchHint,
                 onChanged: (value) {
                   preferencesStore.setSelectedSubject(value);
@@ -170,6 +199,13 @@ class PreferencesTab extends StatelessWidget {
                   }
                 },
                 isExpanded: true,
+                underline: Container(
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).accentColor,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
               ),
             ),
           ),
