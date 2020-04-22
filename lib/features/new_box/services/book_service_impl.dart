@@ -6,11 +6,15 @@ import 'package:bookzbox/features/new_box/services/book_service.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 
+/// Class which calls the Google Books API as an implementation of the [IBookService] interface.
 class BookService extends IBookService {
   BookService._privateConstructor();
 
+  /// A singleton instance of the book service.
   static final BookService instance = BookService._privateConstructor();
 
+  /// Looks up an ISBN code in the Google Books API.
+  /// [isbn] is the ISBN code that is used to fetch the book data. The code can be either ISBN-10 or ISBN-13.
   @override
   Future<Either<String, Book>> isbnLookup(String isbn) async {
     try {

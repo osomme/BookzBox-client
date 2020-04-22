@@ -3,9 +3,16 @@ import 'package:flutter/material.dart';
 
 /// Represents a chat message between two users.
 class ChatMessage {
+  /// The ID of the user that posted the message.
   final String postedByUserId;
+
+  /// The content of the message. Can be either a text or an URL pointing to an image or media type. See [contentType].
   final String content;
+
+  /// A timestamp representing the date and time that the message was posted.
   final DateTime timestamp;
+
+  /// The content type that the message represents. Can be a text message or an URL pointing to a media object.
   final ChatMessageType contentType;
 
   ChatMessage({
@@ -15,12 +22,13 @@ class ChatMessage {
     this.contentType = ChatMessageType.Text,
   });
 
+  /// Maps a message item from Firebase Firestore document to a [ChatMessage] object.
   factory ChatMessage.fromFirebase(DocumentSnapshot snapshot) {
     final data = snapshot.data;
     return ChatMessage(
       postedByUserId: data['postedByUserId'] ?? '',
       content: data['content'] ?? '',
-      timestamp: (data['timestamp'] as Timestamp).toDate(),
+      timestamp: (data['timestamp'] as Timestamp)?.toDate() ?? DateTime.now(),
       contentType:
           (data['contentType'] as int)?.toChatMessageType() ?? ChatMessageType.Text,
     );

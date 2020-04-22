@@ -48,7 +48,7 @@ abstract class _FeedStore with Store {
     final locationData = await _locationService.getLocation();
     locationData.fold(
       (error) {
-        print('No user location @ feed_store.dart');
+        print('No user location @ feed_store.dart with error: $error');
       },
       (point) async {
         _latitude = point.latitude;

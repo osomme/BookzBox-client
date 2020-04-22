@@ -24,10 +24,17 @@ class LocationService implements ILocationService {
   @override
   Future<Either<String, LatLng>> getLocation() async {
     try {
-      final latLng = await Location()
-          .getLocation()
-          .then((p) => LatLng(latitude: p.latitude, longitude: p.longitude));
-      return right(latLng);
+      final locationService = Location();
+      // Checks for permissions and launches a new permission request if the app does not have permissions.
+      final hasPermission = await locationService.requestPermission();
+      if (hasPermission) {
+        final latLng = await locationService
+            .getLocation()
+            .then((p) => LatLng(latitude: p.latitude, longitude: p.longitude));
+        return right(latLng);
+      } else {
+        return left('No permissions');
+      }
     } on PlatformException catch (e) {
       print(e);
       return left(e.code);

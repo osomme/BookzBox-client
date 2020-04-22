@@ -5,6 +5,7 @@ import 'package:bookzbox/features/likes/likes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
+/// Firebase-based implementation of the [IBoxLikeService] interface.
 class FirebaseBoxLikeService implements IBoxLikeService {
   final _firestore = Firestore.instance;
 
@@ -14,6 +15,9 @@ class FirebaseBoxLikeService implements IBoxLikeService {
 
   static final instance = FirebaseBoxLikeService._privateConstructor();
 
+  /// Retrives a stream of likes for a particular user.
+  /// [userId] the userId of the owner who's like stream you want to retrieve.
+  @override
   Future<Stream<HashSet<String>>> likesStreamFor(String userId) async {
     return _firestore
         .collection('likes')
@@ -30,6 +34,9 @@ class FirebaseBoxLikeService implements IBoxLikeService {
         .asBroadcastStream();
   }
 
+  /// Removes a like from the Firebase database.
+  /// [boxId] the ID of the box that the user wishes to remove a like from.
+  /// [userId] the ID of the user that wishes to remove a like.
   @override
   Future<Either<NetworkError, bool>> removeLike(String boxId, String userId) async {
     if (_boxLikeCache.containsKey(boxId)) {
@@ -44,12 +51,15 @@ class FirebaseBoxLikeService implements IBoxLikeService {
     return (right(false));
   }
 
+  /// Adds a like to the Firebase database.
+  /// [boxId] the ID of the box that the user wishes to add a like to.
+  /// [userId] the user that wishes to add a like.
   @override
   Future<Either<NetworkError, bool>> addLike(String boxId, String userId) async {
     final like = {
       'likedByUserId': userId,
       'boxId': boxId,
-      'timestamp': DateTime.now(),
+      'timestamp': FieldValue.serverTimestamp(),
     };
 
     try {

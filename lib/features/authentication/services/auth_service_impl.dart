@@ -71,7 +71,7 @@ class AuthService implements IAuthService {
 
   Future<void> _updateLastSeen(String userId) async {
     final ref = _db.collection('users').document(userId);
-    await ref.setData({'lastSeen': DateTime.now()}, merge: true);
+    await ref.setData({'lastSeen': FieldValue.serverTimestamp()}, merge: true);
   }
 
   Future<void> _setUserData(FirebaseUser user, String username) async {
@@ -82,8 +82,8 @@ class AuthService implements IAuthService {
       'email': user.email,
       'photoURL': user.photoUrl,
       'displayName': username,
-      'registeredOn': DateTime.now(),
-      'lastSeen': DateTime.now()
+      'registeredOn': FieldValue.serverTimestamp(),
+      'lastSeen': FieldValue.serverTimestamp(),
     });
   }
 

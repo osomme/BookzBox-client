@@ -8,7 +8,7 @@ class ActivityStatusService extends IActivityStatusService {
   Future<bool> updateActivityStatus(String userId) async {
     // The updated activity status
     Map<String, dynamic> data = new Map();
-    data.putIfAbsent('lastSeen', () => DateTime.now());
+    data.putIfAbsent('lastSeen', () => FieldValue.serverTimestamp());
 
     bool success = false;
 

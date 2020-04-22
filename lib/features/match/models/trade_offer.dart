@@ -40,7 +40,7 @@ class TradeOffer {
   factory TradeOffer.fromFirebase(Map<dynamic, dynamic> data, String offerId) {
     return TradeOffer(
       offerId: offerId,
-      timestamp: (data['timestamp'] as Timestamp).toDate(),
+      timestamp: (data['timestamp'] as Timestamp)?.toDate() ?? DateTime.now(),
       boxId: data['boxId'],
       boxTitle: data['boxTitle'],
       boxThumbnailUrl: data['boxThumbnailUrl'],
