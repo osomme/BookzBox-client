@@ -37,6 +37,10 @@ class BookSubjectMapper {
       return List();
     }
     String indicesJson = dataString.trim();
+    if (indicesJson.length <= 2) {
+      // The string is just the array brackets.
+      return List();
+    }
     List<String> indices =
         indicesJson.substring(1, indicesJson.length - 1).split(','); //Remove brackets and split
     try {
