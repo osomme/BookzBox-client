@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 
+/// Firebase inplementation of the [IFeedService] interface.
 class FirebaseFeedService implements IFeedService {
   final _firestore = Firestore.instance;
   final String _recommenderApiUrl = 'http://13.48.105.244:80/api/';
@@ -24,7 +25,8 @@ class FirebaseFeedService implements IFeedService {
         .orderBy('publishDateTime', descending: true)
         .limit(number)
         .getDocuments()
-        .then((docs) => docs.documents.map((b) => BoxFeedListItem.fromFirestore(b)).toList())
+        .then((docs) =>
+            docs.documents.map((b) => BoxFeedListItem.fromFirestore(b)).toList())
         .catchError((error) => print(error));
 
     return boxes != null ? Right(boxes) : Left(NetworkError.noInternet);
@@ -32,6 +34,7 @@ class FirebaseFeedService implements IFeedService {
 
   /// Returns a stream of BoxFeedListItems.
   /// [userId] the user ID belonging to the client user. Any boxes that belong to them are filtered out.
+  @override
   Future<Stream<Iterable<BoxFeedListItem>>> getBoxesStream(String userId) async {
     // Box status is stored as an integer in Firestore (0 = public, 1 = hidden, 2 = traded)
     // Filtering locally as a temp solution since the stream does not load document
@@ -46,6 +49,7 @@ class FirebaseFeedService implements IFeedService {
             .where((b) => b.publisherId != userId && b.status == BoxStatus.public));
   }
 
+  /// Retrieves a collection of [BoxFeedListItem] from the reccomendation system.
   @override
   Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxRecommendations(
       String userId, int limit,
@@ -64,9 +68,9 @@ class FirebaseFeedService implements IFeedService {
       return left(NetworkError.noInternet);
     }
 
-    var json = jsonDecode(res.body);
+    final json = jsonDecode(res.body);
     List<BoxFeedListItem> boxes = new List();
-    for (var jsonItem in json) {
+    for (final jsonItem in json) {
       boxes.add(BoxFeedListItem.fromJson(jsonItem));
     }
 

@@ -24,7 +24,7 @@ class FirebaseChatService implements IChatService {
       await _firestore.collection('matches').document(chatId).collection('messages').add({
         'postedByUserId': message.postedByUserId,
         'content': message.content,
-        'timestamp': message.timestamp,
+        'timestamp': FieldValue.serverTimestamp(),
         'contentType': message.contentType.index,
       });
       return right(true);

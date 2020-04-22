@@ -70,15 +70,12 @@ class ChatMessageItem extends StatelessWidget {
                               builder: (ctx) =>
                                   FullSizeImageScreen(imageUrl: message.content),
                             ),
-                            child: Hero(
-                              tag: message.content,
-                              child: Container(
-                                height: 150.0,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.contain,
-                                  ),
+                            child: Container(
+                              height: 150.0,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.contain,
                                 ),
                               ),
                             ),
@@ -141,14 +138,11 @@ class FullSizeImageScreen extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.70,
         child: CachedNetworkImage(
           imageUrl: imageUrl,
-          imageBuilder: (ctx, imageProvider) => Hero(
-            tag: imageUrl,
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.contain,
-                ),
+          imageBuilder: (ctx, imageProvider) => Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.contain,
               ),
             ),
           ),

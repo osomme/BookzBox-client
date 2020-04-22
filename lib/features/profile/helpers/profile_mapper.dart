@@ -8,6 +8,7 @@ class ProfileMapper {
   static Profile fromFirestore(DocumentSnapshot ds) {
     final Map<String, dynamic> data = ds.data;
 
+    print('User profile data:');
     print(data);
 
     return Profile(
@@ -18,8 +19,9 @@ class ProfileMapper {
       lastSeen: (data['lastSeen'] as Timestamp).toDate(),
       tradeCount: (data.containsKey('tradeCount') ? data['tradeCount'] as int : 0),
       rating: (data.containsKey('rating') ? data['rating'] as int : 0),
-      favoriteGenres:
-          (data.containsKey('favoriteGenres') ? BookSubjectMapper.fromFirestore(data) : List()),
+      favoriteGenres: (data.containsKey('favoriteGenres')
+          ? BookSubjectMapper.fromFirestore(data)
+          : List()),
     );
   }
 }
