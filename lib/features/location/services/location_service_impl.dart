@@ -26,8 +26,9 @@ class LocationService implements ILocationService {
     try {
       final locationService = Location();
       // Checks for permissions and launches a new permission request if the app does not have permissions.
-      final hasPermission = await locationService.requestPermission();
-      if (hasPermission) {
+      final permissionStatus = await locationService.requestPermission();
+      print('Location permission status: $permissionStatus');
+      if (permissionStatus == PermissionStatus.GRANTED) {
         final latLng = await locationService
             .getLocation()
             .then((p) => LatLng(latitude: p.latitude, longitude: p.longitude));

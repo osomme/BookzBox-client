@@ -63,9 +63,12 @@ abstract class _MapStore with Store {
     _error = null;
     final location = await _locationService.getLocation();
     location.fold(
-      (error) => _error = MapError.noLocationPermissions,
+      (error) {
+        print('Failed to load user location in map store. Error: $error');
+        _error = MapError.noLocationPermissions;
+      },
       (loc) {
-        print('Location found: $loc');
+        print('Location found in map store: $loc');
         _userPosition = some(loc);
       },
     );
