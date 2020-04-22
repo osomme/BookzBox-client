@@ -64,7 +64,6 @@ abstract class _FeedStore with Store {
   @action
   Future<void> fetchBoxes(String userId) async {
     if (userId == null || userId.isEmpty) {
-      _initialLoadingOngoing = false;
       print('User ID was null in feed store');
       return;
     }

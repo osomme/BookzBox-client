@@ -68,7 +68,7 @@ abstract class _MapStore with Store {
         _error = MapError.noLocationPermissions;
       },
       (loc) {
-        print('Location found: $loc');
+        print('Location found in map store: $loc');
         _userPosition = some(loc);
       },
     );
