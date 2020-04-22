@@ -70,7 +70,7 @@ dependencies:
   google_maps_flutter: ^0.5.23+1
 
   # Obtaining user location coordinates
-  location: ^2.4.0
+  location: ^3.0.1
   
   # Internationalization support for formatting DateTime objects to localized string.
   intl: ^0.16.0
