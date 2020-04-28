@@ -1,3 +1,4 @@
+/// Represents book genres/subjects.
 /// IMPORTANT: DON'T CHANGE THE ORDER!
 enum BookSubject {
   Action,

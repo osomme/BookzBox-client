@@ -7,6 +7,10 @@ import 'package:dartz/dartz.dart';
 class BoxDetailsFirebaseService implements IBoxDetailsService {
   final _firestore = Firestore.instance;
 
+  /// Fetches a box from Firebase.
+  ///
+  /// [boxId] The id of the `Box` to fetch. This it much match the document in Firestore.
+  /// Returns the fetched `Box` on success and an error on failure.
   @override
   Future<Either<BoxDetailsError, Box>> getBox(String boxId) async {
     final doc = await _firestore.collection('boxes').document(boxId).get();

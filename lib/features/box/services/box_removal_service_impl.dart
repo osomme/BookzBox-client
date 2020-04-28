@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class BoxRemovalService extends IBoxRemovalService {
   final Firestore firestore = Firestore.instance;
 
+  /// Removes the box with id [boxId] from Firestore.
+  ///
+  /// Returns `true` if successfull; otherwise `false`.
   @override
   Future<bool> remove(String boxId) async {
     String error;

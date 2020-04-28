@@ -4,15 +4,12 @@ import 'package:bookzbox/features/profile/models/book_subjects.dart';
 import 'package:dartz/dartz.dart';
 
 class BookSubjectMapper {
-  // static Map<String, int> toFirestore(List<BookSubject> subjects) {
-  //   Map<String, int> map = new Map();
-  //   for (var subject in subjects) {
-  //     var kv = getKV(subject);
-  //     map.putIfAbsent(kv.value1, () => kv.value2);
-  //   }
-  //   return map;
-  // }
-
+  /// Converts a list of book subjects into a JSON format supported
+  /// by Firestore.
+  ///
+  /// [subjects] A list if `BookSubject` to convert.
+  /// Returns a `Map` with the given subjects formatted correctly for
+  /// Firestore.
   static Map<String, dynamic> toFirestore(List<BookSubject> subjects) {
     Map<String, dynamic> map = Map();
 
@@ -24,6 +21,11 @@ class BookSubjectMapper {
     return map;
   }
 
+  /// Converts a list of book subjects into a list containing
+  /// the index represented by each subject.
+  ///
+  /// [subjects] The list of `BookSubject` that should be converted.
+  /// Returns a list of indices.
   static List<int> toIndex(List<BookSubject> subjects) {
     List<int> indices = List();
     subjects.forEach((subject) => indices.add(subject.index));

@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 
 part 'box_feed_book.g.dart';
 
+/// A minimized version of a `Book`.
 @HiveType(typeId: 1)
 class BoxFeedBook {
   @HiveField(0)

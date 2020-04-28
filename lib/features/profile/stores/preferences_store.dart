@@ -23,6 +23,8 @@ abstract class _PreferencesStore with Store {
   @computed
   BookSubject get selectedSubject => _selectedSubject;
 
+  /// Adds a book subject to the user with the passed id,
+  /// but only if it is not already added.
   @action
   Future addBookSubject(String userId, BookSubject subject) async {
     if (favoriteBookSubjects.contains(subject)) {
@@ -32,6 +34,8 @@ abstract class _PreferencesStore with Store {
     await _preferencesRepo.setFavoriteGenre(userId, favoriteBookSubjects.toList());
   }
 
+  /// Removes a book subject.
+  /// If the passed subject does not exist, then nothing is done.
   @action
   Future removeBookSubject(String userId, BookSubject subject) async {
     if (!favoriteBookSubjects.contains(subject)) {

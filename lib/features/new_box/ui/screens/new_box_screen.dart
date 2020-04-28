@@ -17,6 +17,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
+/// A screen for creating and publishing boxes.
 class NewBoxScreen extends StatefulWidget {
   final NewBoxStore newBoxStore;
 

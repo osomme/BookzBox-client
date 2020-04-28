@@ -4,6 +4,7 @@ import 'package:bookzbox/features/box/helpers/status_extensions.dart';
 
 class MiniBoxMapper {
   /// Maps the snapshot from Firestore to a MiniBox object.
+  ///
   /// [ds] must NOT be NULL.
   static MiniBox fromFirestore(DocumentSnapshot ds) {
     final Map<String, dynamic> data = ds.data;

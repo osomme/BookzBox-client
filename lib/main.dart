@@ -29,15 +29,21 @@ import 'features/box/models/box.dart';
 
 void main() async {
   initializeDateFormatting();
+  await initHive();
+  runApp(MyApp());
+}
+
+/// Initializes the local Hive database.
+Future<void> initHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(BoxStatusAdapter());
   Hive.registerAdapter(BoxFeedBookAdapter());
   Hive.registerAdapter(BoxFeedListItemAdapter());
-  runApp(MyApp());
 }
 
 final FirebaseAnalytics _analytics = FirebaseAnalytics();
 
+///The color theme shared by all material widgets.
 final _themeData = ThemeData(
   primarySwatch: Color.fromRGBO(58, 46, 58, 1.0).toSwatch(),
   accentColor: Color.fromRGBO(239, 177, 130, 1.0),

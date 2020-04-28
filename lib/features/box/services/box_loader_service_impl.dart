@@ -8,6 +8,9 @@ import 'package:dartz/dartz.dart';
 class BoxLoaderService extends IBoxLoaderService {
   final _firestore = Firestore.instance;
 
+  /// Fetch all boxes for the user with id equal to [userId].
+  /// This function attempts to load private boxes. The [userId]
+  /// must therefore match that of the authenticated user.
   @override
   Future<Either<String, List<MiniBox>>> loadForUser(String userId) async {
     String error;
@@ -54,7 +57,7 @@ class BoxLoaderService extends IBoxLoaderService {
         .collection('liked_boxes')
         .orderBy('publishDateTime', descending: true)
         .snapshots()
-        .map((snap) =>
-            snap.documents.map((doc) => MiniBox.fromFirestore(doc.data, doc.documentID)));
+        .map(
+            (snap) => snap.documents.map((doc) => MiniBox.fromFirestore(doc.data, doc.documentID)));
   }
 }

@@ -29,6 +29,7 @@ abstract class _NewBoxStore with Store {
   @observable
   Book _currentBook;
 
+  /// Book condition of the book currently active/ in-focus.
   @observable
   BookCondition _currentBookCondition = BookCondition.Unknown;
 
@@ -65,10 +66,10 @@ abstract class _NewBoxStore with Store {
   _NewBoxStore(this._bookRepository, this._boxRepository, this._locationService);
 
   /// Attempts to find a book by using the user provided ISBN.
-  /// @returns false if the isbn is invalid and true if lookup was
-  ///          successfull. A successful lookup does not mean the book was found.
-  ///          The @lookupBook is set to NULL if the book was not found and the function
-  ///          returned true.
+  /// Returns `false` if the [_isbn] is invalid and `true` if lookup was
+  /// successfull. A successful lookup does not mean the book was found.
+  /// The [_currentBook] is set to `null` if the book was not found and the function
+  /// returned true.
   @action
   Future<bool> findBook() async {
     if (_isbn == null || !isISBN(_isbn)) return false;
@@ -92,6 +93,9 @@ abstract class _NewBoxStore with Store {
     return true;
   }
 
+  /// Create and publish a box with [user] as the publisher.
+  ///
+  /// Returns either an error or the published box.
   @action
   Future<Either<PublishError, Box>> publishBox(final User user) async {
     if (!isBoxContentValid()) return left(PublishError.Invalid);

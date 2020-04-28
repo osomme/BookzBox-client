@@ -7,6 +7,9 @@ import 'package:dartz/dartz.dart';
 class ProfileService extends IProfileService {
   final firebase = Firestore.instance;
 
+  /// Fetch the profile with the given [userId] from Firebase.
+  ///
+  /// Returns either an error as a `String` or the fetched `Profile`.
   @override
   Future<Either<String, Profile>> fetch(String userId) async {
     String error;

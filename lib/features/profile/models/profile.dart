@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 
 class Profile {
   final String userId;
+
   final String displayName;
+
   final int rating;
+
+  /// The amount of trades completed by the user.
   final int tradeCount;
+
   final String photoUrl;
 
   /// The date of user registration.

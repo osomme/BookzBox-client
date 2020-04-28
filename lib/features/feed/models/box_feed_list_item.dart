@@ -7,6 +7,7 @@ import 'package:hive/hive.dart';
 
 part 'box_feed_list_item.g.dart';
 
+/// A minimized version of a `Box` designed for the feed.
 @HiveType(typeId: 0)
 class BoxFeedListItem extends HiveObject {
   @HiveField(0)

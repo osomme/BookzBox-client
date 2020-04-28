@@ -1,6 +1,9 @@
 import 'package:bookzbox/features/box/models/models.dart';
 
 class BookMapper {
+  /// Maps the passed `Book` to JSON.
+  ///
+  /// [book] The `Book` to map. Expected to be non-null.
   static Map<String, dynamic> map(final Book book) {
     return {
       "isbn13": book.isbn13,
@@ -22,6 +25,9 @@ class BookMapper {
   static List<Book> booksFromFirebase(List<dynamic> books) =>
       books.map((b) => bookFromFirebase(b)).toList();
 
+  /// Creates a `Book` from the passed KV-pairs.
+  ///
+  /// [book] The KV-pairs containing book data. Expected to be non-null.
   static Book bookFromFirebase(Map<dynamic, dynamic> book) {
     return Book(
       publisher: book['publisher'],

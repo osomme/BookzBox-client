@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfileMapper {
   /// Maps the snapshot from Firestore to a Profile object.
-  /// [ds] must NOT be NULL.
+  ///
+  /// [ds] A Firestore snapshot that must NOT be NULL.
+  /// Returns a [Profile] containing the data of [ds].
   static Profile fromFirestore(DocumentSnapshot ds) {
     final Map<String, dynamic> data = ds.data;
 
@@ -19,9 +21,8 @@ class ProfileMapper {
       lastSeen: (data['lastSeen'] as Timestamp).toDate(),
       tradeCount: (data.containsKey('tradeCount') ? data['tradeCount'] as int : 0),
       rating: (data.containsKey('rating') ? data['rating'] as int : 0),
-      favoriteGenres: (data.containsKey('favoriteGenres')
-          ? BookSubjectMapper.fromFirestore(data)
-          : List()),
+      favoriteGenres:
+          (data.containsKey('favoriteGenres') ? BookSubjectMapper.fromFirestore(data) : List()),
     );
   }
 }

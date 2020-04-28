@@ -3,6 +3,7 @@ import 'package:bookzbox/data_access/local_storage.dart';
 import 'package:bookzbox/features/feed/models/box_feed_list_item.dart';
 import 'package:hive/hive.dart';
 
+/// A class that handles local storage of box recommendations.
 class RecommendationStorage extends ILocalStorage<BoxFeedListItem> {
   Box<BoxFeedListItem> _box;
 
@@ -19,6 +20,7 @@ class RecommendationStorage extends ILocalStorage<BoxFeedListItem> {
     _box.add(item);
   }
 
+  /// Persist a list of boxes.
   @override
   void storeAll(List<BoxFeedListItem> items) {
     Map<String, BoxFeedListItem> itemMap = new Map();
@@ -33,6 +35,7 @@ class RecommendationStorage extends ILocalStorage<BoxFeedListItem> {
     _box.delete(key);
   }
 
+  /// Get all stored box recommendations.
   @override
   Future<List<BoxFeedListItem>> getItems() async {
     return (await getBox()).values.toList();

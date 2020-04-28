@@ -29,6 +29,9 @@ abstract class _BoxDetailsStore with Store {
   @computed
   BoxDetailsError get error => _error;
 
+  /// Get the box with id equal to [boxId]. If the action is successfull,
+  /// then [_box] is updated with the fetched `Box`; otherwise [_error]
+  /// is updated with the resulting error.
   @action
   Future<void> fetchBoxDetails(String boxId) async {
     _isLoading = true;

@@ -10,6 +10,8 @@ part 'feed_store.g.dart';
 class FeedStore = _FeedStore with _$FeedStore;
 
 abstract class _FeedStore with Store {
+  /// The maximum amount of box recommendations to fetch
+  /// with each fetch.
   static const int _recommendationLimit = 20;
 
   final IFeedRepository _repo;
@@ -41,6 +43,10 @@ abstract class _FeedStore with Store {
 
   _FeedStore(this._repo, this._locationService);
 
+  /// Initialize the feed.
+  /// This method first fetches the location of the user and there after
+  /// boxes for the user. This method should be called once(1) after creating
+  /// the feed store.
   @action
   Future<void> init(String userId) async {
     _initialLoadingOngoing = true;

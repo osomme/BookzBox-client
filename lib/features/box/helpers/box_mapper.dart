@@ -5,6 +5,9 @@ import 'package:bookzbox/features/box/helpers/status_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BoxMapper {
+  /// Maps the passed `Box` to JSON.
+  ///
+  /// [box] The `Box` to map. Expected to be non-null.
   static Map<String, dynamic> map(final Box box) {
     return {
       "publisher": box.publisher.uid,
@@ -18,6 +21,9 @@ class BoxMapper {
     };
   }
 
+  /// Creates a `Box` from the Firebase snapshot.
+  ///
+  /// [doc] The Firebase snapshot. This must not be null.
   static Box fromFirebase(DocumentSnapshot doc) {
     final data = doc.data;
 
