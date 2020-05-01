@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/widgets/widgets.dart';
 import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -86,8 +87,9 @@ class _BookSwiperState extends State<BookSwiper> {
                     ),
                   ),
                 ),
-                imageUrl:
-                    widget.books[index].fullSizeImageUrl ?? widget.books[index].thumbnailUrl ?? '',
+                imageUrl: widget.books[index].fullSizeImageUrl ??
+                    widget.books[index].thumbnailUrl ??
+                    '',
                 placeholder: (ctx, url) => SpinKitPulse(
                   size: 20.0,
                   color: Theme.of(ctx).primaryIconTheme.color,
@@ -117,15 +119,19 @@ class _BookSwiperState extends State<BookSwiper> {
           ],
         ),
         SizedBox(height: rowGap),
-        Row(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _bookDetailsTextCol(
+            Text(
               S.of(context).detailsBookSynopsis,
-              (book.synopsis == null || book.synopsis.isEmpty)
-                  ? S.of(context).detailsBookNoSynopsis
-                  : book.synopsis,
-              maxLines: 100,
-              textStyle: Theme.of(context).primaryTextTheme.subhead.copyWith(fontSize: 13.0),
+              style: Theme.of(context)
+                  .primaryTextTheme
+                  .subtitle
+                  .copyWith(color: Colors.white70),
+            ),
+            SizedBox(height: 10.0),
+            ExpandableText(
+              text: book.synopsis ?? S.of(context).detailsBookNoSynopsis,
             ),
           ],
         ),
@@ -135,14 +141,17 @@ class _BookSwiperState extends State<BookSwiper> {
           children: <Widget>[
             _bookDetailsTextCol(S.of(context).detailsBookCondition,
                 stringifyBookCondition(context, book.condition)),
-            _bookDetailsTextCol(S.of(context).detailsBookPages, book.pageCount?.toString() ?? '--'),
+            _bookDetailsTextCol(
+                S.of(context).detailsBookPages, book.pageCount?.toString() ?? '--'),
           ],
         ),
         SizedBox(height: rowGap),
         Row(
           children: <Widget>[
-            _bookDetailsTextCol(S.of(context).detailsBookAuthor, book.authors?.join(', ') ?? '--'),
-            _bookDetailsTextCol(S.of(context).detailsBookPublisher, book.publisher ?? '--'),
+            _bookDetailsTextCol(
+                S.of(context).detailsBookAuthor, book.authors?.join(', ') ?? '--'),
+            _bookDetailsTextCol(
+                S.of(context).detailsBookPublisher, book.publisher ?? '--'),
           ],
         ),
         SizedBox(height: rowGap),
@@ -172,7 +181,10 @@ class _BookSwiperState extends State<BookSwiper> {
           children: <Widget>[
             Text(
               header,
-              style: Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white70),
+              style: Theme.of(context)
+                  .primaryTextTheme
+                  .subtitle
+                  .copyWith(color: Colors.white70),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),

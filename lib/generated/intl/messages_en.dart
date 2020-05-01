@@ -213,6 +213,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "detailsNoLocation" : MessageLookupByLibrary.simpleMessage("No location data"),
     "detailsPublishedOn" : MessageLookupByLibrary.simpleMessage("Published On"),
     "detailsStatus" : MessageLookupByLibrary.simpleMessage("Status"),
+    "expandableShowLessButton" : MessageLookupByLibrary.simpleMessage("Read Less"),
+    "expandablekReadMoreButton" : MessageLookupByLibrary.simpleMessage("Read More"),
     "feedBooks" : MessageLookupByLibrary.simpleMessage("BOOKS"),
     "feedDescription" : MessageLookupByLibrary.simpleMessage("Description"),
     "feedLocation" : MessageLookupByLibrary.simpleMessage("LOCATION"),

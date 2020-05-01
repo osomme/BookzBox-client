@@ -32,6 +32,8 @@ abstract class _MapStore with Store {
     _fetchUserLocation();
   }
 
+  /// Gets a list of [BoxMapItem] according to the currently set filter.
+  /// If no filter is set, then all the boxes are shown.
   @computed
   List<BoxMapItem> get boxes {
     if (!_filters.hasAnyFilter) {
@@ -40,21 +42,27 @@ abstract class _MapStore with Store {
     return _boxes.where((b) => _filters.filters.every((f) => f(b))).toList();
   }
 
+  /// The clients current latitudinal and longitudinal position.
   @computed
   Option<LatLng> get userPosition => _userPosition;
 
+  /// A map error in the event of a network failure or such. See [MapError] for possible errors.
   @computed
   MapError get error => _error;
 
+  /// Returns true if the store is curerntly loading boxes from service.
   @computed
   bool get isLoadingBoxes => _isLoadingBoxes;
 
+  /// Returns true if the user has set a filter. Returns false if there is no active filter.
   @computed
   bool get hasActiveFilter => _filters.hasAnyFilter;
 
+  /// The current filter input values.
   @computed
   BoxFilterValues get filters => _filters;
 
+  /// Sets a box filter. Will automatically refresh the boxes property.
   @action
   void setBoxFilter(BoxFilterValues filters) => _filters = filters;
 

@@ -2551,6 +2551,24 @@ class S {
       args: [],
     );
   }
+
+  String get expandablekReadMoreButton {
+    return Intl.message(
+      'Read More',
+      name: 'expandablekReadMoreButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get expandableShowLessButton {
+    return Intl.message(
+      'Read Less',
+      name: 'expandableShowLessButton',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
