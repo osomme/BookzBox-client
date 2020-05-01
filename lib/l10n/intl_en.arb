@@ -277,7 +277,5 @@
     "bookConditionAcceptableDesc": "The book is fairly worn, but is still complete and can be read without issues.",
     "bookConditionDamaged": "Damaged",
     "bookConditionDamagedDesc": "The book is damaged. Missing or partial pages may occur.",
-    "bookConditionRequiredError": "Please set the book condition.",
-    "expandablekReadMoreButton": "Read More",
-    "expandableShowLessButton": "Read Less"
+    "bookConditionRequiredError": "Please set the book condition."
 }

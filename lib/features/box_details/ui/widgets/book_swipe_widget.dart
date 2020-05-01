@@ -120,7 +120,6 @@ class _BookSwiperState extends State<BookSwiper> {
         ),
         SizedBox(height: rowGap),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
               S.of(context).detailsBookSynopsis,
@@ -133,6 +132,7 @@ class _BookSwiperState extends State<BookSwiper> {
             ExpandableText(
               text: book.synopsis ?? S.of(context).detailsBookNoSynopsis,
             ),
+            SizedBox(height: rowGap),
           ],
         ),
         SizedBox(height: rowGap),
