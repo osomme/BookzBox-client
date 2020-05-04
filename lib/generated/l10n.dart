@@ -2551,6 +2551,15 @@ class S {
       args: [],
     );
   }
+
+  String get activityClearAllUnread {
+    return Intl.message(
+      'Mark all as read',
+      name: 'activityClearAllUnread',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

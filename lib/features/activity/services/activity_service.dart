@@ -6,4 +6,7 @@ abstract class IActivtiyService {
 
   /// Marks a activity item as read.
   Future<void> markAsRead(String userId, String activityId);
+
+  /// Marks all activities for a user as read.
+  Future<void> markAllAsRead(String userId);
 }

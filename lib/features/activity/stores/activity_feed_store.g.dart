@@ -124,4 +124,14 @@ mixin _$ActivityFeedStore on _ActivityFeedStore, Store {
       _$_ActivityFeedStoreActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  void markAllAsRead(String userId) {
+    final _$actionInfo = _$_ActivityFeedStoreActionController.startAction();
+    try {
+      return super.markAllAsRead(userId);
+    } finally {
+      _$_ActivityFeedStoreActionController.endAction(_$actionInfo);
+    }
+  }
 }

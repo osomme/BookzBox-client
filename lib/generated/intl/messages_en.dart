@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static _notInlinedMessages(_) => <String, Function> {
     "activityBoxFeedRemoveLike" : MessageLookupByLibrary.simpleMessage("REMOVE LIKE"),
     "activityChatMedia" : MessageLookupByLibrary.simpleMessage("[Media]"),
+    "activityClearAllUnread" : MessageLookupByLibrary.simpleMessage("Mark all as read"),
     "activityFailedBoxLoad" : MessageLookupByLibrary.simpleMessage("Failed to load liked boxes"),
     "activityFeedErrorMessage" : MessageLookupByLibrary.simpleMessage("Failed to load notifications"),
     "activityItemAcceptedTrade" : MessageLookupByLibrary.simpleMessage("accepted your trade offer"),

@@ -12,4 +12,7 @@ class ActivityRepositoryImpl implements IActivtiyRepository {
   @override
   Future<void> markAsRead(String userId, String activityId) =>
       _service.markAsRead(userId, activityId);
+
+  @override
+  Future<void> markAllAsRead(String userId) => _service.markAllAsRead(userId);
 }

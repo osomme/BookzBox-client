@@ -102,6 +102,21 @@ class _ActivityScreenState extends State<ActivityScreen> {
             ),
           ],
         ),
+        floatingActionButton: Observer(
+          builder: (ctx) => widget.activityFeedStore.hasUnread
+              ? FloatingActionButton.extended(
+                  onPressed: () => widget.activityFeedStore.markAllAsRead(widget.userId),
+                  icon: Icon(
+                    Icons.clear_all,
+                    size: 20.0,
+                  ),
+                  label: Text(
+                    S.of(context).activityClearAllUnread,
+                    style: TextStyle(fontSize: 10.0),
+                  ),
+                )
+              : SizedBox.shrink(),
+        ),
       ),
     );
   }

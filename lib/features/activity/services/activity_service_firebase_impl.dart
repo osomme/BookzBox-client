@@ -29,4 +29,24 @@ class FirebaseActivtiyService implements IActivtiyService {
           '($activityId) and userID ($userId) as read: $e');
     }
   }
+
+  @override
+  Future<void> markAllAsRead(String userId) async {
+    try {
+      await _firestore
+          .collection('users')
+          .document(userId)
+          .collection('activity')
+          .where('read', isEqualTo: false)
+          .getDocuments()
+          .then(
+            (docs) => docs.documents.forEach(
+              (doc) => doc.reference.updateData({'read': true}),
+            ),
+          );
+    } catch (e) {
+      print(
+          'Error while attempting to clear all unread activity notifications with user ID $userId');
+    }
+  }
 }

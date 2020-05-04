@@ -74,6 +74,9 @@ abstract class _ActivityFeedStore with Store {
   void markAsRead(String userId, String activityId) =>
       _repository.markAsRead(userId, activityId);
 
+  @action
+  void markAllAsRead(String userId) => _repository.markAllAsRead(userId);
+
   void dispose() {
     _streamSubscription?.cancel();
   }
