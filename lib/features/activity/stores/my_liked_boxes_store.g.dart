@@ -75,4 +75,11 @@ mixin _$MyLikedBoxesStore on _MyLikedBoxesStore, Store {
       _$_boxesAtom.reportChanged();
     }, _$_boxesAtom, name: '${_$_boxesAtom.name}_set');
   }
+
+  final _$removeLikeAsyncAction = AsyncAction('removeLike');
+
+  @override
+  Future<void> removeLike(String boxId) {
+    return _$removeLikeAsyncAction.run(() => super.removeLike(boxId));
+  }
 }

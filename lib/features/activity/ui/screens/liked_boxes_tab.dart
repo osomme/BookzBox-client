@@ -55,7 +55,8 @@ class LikedBoxesTab extends StatelessWidget {
                 box: likedBoxesStore.boxes[i],
                 shouldShowLeftButton: true,
                 leftButtonText: S.of(context).activityBoxFeedRemoveLike,
-                onLeftButtonPressed: () => print('Clicked remove like'),
+                onLeftButtonPressed: () =>
+                    likedBoxesStore.removeLike(likedBoxesStore.boxes[i].id),
                 shouldShowExtraOptions: false,
               );
             },

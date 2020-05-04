@@ -146,7 +146,7 @@
     "activityNoFeedItems": "Your activity feed is empty",
     "activityFeedErrorMessage": "Failed to load notifications",
     "activityFailedBoxLoad": "Failed to load liked boxes",
-    "activityNoLikedBoxes": "You have not liked any boxes...",
+    "activityNoLikedBoxes": "You do not have any liked boxes",
     "activityStartChatting": "Click to start chatting",
     "activityChatMedia": "[Media]",
     "chatInputHint": "Write a message...",

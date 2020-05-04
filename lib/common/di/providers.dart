@@ -112,18 +112,19 @@ final bookProviders = [
   Provider<IBoxRemovalService>(
     create: (_) => BoxRemovalService(),
   ),
-  ProxyProvider5<IPublishService, IBoxLoaderService, IBoxDetailsService, IBoxUpdaterService,
-      IBoxRemovalService, IBoxRepository>(
-    update: (_, publishService, boxLoaderService, detailsService, updaterService, boxRemovalService,
-            __) =>
-        BoxRepository(
-            publishService, boxLoaderService, detailsService, updaterService, boxRemovalService),
+  ProxyProvider5<IPublishService, IBoxLoaderService, IBoxDetailsService,
+      IBoxUpdaterService, IBoxRemovalService, IBoxRepository>(
+    update: (_, publishService, boxLoaderService, detailsService, updaterService,
+            boxRemovalService, __) =>
+        BoxRepository(publishService, boxLoaderService, detailsService, updaterService,
+            boxRemovalService),
   ),
   Provider<ILocationService>(
     create: (_) => LocationService(),
   ),
   ProxyProvider3<IBookRepository, IBoxRepository, ILocationService, NewBoxStore>(
-    update: (_, bookRepo, boxRepo, locService, __) => NewBoxStore(bookRepo, boxRepo, locService),
+    update: (_, bookRepo, boxRepo, locService, __) =>
+        NewBoxStore(bookRepo, boxRepo, locService),
   ),
   ProxyProvider<NewBoxStore, NewBoxScreen>(
     update: (_, store, __) => NewBoxScreen(store, key: Key(Keys.newBoxScreenKey)),
@@ -213,8 +214,10 @@ final myProfileProviders = [
   ProxyProvider<IBoxRepository, ProfileBoxStore>(
     update: (_, repo, __) => ProfileBoxStore(repo),
   ),
-  ProxyProvider4<ProfileStore, AuthStore, ProfileBoxStore, PreferencesStore, ProfileScreen>(
-    update: (_, profileStore, authStore, profileBoxStore, preferencesStore, __) => ProfileScreen(
+  ProxyProvider4<ProfileStore, AuthStore, ProfileBoxStore, PreferencesStore,
+      ProfileScreen>(
+    update: (_, profileStore, authStore, profileBoxStore, preferencesStore, __) =>
+        ProfileScreen(
       profileStore: profileStore,
       authStore: authStore,
       profileBoxStore: profileBoxStore,
@@ -268,8 +271,8 @@ final boxLoaderProviders = [
 ];
 
 final likedBoxesStore = [
-  ProxyProvider<IBoxLoaderRepository, MyLikedBoxesStore>(
-    update: (_, repository, __) => MyLikedBoxesStore(repository),
+  ProxyProvider2<IBoxLoaderRepository, IBoxLikeRepository, MyLikedBoxesStore>(
+    update: (_, boxRepo, likeRepo, __) => MyLikedBoxesStore(boxRepo, likeRepo),
   ),
 ];
 
@@ -295,6 +298,7 @@ final chatProviders = [
     update: (_, service, __) => ChatRepositoryImpl(service),
   ),
   ProxyProvider3<IChatRepository, ActivityFeedStore, IStorageService, ChatStore>(
-    update: (_, repo, feedStore, storageService, __) => ChatStore(repo, feedStore, storageService),
+    update: (_, repo, feedStore, storageService, __) =>
+        ChatStore(repo, feedStore, storageService),
   ),
 ];

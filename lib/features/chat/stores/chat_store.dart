@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:bookzbox/features/activity/activity.dart';
 import 'package:bookzbox/features/chat/chat.dart';
-import 'package:dartz/dartz.dart';
 import 'package:mobx/mobx.dart';
 
 part 'chat_store.g.dart';
@@ -22,10 +21,6 @@ abstract class _ChatStore with Store {
   final IChatRepository _chatRepository;
 
   final IStorageService _storageService;
-
-  /// The ID of the other user participating in the chat.
-  @observable
-  Option<String> _otherUserId = none();
 
   @observable
   bool _isUploadingImage = false;
@@ -46,9 +41,6 @@ abstract class _ChatStore with Store {
   List<ChatMessage> _messages = List();
 
   _ChatStore(this._chatRepository, this._feedStore, this._storageService);
-
-  @computed
-  Option<String> get otherUserId => _otherUserId;
 
   @computed
   bool get isUploadingImage => _isUploadingImage;
@@ -85,9 +77,6 @@ abstract class _ChatStore with Store {
         if (_messages.isNotEmpty && _reactionDisposer == null) {
           // Mark the most recently received message as read.
           _setNewestMessageReadListener(clientUserId, matchId);
-        }
-        if (_otherUserId.isNone()) {
-          _retrieveOtherUserId(data, clientUserId);
         }
       },
       onError: (error) {
@@ -173,18 +162,6 @@ abstract class _ChatStore with Store {
       (success) => print('[CHAT STORE] Posted image message: ${msg.content}'),
     );
     _isPostingMessage = false;
-  }
-
-  @action
-  void _retrieveOtherUserId(Iterable<ChatMessage> data, String clientUserId) {
-    try {
-      final otherUserId =
-          data.firstWhere((msg) => msg.postedByUserId != clientUserId).postedByUserId;
-      _otherUserId = some(otherUserId);
-    } catch (e) {
-      print('[CHAT STORE] Failed to retrieve user ID of other chat participant.'
-          ' This is normal if other user has not typed any messages');
-    }
   }
 
   ChatMessage _createMessage(String postedByUserId, String message) {

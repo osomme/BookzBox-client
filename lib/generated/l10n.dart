@@ -1366,7 +1366,7 @@ class S {
 
   String get activityNoLikedBoxes {
     return Intl.message(
-      'You have not liked any boxes...',
+      'You do not have any liked boxes',
       name: 'activityNoLikedBoxes',
       desc: '',
       args: [],

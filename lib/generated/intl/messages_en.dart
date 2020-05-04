@@ -77,7 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "activityNewItem" : MessageLookupByLibrary.simpleMessage("Unread"),
     "activityNoChatItems" : MessageLookupByLibrary.simpleMessage("You have no active conversations"),
     "activityNoFeedItems" : MessageLookupByLibrary.simpleMessage("Your activity feed is empty"),
-    "activityNoLikedBoxes" : MessageLookupByLibrary.simpleMessage("You have not liked any boxes..."),
+    "activityNoLikedBoxes" : MessageLookupByLibrary.simpleMessage("You do not have any liked boxes"),
     "activityScreenAppBarTitle" : MessageLookupByLibrary.simpleMessage("Recent activity"),
     "activityStartChatting" : MessageLookupByLibrary.simpleMessage("Click to start chatting"),
     "activityTabLabelActivity" : MessageLookupByLibrary.simpleMessage("Activity"),

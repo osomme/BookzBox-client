@@ -116,9 +116,10 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
         title: Observer(
           builder: (ctx) => GestureDetector(
-            onTap: () => widget.chatStore.otherUserId
-                .map((id) => Navigator.pushNamed(ctx, Screens.profile, arguments: id))
-                .getOrElse(() => null),
+            onTap: widget.matchStore.otherUserId != null
+                ? () => Navigator.pushNamed(ctx, Screens.profile,
+                    arguments: widget.matchStore.otherUserId)
+                : null,
             child: Row(
               children: <Widget>[
                 ProfileAvatar(

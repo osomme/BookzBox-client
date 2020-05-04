@@ -9,12 +9,6 @@ part of 'chat_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ChatStore on _ChatStore, Store {
-  Computed<Option<String>> _$otherUserIdComputed;
-
-  @override
-  Option<String> get otherUserId => (_$otherUserIdComputed ??=
-          Computed<Option<String>>(() => super.otherUserId))
-      .value;
   Computed<bool> _$isUploadingImageComputed;
 
   @override
@@ -50,23 +44,6 @@ mixin _$ChatStore on _ChatStore, Store {
   List<ChatMessage> get messages =>
       (_$messagesComputed ??= Computed<List<ChatMessage>>(() => super.messages))
           .value;
-
-  final _$_otherUserIdAtom = Atom(name: '_ChatStore._otherUserId');
-
-  @override
-  Option<String> get _otherUserId {
-    _$_otherUserIdAtom.context.enforceReadPolicy(_$_otherUserIdAtom);
-    _$_otherUserIdAtom.reportObserved();
-    return super._otherUserId;
-  }
-
-  @override
-  set _otherUserId(Option<String> value) {
-    _$_otherUserIdAtom.context.conditionallyRunInAction(() {
-      super._otherUserId = value;
-      _$_otherUserIdAtom.reportChanged();
-    }, _$_otherUserIdAtom, name: '${_$_otherUserIdAtom.name}_set');
-  }
 
   final _$_isUploadingImageAtom = Atom(name: '_ChatStore._isUploadingImage');
 
@@ -211,16 +188,6 @@ mixin _$ChatStore on _ChatStore, Store {
     final _$actionInfo = _$_ChatStoreActionController.startAction();
     try {
       return super.setChatInput(input);
-    } finally {
-      _$_ChatStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void _retrieveOtherUserId(Iterable<ChatMessage> data, String clientUserId) {
-    final _$actionInfo = _$_ChatStoreActionController.startAction();
-    try {
-      return super._retrieveOtherUserId(data, clientUserId);
     } finally {
       _$_ChatStoreActionController.endAction(_$actionInfo);
     }
