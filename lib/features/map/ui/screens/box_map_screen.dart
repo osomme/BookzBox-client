@@ -13,6 +13,7 @@ import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BoxMapScreen extends StatefulWidget {
   final MapStore mapStore;
@@ -70,6 +71,16 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
     super.dispose();
   }
 
+  // TODO: Remove. This is just a demo implementation for focus group.
+  Future<void> _launchURL() async {
+    const url = 'https://ark.no';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,10 +111,7 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
                     onPressed: _openFilterDialog,
                     label: Text(
                       S.of(context).mapFilterButtonLabel,
-                      style: Theme.of(context)
-                          .accentTextTheme
-                          .button
-                          .copyWith(fontSize: 13.0),
+                      style: Theme.of(context).accentTextTheme.button.copyWith(fontSize: 13.0),
                     ),
                     icon: widget.mapStore.hasActiveFilter
                         ? Icon(
@@ -116,6 +124,44 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
                           ),
                   ),
                 ],
+              ),
+            ),
+            GestureDetector(
+              onTap: () async => _launchURL(),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: 256,
+                  height: 80,
+                  margin: const EdgeInsets.only(top: 16),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(4),
+                    color: Colors.black,
+                  ),
+                  child: Stack(
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/images/reklame_banner.png',
+                        fit: BoxFit.fill,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2),
+                          color: Colors.black45,
+                        ),
+                        child: Text(
+                          'Ad',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
@@ -147,20 +193,16 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   ReactionDisposer _userLocationListener() =>
       autorun((_) => _onUserLocationObtained(widget.mapStore.userPosition));
 
-  ReactionDisposer _boxesListener() =>
-      autorun((_) => _onBoxesLoaded(widget.mapStore.boxes));
+  ReactionDisposer _boxesListener() => autorun((_) => _onBoxesLoaded(widget.mapStore.boxes));
 
-  Future<void> _onUserLocationObtained(
-      Dartz.Option<LatLngModel.LatLng> userLocation) async {
-    final currentUserPos = userLocation
-        .map((p) => LatLng(p.latitude, p.longitude))
-        .getOrElse(() => startPos);
+  Future<void> _onUserLocationObtained(Dartz.Option<LatLngModel.LatLng> userLocation) async {
+    final currentUserPos =
+        userLocation.map((p) => LatLng(p.latitude, p.longitude)).getOrElse(() => startPos);
     await mapController.moveCamera(CameraUpdate.newLatLng(currentUserPos));
   }
 
   Future<void> _onBoxesLoaded(List<BoxMapItem> boxes) async {
-    final items =
-        boxes.map((b) => ClusterItem(LatLng(b.latitude, b.longitude), item: b)).toList();
+    final items = boxes.map((b) => ClusterItem(LatLng(b.latitude, b.longitude), item: b)).toList();
     manager.setItems(items);
   }
 
