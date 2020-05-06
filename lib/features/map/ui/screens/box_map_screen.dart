@@ -131,12 +131,14 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  width: 256,
-                  height: 80,
-                  margin: const EdgeInsets.only(top: 16),
+                  width: 224,
+                  height: 70,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(5),
+                      bottomRight: Radius.circular(5),
+                    ),
                     color: Colors.black,
                   ),
                   child: Stack(

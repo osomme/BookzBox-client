@@ -29,7 +29,7 @@ void main() {
       when(mockFeedService.getBoxRecommendations(any, any, longitude: 0.0, latitude: 0.0))
           .thenAnswer((_) => Future.value(right(boxes)));
       when(mockLocalStorage.getItems(any)).thenAnswer((_) => Future.value(boxes));
-      when(mockLocalStorage.storeAll(any)).thenReturn(null);
+      when(mockLocalStorage.storeAll(any, any)).thenReturn(null);
 
       await repo.getBoxRecommendations('userId', limit, latitude: 0.0, longitude: 0.0);
 
@@ -45,7 +45,7 @@ void main() {
       when(mockFeedService.getBoxRecommendations(any, any, longitude: 0.0, latitude: 0.0))
           .thenAnswer((_) => Future.value(right(boxes)));
       when(mockLocalStorage.getItems(any)).thenAnswer((_) => Future.value(boxes));
-      when(mockLocalStorage.storeAll(any)).thenReturn(null);
+      when(mockLocalStorage.storeAll(any, any)).thenReturn(null);
 
       await repo.getBoxRecommendations('userId', limit, latitude: 0.0, longitude: 0.0);
 

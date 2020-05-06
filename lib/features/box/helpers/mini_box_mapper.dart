@@ -8,7 +8,6 @@ class MiniBoxMapper {
   /// [ds] must NOT be NULL.
   static MiniBox fromFirestore(DocumentSnapshot ds) {
     final Map<String, dynamic> data = ds.data;
-    print(data);
     return MiniBox(
       id: ds.documentID,
       status: (data['status'] as int).toBoxStatus(),

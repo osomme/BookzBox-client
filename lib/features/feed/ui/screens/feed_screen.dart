@@ -2,9 +2,11 @@ import 'package:bookzbox/common/widgets/keys.dart';
 import 'package:bookzbox/common/widgets/widgets.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/feed/feed.dart';
+import 'package:bookzbox/features/feed/ui/widgets/ad_card.dart';
 import 'package:bookzbox/features/likes/likes.dart';
 import 'package:bookzbox/features/location/location.dart';
 import 'package:bookzbox/generated/l10n.dart';
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -76,13 +78,38 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
     );
   }
 
+  List<Widget> getFeedCards() {
+    List<Widget> cards = List();
+
+    for (int index = 0; index < widget.feedStore.boxes.length; index++) {
+      if (index % 5 == 0 && index != 0) {
+        cards.add(AdCard(pageController: _pageController, index: cards.length));
+      }
+      int newIndex = cards.length;
+      cards.add(FeedListItem(
+        key: Key(Keys.feedItemKey + newIndex.toString()),
+        pageController: _pageController,
+        index: newIndex,
+        box: widget.feedStore.boxes[index],
+        locationService: Provider.of<ILocationService>(context),
+        store: BoxLikeStore(
+          Provider.of<IBoxLikeRepository>(context),
+          Provider.of<IAuthService>(context),
+          widget.feedStore.boxes[index].id,
+        ),
+      ));
+    }
+
+    return cards;
+  }
+
   SizedBox _mainContent() {
     return SizedBox.expand(
       child: Container(
         child: Observer(
-          builder: (_) => PageView.builder(
+          builder: (_) => PageView(
             controller: _pageController,
-            itemCount: widget.feedStore.boxes.length,
+            children: getFeedCards(),
             onPageChanged: (index) async {
               if (index == (widget.feedStore.boxes.length - 5)) {
                 await widget.feedStore.fetchBoxes(_authStore?.user?.uid);
@@ -92,18 +119,6 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
                 widget.feedStore.markAsRead(_authStore.user.uid, index - 1);
               }
             },
-            itemBuilder: (context, index) => FeedListItem(
-              key: Key(Keys.feedItemKey + index.toString()),
-              pageController: _pageController,
-              index: index,
-              box: widget.feedStore.boxes[index],
-              locationService: Provider.of<ILocationService>(context),
-              store: BoxLikeStore(
-                Provider.of<IBoxLikeRepository>(context),
-                Provider.of<IAuthService>(context),
-                widget.feedStore.boxes[index].id,
-              ),
-            ),
           ),
         ),
       ),
