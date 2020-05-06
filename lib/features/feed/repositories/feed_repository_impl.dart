@@ -1,4 +1,5 @@
 import 'package:bookzbox/common/errors/error_types.dart';
+import 'package:bookzbox/data_access/HiveBox.dart';
 import 'package:bookzbox/data_access/local_storage.dart';
 import 'package:bookzbox/features/feed/feed.dart';
 import 'package:bookzbox/features/feed/repositories/feed_repository.dart';
@@ -48,7 +49,7 @@ class FeedRepository implements IFeedRepository {
     result.fold(
       (err) => print("Not saving locally as an error occured."),
       (boxes) async {
-        storeRecommendations(boxes);
+        await storeRecommendations(userId, boxes);
       },
     );
 
@@ -59,13 +60,13 @@ class FeedRepository implements IFeedRepository {
   }
 
   /// Stores the recommended boxes locally.
-  void storeRecommendations(List<BoxFeedListItem> boxes) {
-    _recommendationStorage.storeAll(boxes);
+  Future<void> storeRecommendations(String userId, List<BoxFeedListItem> boxes) async {
+    await _recommendationStorage.storeAll(userId + HiveBox.recommendations, boxes);
   }
 
   /// Removes a recommendation for local storage.
-  void removeRecommendation(String userId, BoxFeedListItem item) {
-    _recommendationStorage.remove(item.key);
+  Future<void> removeRecommendation(String userId, BoxFeedListItem item) async {
+    await _recommendationStorage.remove(userId + HiveBox.recommendations, item.key);
   }
 
   Future<List<BoxFeedListItem>> getLocalRecommendations(String userId) async {

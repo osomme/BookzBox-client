@@ -17,23 +17,24 @@ class RecommendationStorage extends ILocalStorage<BoxFeedListItem> {
   }
 
   @override
-  void store(item) {
-    _box.add(item);
+  Future<void> store(String boxKey, BoxFeedListItem item) async {
+    (await getBox(boxKey)).add(item);
   }
 
   /// Persist a list of boxes.
   @override
-  void storeAll(List<BoxFeedListItem> items) {
+  Future<void> storeAll(String boxKey, List<BoxFeedListItem> items) async {
     Map<String, BoxFeedListItem> itemMap = new Map();
     for (var item in items) {
       itemMap.putIfAbsent(item.id, () => item);
     }
-    _box.putAll(itemMap);
+    (await getBox(boxKey)).putAll(itemMap);
   }
 
   @override
-  void remove(dynamic key) {
-    _box.delete(key);
+  Future<void> remove(String boxKey, dynamic itemKey) async {
+    if (itemKey == null) return;
+    (await getBox(boxKey)).delete(itemKey);
   }
 
   /// Get all stored box recommendations.

@@ -13,5 +13,5 @@ abstract class IFeedRepository {
       String userId, int limit,
       {double latitude = -1.0, double longitude = -1.0});
 
-  void removeRecommendation(String userId, BoxFeedListItem item);
+  Future<void> removeRecommendation(String userId, BoxFeedListItem item);
 }
