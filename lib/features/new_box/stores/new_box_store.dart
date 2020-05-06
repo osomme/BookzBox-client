@@ -272,5 +272,7 @@ abstract class _NewBoxStore with Store {
     _titleError = BoxError.None;
     _bookCountError = BoxError.None;
     _isbnScanError = ScanError.None;
+    _boxTitle = "";
+    _boxDescription = "";
   }
 }

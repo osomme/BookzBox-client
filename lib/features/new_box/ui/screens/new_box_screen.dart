@@ -72,6 +72,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
     result.fold(
       (error) => print("Publish error"),
       (box) {
+        widget.newBoxStore.clear();
         // Pop new box page so when user clicks bar they dont end up on the new box page.
         Navigator.pop(context);
         // Navigate to the details page for the newly published box.
