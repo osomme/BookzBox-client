@@ -83,13 +83,12 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
             controller: _pageController,
             itemCount: widget.feedStore.boxes.length,
             onPageChanged: (index) async {
-              if (index == (widget.feedStore.boxes.length - 6)) {
+              if (index == (widget.feedStore.boxes.length - 5)) {
                 await widget.feedStore.fetchBoxes(_authStore?.user?.uid);
               }
               if ((index - 1) >= 0) {
                 // Marks the previous box as read/seen.
-                // widget.feedStore.markAsRead(index - 1);
-                // TODO: UNCOMMENT BEFORE RELEASE!
+                widget.feedStore.markAsRead(index - 1);
               }
             },
             itemBuilder: (context, index) => FeedListItem(
