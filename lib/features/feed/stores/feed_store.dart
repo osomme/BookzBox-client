@@ -12,7 +12,7 @@ class FeedStore = _FeedStore with _$FeedStore;
 abstract class _FeedStore with Store {
   /// The maximum amount of box recommendations to fetch
   /// with each fetch.
-  static const int _recommendationLimit = 20;
+  static const int _recommendationLimit = 10;
 
   final IFeedRepository _repo;
   final ILocationService _locationService;
@@ -80,8 +80,8 @@ abstract class _FeedStore with Store {
   }
 
   @action
-  void markAsRead(int index) {
-    _repo.removeRecommendation(_boxes[index]);
+  void markAsRead(String userId, int index) {
+    _repo.removeRecommendation(userId, _boxes[index]);
   }
 
   Future<void> internalFetchBoxes(String userId) async {

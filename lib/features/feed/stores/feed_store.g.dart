@@ -132,10 +132,10 @@ mixin _$FeedStore on _FeedStore, Store {
   final _$_FeedStoreActionController = ActionController(name: '_FeedStore');
 
   @override
-  void markAsRead(int index) {
+  void markAsRead(String userId, int index) {
     final _$actionInfo = _$_FeedStoreActionController.startAction();
     try {
-      return super.markAsRead(index);
+      return super.markAsRead(userId, index);
     } finally {
       _$_FeedStoreActionController.endAction(_$actionInfo);
     }

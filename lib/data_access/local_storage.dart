@@ -11,8 +11,8 @@ abstract class ILocalStorage<T> {
   void remove(dynamic key);
 
   /// Get the Hive Box
-  Future<Box<T>> getBox();
+  Future<Box<T>> getBox(String key);
 
-  /// Get a list of the stored items.
-  Future<List<T>> getItems();
+  /// Get a list of the stored items for a user.
+  Future<List<T>> getItems(String userId);
 }

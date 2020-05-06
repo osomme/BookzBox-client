@@ -8,10 +8,11 @@ class RecommendationStorage extends ILocalStorage<BoxFeedListItem> {
   Box<BoxFeedListItem> _box;
 
   @override
-  Future<Box<BoxFeedListItem>> getBox() async {
-    if (_box == null || !_box.isOpen) {
-      _box = await Hive.openBox(HiveBox.recommendations);
+  Future<Box<BoxFeedListItem>> getBox(String key) async {
+    if (_box == null || _box.name != key || !_box.isOpen) {
+      _box = await Hive.openBox(key);
     }
+
     return _box;
   }
 
@@ -37,7 +38,7 @@ class RecommendationStorage extends ILocalStorage<BoxFeedListItem> {
 
   /// Get all stored box recommendations.
   @override
-  Future<List<BoxFeedListItem>> getItems() async {
-    return (await getBox()).values.toList();
+  Future<List<BoxFeedListItem>> getItems(String userId) async {
+    return (await getBox(userId + HiveBox.recommendations)).values.toList();
   }
 }

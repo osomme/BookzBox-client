@@ -31,7 +31,7 @@ class FeedRepository implements IFeedRepository {
   Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxRecommendations(
       String userId, int limit,
       {double latitude = -1.0, double longitude = -1.0}) async {
-    var boxes = await getLocalRecommendations();
+    var boxes = await getLocalRecommendations(userId);
 
     if (boxes.length >= limit) {
       // Already got enough boxes stored locally.
@@ -55,7 +55,7 @@ class FeedRepository implements IFeedRepository {
     if (result.isLeft()) {
       return result; // Just return the error.
     }
-    return right(await getLocalRecommendations());
+    return right(await getLocalRecommendations(userId));
   }
 
   /// Stores the recommended boxes locally.
@@ -64,11 +64,11 @@ class FeedRepository implements IFeedRepository {
   }
 
   /// Removes a recommendation for local storage.
-  void removeRecommendation(BoxFeedListItem item) {
+  void removeRecommendation(String userId, BoxFeedListItem item) {
     _recommendationStorage.remove(item.key);
   }
 
-  Future<List<BoxFeedListItem>> getLocalRecommendations() async {
-    return await _recommendationStorage.getItems();
+  Future<List<BoxFeedListItem>> getLocalRecommendations(String userId) async {
+    return await _recommendationStorage.getItems(userId);
   }
 }

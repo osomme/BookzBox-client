@@ -18,6 +18,7 @@ class FeedScreen extends StatefulWidget {
 
   @override
   _FeedScreenState createState() {
+    feedStore.boxes.clear();
     return _FeedScreenState();
   }
 }
@@ -88,7 +89,7 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
               }
               if ((index - 1) >= 0) {
                 // Marks the previous box as read/seen.
-                widget.feedStore.markAsRead(index - 1);
+                widget.feedStore.markAsRead(_authStore.user.uid, index - 1);
               }
             },
             itemBuilder: (context, index) => FeedListItem(
