@@ -50,10 +50,12 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   }
 
   ClusterManager<BoxMapItem> _initClusterManager() {
-    return ClusterManager<BoxMapItem>(items, _updateMarkers,
-        initialZoom: _startingZoom,
-        markerBuilder: _markerBuilder,
-        levels: const [5, 8.25, 11.5, 14.5, 16, 16.5, 20]);
+    return ClusterManager<BoxMapItem>(
+      items,
+      _updateMarkers,
+      initialZoom: _startingZoom,
+      markerBuilder: _markerBuilder,
+    );
   }
 
   @override
@@ -111,7 +113,10 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
                     onPressed: _openFilterDialog,
                     label: Text(
                       S.of(context).mapFilterButtonLabel,
-                      style: Theme.of(context).accentTextTheme.button.copyWith(fontSize: 13.0),
+                      style: Theme.of(context)
+                          .accentTextTheme
+                          .button
+                          .copyWith(fontSize: 13.0),
                     ),
                     icon: widget.mapStore.hasActiveFilter
                         ? Icon(
@@ -195,16 +200,20 @@ class _BoxMapScreenState extends State<BoxMapScreen> {
   ReactionDisposer _userLocationListener() =>
       autorun((_) => _onUserLocationObtained(widget.mapStore.userPosition));
 
-  ReactionDisposer _boxesListener() => autorun((_) => _onBoxesLoaded(widget.mapStore.boxes));
+  ReactionDisposer _boxesListener() =>
+      autorun((_) => _onBoxesLoaded(widget.mapStore.boxes));
 
-  Future<void> _onUserLocationObtained(Dartz.Option<LatLngModel.LatLng> userLocation) async {
-    final currentUserPos =
-        userLocation.map((p) => LatLng(p.latitude, p.longitude)).getOrElse(() => startPos);
+  Future<void> _onUserLocationObtained(
+      Dartz.Option<LatLngModel.LatLng> userLocation) async {
+    final currentUserPos = userLocation
+        .map((p) => LatLng(p.latitude, p.longitude))
+        .getOrElse(() => startPos);
     await mapController.moveCamera(CameraUpdate.newLatLng(currentUserPos));
   }
 
   Future<void> _onBoxesLoaded(List<BoxMapItem> boxes) async {
-    final items = boxes.map((b) => ClusterItem(LatLng(b.latitude, b.longitude), item: b)).toList();
+    final items =
+        boxes.map((b) => ClusterItem(LatLng(b.latitude, b.longitude), item: b)).toList();
     manager.setItems(items);
   }
 
