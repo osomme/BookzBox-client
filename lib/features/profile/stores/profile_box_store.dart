@@ -42,14 +42,19 @@ abstract class _ProfileBoxStore with Store {
 
   @action
   void init(String userId, bool myProfile) {
+    myBoxes.clear();
     if (userId == null || userId.isEmpty) {
       return;
     }
     _isLoading = true;
     if (myProfile) {
-      _boxRepository.fetchUserBoxes(userId).then((result) => handleResult(result));
+      _boxRepository.fetchUserBoxes(userId).then((result) {
+        if (myProfile) handleResult(result);
+      });
     } else {
-      _boxRepository.fetchOtherUsersBoxes(userId).then((result) => handleResult(result));
+      _boxRepository.fetchOtherUsersBoxes(userId).then((result) {
+        if (!myProfile) handleResult(result);
+      });
     }
   }
 
