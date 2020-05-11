@@ -85,7 +85,32 @@ class PreferencesTab extends StatelessWidget {
       ));
     });
 
+    menuItems.sort((a, b) => (a.child as Text).data.compareTo((b.child as Text).data));
     return menuItems;
+  }
+
+  /// Generate chips for each passed book subject.
+  /// The chips are sorted alphabetically based on chip label.
+  List<Chip> _genGenreChips(BuildContext context, List<BookSubject> subjects) {
+    List<Chip> chips = List();
+    final subjectStrings = getBookSubjects(context);
+
+    for (int i = 0; i < subjects.length; i++) {
+      BookSubject subject = subjects[i];
+      chips.add(Chip(
+        key: Key(Keys.bookPreferenceChipKey + i.toString()),
+        elevation: 8,
+        backgroundColor: Theme.of(context).accentColor,
+        label: Text(subjectStrings[subject]),
+        deleteIcon: Icon(
+          MaterialIcons.close,
+        ),
+        deleteButtonTooltipMessage: S.of(context).preferencesRemoveGenreTip,
+        onDeleted: () => preferencesStore.removeBookSubject(profileStore.profile.userId, subject),
+      ));
+    }
+    chips.sort((a, b) => (a.label as Text).data.compareTo((b.label as Text).data));
+    return chips;
   }
 
   @override
@@ -118,93 +143,62 @@ class PreferencesTab extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(
-          flex: 1,
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width,
-              maxHeight: MediaQuery.of(context).size.height,
-            ),
-            child: Observer(
-              builder: (_) => ListView.builder(
-                itemCount: preferencesStore.favoriteBookSubjects.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.only(
-                      left: 4,
-                      right: 4,
-                    ),
-                    child: Chip(
-                      key: Key(Keys.bookPreferenceChipKey + index.toString()),
-                      elevation: 8,
-                      backgroundColor: Theme.of(context).accentColor,
-                      label: Text(
-                          getBookSubjects(context)[preferencesStore.favoriteBookSubjects[index]]),
-                      deleteIcon: Icon(
-                        MaterialIcons.close,
-                      ),
-                      deleteButtonTooltipMessage: S.of(context).preferencesRemoveGenreTip,
-                      onDeleted: () => preferencesStore.removeBookSubject(
-                          profileStore.profile.userId,
-                          preferencesStore.favoriteBookSubjects[index]),
-                    ),
-                  );
-                },
-                scrollDirection: Axis.horizontal,
-              ),
+        Container(
+          child: Observer(
+            builder: (_) => Wrap(
+              spacing: 8.0,
+              runSpacing: 4.0,
+              children: _genGenreChips(context, preferencesStore.favoriteBookSubjects),
             ),
           ),
         ),
-        Expanded(
-          flex: 5,
-          child: Container(
-            margin: const EdgeInsets.only(
-              top: 8,
-              bottom: 8,
-              right: 16.0,
-              left: 16.0,
-            ),
-            padding: const EdgeInsets.only(
-              top: 4,
-              bottom: 4,
-              left: 8,
-              right: 8,
-            ),
-            child: Observer(
-              builder: (_) => SearchableDropdown.single(
-                style: TextStyle(color: Colors.black),
-                dialogBox: true,
-                items: getBookSubjectsMenuItems(context),
-                value: preferencesStore.selectedSubject,
-                hint: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 12,
-                    top: 12,
-                    bottom: 12,
-                  ),
-                  child: Text(
-                    S.of(context).preferencesGenreHint,
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                    ),
+        Container(
+          margin: const EdgeInsets.only(
+            top: 8,
+            bottom: 8,
+            right: 16.0,
+            left: 16.0,
+          ),
+          padding: const EdgeInsets.only(
+            top: 4,
+            bottom: 4,
+            left: 8,
+            right: 8,
+          ),
+          child: Observer(
+            builder: (_) => SearchableDropdown.single(
+              style: TextStyle(color: Colors.black),
+              dialogBox: true,
+              items: getBookSubjectsMenuItems(context),
+              value: preferencesStore.selectedSubject,
+              hint: Padding(
+                padding: const EdgeInsets.only(
+                  left: 12,
+                  top: 12,
+                  bottom: 12,
+                ),
+                child: Text(
+                  S.of(context).preferencesGenreHint,
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
                   ),
                 ),
-                searchHint: S.of(context).preferencesGenreSearchHint,
-                onChanged: (value) {
-                  preferencesStore.setSelectedSubject(value);
-                  if (value != null) {
-                    preferencesStore.addBookSubject(profileStore.profile.userId, value);
-                  }
-                },
-                isExpanded: true,
-                underline: Container(
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).accentColor,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
+              ),
+              searchHint: S.of(context).preferencesGenreSearchHint,
+              onChanged: (value) {
+                preferencesStore.setSelectedSubject(value);
+                if (value != null) {
+                  preferencesStore.addBookSubject(profileStore.profile.userId, value);
+                }
+              },
+              isExpanded: true,
+              underline: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).accentColor,
+                  borderRadius: BorderRadius.circular(2),
                 ),
               ),
             ),
