@@ -12,7 +12,7 @@ class FeedStore = _FeedStore with _$FeedStore;
 abstract class _FeedStore with Store {
   /// The maximum amount of box recommendations to fetch
   /// with each fetch.
-  static const int _recommendationLimit = 10;
+  static const int _recommendationLimit = 25;
 
   final IFeedRepository _repo;
   final ILocationService _locationService;
