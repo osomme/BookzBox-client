@@ -309,6 +309,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
             key: Key(Keys.boxTitleInputFieldKey),
             maxLength: 50,
             maxLengthEnforced: true,
+            textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               hintText: S.of(context).newBoxTitleHintText,
             ),
@@ -332,6 +333,7 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
             maxLengthEnforced: true,
             maxLines: 5,
             minLines: 5,
+            textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               hintText: S.of(context).newBoxDescriptionHintText,
             ),
