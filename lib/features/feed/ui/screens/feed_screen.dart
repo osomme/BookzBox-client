@@ -116,7 +116,7 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
               }
               if ((index - 1) >= 0) {
                 // Marks the previous box as read/seen.
-                widget.feedStore.markAsRead(_authStore.user.uid, index - 1);
+                await widget.feedStore.markAsRead(_authStore?.user?.uid, index - 1);
               }
             },
           ),

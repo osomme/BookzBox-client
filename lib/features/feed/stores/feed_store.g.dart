@@ -129,15 +129,10 @@ mixin _$FeedStore on _FeedStore, Store {
     return _$fetchBoxesAsyncAction.run(() => super.fetchBoxes(userId));
   }
 
-  final _$_FeedStoreActionController = ActionController(name: '_FeedStore');
+  final _$markAsReadAsyncAction = AsyncAction('markAsRead');
 
   @override
-  void markAsRead(String userId, int index) {
-    final _$actionInfo = _$_FeedStoreActionController.startAction();
-    try {
-      return super.markAsRead(userId, index);
-    } finally {
-      _$_FeedStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> markAsRead(String userId, int index) {
+    return _$markAsReadAsyncAction.run(() => super.markAsRead(userId, index));
   }
 }

@@ -7,7 +7,7 @@ abstract class ILocalStorage<T> {
   /// Persists a `List` of items.
   Future<void> storeAll(String boxKey, List<T> items);
 
-  /// Remove a single item by its unique [key].
+  /// Remove a single item by its unique [itemKey].
   Future<void> remove(String boxKey, dynamic itemKey);
 
   /// Get the Hive Box

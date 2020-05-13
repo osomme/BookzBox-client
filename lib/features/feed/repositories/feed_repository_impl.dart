@@ -22,8 +22,8 @@ class FeedRepository implements IFeedRepository {
       _service.getBoxesStream(userId);
 
   /// Gets the [limit] amount of recommended boxes.
-  /// Boxes are only fetched from external sources if there are not [limit]
-  /// amount of recommended boxes available locally.
+  /// Boxes are only fetched from external sources if there are not
+  /// 10 of the recommended boxes available locally.
   /// [userId] The id of the user of whom to get recommendations for.
   /// [limit] The maximum amount of recommendations to fetch externally.
   /// [latitude] Optional location parameter.
@@ -34,7 +34,7 @@ class FeedRepository implements IFeedRepository {
       {double latitude = -1.0, double longitude = -1.0}) async {
     var boxes = await getLocalRecommendations(userId);
 
-    if (boxes.length >= limit) {
+    if (boxes.length >= 10) {
       // Already got enough boxes stored locally.
       return right(boxes);
     }
@@ -66,6 +66,9 @@ class FeedRepository implements IFeedRepository {
 
   /// Removes a recommendation for local storage.
   Future<void> removeRecommendation(String userId, BoxFeedListItem item) async {
+    if (userId == null || item == null) {
+      return;
+    }
     await _recommendationStorage.remove(userId + HiveBox.recommendations, item.key);
   }
 
