@@ -191,6 +191,13 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
     }, _$_isRemovingBoxAtom, name: '${_$_isRemovingBoxAtom.name}_set');
   }
 
+  final _$initAsyncAction = AsyncAction('init');
+
+  @override
+  Future<void> init(String userId, bool myProfile) {
+    return _$initAsyncAction.run(() => super.init(userId, myProfile));
+  }
+
   final _$updateBoxVisibilityAsyncAction = AsyncAction('updateBoxVisibility');
 
   @override
@@ -208,16 +215,6 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
 
   final _$_ProfileBoxStoreActionController =
       ActionController(name: '_ProfileBoxStore');
-
-  @override
-  void init(String userId, bool myProfile) {
-    final _$actionInfo = _$_ProfileBoxStoreActionController.startAction();
-    try {
-      return super.init(userId, myProfile);
-    } finally {
-      _$_ProfileBoxStoreActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   void handleResult(Either<String, List<MiniBox>> res) {

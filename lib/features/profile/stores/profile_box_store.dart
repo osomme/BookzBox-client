@@ -41,20 +41,26 @@ abstract class _ProfileBoxStore with Store {
   _ProfileBoxStore(this._boxRepository);
 
   @action
-  void init(String userId, bool myProfile) {
+  Future<void> init(String userId, bool myProfile) async {
     myBoxes.clear();
     if (userId == null || userId.isEmpty) {
       return;
     }
     _isLoading = true;
     if (myProfile) {
-      _boxRepository.fetchUserBoxes(userId).then((result) {
-        if (myProfile) handleResult(result);
-      });
+      final res = await _boxRepository.fetchUserBoxes(userId);
+      handleResult(res);
+      // _boxRepository.fetchUserBoxes(userId).then((result) {
+      print("Fetching boxes for MY profile.");
+      //   if (myProfile) handleResult(result);
+      // });
     } else {
-      _boxRepository.fetchOtherUsersBoxes(userId).then((result) {
-        if (!myProfile) handleResult(result);
-      });
+      final res = await _boxRepository.fetchOtherUsersBoxes(userId);
+      handleResult(res);
+      // _boxRepository.fetchOtherUsersBoxes(userId).then((result) {
+      print("Fetching boxes for other users profile.");
+      //   if (!myProfile) handleResult(result);
+      // });
     }
   }
 

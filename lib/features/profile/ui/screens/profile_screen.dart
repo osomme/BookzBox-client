@@ -35,6 +35,8 @@ class ProfileScreen extends StatefulWidget {
       profileStore.setUserId(authStore.user?.uid);
     }
     profileStore.init();
+    print("Profile uid: ${profileStore.userId} | Is my profile? ${profileStore.isMyProfile}");
+
     profileBoxStore.init(profileStore.userId, profileStore.isMyProfile);
   }
 

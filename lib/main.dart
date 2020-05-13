@@ -113,20 +113,11 @@ class MyApp extends StatelessWidget {
           } else if (settings.name == Screens.profile) {
             final String userId = settings.arguments;
             return MaterialPageRoute(builder: (ctx) {
-              return MultiProvider(
-                providers: [
-                  ProxyProvider<IProfileRepository, ProfileStore>(
-                    update: (_, repo, __) => ProfileStore(repo, userId),
-                  ),
-                ],
-                child: Consumer<ProfileScreen>(
-                  builder: (ctx, screen, __) => ProfileScreen(
-                    profileStore: Provider.of<ProfileStore>(ctx),
-                    authStore: Provider.of<AuthStore>(ctx),
-                    profileBoxStore: Provider.of<ProfileBoxStore>(ctx),
-                    preferencesStore: Provider.of<PreferencesStore>(ctx),
-                  ),
-                ),
+              return ProfileScreen(
+                profileStore: ProfileStore(Provider.of<IProfileRepository>(ctx), userId),
+                authStore: Provider.of<AuthStore>(ctx),
+                profileBoxStore: Provider.of<ProfileBoxStore>(ctx),
+                preferencesStore: Provider.of<PreferencesStore>(ctx),
               );
             });
           } else if (settings.name == Screens.chat) {
