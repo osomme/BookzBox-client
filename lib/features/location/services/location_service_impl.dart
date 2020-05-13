@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bookzbox/features/location/location.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/services.dart';
@@ -31,14 +33,19 @@ class LocationService implements ILocationService {
       if (permissionStatus == PermissionStatus.GRANTED) {
         final latLng = await locationService
             .getLocation()
+            .timeout(Duration(seconds: 3))
             .then((p) => LatLng(latitude: p.latitude, longitude: p.longitude));
+
         return right(latLng);
       } else {
         return left('No permissions');
       }
     } on PlatformException catch (e) {
       print(e);
-      return left(e.code);
+      return left(e.message);
+    } on TimeoutException catch (e) {
+      print(e);
+      return left(e.message);
     }
   }
 }

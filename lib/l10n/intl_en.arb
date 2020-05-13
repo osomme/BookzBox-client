@@ -53,6 +53,7 @@
     "newBoxScanIsbnBtnText": "Scan ISBN",
     "newBoxCameraPermissionDenied": "This feature requires camera permission.",
     "newBoxUnknownScanError": "Scan failed, please try again.",
+    "newBoxPublishNoLocationError": "Please check your location settings.",
     "homeNavBarFeedLabel": "Feed",
     "homeNavBarMapLabel": "Map",
     "homeNavBarActivityLabel": "Activity",

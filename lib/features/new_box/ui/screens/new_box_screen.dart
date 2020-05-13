@@ -7,6 +7,7 @@ import 'package:bookzbox/features/box/models/models.dart';
 import 'package:bookzbox/features/new_box/models/box_error.dart';
 import 'package:bookzbox/features/new_box/models/lookup_error.dart';
 import 'package:bookzbox/features/new_box/models/scan_error.dart';
+import 'package:bookzbox/features/new_box/services/publish_error.dart';
 import 'package:bookzbox/features/new_box/stores/new_box_store.dart';
 import 'package:bookzbox/features/new_box/ui/widgets/book_card_widget.dart';
 import 'package:bookzbox/generated/l10n.dart';
@@ -200,21 +201,39 @@ class _NewBoxScreenState extends State<NewBoxScreen> {
       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
-        child: Text(
-          S.of(context).newBoxTitle,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 15,
-            shadows: <Shadow>[
-              Shadow(
-                blurRadius: 1.0,
-                color: Colors.black,
-                offset: Offset(1.0, 1.0),
+        child: Column(
+          children: <Widget>[
+            Text(
+              S.of(context).newBoxTitle,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 15,
+                shadows: <Shadow>[
+                  Shadow(
+                    blurRadius: 1.0,
+                    color: Colors.black,
+                    offset: Offset(1.0, 1.0),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            (widget.newBoxStore.publishError == PublishError.NoLocation
+                ? Container(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                    child: Text(
+                      S.of(context).newBoxPublishNoLocationError,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.red[400],
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink())
+          ],
         ),
       ),
     );

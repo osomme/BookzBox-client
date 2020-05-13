@@ -513,6 +513,15 @@ class S {
     );
   }
 
+  String get newBoxPublishNoLocationError {
+    return Intl.message(
+      'Please check your location settings.',
+      name: 'newBoxPublishNoLocationError',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get homeNavBarFeedLabel {
     return Intl.message(
       'Feed',

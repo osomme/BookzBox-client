@@ -272,6 +272,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "newBoxIsbnInfoText" : MessageLookupByLibrary.simpleMessage("ISBN is typically found on the back of a book."),
     "newBoxIsbnInvalid" : MessageLookupByLibrary.simpleMessage("Invalid ISBN"),
     "newBoxNoBooks" : MessageLookupByLibrary.simpleMessage("A box must have at least 1 book"),
+    "newBoxPublishNoLocationError" : MessageLookupByLibrary.simpleMessage("Please check your location settings."),
     "newBoxPublishTip" : MessageLookupByLibrary.simpleMessage("Publish"),
     "newBoxRemoveBook" : MessageLookupByLibrary.simpleMessage("Delete"),
     "newBoxScanIsbnBtnText" : MessageLookupByLibrary.simpleMessage("Scan ISBN"),

@@ -63,6 +63,9 @@ abstract class _NewBoxStore with Store {
   @observable
   ScanError _isbnScanError = ScanError.None;
 
+  @observable
+  PublishError _publishError = PublishError.None;
+
   _NewBoxStore(this._bookRepository, this._boxRepository, this._locationService);
 
   /// Attempts to find a book by using the user provided ISBN.
@@ -275,4 +278,7 @@ abstract class _NewBoxStore with Store {
     _boxTitle = "";
     _boxDescription = "";
   }
+
+  @computed
+  PublishError get publishError => _publishError;
 }

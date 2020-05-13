@@ -85,6 +85,12 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
   BookCondition get currentBookCondition => (_$currentBookConditionComputed ??=
           Computed<BookCondition>(() => super.currentBookCondition))
       .value;
+  Computed<PublishError> _$publishErrorComputed;
+
+  @override
+  PublishError get publishError => (_$publishErrorComputed ??=
+          Computed<PublishError>(() => super.publishError))
+      .value;
 
   final _$_isbnAtom = Atom(name: '_NewBoxStore._isbn');
 
@@ -311,6 +317,23 @@ mixin _$NewBoxStore on _NewBoxStore, Store {
       super._isbnScanError = value;
       _$_isbnScanErrorAtom.reportChanged();
     }, _$_isbnScanErrorAtom, name: '${_$_isbnScanErrorAtom.name}_set');
+  }
+
+  final _$_publishErrorAtom = Atom(name: '_NewBoxStore._publishError');
+
+  @override
+  PublishError get _publishError {
+    _$_publishErrorAtom.context.enforceReadPolicy(_$_publishErrorAtom);
+    _$_publishErrorAtom.reportObserved();
+    return super._publishError;
+  }
+
+  @override
+  set _publishError(PublishError value) {
+    _$_publishErrorAtom.context.conditionallyRunInAction(() {
+      super._publishError = value;
+      _$_publishErrorAtom.reportChanged();
+    }, _$_publishErrorAtom, name: '${_$_publishErrorAtom.name}_set');
   }
 
   final _$findBookAsyncAction = AsyncAction('findBook');
