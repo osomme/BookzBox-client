@@ -1,0 +1,23 @@
+{
+    "authUsername": "Brukernavn",
+    "authPassword": "Passord",
+    "authEmail": "E-post",
+    "authNavToRegistration": "Lag ny konto",
+    "authNavToLogIn": "Logg inn med eksisterende konto",
+    "authLogInBtn": "Logg inn",
+    "authRegisterBtn": "Registrer",
+    "authSelectGoogle": "Logg inn med Google",
+    "authSelectFacebook": "Logg inn med Facebook",
+    "authSelectEmail": "Logg inn med E-post",
+    "authSelectNewAcct": "Har du ikke en konto? ",
+    "authErrorEmailAlreadyUsed": "E-posten har allerede blitt brukt",
+    "authErrorInvalidEmail": "Ugyldig E-post addresse",
+    "authErrorWeakPassword": "Passordet er ikke sterkt nok",
+    "authErrorUserNotFound": "Kunne ikke finne brukeren",
+    "authErrorOperationNotAllowed": "Handlingen ikke godkjent",
+    "authErrorCredsAlreadyExists": "Det eksisterer allerede en bruker med den E-post addressen",
+    "authErrorWrongPassword": "Feil passord",
+    "authErrorTooManyReqs": "Du har forsøkt å logge inn for mange ganger",
+    "authErrorUnknown": "Ukjent feil",
+    "authNewAccountNavigate": "Lag en ny"
+}
