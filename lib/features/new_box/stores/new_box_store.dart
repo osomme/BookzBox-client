@@ -1,3 +1,4 @@
+import 'package:bookzbox/common/utils/Location.dart';
 import 'package:bookzbox/features/authentication/authentication.dart';
 import 'package:bookzbox/features/box/models/book.dart';
 import 'package:bookzbox/features/box/models/book_condition.dart';
@@ -117,8 +118,8 @@ abstract class _NewBoxStore with Store {
           books: _books,
           status: BoxStatus.public,
           publishDateTime: DateTime.now(),
-          latitude: p.latitude,
-          longitude: p.longitude,
+          latitude: Location.getCoordAt250mAccuracy(p.latitude),
+          longitude: Location.getCoordAt250mAccuracy(p.longitude),
           title: _boxTitle,
           description: _boxDescription,
         );
