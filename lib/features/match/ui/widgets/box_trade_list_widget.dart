@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+/// Widget used for selecting a box from a list.
 class BoxTradeList extends StatelessWidget {
+  /// The store used for logic related to the box.
   final BoxSelectionStore store;
 
   BoxTradeList({
@@ -38,7 +40,8 @@ class BoxTradeList extends StatelessWidget {
           children: <Widget>[
             Text(
               S.of(context).boxTradeListSelectTitle,
-              style: Theme.of(context).textTheme.title.copyWith(fontWeight: FontWeight.w700),
+              style:
+                  Theme.of(context).textTheme.title.copyWith(fontWeight: FontWeight.w700),
             ),
             SizedBox(height: 6.0),
             Text(
@@ -81,7 +84,8 @@ class BoxTradeList extends StatelessWidget {
                         : null,
                     child: Text(
                       S.of(context).boxTradeListOk,
-                      style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
+                      style: TextStyle(
+                          color: Colors.deepPurple[900], fontWeight: FontWeight.w700),
                     ),
                   ),
                 ),

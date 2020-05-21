@@ -1,6 +1,7 @@
 import 'package:bookzbox/features/match/match.dart';
 
 extension TradeOfferMapper on int {
+  /// Maps an integer to a [TradeOfferStatus] enum value. Throws an exception if the integer is not in valid range.
   TradeOfferStatus toTradeOfferStatus() {
     switch (this) {
       case 0:

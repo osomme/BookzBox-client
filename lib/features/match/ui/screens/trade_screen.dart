@@ -11,13 +11,18 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/// Widget containing widgets for displaying trade offers between two users.
 class TradeScreen extends StatefulWidget {
+  /// Store containing properties and methods used in the widget for retrieving data and logic.
   final MatchStore store;
 
+  /// The user ID of the currently logged in client ID.
   final String userId;
 
+  /// The ID of the other user involved in the trade.
   final String recipientId;
 
+  /// The username of the other user involved in the trade.
   final String otherUserName;
 
   const TradeScreen({

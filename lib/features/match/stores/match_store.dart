@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 
 part 'match_store.g.dart';
 
+/// Store which contains reactive properties and methods for interacting with a match.
 class MatchStore = _MatchStore with _$MatchStore;
 
 abstract class _MatchStore with Store {
@@ -19,10 +20,10 @@ abstract class _MatchStore with Store {
 
   ReactionDisposer _unreadNotificationsDisposer;
 
+  String _clientUserId;
+
   @observable
   String _matchId;
-
-  String _clientUserId;
 
   @observable
   List<TradeOffer> _offers = List();
@@ -41,18 +42,22 @@ abstract class _MatchStore with Store {
 
   _MatchStore(this._repository, this._feedStore);
 
+  /// The ID of the other user in the match, or null if match has not been loaded.
   @computed
   String get otherUserId =>
       _match?.participants?.firstWhere((id) => id != _clientUserId, orElse: () => null);
 
+  /// The most recent trade offer of the other user in the match, or null if match has not been loaded or no offer has been made.
   @computed
   TradeOffer get otherUserOffer =>
       _offers.firstWhere((o) => o.offerByUserId != _clientUserId, orElse: () => null);
 
+  /// The most recent trade offer of the client user in the match, or null if match has not been loaded or no offer has been made.
   @computed
   TradeOffer get clientUserOffer =>
       _offers.firstWhere((o) => o.offerByUserId == _clientUserId, orElse: () => null);
 
+  /// Returns a list of trade offers. Empty list of no offers have been made, or until match has been loaded.
   @computed
   List<TradeOffer> get offers => _offers;
 
@@ -72,12 +77,18 @@ abstract class _MatchStore with Store {
   @computed
   bool get isReplyingToOffer => _isReplyingToOffer;
 
+  /// The number of unread trade requests.
   @computed
   int get numUnreadTradeRequests => _numUnreadTradeRequests;
 
+  /// Whether there are any unread trade requests.
   @computed
   bool get hasUnreadTradeRequests => _numUnreadTradeRequests != 0;
 
+  /// Initializes the store by loading match and trade offer streams.
+  ///
+  /// [matchId] The ID of the match that is being loaded.
+  /// [clientUserId] The ID of the user that is currently logged in.
   @action
   void init(String matchId, String clientUserId) {
     _matchId = matchId;
@@ -101,6 +112,9 @@ abstract class _MatchStore with Store {
             }));
   }
 
+  /// Posts a new trade offer.
+  ///
+  /// [offer] The offer that is being made.
   @action
   Future<void> postOffer(TradeOffer offer) async {
     _isPostingOffer = true;
@@ -112,6 +126,9 @@ abstract class _MatchStore with Store {
     _isPostingOffer = false;
   }
 
+  /// Accepts a trade offer.
+  ///
+  /// [offer] The offer that is being accepted.
   @action
   Future<void> acceptOffer(TradeOffer offer) async {
     _isReplyingToOffer = true;
@@ -124,6 +141,9 @@ abstract class _MatchStore with Store {
     _isReplyingToOffer = false;
   }
 
+  /// Rejects a trade offer.
+  ///
+  /// [offer] The offer that is being rejected.
   @action
   Future<void> rejectOffer(TradeOffer offer) async {
     _isReplyingToOffer = true;
@@ -136,6 +156,9 @@ abstract class _MatchStore with Store {
     _isReplyingToOffer = false;
   }
 
+  /// Marks all trade notifications as read.
+  ///
+  /// [matchId] The ID of the match that the trade offers belong to.
   void markTradeNotificationsAsRead(String matchId) {
     _feedStore.activityNotifications
         .where((a) =>
@@ -145,6 +168,7 @@ abstract class _MatchStore with Store {
         .forEach((a) => _feedStore.markAsRead(_clientUserId, a.id));
   }
 
+  /// Cleans up resources used by the store. Should always be called before an instance of this class is garbage collected.
   void dispose() {
     _unreadNotificationsDisposer?.call();
     _matchSubscription?.cancel();
