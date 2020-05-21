@@ -10,30 +10,39 @@ part 'box_feed_list_item.g.dart';
 /// A minimized version of a `Box` designed for the feed.
 @HiveType(typeId: 0)
 class BoxFeedListItem extends HiveObject {
+  /// The ID of the box.
   @HiveField(0)
   final String id;
 
+  /// The ID of the publisher of the box.
   @HiveField(1)
   final String publisherId;
 
+  /// The date that the box was published.
   @HiveField(2)
   final DateTime publishedOn;
 
+  /// The title of the box.
   @HiveField(3)
   final String title;
 
+  /// The description of the box.
   @HiveField(4)
   final String description;
 
+  /// Latitudinal coordinates of the box.
   @HiveField(5)
   final double lat;
 
+  /// Longitudinal coordinates of the box.
   @HiveField(6)
   final double lng;
 
+  /// A list of [BoxFeedBook]s belonging to the box.
   @HiveField(7)
   final List<BoxFeedBook> books;
 
+  /// The current [BoxStatus] value of the box.
   @HiveField(8)
   final BoxStatus status;
 
@@ -55,22 +64,7 @@ class BoxFeedListItem extends HiveObject {
   @override
   int get hashCode => id.hashCode;
 
-  factory BoxFeedListItem.fromFirestore(DocumentSnapshot doc) {
-    Map data = doc.data;
-
-    return BoxFeedListItem(
-      id: doc.documentID,
-      publisherId: data['publisher'] as String,
-      books: BoxFeedBook.fromFirebaseList(data['books']),
-      publishedOn: DateTime.fromMillisecondsSinceEpoch((data['publishDateTime'] as int)),
-      lat: data['latitude'] as double,
-      lng: data['longitude'] as double,
-      title: data['title'] as String,
-      description: (data['description'] as String) ?? '',
-      status: (data['status'] as int).toBoxStatus(),
-    );
-  }
-
+  /// Maps a JSON map into [BoxFeedListItem].
   factory BoxFeedListItem.fromJson(Map<String, dynamic> json) {
     return BoxFeedListItem(
       id: json['id'],

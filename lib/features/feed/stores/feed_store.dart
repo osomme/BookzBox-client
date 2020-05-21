@@ -32,12 +32,15 @@ abstract class _FeedStore with Store {
   @observable
   double _longitude = -1.0;
 
+  /// The error, if any, that the store contains. Is null if there is no error.
   @computed
   NetworkError get error => _error;
 
+  /// The list of recommended boxes. Is an empty list if the boxes have not been loaded.
   @computed
   List<BoxFeedListItem> get boxes => _boxes;
 
+  /// Whether the store is currently performing the initial load of boxes.
   @computed
   bool get initialLoadingOngoing => _initialLoadingOngoing;
 
@@ -74,32 +77,35 @@ abstract class _FeedStore with Store {
       return;
     }
 
-    await internalFetchBoxes(userId);
+    await _internalFetchBoxes(userId);
 
     _initialLoadingOngoing = false;
   }
 
+  /// Marks a list item as read.
+  ///
+  /// [userId] The ID of the user that is marking their recommendation as read.
+  /// [index] The index of where the Box is in the [boxes] property.
   @action
   Future<void> markAsRead(String userId, int index) async {
     if (userId == null || index < 0 || index >= _boxes.length) return;
     await _repo.removeRecommendation(userId, _boxes[index]);
   }
 
-  Future<void> internalFetchBoxes(String userId) async {
-    final res = await _repo.getBoxRecommendations(userId, _recommendationLimit + _boxes.length,
+  Future<void> _internalFetchBoxes(String userId) async {
+    final res = await _repo.getBoxRecommendations(
+        userId, _recommendationLimit + _boxes.length,
         latitude: _latitude, longitude: _longitude);
     res.fold(
       (err) => _error = err,
       (boxes) {
         boxes.shuffle();
-        for (var box in boxes) {
-          internalAddBoxIfNotAdded(box);
-        }
+        boxes.forEach((box) => _internalAddBoxIfNotAdded(box));
       },
     );
   }
 
-  void internalAddBoxIfNotAdded(BoxFeedListItem box) {
+  void _internalAddBoxIfNotAdded(BoxFeedListItem box) {
     if (!_boxes.contains(box)) {
       _boxes.add(box);
     }

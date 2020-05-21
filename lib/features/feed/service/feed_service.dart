@@ -9,12 +9,4 @@ abstract class IFeedService {
   Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxRecommendations(
       String userId, int limit,
       {double latitude = -1.0, double longitude = -1.0});
-
-  /// Returns an optional type containing either a list of boxes, or a feed error.
-  Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxesFrom(int number, DateTime fromDate);
-
-  /// Returns a stream of BoxFeedListItems.
-  ///
-  /// [userId] the user ID belonging to the client user. Any boxes that belong to them are filtered out.
-  Future<Stream<Iterable<BoxFeedListItem>>> getBoxesStream(String userId);
 }

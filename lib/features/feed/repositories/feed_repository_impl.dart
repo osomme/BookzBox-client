@@ -12,15 +12,6 @@ class FeedRepository implements IFeedRepository {
 
   FeedRepository(this._service, this._recommendationStorage);
 
-  @override
-  Future<Either<NetworkError, List<BoxFeedListItem>>> getBoxesFrom(
-          int number, DateTime fromDate) async =>
-      await _service.getBoxesFrom(number, fromDate);
-
-  @override
-  Future<Stream<Iterable<BoxFeedListItem>>> getBoxesStream(String userId) =>
-      _service.getBoxesStream(userId);
-
   /// Gets the [limit] amount of recommended boxes.
   /// Boxes are only fetched from external sources if there are not
   /// 10 of the recommended boxes available locally.

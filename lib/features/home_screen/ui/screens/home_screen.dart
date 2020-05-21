@@ -22,8 +22,13 @@ import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
+  /// Store containing an activity feed list.
   final ActivityFeedStore activityFeedStore;
+
+  /// Authentication store used for obtaining user authentication status.
   final AuthStore authStore;
+
+  /// Activity status store used for updating login-status.
   final ActivityStatusStore activityStatusStore;
 
   const HomeScreen({
