@@ -8,5 +8,7 @@ abstract class IBoxDetailsService {
   /// [boxId] Id of the box to fetch.
   ///
   /// Returns the fetched `Box` or an error.
+  ///
+  /// [boxId] The ID of the box that is being loaded.
   Future<Either<BoxDetailsError, Box>> getBox(String boxId);
 }

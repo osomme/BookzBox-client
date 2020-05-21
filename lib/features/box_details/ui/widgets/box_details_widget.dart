@@ -9,7 +9,10 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class BoxDetails extends StatelessWidget {
+  /// The box that is being displayed in the widget.
   final Box box;
+
+  /// Location service responsible for obtaining information about a location from its latitudinal and longitudinal coordinates.
   final ILocationService locationService;
 
   const BoxDetails({
@@ -18,11 +21,13 @@ class BoxDetails extends StatelessWidget {
     @required this.locationService,
   }) : super(key: key);
 
+  // Default header style.
   static const _boxInfoHeader = TextStyle(
     fontSize: 20.0,
     fontWeight: FontWeight.w600,
   );
 
+  // Default body style.
   static const _boxInfoBody = TextStyle(
     fontSize: 14.0,
     color: Colors.black87,

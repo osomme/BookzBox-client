@@ -12,11 +12,21 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+/// Widget for the larger box details screen.
 class BoxDetailsScreen extends StatefulWidget {
+  /// The ID of the box that is being displayed.
   final String boxId;
+
+  /// The user ID of the user that is viewing the box.
   final String userId;
+
+  /// The box details store that is responsible for loading the box.
   final BoxDetailsStore store;
+
+  /// The like store that is responsible for liking or removing likes for a box.
   final BoxLikeStore likeStore;
+
+  /// Location service responsible for obtaining information about a location from its latitudinal and longitudinal coordinates.
   final ILocationService locationService;
 
   const BoxDetailsScreen({

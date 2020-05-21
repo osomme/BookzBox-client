@@ -7,7 +7,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class BookSwiper extends StatefulWidget {
+  /// A list of [Book]s to be displayed in the widget.
   final List<Book> books;
+
+  /// The backgroundcolor of the widget.
   final Color backgroundColor;
 
   const BookSwiper({
