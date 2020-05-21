@@ -1,6 +1,7 @@
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
+/// Methods that are responsible for parsing an error code into a readable String message.
 abstract class IAuthErrorParser {
   String messageFrom(String errorCode, BuildContext ctx);
 }
@@ -9,6 +10,9 @@ class FirebaseErrorParser implements IAuthErrorParser {
   /// Converts Firebase error codes into human readable strings.
   /// The Firebase error codes are poorly documented but relevant ones can be found in the method
   /// descriptions found here: https://pub.dev/documentation/firebase_auth/latest/firebase_auth/FirebaseAuth-class.html
+  ///
+  /// [errorCode] The error code that Firebase returns.
+  /// [ctx] The [BuildContext] that the translated string is being requrested from.
   @override
   String messageFrom(String errorCode, BuildContext ctx) {
     print('[AUTH ERROR] code: $errorCode');

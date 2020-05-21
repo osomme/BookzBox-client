@@ -22,6 +22,9 @@ class BookMapper {
     };
   }
 
+  /// Maps a list of Firestore or JSON book objects to domain models.
+  ///
+  /// [books] A list of maps containing book data.
   static List<Book> booksFromFirebase(List<dynamic> books) =>
       books.map((b) => bookFromFirebase(b)).toList();
 

@@ -13,7 +13,8 @@ class BooksApiResponse {
     this.items,
   });
 
-  factory BooksApiResponse.fromRawJson(String str) => BooksApiResponse.fromJson(json.decode(str));
+  factory BooksApiResponse.fromRawJson(String str) =>
+      BooksApiResponse.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
@@ -21,7 +22,8 @@ class BooksApiResponse {
         kind: json["kind"],
         totalItems: json["totalItems"],
         items: json["totalItems"] > 0
-            ? List<BookResponseItem>.from(json["items"]?.map((x) => BookResponseItem.fromJson(x)))
+            ? List<BookResponseItem>.from(
+                json["items"]?.map((x) => BookResponseItem.fromJson(x)))
             : [],
       );
 
@@ -53,7 +55,8 @@ class BookResponseItem {
     this.searchInfo,
   });
 
-  factory BookResponseItem.fromRawJson(String str) => BookResponseItem.fromJson(json.decode(str));
+  factory BookResponseItem.fromRawJson(String str) =>
+      BookResponseItem.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
@@ -64,12 +67,14 @@ class BookResponseItem {
       authors: volumeInfo.authors,
       categories: volumeInfo.categories,
       fullSizeImageUrl: volumeInfo.imageLinks?.thumbnail,
-      isbn10:
-          volumeInfo.industryIdentifiers?.firstWhere((id) => id.type == 'ISBN_10')?.identifier ??
-              null,
-      isbn13:
-          volumeInfo.industryIdentifiers?.firstWhere((id) => id.type == 'ISBN_13')?.identifier ??
-              null,
+      isbn10: volumeInfo.industryIdentifiers
+              ?.firstWhere((id) => id.type == 'ISBN_10')
+              ?.identifier ??
+          null,
+      isbn13: volumeInfo.industryIdentifiers
+              ?.firstWhere((id) => id.type == 'ISBN_13')
+              ?.identifier ??
+          null,
       pageCount: volumeInfo.pageCount,
       publisher: volumeInfo.publisher,
       publishYear: int.tryParse(volumeInfo.publishedDate) ?? -1,
@@ -286,9 +291,11 @@ class VolumeInfo {
         publishedDate: json["publishedDate"],
         description: json["description"],
         industryIdentifiers: List<IndustryIdentifier>.from(
-            json["industryIdentifiers"]?.map((x) => IndustryIdentifier.fromJson(x)) ?? []),
-        readingModes:
-            json["readingModes"] != null ? ReadingModes.fromJson(json["readingModes"]) : null,
+            json["industryIdentifiers"]?.map((x) => IndustryIdentifier.fromJson(x)) ??
+                []),
+        readingModes: json["readingModes"] != null
+            ? ReadingModes.fromJson(json["readingModes"])
+            : null,
         pageCount: json["pageCount"],
         printType: json["printType"],
         categories: List<String>.from(json["categories"]?.map((x) => x) ?? []),
@@ -300,7 +307,8 @@ class VolumeInfo {
         panelizationSummary: json["panelizationSummary"] != null
             ? PanelizationSummary.fromJson(json["panelizationSummary"])
             : null,
-        imageLinks: json["imageLinks"] != null ? ImageLinks.fromJson(json["imageLinks"]) : null,
+        imageLinks:
+            json["imageLinks"] != null ? ImageLinks.fromJson(json["imageLinks"]) : null,
         language: json["language"],
         previewLink: json["previewLink"],
         infoLink: json["infoLink"],

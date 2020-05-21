@@ -3,15 +3,18 @@ import 'package:mobx/mobx.dart';
 
 part 'new_account_store.g.dart';
 
+/// Store which contains properties and methods for determining whether new user credentials are valid.
 class NewAccountStore = _NewAccountStore with _$NewAccountStore;
 
 abstract class _NewAccountStore extends LoginCredentialsStore with Store {
   @observable
   String _username;
 
+  /// The currently set username.
   @computed
   String get username => _username;
 
+  /// Returns a string representation of the current username error, or null if there is no error.
   @computed
   String get usernameError {
     if (_username == null) {
@@ -24,13 +27,16 @@ abstract class _NewAccountStore extends LoginCredentialsStore with Store {
         : null;
   }
 
+  /// Whether the currently set username is valid or not.
   @computed
   bool get usernameIsValid => usernameError == null;
 
+  /// Whether the username, email and password combination is valid or not.
   @override
   bool get credentialsAreValid =>
       super.credentialsAreValid && _username != null && usernameError == null;
 
+  /// Resets the currently set credentials.
   @override
   @action
   void reset() {
@@ -38,6 +44,9 @@ abstract class _NewAccountStore extends LoginCredentialsStore with Store {
     super.reset();
   }
 
+  /// Sets the current username.
+  ///
+  /// [username] The username that is being set.
   @action
   void setUsername(String username) => _username = username.trim();
 }
