@@ -4,10 +4,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+/// Displays a list of book covers.
 class BookCoverList extends StatelessWidget {
+  /// The box that the images are being loaded from.
   final BoxMapItem box;
 
+  /// The height of the images, default is 150.0.
   final double height;
+
+  /// The width of the images, default is 100.0.
   final double width;
 
   const BookCoverList({

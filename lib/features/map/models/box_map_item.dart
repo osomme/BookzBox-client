@@ -3,15 +3,33 @@ import 'package:bookzbox/features/map/box_map.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+/// Domain model representing a box that is shown on a map.
 class BoxMapItem {
+  /// The latitudinal position of the box.
   final double latitude;
+
+  /// The longitudinal position of the box.
   final double longitude;
+
+  /// The description of the box.
   final String description;
+
+  /// The title of the box.
   final String title;
+
+  /// The date and time that the box was published.
   final DateTime publishedOn;
+
+  /// The ID of the publisher.
   final String publishedById;
+
+  /// The ID of the box.
   final String boxId;
+
+  /// A list of books that the box contains.
   final List<MapBookItem> books;
+
+  /// The status of the box.
   final BoxStatus status;
 
   BoxMapItem({
@@ -26,6 +44,9 @@ class BoxMapItem {
     @required this.status,
   });
 
+  /// Maps a Firestore document into a [BoxMapItem] domain model.
+  ///
+  /// [doc] The Firestore document representing a single box map item.
   factory BoxMapItem.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data;
 

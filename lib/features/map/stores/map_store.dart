@@ -5,6 +5,7 @@ import 'package:mobx/mobx.dart';
 
 part 'map_store.g.dart';
 
+/// Store which contains reactive properties and methods for interacting with map boxes.
 class MapStore = _MapStore with _$MapStore;
 
 abstract class _MapStore with Store {
@@ -27,13 +28,14 @@ abstract class _MapStore with Store {
   @observable
   Option<LatLng> _userPosition = none();
 
+  /// Constructor which takes a repository and location service and immediatly loads boxes and user location.
   _MapStore(this._locationService, this._repository) {
     _fetchBoxes();
     _fetchUserLocation();
   }
 
   /// Gets a list of [BoxMapItem] according to the currently set filter.
-  /// If no filter is set, then all the boxes are shown.
+  /// If no filter is set, then all loaded boxes are shown.
   @computed
   List<BoxMapItem> get boxes {
     if (!_filters.hasAnyFilter) {
@@ -63,6 +65,8 @@ abstract class _MapStore with Store {
   BoxFilterValues get filters => _filters;
 
   /// Sets a box filter. Will automatically refresh the boxes property.
+  ///
+  /// [filters] The filters that will be applied.
   @action
   void setBoxFilter(BoxFilterValues filters) => _filters = filters;
 

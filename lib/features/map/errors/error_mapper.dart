@@ -3,6 +3,7 @@ import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 extension MapErrorMapper on MapError {
+  /// Maps an error to a localized string representation of that error.
   String toErrorString(BuildContext ctx) {
     switch (this) {
       case MapError.boxError:

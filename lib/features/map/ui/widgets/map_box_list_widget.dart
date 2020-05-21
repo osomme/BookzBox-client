@@ -7,10 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+/// Widget which displays a list of boxes.
 class MapBoxList extends StatelessWidget {
+  /// The list of boxes to be displayed. Cannot be null.k
   final List<BoxMapItem> boxes;
 
-  MapBoxList({@required this.boxes});
+  MapBoxList({
+    @required this.boxes,
+  });
 
   @override
   Widget build(BuildContext context) {

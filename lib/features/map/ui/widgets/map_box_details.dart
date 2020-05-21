@@ -10,11 +10,15 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 
+/// Widget which displays the details of a singular box.
 class ModalBoxDetails extends StatefulWidget {
+  /// The box that is being displayed.
   final BoxMapItem box;
 
+  /// The like store, used to handle logic related to liking a box.
   final BoxLikeStore likeStore;
 
+  /// The authentication store, used to determine if the owner of a box is the currently logged in user.
   final AuthStore authStore;
 
   const ModalBoxDetails({

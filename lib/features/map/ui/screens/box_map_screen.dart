@@ -16,6 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BoxMapScreen extends StatefulWidget {
+  /// Map store responsible for handling loading and location logic for the map.
   final MapStore mapStore;
 
   const BoxMapScreen({

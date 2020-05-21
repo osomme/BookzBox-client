@@ -3,10 +3,15 @@ import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
+/// Widget which allows the user to set box filtering.
 class BoxFilter extends StatefulWidget {
+  /// The current filter, if any. Can be null.
   final BoxFilterValues currentFilter;
 
-  const BoxFilter({Key key, this.currentFilter}) : super(key: key);
+  const BoxFilter({
+    Key key,
+    this.currentFilter,
+  }) : super(key: key);
 
   @override
   _BoxFilterState createState() => _BoxFilterState();
@@ -29,6 +34,7 @@ class _BoxFilterState extends State<BoxFilter> {
 
   @override
   void initState() {
+    // If there is a currently set filter, populate the text input widgets with the contents of that filter.
     titleDescriptionController = TextEditingController(
       text: widget.currentFilter?.boxTitleOrDescriptionText,
     );

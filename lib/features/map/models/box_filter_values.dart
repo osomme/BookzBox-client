@@ -1,15 +1,36 @@
 import 'package:bookzbox/features/map/box_map.dart';
 
-enum DateLimit { OneDay, SevenDays, ThirtyDays, NoLimit }
+/// Enums which represent the different levels that box published date can be filtered on.
+enum DateLimit {
+  /// Limit to 1 day (24 hours)
+  OneDay,
 
+  /// Limit to 7 days.
+  SevenDays,
+
+  /// Limit to 30 days.
+  ThirtyDays,
+
+  /// Allow all boxes from any published date.
+  NoLimit,
+}
+
+/// Class which contains immutable filter query values that can be used in a box filtering query.
 class BoxFilterValues {
   List<bool Function(BoxMapItem)> _filters = List();
 
   bool _hasAnyFilter = false;
 
+  /// The input box title or description text.
   final String boxTitleOrDescriptionText;
+
+  /// The input author name.
   final String authorName;
+
+  /// The input book title.
   final String bookTitle;
+
+  /// The published date limitation.
   final DateLimit dateLimitation;
 
   BoxFilterValues({
@@ -19,16 +40,16 @@ class BoxFilterValues {
     this.dateLimitation,
   }) {
     _createFilter();
-    if (_filters.isNotEmpty) {
-      _hasAnyFilter = true;
-    }
+    _hasAnyFilter = _filters.isNotEmpty;
   }
 
   /// Creates a new instance of the class with no filters applied.
   factory BoxFilterValues.noFilters() => BoxFilterValues();
 
+  /// Retrieve a list of functions that can be used to filter a list of [BoxMapItem] objects.
   List<bool Function(BoxMapItem)> get filters => _filters;
 
+  /// Whether there are any filters set.
   bool get hasAnyFilter => _hasAnyFilter;
 
   void _createFilter() {
