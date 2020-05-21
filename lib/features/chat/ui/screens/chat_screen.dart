@@ -10,9 +10,15 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 
+/// Arguments used when routing into the chat screen.
 class ChatScreenArgs {
+  /// The ID of the chat.
   final String chatId;
+
+  /// The username of the user that the client is chatting with.
   final String otherUserName;
+
+  /// The thumbnail URL of the user that the client is chatting with.
   final String otherUserThumbnail;
 
   ChatScreenArgs(this.chatId, this.otherUserName, this.otherUserThumbnail);
@@ -28,10 +34,13 @@ class ChatScreen extends StatefulWidget {
   /// The username of the user that the client is chatting with.
   final String otherUsername;
 
+  /// Store used to load chat messages and provide methods for posting new chat messages.
   final ChatStore chatStore;
 
+  /// Store used for match information.
   final MatchStore matchStore;
 
+  /// An URL containing the thumbnail image of the other user.
   final String otherUserThumbnail;
 
   ChatScreen({
@@ -250,6 +259,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  /// Retrieves an image from either the device gallery, or device camera.
   Future getImage(ImageSource source) async {
     final image = await ImagePicker.pickImage(source: source, imageQuality: 50);
     if (image != null) {
@@ -258,6 +268,7 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  /// Submits a new chat message.
   void submitMessage() {
     controller.clear();
     widget.chatStore.postTextMessage(widget.clientUserId, widget.matchId);

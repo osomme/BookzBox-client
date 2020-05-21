@@ -6,9 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 
+/// Widget containing a single chat message.
 class ChatMessageItem extends StatelessWidget {
+  /// Whether the message belongs to the client user.
   final bool isClientUser;
+
+  /// The chat message itself.
   final ChatMessage message;
+
+  /// Optional parameter to an URL to an image that can be used as a thumbnail.
   final String thumbnail;
 
   /// Optional parameter used for when the message is representing another user (not client user).
@@ -123,7 +129,9 @@ class ChatMessageItem extends StatelessWidget {
   }
 }
 
+/// Widget used to display an image across the entire screen.
 class FullSizeImageScreen extends StatelessWidget {
+  /// The URL of the image. Cannot be null.
   final String imageUrl;
 
   const FullSizeImageScreen({

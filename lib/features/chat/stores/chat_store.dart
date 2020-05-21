@@ -7,6 +7,7 @@ import 'package:mobx/mobx.dart';
 
 part 'chat_store.g.dart';
 
+/// Store which contains reactive properties and methods related to reading and posting chat messages.
 class ChatStore = _ChatStore with _$ChatStore;
 
 abstract class _ChatStore with Store {
@@ -40,29 +41,41 @@ abstract class _ChatStore with Store {
   @observable
   List<ChatMessage> _messages = List();
 
+  /// Constructor for the store. Inject dependencies through this constructor.
   _ChatStore(this._chatRepository, this._feedStore, this._storageService);
 
+  /// Whether the store is currently uploading an image.
   @computed
   bool get isUploadingImage => _isUploadingImage;
 
+  /// Whether the user input message is valid.
   @computed
   bool get isInputValid => _messageInput.isNotEmpty;
 
+  /// Whether the store is currently loading chat messages.
   @computed
   bool get isLoadingMessages => _isLoadingMessages;
 
+  /// Whether the store is currently posting a message.
   @computed
   bool get isPostingMessage => _isPostingMessage;
 
+  /// Whether the store has an error.
   @computed
   bool get hasError => _hasError;
 
+  /// Returns a list of [ChatMessage]s. Returns an empty list if there is no messages, or the messages are being loaded.
   @computed
   List<ChatMessage> get messages => _messages;
 
+  /// Sets the current user input for a new message.
   @action
   void setChatInput(String input) => _messageInput = input.trim();
 
+  /// Loads a stream of chat messages.
+  ///
+  /// [matchId] The ID of the match that the chat belongs to.
+  /// [clientUserId] The user ID of the currently logged in user.
   @action
   Future<void> loadChatStream(String matchId, String clientUserId) async {
     _isLoadingMessages = true;
@@ -121,6 +134,11 @@ abstract class _ChatStore with Store {
     }
   }
 
+  /// Uploads an image to the remote storage service.
+  ///
+  /// [image] The image that is going to be uploaded.
+  /// [userId] The user ID of the user that is uploading the image.
+  /// [matchId] The match ID that the chat belongs to.
   @action
   Future<void> uploadImage(File image, String userId, String matchId) async {
     _isUploadingImage = true;
@@ -135,6 +153,10 @@ abstract class _ChatStore with Store {
     _isUploadingImage = false;
   }
 
+  /// Posts a new chat message.
+  ///
+  /// [postedByUserId] The ID of the user that is posting the message.
+  /// [matchId] The ID of the match that the chat belongs to.
   @action
   Future<void> postTextMessage(String postedByUserId, String matchId) async {
     if (!isInputValid) {
@@ -182,6 +204,7 @@ abstract class _ChatStore with Store {
     );
   }
 
+  /// Cleans up resources used by the store such as the stream subscription and event listeners.
   void dispose() {
     _isDisposing = true;
     _streamSubscription?.cancel();
