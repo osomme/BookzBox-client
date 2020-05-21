@@ -8,8 +8,13 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ActivityScreen extends StatefulWidget {
+  /// The activity feed store that the screen needs to fetch data.
   final ActivityFeedStore activityFeedStore;
+
+  /// Liked boxes store used to fetch data.
   final MyLikedBoxesStore boxLikeStore;
+
+  /// The user ID of the user whos activity feed is being shown.
   final String userId;
 
   const ActivityScreen({

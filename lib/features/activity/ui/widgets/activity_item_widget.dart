@@ -2,13 +2,27 @@ import 'package:bookzbox/common/extensions/extensions.dart';
 import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
+/// Widget used to display an activity list item in a list of activity feed notifications.
 class ActivityListItem extends StatelessWidget {
+  /// The widget to display on the leftmost side of the item.
   final Widget leading;
+
+  /// A list of subtitle texts. Is joined together to create one text.
   final List<ActivityItemTextParam> subtitleTexts;
+
+  /// The widget to display on the rightmost side of the item.
   final Widget trailing;
+
+  /// Whether the item is three lines tall.
   final bool isThreeLines;
+
+  /// The function to call when the item is clicked.
   final VoidCallback onClick;
+
+  /// The timestamp of the list item that is being displayed.
   final DateTime date;
+
+  /// Whether the activity feed item has been read.
   final bool read;
 
   const ActivityListItem({
@@ -77,8 +91,13 @@ class ActivityListItem extends StatelessWidget {
 
 /// Class containing information that is used to determine the text style for a given text in the ActivityListItem widget.
 class ActivityItemTextParam {
+  /// The string content of the text.
   final String content;
+
+  /// Whether the text is bold. False by default.
   final bool bold;
+
+  /// Whether the text is italic. False by default.
   final bool italic;
 
   ActivityItemTextParam({

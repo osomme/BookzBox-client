@@ -9,7 +9,10 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ActivityFeedTab extends StatelessWidget {
+  /// The activity feed store that the screen needs to display data.
   final ActivityFeedStore activityFeedStore;
+
+  /// The user ID of the user who's activity feed is being shown.
   final String userId;
 
   const ActivityFeedTab({

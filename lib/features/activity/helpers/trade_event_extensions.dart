@@ -3,6 +3,7 @@ import 'package:bookzbox/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 extension TradeEventExtension on String {
+  /// Converts a string to a TradeEvent enum value.
   TradeEvent toTradeEvent() {
     switch (this) {
       case 'accepted':
@@ -18,6 +19,7 @@ extension TradeEventExtension on String {
 }
 
 extension TradeEventLocalization on TradeEvent {
+  /// Converts a TradeEvent enum to an localized string.
   String toLocalizedActivityString(BuildContext ctx) {
     switch (this) {
       case TradeEvent.Accepted:

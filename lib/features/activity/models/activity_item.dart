@@ -4,9 +4,15 @@ import 'package:bookzbox/features/activity/activity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+/// Model representing a activity notification item.
 class ActivityItem {
+  /// The ID of the activity feed item.
   final String id;
+
+  /// The type of the activity feed item.
   final ActivityType type;
+
+  /// The timestamp for when the activity feed item was created.
   final DateTime timestamp;
 
   /// Has the activity item been read by the user.
@@ -19,6 +25,8 @@ class ActivityItem {
     @required this.read,
   });
 
+  /// Attempts to create a new instance of an [ActivityItem] from a Firebase Firestore document.
+  /// Throws an exception if the type is unknown.
   factory ActivityItem.fromFirestore(Map<dynamic, dynamic> data, String id) {
     if (data['typename'] == 'like') {
       return _mapToLikeItem(data, id);

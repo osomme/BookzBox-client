@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ChatFeedTab extends StatelessWidget {
+  /// The activity feed store that the screen needs to fetch data.
   final ActivityFeedStore feedStore;
 
   const ChatFeedTab({
@@ -108,7 +109,7 @@ class ChatFeedTab extends StatelessWidget {
 
   String _extractMessageSnippet(BuildContext context, String lastMessage) {
     if (lastMessage != null && lastMessage.startsWith("https://firebasestorage")) {
-      // If the message is a link pointing to firebase storage, then it is a media type message.
+      // If the message is a link pointing to Firebase Storage, then it is a media type message.
       return S.of(context).activityChatMedia;
     }
     return lastMessage ?? S.of(context).activityStartChatting;

@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 
 part 'my_liked_boxes_store.g.dart';
 
+/// Store which contains reactive properties that return liked boxes for a particular user.
 class MyLikedBoxesStore = _MyLikedBoxesStore with _$MyLikedBoxesStore;
 
 abstract class _MyLikedBoxesStore with Store {
@@ -27,15 +28,21 @@ abstract class _MyLikedBoxesStore with Store {
 
   _MyLikedBoxesStore(this._boxLoaderRepository, this._likeRepository);
 
+  /// Whether the store is currently loading the stream.
   @computed
   bool get isLoading => _isLoading;
 
+  /// Whether the stream contains an error.
   @computed
   bool get hasError => _hasError;
 
+  /// A list of [MiniBox]es that the user currently has a like for.
   @computed
   List<MiniBox> get boxes => _boxes;
 
+  /// Loads a stream of liked boxes belonging to a particular user.
+  ///
+  /// [userId] The user ID of the user whose liked boxes stream is being loaded.
   Future<void> fetchBoxes(String userId) async {
     _userId = userId;
     _isLoading = true;
@@ -57,6 +64,9 @@ abstract class _MyLikedBoxesStore with Store {
     );
   }
 
+  /// Removes a like from the liked boxes stream.
+  ///
+  /// [boxId] The ID of the box whose like is being removed.
   @action
   Future<void> removeLike(String boxId) async {
     if (_userId == null) {
@@ -83,6 +93,7 @@ abstract class _MyLikedBoxesStore with Store {
     _isLoading = false;
   }
 
+  /// Cleans up resources belonging to the store, such as the stream subscription.
   void dispose() {
     _streamSubscription?.cancel();
   }

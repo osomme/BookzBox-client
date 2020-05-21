@@ -8,11 +8,14 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LikedBoxesTab extends StatelessWidget {
+  /// Liked boxes store used to fetch data.
   final MyLikedBoxesStore likedBoxesStore;
 
   LikedBoxesTab({
     Key key,
     @required this.likedBoxesStore,
+
+    /// The user ID of the user whose liked boxes are being shown.
     @required String userId,
   }) : super(key: key) {
     likedBoxesStore.fetchBoxes(userId);
