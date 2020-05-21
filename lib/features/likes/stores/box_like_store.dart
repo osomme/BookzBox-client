@@ -8,6 +8,7 @@ import 'package:mobx/mobx.dart';
 
 part 'box_like_store.g.dart';
 
+/// Store containing reactive properties and methods related to obtaining and modifying like status for a box.
 class BoxLikeStore = _BoxLikeStore with _$BoxLikeStore;
 
 abstract class _BoxLikeStore with Store {
@@ -41,7 +42,7 @@ abstract class _BoxLikeStore with Store {
   @computed
   bool get isLiked => _isLiked;
 
-  /// A potential error message for the store.
+  /// A potential error message for the store. Is null if there is no error.
   @computed
   NetworkError get errorMessage => _error;
 
@@ -91,5 +92,6 @@ abstract class _BoxLikeStore with Store {
     _isLoading = false;
   }
 
+  /// Cleans up resources used by the store. Should always be called before store is garbage collected.
   void dispose() => _streamSubscription?.cancel();
 }
