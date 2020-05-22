@@ -5,4 +5,9 @@
              Flutter draws its first frame -->
         <item name="android:windowBackground">@drawable/launch_background</item>
     </style>
+
+    <!-- A normal theme that shows while the screen orientation changes and activity restoration -->
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
 </resources>
