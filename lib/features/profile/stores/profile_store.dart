@@ -42,6 +42,8 @@ abstract class _ProfileStore with Store {
     }
   }
 
+  /// Initializes the profile by fetching the profile
+  /// for the user with id [_userId].
   /// Run once on load.
   @action
   void init() {
@@ -51,6 +53,9 @@ abstract class _ProfileStore with Store {
         ));
   }
 
+  /// Updates the current profile.
+  /// The profile is cached if it is the currently authenticated
+  /// users profile.
   @action
   onProfileLoaded(Profile loaded) {
     _profile = loaded;

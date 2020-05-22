@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
+/// A widget for showing error text along with an icon.
 class ErrorTextWithIcon extends StatelessWidget {
   final String text;
   final Icon icon;
   final Color textColor;
 
-  const ErrorTextWithIcon(
-      {Key key, @required this.text, @required this.icon, this.textColor})
+  const ErrorTextWithIcon({Key key, @required this.text, @required this.icon, this.textColor})
       : super(key: key);
 
   @override

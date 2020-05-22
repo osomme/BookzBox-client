@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// A material button with circular shape.
 class CircularButton extends StatelessWidget {
   const CircularButton({
     Key key,
@@ -11,9 +12,16 @@ class CircularButton extends StatelessWidget {
   }) : super(key: key);
 
   final Widget child;
+
+  /// The text to show on this button.
   final String label;
+
+  /// The action to execute when this button is tapped.
   final Function onClick;
+
+  /// The color of the [label].
   final Color textColor;
+
   final double padding;
 
   @override

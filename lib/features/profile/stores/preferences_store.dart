@@ -12,6 +12,7 @@ abstract class _PreferencesStore with Store {
   @observable
   ObservableList<BookSubject> favoriteBookSubjects = new ObservableList();
 
+  /// The `BookSubject` that is currently selected.
   @observable
   BookSubject _selectedSubject;
 

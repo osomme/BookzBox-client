@@ -16,6 +16,7 @@ import 'package:validators/validators.dart';
 
 part 'new_box_store.g.dart';
 
+/// Handles logic for the NewBoxScreen.
 class NewBoxStore = _NewBoxStore with _$NewBoxStore;
 
 abstract class _NewBoxStore with Store {
@@ -23,6 +24,7 @@ abstract class _NewBoxStore with Store {
   final IBoxRepository _boxRepository;
   final ILocationService _locationService;
 
+  /// The current content of the ISBN field.
   @observable
   String _isbn;
 
@@ -34,27 +36,36 @@ abstract class _NewBoxStore with Store {
   @observable
   BookCondition _currentBookCondition = BookCondition.Unknown;
 
+  /// Is there currently a non-background operation?
   @observable
   bool _isLoadingBook = false;
 
+  /// Current value of the box title field.
   @observable
   String _boxTitle;
 
+  /// Current value of the box description field.
   @observable
   String _boxDescription;
 
+  /// The result of the last ISBN lookup request.
   @observable
   LookupError _lookupError = LookupError.None;
 
+  /// The books that the user has added to this box.
   @observable
   ObservableList<Book> _books = new ObservableList();
 
+  /// An error symbolising whether or not the box
+  /// fulfills the book count requirement.
   @observable
   BoxError _bookCountError = BoxError.None;
 
+  /// An error symbolising whether or not the title is valid.
   @observable
   BoxError _titleError = BoxError.None;
 
+  /// Is there currently a publish operation working?
   @observable
   bool _isPublishing = false;
 
@@ -131,6 +142,8 @@ abstract class _NewBoxStore with Store {
     return result;
   }
 
+  /// Add the [_currentBook] to the list of [_books].
+  /// The book cannot be `null` and must have a non-default `BookCondition`.
   @action
   bool addCurrentBook() {
     if (_currentBook == null || _currentBook.condition == BookCondition.Unknown) return false;
@@ -139,6 +152,7 @@ abstract class _NewBoxStore with Store {
     return true;
   }
 
+  /// Removes the [book] from [books] if it is non-null.
   @action
   void removeBook(Book book) {
     if (book == null) return;
@@ -149,6 +163,8 @@ abstract class _NewBoxStore with Store {
   @action
   void setIsbn(String isbn) => _isbn = isbn;
 
+  /// Checks the current ISBN and returns the appropriate error.
+  /// Note that `LookupError.None` is returned if there is no error.
   @computed
   LookupError get isbnError {
     if (_isbn == null) {
@@ -172,6 +188,8 @@ abstract class _NewBoxStore with Store {
   @computed
   String get boxTitle => _boxTitle;
 
+  /// Update the current box title with [title].
+  /// Note that this triggers a validation check.
   @action
   void setBoxTitle(String title) {
     _boxTitle = title;
@@ -229,6 +247,9 @@ abstract class _NewBoxStore with Store {
     return true;
   }
 
+  /// Checks that the current title is valid.
+  /// Returns `true` if the title is valid and `false` otherwise.
+  /// Note that this also updates the [_titleError] to the approriate value.
   @action
   bool validateTitle() {
     if (_boxTitle == null || _boxTitle.length <= 3) {

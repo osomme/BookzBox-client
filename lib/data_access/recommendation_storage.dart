@@ -7,6 +7,7 @@ import 'package:hive/hive.dart';
 class RecommendationStorage extends ILocalStorage<BoxFeedListItem> {
   Box<BoxFeedListItem> _box;
 
+  /// Get the Hive box identified by [key].
   @override
   Future<Box<BoxFeedListItem>> getBox(String key) async {
     if (_box == null || _box.name != key || !_box.isOpen) {
@@ -16,12 +17,15 @@ class RecommendationStorage extends ILocalStorage<BoxFeedListItem> {
     return _box;
   }
 
+  /// Save an [item] to persistent storage in the Hive box
+  /// identified by [boxKey].
   @override
   Future<void> store(String boxKey, BoxFeedListItem item) async {
     (await getBox(boxKey)).add(item);
   }
 
-  /// Persist a list of boxes.
+  /// Persist a list of box recommendations ([items]) to the Hive box
+  /// identified by [boxKey].
   @override
   Future<void> storeAll(String boxKey, List<BoxFeedListItem> items) async {
     Map<String, BoxFeedListItem> itemMap = new Map();
@@ -31,6 +35,7 @@ class RecommendationStorage extends ILocalStorage<BoxFeedListItem> {
     (await getBox(boxKey)).putAll(itemMap);
   }
 
+  /// Remove the box with [itemKey] from the Hive box with [boxKey].
   @override
   Future<void> remove(String boxKey, dynamic itemKey) async {
     if (itemKey == null) return;

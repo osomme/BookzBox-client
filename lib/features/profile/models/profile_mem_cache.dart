@@ -5,6 +5,7 @@ class ProfileMemCache extends IMemCache<Profile> {
   /// The cached profile.
   static Profile _profile;
 
+  /// Check if there is currently a cached `Profile`.
   @override
   bool hasCache() => _profile != null;
 

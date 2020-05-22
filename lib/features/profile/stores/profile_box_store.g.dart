@@ -217,10 +217,10 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
       ActionController(name: '_ProfileBoxStore');
 
   @override
-  void handleResult(Either<String, List<MiniBox>> res) {
+  void handleFetchResult(Either<String, List<MiniBox>> res) {
     final _$actionInfo = _$_ProfileBoxStoreActionController.startAction();
     try {
-      return super.handleResult(res);
+      return super.handleFetchResult(res);
     } finally {
       _$_ProfileBoxStoreActionController.endAction(_$actionInfo);
     }
@@ -247,10 +247,10 @@ mixin _$ProfileBoxStore on _ProfileBoxStore, Store {
   }
 
   @override
-  void handleUpdateRes(Either<String, Box> res) {
+  void handleUpdateRes(Either<String, Box> response) {
     final _$actionInfo = _$_ProfileBoxStoreActionController.startAction();
     try {
-      return super.handleUpdateRes(res);
+      return super.handleUpdateRes(response);
     } finally {
       _$_ProfileBoxStoreActionController.endAction(_$actionInfo);
     }

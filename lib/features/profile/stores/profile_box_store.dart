@@ -40,6 +40,10 @@ abstract class _ProfileBoxStore with Store {
 
   _ProfileBoxStore(this._boxRepository);
 
+  /// Initialize the store.
+  /// This should be called once before any other method is called.
+  /// [userId] id of the user of whom this profile belongs
+  /// [myProfile] whether or not this profile is that of the currently logged in user.
   @action
   Future<void> init(String userId, bool myProfile) async {
     myBoxes.clear();
@@ -49,23 +53,15 @@ abstract class _ProfileBoxStore with Store {
     _isLoading = true;
     if (myProfile) {
       final res = await _boxRepository.fetchUserBoxes(userId);
-      handleResult(res);
-      // _boxRepository.fetchUserBoxes(userId).then((result) {
-      print("Fetching boxes for MY profile.");
-      //   if (myProfile) handleResult(result);
-      // });
+      handleFetchResult(res);
     } else {
       final res = await _boxRepository.fetchOtherUsersBoxes(userId);
-      handleResult(res);
-      // _boxRepository.fetchOtherUsersBoxes(userId).then((result) {
-      print("Fetching boxes for other users profile.");
-      //   if (!myProfile) handleResult(result);
-      // });
+      handleFetchResult(res);
     }
   }
 
   @action
-  void handleResult(Either<String, List<MiniBox>> res) {
+  void handleFetchResult(Either<String, List<MiniBox>> res) {
     res.fold(
       (err) => handleFetchError(err),
       (boxes) => handleFetchSuccess(boxes),
@@ -104,9 +100,10 @@ abstract class _ProfileBoxStore with Store {
     );
   }
 
+  /// Handles the [response] of an update operation.
   @action
-  void handleUpdateRes(Either<String, Box> res) {
-    res.fold(
+  void handleUpdateRes(Either<String, Box> response) {
+    response.fold(
       (err) {
         print(err);
         _updateError = err;
@@ -115,6 +112,8 @@ abstract class _ProfileBoxStore with Store {
     );
   }
 
+  /// Delete the box at [index]. This index is assumed to be in bounds
+  /// of [myBoxes].
   @action
   Future deleteBox(int index) async {
     _isRemovingBox = true;
@@ -162,6 +161,7 @@ abstract class _ProfileBoxStore with Store {
   @action
   void setUpdateError(String err) => _updateError = err;
 
+  /// Update the [status] of the box at [index].
   @action
   void setBoxStatus(BoxStatus status, int index) {
     myBoxes[index].status = status;

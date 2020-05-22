@@ -32,6 +32,7 @@ class BookSubjectMapper {
     return indices;
   }
 
+  /// Create a list of `BookSubject`s from Firestore [data].
   static List<BookSubject> fromFirestore(Map<String, dynamic> data) {
     List<BookSubject> result;
     var dataString = (data['favoriteGenres'] as String);
@@ -69,6 +70,8 @@ class BookSubjectMapper {
     return subjectList;
   }
 
+  /// Get the approtiate string representation for the given [subject].
+  /// This is not a localized string and is not meant for UI.
   static Tuple2<String, int> getKV(BookSubject subject) {
     switch (subject) {
       case BookSubject.Action:
