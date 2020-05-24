@@ -24,7 +24,8 @@ class FeedScreen extends StatefulWidget {
   }
 }
 
-class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateMixin {
+class _FeedScreenState extends State<FeedScreen>
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   AuthStore _authStore;
   PageController _pageController;
 
@@ -37,7 +38,9 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
   @override
   void didChangeDependencies() {
     _authStore = Provider.of<AuthStore>(context);
-    widget.feedStore.init(_authStore?.user?.uid ?? '');
+    if (!widget.feedStore.isInitialized || _authStore?.user?.uid != widget.feedStore.userId) {
+      widget.feedStore.init(_authStore?.user?.uid ?? '');
+    }
     super.didChangeDependencies();
   }
 
@@ -48,7 +51,11 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: Observer(builder: (_) {
         if (widget.feedStore.initialLoadingOngoing) {

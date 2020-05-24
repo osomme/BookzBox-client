@@ -18,6 +18,12 @@ abstract class _FeedStore with Store {
   final ILocationService _locationService;
 
   @observable
+  String _userId;
+
+  @observable
+  bool _isInitialized = false;
+
+  @observable
   List<BoxFeedListItem> _boxes = List();
 
   @observable
@@ -31,6 +37,15 @@ abstract class _FeedStore with Store {
 
   @observable
   double _longitude = -1.0;
+
+  /// Has `init()` been called?
+  @computed
+  bool get isInitialized => _isInitialized;
+
+  /// User id of the user of whom the feed is initialized for.
+  /// Note: This value can be null.
+  @computed
+  String get userId => _userId;
 
   /// The error, if any, that the store contains. Is null if there is no error.
   @computed
@@ -53,6 +68,7 @@ abstract class _FeedStore with Store {
   @action
   Future<void> init(String userId) async {
     _initialLoadingOngoing = true;
+    _userId = userId;
 
     final locationData = await _locationService.getLocation();
     locationData.fold(
@@ -66,6 +82,7 @@ abstract class _FeedStore with Store {
     );
 
     await fetchBoxes(userId);
+    _isInitialized = true;
   }
 
   /// Fetch [limit] amount of boxes for the user with id [userid].
@@ -93,8 +110,7 @@ abstract class _FeedStore with Store {
   }
 
   Future<void> _internalFetchBoxes(String userId) async {
-    final res = await _repo.getBoxRecommendations(
-        userId, _recommendationLimit + _boxes.length,
+    final res = await _repo.getBoxRecommendations(userId, _recommendationLimit + _boxes.length,
         latitude: _latitude, longitude: _longitude);
     res.fold(
       (err) => _error = err,

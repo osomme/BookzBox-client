@@ -9,6 +9,17 @@ part of 'feed_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$FeedStore on _FeedStore, Store {
+  Computed<bool> _$isInitializedComputed;
+
+  @override
+  bool get isInitialized =>
+      (_$isInitializedComputed ??= Computed<bool>(() => super.isInitialized))
+          .value;
+  Computed<String> _$userIdComputed;
+
+  @override
+  String get userId =>
+      (_$userIdComputed ??= Computed<String>(() => super.userId)).value;
   Computed<NetworkError> _$errorComputed;
 
   @override
@@ -26,6 +37,40 @@ mixin _$FeedStore on _FeedStore, Store {
   bool get initialLoadingOngoing => (_$initialLoadingOngoingComputed ??=
           Computed<bool>(() => super.initialLoadingOngoing))
       .value;
+
+  final _$_userIdAtom = Atom(name: '_FeedStore._userId');
+
+  @override
+  String get _userId {
+    _$_userIdAtom.context.enforceReadPolicy(_$_userIdAtom);
+    _$_userIdAtom.reportObserved();
+    return super._userId;
+  }
+
+  @override
+  set _userId(String value) {
+    _$_userIdAtom.context.conditionallyRunInAction(() {
+      super._userId = value;
+      _$_userIdAtom.reportChanged();
+    }, _$_userIdAtom, name: '${_$_userIdAtom.name}_set');
+  }
+
+  final _$_isInitializedAtom = Atom(name: '_FeedStore._isInitialized');
+
+  @override
+  bool get _isInitialized {
+    _$_isInitializedAtom.context.enforceReadPolicy(_$_isInitializedAtom);
+    _$_isInitializedAtom.reportObserved();
+    return super._isInitialized;
+  }
+
+  @override
+  set _isInitialized(bool value) {
+    _$_isInitializedAtom.context.conditionallyRunInAction(() {
+      super._isInitialized = value;
+      _$_isInitializedAtom.reportChanged();
+    }, _$_isInitializedAtom, name: '${_$_isInitializedAtom.name}_set');
+  }
 
   final _$_boxesAtom = Atom(name: '_FeedStore._boxes');
 
