@@ -75,14 +75,14 @@ mixin _$FeedStore on _FeedStore, Store {
   final _$_boxesAtom = Atom(name: '_FeedStore._boxes');
 
   @override
-  List<BoxFeedListItem> get _boxes {
+  ObservableList<BoxFeedListItem> get _boxes {
     _$_boxesAtom.context.enforceReadPolicy(_$_boxesAtom);
     _$_boxesAtom.reportObserved();
     return super._boxes;
   }
 
   @override
-  set _boxes(List<BoxFeedListItem> value) {
+  set _boxes(ObservableList<BoxFeedListItem> value) {
     _$_boxesAtom.context.conditionallyRunInAction(() {
       super._boxes = value;
       _$_boxesAtom.reportChanged();

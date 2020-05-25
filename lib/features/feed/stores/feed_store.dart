@@ -24,7 +24,7 @@ abstract class _FeedStore with Store {
   bool _isInitialized = false;
 
   @observable
-  List<BoxFeedListItem> _boxes = List();
+  ObservableList<BoxFeedListItem> _boxes = ObservableList();
 
   @observable
   NetworkError _error;

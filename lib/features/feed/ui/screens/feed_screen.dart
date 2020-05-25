@@ -24,8 +24,7 @@ class FeedScreen extends StatefulWidget {
   }
 }
 
-class _FeedScreenState extends State<FeedScreen>
-    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateMixin {
   AuthStore _authStore;
   PageController _pageController;
 
@@ -38,9 +37,7 @@ class _FeedScreenState extends State<FeedScreen>
   @override
   void didChangeDependencies() {
     _authStore = Provider.of<AuthStore>(context);
-    if (!widget.feedStore.isInitialized || _authStore?.user?.uid != widget.feedStore.userId) {
-      widget.feedStore.init(_authStore?.user?.uid ?? '');
-    }
+    widget.feedStore.init(_authStore?.user?.uid ?? '');
     super.didChangeDependencies();
   }
 
@@ -51,14 +48,10 @@ class _FeedScreenState extends State<FeedScreen>
   }
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
       body: Observer(builder: (_) {
-        if (widget.feedStore.initialLoadingOngoing) {
+        if (widget.feedStore.initialLoadingOngoing && widget.feedStore.boxes.isEmpty) {
           return Center(
             child: SpinKitThreeBounce(
               color: Theme.of(context).primaryColor,
@@ -84,10 +77,10 @@ class _FeedScreenState extends State<FeedScreen>
     );
   }
 
-  List<Widget> getFeedCards() {
+  List<Widget> getFeedCards(List<BoxFeedListItem> boxes) {
     List<Widget> cards = List();
 
-    for (int index = 0; index < widget.feedStore.boxes.length; index++) {
+    for (int index = 0; index < boxes.length; index++) {
       if (index % 5 == 0 && index != 0) {
         cards.add(AdCard(pageController: _pageController, index: cards.length));
       }
@@ -96,12 +89,12 @@ class _FeedScreenState extends State<FeedScreen>
         key: Key(Keys.feedItemKey + newIndex.toString()),
         pageController: _pageController,
         index: newIndex,
-        box: widget.feedStore.boxes[index],
+        box: boxes[index],
         locationService: Provider.of<ILocationService>(context),
         store: BoxLikeStore(
           Provider.of<IBoxLikeRepository>(context),
           Provider.of<IAuthService>(context),
-          widget.feedStore.boxes[index].id,
+          boxes[index].id,
         ),
       ));
     }
@@ -115,7 +108,7 @@ class _FeedScreenState extends State<FeedScreen>
         child: Observer(
           builder: (_) => PageView(
             controller: _pageController,
-            children: getFeedCards(),
+            children: getFeedCards(widget.feedStore.boxes),
             onPageChanged: (index) async {
               if (index == (widget.feedStore.boxes.length - 5)) {
                 await widget.feedStore.fetchBoxes(_authStore?.user?.uid);
